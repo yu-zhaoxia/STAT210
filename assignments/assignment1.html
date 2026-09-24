@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Zhaoxia Yu">
 
-<title>Assignments – STAT210 — Statistical Methods I: Linear Models</title>
+<title>STAT200C Assignment 1 – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -96,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Lecture Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../assignments/index.html" aria-current="page"> 
+    <a class="nav-link" href="../assignments/index.html"> 
 <span class="menu-text">Assignments</span></a>
   </li>  
   <li class="nav-item">
@@ -114,21 +144,39 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">1.</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2.</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">3.</a>
+  <ul class="collapse">
+  <li><a href="#a" id="toc-a" class="nav-link" data-scroll-target="#a">a)</a></li>
+  <li><a href="#b" id="toc-b" class="nav-link" data-scroll-target="#b">b)</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Assignments</h1>
+<h1 class="title">STAT200C Assignment 1</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zhaoxia Yu </p>
+          </div>
+  </div>
     
   
     
@@ -139,11 +187,132 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">1.</h2>
+<p>A subset of observations were randomly selected from the <code>cars</code> dataset. There are two variables: <code>speed</code> (numeric speed in mph) and <code>dist</code> (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = dist ~ speed, data = cars_sub)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-25.637  -8.143  -1.974   6.110  47.037 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -18.9899     7.3719  -2.576    0.014 *  
+speed         3.8314     0.4511   8.493  2.6e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.65 on 38 degrees of freedom
+Multiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 
+F-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10</code></pre>
+</div>
+</div>
+<p>Based on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.</p>
+<p><strong>a)</strong> What is the sample size <span class="math inline">\(n\)</span>?</p>
+<p><strong>b)</strong> What is the value of <span class="math inline">\(s^2\)</span>, the estimate of the error variance <span class="math inline">\(\sigma^2\)</span>? What is <span class="math inline">\(SSE\)</span>?</p>
+<p><strong>c)</strong> Based on the standard error of <span class="math inline">\(\hat{\beta}_1\)</span>, and other information you have found in a) and b), find the value of <span class="math inline">\(S_{xx}\)</span>. Then find the value of <span class="math inline">\(SSR\)</span> (sum of squares of regression).</p>
+<p><strong>d)</strong> Find the value of <span class="math inline">\(SST\)</span> (total sum of squares).</p>
+<p><strong>e)</strong> In general, although we cannot find <span class="math inline">\(\bar{x}\)</span> from the summary data, we can find <span class="math inline">\(\bar{x}^2\)</span>. For this problem, because distance is greater than zero, we can find <span class="math inline">\(\bar{x}\)</span>. Find its value, then the value of <span class="math inline">\(\bar{y}\)</span>.</p>
+<p><strong>f)</strong> Find a 95% confidence interval for <span class="math inline">\(E[y \mid x=20]\)</span>.</p>
+<p><strong>g)</strong> Find a 95% prediction interval for a new observation when <span class="math inline">\(x=20\)</span>.</p>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">2.</h2>
+<p>In one simple linear regression model, we have sample size <span class="math inline">\(n=10\)</span>, <span class="math inline">\(\bar{x}=1.03\)</span>, <span class="math inline">\(\bar{y}=2.51\)</span>,</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} x_i^{2}=20.37,\qquad
+\sum_{i=1}^{n} y_i^{2}=116.56,\qquad
+\sum_{i=1}^{n} x_i y_i=46.85.
+\]</span></p>
+<p><strong>a)</strong> Find the values of the least squares estimators: <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<p><strong>b)</strong> Calculate <span class="math inline">\(\mathrm{SST}\)</span>, <span class="math inline">\(\mathrm{SSR}\)</span>, and <span class="math inline">\(\mathrm{SSE}\)</span>.</p>
+<p><strong>c)</strong> Calculate the sample estimate of the variance <span class="math inline">\(\sigma^{2}\)</span> for the regression model.</p>
+<p><strong>d)</strong> What is the value of <span class="math inline">\(R^{2}\)</span> here?</p>
+<p><em>Hint.</em> The following formulae may be useful (can be used without proof):</p>
+<p><span class="math display">\[
+\sum (x_i-\bar{x})^2
+=
+\sum x_i^2-n\bar{x}^{\,2},
+\]</span></p>
+<p><span class="math display">\[
+\sum (x_i-\bar{x})(y_i-\bar{y})
+=
+\sum x_i y_i-n\bar{x}\,\bar{y}.
+\]</span></p>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">3.</h2>
+<p>Consider the simple linear regression model</p>
+<p><span class="math display">\[
+y_i=\beta_0+\beta_1x_i+\varepsilon_i,\qquad i=1,\ldots,n,
+\]</span></p>
+<p>where we assume:</p>
 <ul>
-<li><a href="../assignments/assignment1.html">STAT210 Assignment 1: Due on xxxday, October 00, 2026</a></li>
+<li><span class="math inline">\(\mathbb{E}(\varepsilon_i)=0,\ \forall i\)</span>;</li>
+<li><span class="math inline">\(\operatorname{Var}(\varepsilon_i)=\sigma^2,\ \forall i\)</span>;</li>
+<li><span class="math inline">\(\operatorname{Cov}(\varepsilon_i,\varepsilon_j)=0,\ \forall i,j\text{ with }i\neq j\)</span>.</li>
 </ul>
+<p><strong>For the following questions, prove or verify the results. You can choose either one of the two ways:</strong></p>
+<ol type="1">
+<li><p><strong>Prove:</strong> You can prove them mathematically.</p></li>
+<li><p><strong>Verify:</strong> You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.</p></li>
+</ol>
+<section id="a" class="level3">
+<h3 class="anchored" data-anchor-id="a">a)</h3>
+<p>For the least squares estimators <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, the following hold.</p>
+<p><span class="math display">\[
+\text{i.}\quad
+\hat{\beta}_1
+=
+\frac{\sum_{i=1}^{n}(y_i-\bar{y})(x_i-\bar{x})}
+{\sum_{i=1}^{n}(x_i-\bar{x})^2},
+\]</span></p>
+<p><span class="math display">\[
+\text{ii.}\quad
+\hat{\beta}_1
+=
+\frac{\sum_{i=1}^{n}y_i\,(x_i-\bar{x})}
+{\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+\]</span></p>
+<!--
+$$
+\text{iii.}\quad
+\operatorname{Cov}\!\big(\hat{\beta}_{0},\hat{\beta}_{1}\big)
+=
+-\frac{\sigma^{2}\sum_{i=1}^{n}x_i}
+{n\sum_{i=1}^{n}(x_i-\bar{x})^2}
+=
+-\frac{\bar{x}\sigma^{2}}
+{\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+$$
+-->
+</section>
+<section id="b" class="level3">
+<h3 class="anchored" data-anchor-id="b">b)</h3>
+<p>Let the residuals be</p>
+<p><span class="math display">\[
+e_i=y_i-\hat{\beta}_0-\hat{\beta}_1x_i.
+\]</span></p>
+<p>The following holds:</p>
+<p><span class="math display">\[
+0
+=
+\sum_{i=1}^{n}x_i e_i
+=
+\sum_{i=1}^{n}e_i
+=
+\sum_{i=1}^{n}\hat{y}_i e_i.
+\]</span></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

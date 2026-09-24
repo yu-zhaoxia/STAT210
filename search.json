@@ -7,11 +7,46 @@
     "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
   },
   {
+    "objectID": "assignments/assignment1.html",
+    "href": "assignments/assignment1.html",
+    "title": "STAT200C Assignment 1",
+    "section": "",
+    "text": "A subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
+  },
+  {
+    "objectID": "assignments/assignment1.html#section",
+    "href": "assignments/assignment1.html#section",
+    "title": "STAT200C Assignment 1",
+    "section": "",
+    "text": "A subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
+  },
+  {
+    "objectID": "assignments/assignment1.html#section-1",
+    "href": "assignments/assignment1.html#section-1",
+    "title": "STAT200C Assignment 1",
+    "section": "2.",
+    "text": "2.\nIn one simple linear regression model, we have sample size \\(n=10\\), \\(\\bar{x}=1.03\\), \\(\\bar{y}=2.51\\),\n\\[\n\\sum_{i=1}^{n} x_i^{2}=20.37,\\qquad\n\\sum_{i=1}^{n} y_i^{2}=116.56,\\qquad\n\\sum_{i=1}^{n} x_i y_i=46.85.\n\\]\na) Find the values of the least squares estimators: \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\nb) Calculate \\(\\mathrm{SST}\\), \\(\\mathrm{SSR}\\), and \\(\\mathrm{SSE}\\).\nc) Calculate the sample estimate of the variance \\(\\sigma^{2}\\) for the regression model.\nd) What is the value of \\(R^{2}\\) here?\nHint. The following formulae may be useful (can be used without proof):\n\\[\n\\sum (x_i-\\bar{x})^2\n=\n\\sum x_i^2-n\\bar{x}^{\\,2},\n\\]\n\\[\n\\sum (x_i-\\bar{x})(y_i-\\bar{y})\n=\n\\sum x_i y_i-n\\bar{x}\\,\\bar{y}.\n\\]"
+  },
+  {
+    "objectID": "assignments/assignment1.html#section-2",
+    "href": "assignments/assignment1.html#section-2",
+    "title": "STAT200C Assignment 1",
+    "section": "3.",
+    "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "assignments/index.html",
+    "href": "assignments/index.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "STAT210 Assignment 1: Due on xxxday, October 00, 2026"
   },
   {
     "objectID": "index.html",
