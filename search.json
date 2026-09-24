@@ -74,7 +74,7 @@
     "href": "lectures/01-lecture.html",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "",
-    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”\n\n\n\n\n\nGalton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line.\n\n\n\n\n\n\n\n\nGalton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”. \n\n\n\n\n\n\n1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests\n\n\n\n\n\nFoundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences\n\n\n\n\n\n\nResponse variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGalaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
+    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”\n\n\n\n\n\nGalton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line.\n\n\n\n\n\n\n\n\n\n\n\n\nGalton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”. \n\n\n\n\n\n\n\n\n\n\n1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests\n\n\n\n\n\nFoundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences\n\n\n\n\n\n\nResponse variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Pisa tower data\npisa &lt;- data.frame(\n  obs  = 1:13,\n  year = 75:87,\n  lean = c(642, 644, 656, 667, 673, 688, \n           696, 698, 713, 717, 725, 742, 757)\n)\n\n# Scatter plot with regression line\nplot(pisa$year, pisa$lean,\n     pch = 19, col = \"blue\",\n     xlab = \"Year (19xx)\",\n     ylab = \"Lean (mm)\",\n     main = \"Leaning of the Pisa Tower Over Time\")\n\n# Add regression line\nfit &lt;- lm(lean ~ year, data = pisa)\nabline(fit, col = \"red\", lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\nGalaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
   },
   {
     "objectID": "lectures/01-lecture.html#history-of-regression",
@@ -117,6 +117,13 @@
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "",
     "text": "Response variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-leaning-tower-of-pisa-1",
+    "href": "lectures/01-lecture.html#example-leaning-tower-of-pisa-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Code\n# Pisa tower data\npisa &lt;- data.frame(\n  obs  = 1:13,\n  year = 75:87,\n  lean = c(642, 644, 656, 667, 673, 688, \n           696, 698, 713, 717, 725, 742, 757)\n)\n\n# Scatter plot with regression line\nplot(pisa$year, pisa$lean,\n     pch = 19, col = \"blue\",\n     xlab = \"Year (19xx)\",\n     ylab = \"Lean (mm)\",\n     main = \"Leaning of the Pisa Tower Over Time\")\n\n# Add regression line\nfit &lt;- lm(lean ~ year, data = pisa)\nabline(fit, col = \"red\", lwd = 2)"
   },
   {
     "objectID": "lectures/01-lecture.html#example-hubbles-law-1929",
@@ -172,7 +179,7 @@
     "href": "lectures/01-lecture.html#implications-of-assumptions-b",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "2.7 Implications of Assumptions (b)",
-    "text": "2.7 Implications of Assumptions (b)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the basic assumptions (b), we have\n\n\\(y_i \\sim N(\\beta_0 + \\beta_1 x_i, \\sigma^2)\\)\n\\(y_1, \\cdots, y_n\\) are independent {width=“300”,} fig-align=“center”}"
+    "text": "2.7 Implications of Assumptions (b)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the assumptions (b), we have\n\n\\(y_i \\sim N(\\beta_0 + \\beta_1 x_i, \\sigma^2)\\)\n\\(y_1, \\cdots, y_n\\) are independent"
   },
   {
     "objectID": "lectures/01-lecture.html#estimate-coefficients",
@@ -270,14 +277,14 @@
     "href": "lectures/01-lecture.html#example-battery-data-1",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "6.2 Example: Battery data",
-    "text": "6.2 Example: Battery data\nScatter plot:"
+    "text": "6.2 Example: Battery data\nScatter plot:\n\n\nCode\nbattery=read.csv(\"../data/battery.csv\")\n#names(battery)\n#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")"
   },
   {
     "objectID": "lectures/01-lecture.html#example-battery-data-2",
     "href": "lectures/01-lecture.html#example-battery-data-2",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "6.3 Example: Battery data",
-    "text": "6.3 Example: Battery data\n\nFit a linear regression"
+    "text": "6.3 Example: Battery data\n\nFit a linear regression\n\n\n\nCode\nfit &lt;- lm(log10(cycleLife) ~ log10(DeltaQvar), data = battery)\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")\nabline(fit, col=\"red\", lwd=2)"
   },
   {
     "objectID": "lectures/01-lecture.html#example-battery-data-3",
@@ -291,7 +298,7 @@
     "href": "lectures/01-lecture.html#example-battery-data-4",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "6.5 Example: Battery data",
-    "text": "6.5 Example: Battery data\nDo the calculations ``manually’’:\n\nsufficient statistics:\n\n\n\n[1] 41\n\n\n[1] -149.953\n\n\n[1] 115.0934\n\n\n[1] 554.024\n\n\n[1] 324.0225\n\n\n[1] -423.0244\n\n\n[1] -3.65739\n\n\n[1] 2.807155\n\n\n[1] 5.587388\n\n\n[1] 0.9375112\n\n\n[1] -2.083033\n\n\n[1] -0.3728098\n\n\n[1] 1.443645\n\n\n[1] 0.00412657"
+    "text": "6.5 Example: Battery data\nDo the calculations ``manually’’:\n\nsufficient statistics:\n\n\n\nCode\nn = nrow(battery)\nsum_x = sum(log10(battery$DeltaQvar))\nsum_y = sum(log10(battery$cycleLife))\nsum_x2 = sum(log10(battery$DeltaQvar)^2)\nsum_y2 = sum(log10(battery$cycleLife)^2)\nsum_xy = sum(log10(battery$DeltaQvar)*log10(battery$cycleLife))\nn; sum_x; sum_y; sum_x2; sum_y2; sum_xy\n\n\n[1] 41\n\n\n[1] -149.953\n\n\n[1] 115.0934\n\n\n[1] 554.024\n\n\n[1] 324.0225\n\n\n[1] -423.0244\n\n\nCode\nmean_x = sum_x/n\nmean_y = sum_y/n\nmean_x; mean_y\n\n\n[1] -3.65739\n\n\n[1] 2.807155\n\n\nCode\nS_xx = sum_x2 - n*mean_x^2\nS_yy = sum_y2 - n*mean_y^2\nS_xy = sum_xy - n*mean_x*mean_y\nS_xx; S_yy; S_xy\n\n\n[1] 5.587388\n\n\n[1] 0.9375112\n\n\n[1] -2.083033\n\n\nCode\nb1_hat = S_xy/S_xx\nb0_hat = mean_y - b1_hat*mean_x\nb1_hat; b0_hat\n\n\n[1] -0.3728098\n\n\n[1] 1.443645\n\n\nCode\nSSE = S_yy - b1_hat*S_xy\nsigma2_hat = SSE/(n-2)\nsigma2_hat\n\n\n[1] 0.00412657"
   },
   {
     "objectID": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",

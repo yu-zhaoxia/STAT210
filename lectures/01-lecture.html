@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -245,7 +279,11 @@ window.Quarto = {
 <li>Provided one of the earliest scatterplots with a fitted line.</li>
 </ul>
 <div style="text-align: center;">
-<p><img src="../images/clipboard-1040535992.png" class="img-fluid" style="width:70.0%"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/clipboard-1040535992.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
 </div>
 </section>
 <section id="regression-to-the-mean" class="level2" data-number="1.3">
@@ -254,7 +292,11 @@ window.Quarto = {
 <li>Galton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.</li>
 <li>This phenomenon is now known as “regression to the mean”. <!-- calculations related to these probabilities can be done by cdf of mvn --></li>
 </ul>
-<p><img src="../images/clipboard-1040535992.png" class="img-fluid" style="width:70.0%"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/clipboard-1040535992.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
 </section>
 <section id="after-galton" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="after-galton"><span class="header-section-number">1.4</span> After Galton</h2>
@@ -291,11 +333,36 @@ window.Quarto = {
 <li>Response variable: Lean of the tower (in mm)</li>
 <li>Predictor variable: Year (19xx)</li>
 </ul>
-<p><img src="../images/clipboard-1200793949.png" class="img-fluid" style="width:70.0%"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/clipboard-1200793949.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
 </section>
 <section id="example-leaning-tower-of-pisa-1" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="example-leaning-tower-of-pisa-1"><span class="header-section-number">1.7</span> Example: Leaning tower of Pisa</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Pisa tower data</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>pisa <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="at">obs  =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>,</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="at">year =</span> <span class="dv">75</span><span class="sc">:</span><span class="dv">87</span>,</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="at">lean =</span> <span class="fu">c</span>(<span class="dv">642</span>, <span class="dv">644</span>, <span class="dv">656</span>, <span class="dv">667</span>, <span class="dv">673</span>, <span class="dv">688</span>, </span>
+<span id="cb1-6"><a href="#cb1-6"></a>           <span class="dv">696</span>, <span class="dv">698</span>, <span class="dv">713</span>, <span class="dv">717</span>, <span class="dv">725</span>, <span class="dv">742</span>, <span class="dv">757</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Scatter plot with regression line</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">plot</span>(pisa<span class="sc">$</span>year, pisa<span class="sc">$</span>lean,</span>
+<span id="cb1-11"><a href="#cb1-11"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12"></a>     <span class="at">xlab =</span> <span class="st">"Year (19xx)"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13"></a>     <span class="at">ylab =</span> <span class="st">"Lean (mm)"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14"></a>     <span class="at">main =</span> <span class="st">"Leaning of the Pisa Tower Over Time"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># Add regression line</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(lean <span class="sc">~</span> year, <span class="at">data =</span> pisa)</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -311,7 +378,11 @@ window.Quarto = {
 <li>Galaxies are moving away from us</li>
 <li>the farther away a galaxy is, the faster it is moving away</li>
 </ul>
-<p><img src="../images/clipboard-3377173718.png" class="img-fluid" style="width:70.0%"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/clipboard-3377173718.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
 </section>
 </section>
 <section id="slr" class="level1" data-number="2">
@@ -383,12 +454,17 @@ window.Quarto = {
 <h2 data-number="2.7" class="anchored" data-anchor-id="implications-of-assumptions-b"><span class="header-section-number">2.7</span> Implications of Assumptions (b)</h2>
 <p>Regression Model: <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \epsilon_i, \quad i=1, \cdots, n\)</span></p>
 <ul>
-<li>For a given <span class="math inline">\(x_i\)</span>, under the basic assumptions (b), we have
+<li>For a given <span class="math inline">\(x_i\)</span>, under the assumptions (b), we have
 <ul>
 <li><span class="math inline">\(y_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)\)</span></li>
-<li><span class="math inline">\(y_1, \cdots, y_n\)</span> are independent <img src="images/clipboard-1005134660.png" class="img-fluid">{width=“300”,} fig-align=“center”}</li>
+<li><span class="math inline">\(y_1, \cdots, y_n\)</span> are independent</li>
 </ul></li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/clipboard-1005134660.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 </section>
 </section>
 <section id="estimate-beta_0-beta_1" class="level1" data-number="3">
@@ -508,6 +584,17 @@ Source: <a href="https://www.mathworks.com/help/predmaint/ug/predict-remaining-c
 <h2 data-number="6.2" class="anchored" data-anchor-id="example-battery-data-1"><span class="header-section-number">6.2</span> Example: Battery data</h2>
 <p>Scatter plot:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>battery<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/battery.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#names(battery)</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">plot</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>DeltaQvar), <span class="fu">log10</span>(battery<span class="sc">$</span>cycleLife),</span>
+<span id="cb2-5"><a href="#cb2-5"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>     <span class="at">xlab=</span><span class="st">"log10(DeltaQvar)"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>     <span class="at">ylab=</span><span class="st">"log10(cycleLife)"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8"></a>     <span class="at">main=</span><span class="st">"Battery Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -523,6 +610,16 @@ Source: <a href="https://www.mathworks.com/help/predmaint/ug/predict-remaining-c
 <li>Fit a linear regression</li>
 </ul>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(cycleLife) <span class="sc">~</span> <span class="fu">log10</span>(DeltaQvar), <span class="at">data =</span> battery)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">plot</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>DeltaQvar), <span class="fu">log10</span>(battery<span class="sc">$</span>cycleLife),</span>
+<span id="cb3-3"><a href="#cb3-3"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>     <span class="at">xlab=</span><span class="st">"log10(DeltaQvar)"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>     <span class="at">ylab=</span><span class="st">"log10(cycleLife)"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>     <span class="at">main=</span><span class="st">"Battery Data"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">abline</span>(fit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -584,6 +681,16 @@ Source: <a href="https://www.mathworks.com/help/predmaint/ug/predict-remaining-c
 <li>sufficient statistics:</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(battery)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>sum_x <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>DeltaQvar))</span>
+<span id="cb4-3"><a href="#cb4-3"></a>sum_y <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>cycleLife))</span>
+<span id="cb4-4"><a href="#cb4-4"></a>sum_x2 <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>DeltaQvar)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>sum_y2 <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>cycleLife)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>sum_xy <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>DeltaQvar)<span class="sc">*</span><span class="fu">log10</span>(battery<span class="sc">$</span>cycleLife))</span>
+<span id="cb4-7"><a href="#cb4-7"></a>n; sum_x; sum_y; sum_x2; sum_y2; sum_xy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 41</code></pre>
 </div>
@@ -602,12 +709,25 @@ Source: <a href="https://www.mathworks.com/help/predmaint/ug/predict-remaining-c
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -423.0244</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>mean_x <span class="ot">=</span> sum_x<span class="sc">/</span>n</span>
+<span id="cb11-2"><a href="#cb11-2"></a>mean_y <span class="ot">=</span> sum_y<span class="sc">/</span>n</span>
+<span id="cb11-3"><a href="#cb11-3"></a>mean_x; mean_y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -3.65739</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.807155</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>S_xx <span class="ot">=</span> sum_x2 <span class="sc">-</span> n<span class="sc">*</span>mean_x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>S_yy <span class="ot">=</span> sum_y2 <span class="sc">-</span> n<span class="sc">*</span>mean_y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>S_xy <span class="ot">=</span> sum_xy <span class="sc">-</span> n<span class="sc">*</span>mean_x<span class="sc">*</span>mean_y</span>
+<span id="cb14-4"><a href="#cb14-4"></a>S_xx; S_yy; S_xy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.587388</code></pre>
 </div>
@@ -617,12 +737,24 @@ Source: <a href="https://www.mathworks.com/help/predmaint/ug/predict-remaining-c
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -2.083033</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>b1_hat <span class="ot">=</span> S_xy<span class="sc">/</span>S_xx</span>
+<span id="cb18-2"><a href="#cb18-2"></a>b0_hat <span class="ot">=</span> mean_y <span class="sc">-</span> b1_hat<span class="sc">*</span>mean_x</span>
+<span id="cb18-3"><a href="#cb18-3"></a>b1_hat; b0_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.3728098</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.443645</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>SSE <span class="ot">=</span> S_yy <span class="sc">-</span> b1_hat<span class="sc">*</span>S_xy</span>
+<span id="cb21-2"><a href="#cb21-2"></a>sigma2_hat <span class="ot">=</span> SSE<span class="sc">/</span>(n<span class="dv">-2</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>sigma2_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.00412657</code></pre>
 </div>
