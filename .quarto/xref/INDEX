@@ -4,5 +4,14 @@
   },
   "about.qmd": {
     "about.html": "08d35c02"
+  },
+  "assignments/index.qmd": {
+    "index.html": "01f6d5b8"
+  },
+  "exams/index.qmd": {
+    "index.html": "e1180619"
+  },
+  "lectures/index.qmd": {
+    "index.html": "3b49f3af"
   }
 }

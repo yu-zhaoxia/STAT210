@@ -1,6 +1,10 @@
 {
-    "path": "C:/Users/yu790/Desktop/Desktop/Teaching210_2026/STAT210",
+    "path": "C:/Users/yu790/Desktop/Desktop/Teaching210_2026/STAT210/lectures",
     "sortOrder": [
+        {
+            "columnIndex": 4,
+            "ascending": false
+        },
         {
             "columnIndex": 2,
             "ascending": true

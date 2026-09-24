@@ -1,0 +1,6 @@
+---
+title: "Exams"
+---
+
+-   Midterm (00, Nov 00, 9:30-10:50am)
+-   Final (Thu, Dec 10, 8:00-10:00am)

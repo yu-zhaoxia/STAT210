@@ -1,0 +1,16 @@
+body {
+  counter-reset: section -1;
+}
+
+h1 {
+  counter-reset: h2counter;
+}
+
+h2::before {
+  counter-increment: h2counter;
+  content: counter(h2counter) " ";
+}
+
+h2:first-of-type::before {
+  counter-reset: h2counter -1;
+}
