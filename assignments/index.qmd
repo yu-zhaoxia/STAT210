@@ -3,3 +3,4 @@ title: "Assignments"
 ---
 
 
+- [STAT210 Assignment 1: Due on xxxday, October 00, 2026](assignment1.qmd)

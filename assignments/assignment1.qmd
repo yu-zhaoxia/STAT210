@@ -1,0 +1,146 @@
+---
+title: "STAT200C Assignment 1"
+author: "Zhaoxia Yu"
+format:
+  html:
+    toc: true
+    number-sections: false
+execute:
+  echo: false
+---
+
+## 1.
+
+A subset of observations were randomly selected from the `cars` dataset. There are two variables: `speed` (numeric speed in mph) and `dist` (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.
+
+```{r}
+set.seed(123)
+cars_sub = cars[sample(1:50, 40, replace = FALSE), ]
+lm <- lm(dist ~ speed, data = cars_sub)
+summary(lm)
+```
+
+Based on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.
+
+**a)** What is the sample size $n$?
+
+**b)** What is the value of $s^2$, the estimate of the error variance $\sigma^2$? What is $SSE$?
+
+**c)** Based on the standard error of $\hat{\beta}_1$, and other information you have found in a) and b), find the value of $S_{xx}$. Then find the value of $SSR$ (sum of squares of regression).
+
+**d)** Find the value of $SST$ (total sum of squares).
+
+**e)** In general, although we cannot find $\bar{x}$ from the summary data, we can find $\bar{x}^2$. For this problem, because distance is greater than zero, we can find $\bar{x}$. Find its value, then the value of $\bar{y}$.
+
+**f)** Find a 95% confidence interval for $E[y \mid x=20]$.
+
+**g)** Find a 95% prediction interval for a new observation when $x=20$.
+
+\newpage
+
+## 2.
+
+In one simple linear regression model, we have sample size $n=10$, $\bar{x}=1.03$, $\bar{y}=2.51$,
+
+$$
+\sum_{i=1}^{n} x_i^{2}=20.37,\qquad
+\sum_{i=1}^{n} y_i^{2}=116.56,\qquad
+\sum_{i=1}^{n} x_i y_i=46.85.
+$$
+
+**a)** Find the values of the least squares estimators: $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+**b)** Calculate $\mathrm{SST}$, $\mathrm{SSR}$, and $\mathrm{SSE}$.
+
+**c)** Calculate the sample estimate of the variance $\sigma^{2}$ for the regression model.
+
+**d)** What is the value of $R^{2}$ here?
+
+*Hint.* The following formulae may be useful (can be used without proof):
+
+$$
+\sum (x_i-\bar{x})^2
+=
+\sum x_i^2-n\bar{x}^{\,2},
+$$
+
+$$
+\sum (x_i-\bar{x})(y_i-\bar{y})
+=
+\sum x_i y_i-n\bar{x}\,\bar{y}.
+$$
+
+\vspace{0.5cm}
+
+## 3.
+
+Consider the simple linear regression model
+
+$$
+y_i=\beta_0+\beta_1x_i+\varepsilon_i,\qquad i=1,\ldots,n,
+$$
+
+where we assume:
+
+- $\mathbb{E}(\varepsilon_i)=0,\ \forall i$;
+- $\operatorname{Var}(\varepsilon_i)=\sigma^2,\ \forall i$;
+- $\operatorname{Cov}(\varepsilon_i,\varepsilon_j)=0,\ \forall i,j\text{ with }i\neq j$.
+
+**For the following questions, prove or verify the results. You can choose either one of the two ways:**
+
+1. **Prove:** You can prove them mathematically.
+
+2. **Verify:** You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.
+
+### a)
+
+For the least squares estimators $\hat{\beta}_0$ and $\hat{\beta}_1$, the following hold.
+
+$$
+\text{i.}\quad
+\hat{\beta}_1
+=
+\frac{\sum_{i=1}^{n}(y_i-\bar{y})(x_i-\bar{x})}
+{\sum_{i=1}^{n}(x_i-\bar{x})^2},
+$$
+
+$$
+\text{ii.}\quad
+\hat{\beta}_1
+=
+\frac{\sum_{i=1}^{n}y_i\,(x_i-\bar{x})}
+{\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+$$
+
+<!--
+$$
+\text{iii.}\quad
+\operatorname{Cov}\!\big(\hat{\beta}_{0},\hat{\beta}_{1}\big)
+=
+-\frac{\sigma^{2}\sum_{i=1}^{n}x_i}
+{n\sum_{i=1}^{n}(x_i-\bar{x})^2}
+=
+-\frac{\bar{x}\sigma^{2}}
+{\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+$$
+-->
+
+### b)
+
+Let the residuals be
+
+$$
+e_i=y_i-\hat{\beta}_0-\hat{\beta}_1x_i.
+$$
+
+The following holds:
+
+$$
+0
+=
+\sum_{i=1}^{n}x_i e_i
+=
+\sum_{i=1}^{n}e_i
+=
+\sum_{i=1}^{n}\hat{y}_i e_i.
+$$
