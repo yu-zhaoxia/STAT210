@@ -4,6 +4,10 @@ format:
   html:
     toc: true
     number-sections: true
+    code-line-numbers: true
+    echo: true
+    code-fold: true
+    fig-align: center
 lang: en
 ---
 
@@ -37,7 +41,7 @@ library(MASS)
 -   Provided one of the earliest scatterplots with a fitted line.
 
 ::: {style="text-align: center;"}
-![](../images/clipboard-1040535992.png){width=70%}
+![](../images/clipboard-1040535992.png){fig-align="center" width=70%}
 :::
 
 ## Regression to the mean
@@ -47,7 +51,7 @@ library(MASS)
 -   This phenomenon is now known as "regression to the mean".
     <!-- calculations related to these probabilities can be done by cdf of mvn -->
 
-![](../images/clipboard-1040535992.png){width=70%}
+![](../images/clipboard-1040535992.png){fig-align="center" width=70%}
 
 ## After Galton
 
@@ -76,12 +80,12 @@ library(MASS)
 -   Predictor variable: Year (19xx)
 
 
-![](../images/clipboard-1200793949.png){width=70%}
+![](../images/clipboard-1200793949.png){fig-align="center" width=70%}
 
 
 ## Example: Leaning tower of Pisa
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # Pisa tower data
 pisa <- data.frame(
   obs  = 1:13,
@@ -108,7 +112,7 @@ abline(fit, col = "red", lwd = 2)
 -   the farther away a galaxy is, the faster it is moving away
 
 
-![](../images/clipboard-3377173718.png){width=70%}
+![](../images/clipboard-3377173718.png){fig-align="center" width=70%}
 
 
 # SLR
@@ -184,11 +188,12 @@ $y_i = \beta_0 + \beta_1 x_i + \epsilon_i, \quad i=1, \cdots, n$
 Regression Model:
 $y_i = \beta_0 + \beta_1 x_i + \epsilon_i, \quad i=1, \cdots, n$
 
--   For a given $x_i$, under the basic assumptions (b), we have
+-   For a given $x_i$, under the  assumptions (b), we have
     -   $y_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)$
     -   $y_1, \cdots, y_n$ are independent
-        ![](images/clipboard-1005134660.png){width="300",}
-        fig-align="center"}
+    
+![](../images/clipboard-1005134660.png){fig-align="center" width=80%}
+
 
 # Estimate $\beta_0, \beta_1$
 
@@ -343,7 +348,7 @@ Toolbox](https://www.mathworks.com/help/predmaint/ug/predict-remaining-cycle-lif
 
 Scatter plot:
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', out.width='0.8\\linewidth'}
+```{r, message=FALSE, warning=FALSE, fig.align='center', out.width='0.8\\linewidth'}
 battery=read.csv("../data/battery.csv")
 #names(battery)
 #draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale
@@ -358,7 +363,7 @@ plot(log10(battery$DeltaQvar), log10(battery$cycleLife),
 
 -   Fit a linear regression
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', out.width='0.8\\linewidth'}
+```{r, message=FALSE, warning=FALSE, fig.align='center', out.width='0.8\\linewidth'}
 fit <- lm(log10(cycleLife) ~ log10(DeltaQvar), data = battery)
 plot(log10(battery$DeltaQvar), log10(battery$cycleLife),
      pch=19, col="blue",
@@ -387,7 +392,7 @@ Do the calculations ``manually'':
 
 -   sufficient statistics:
 
-```{r, echo=FALSE}
+```{r}
 n = nrow(battery)
 sum_x = sum(log10(battery$DeltaQvar))
 sum_y = sum(log10(battery$cycleLife))
