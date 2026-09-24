@@ -1,5 +1,6 @@
 ---
-title: "index"
+title: "Lecture Notes"
 format: html
 ---
 
+- [1 — Simple Linear Regression](01-lecture.qmd); [pdf](STAT210_Lec01.pdf)
