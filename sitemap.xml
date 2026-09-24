@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yu-zhaoxia.github.io/STAT210/lectures/index.html</loc>
-    <lastmod>2026-09-24T05:12:15.686Z</lastmod>
+    <lastmod>2026-09-24T07:02:56.329Z</lastmod>
   </url>
   <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/exams/index.html</loc>
-    <lastmod>2026-09-24T05:12:15.682Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/assignments/assignment1.html</loc>
-    <lastmod>2026-09-24T05:47:02.290Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/about.html</loc>
-    <lastmod>2026-09-24T05:12:15.680Z</lastmod>
+    <loc>https://yu-zhaoxia.github.io/STAT210/index.html</loc>
+    <lastmod>2026-09-24T05:12:15.683Z</lastmod>
   </url>
   <url>
     <loc>https://yu-zhaoxia.github.io/STAT210/assignments/index.html</loc>
     <lastmod>2026-09-24T05:51:14.358Z</lastmod>
   </url>
   <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/index.html</loc>
-    <lastmod>2026-09-24T05:12:15.683Z</lastmod>
+    <loc>https://yu-zhaoxia.github.io/STAT210/about.html</loc>
+    <lastmod>2026-09-24T05:12:15.680Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/assignments/assignment1.html</loc>
+    <lastmod>2026-09-24T05:47:02.290Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/exams/index.html</loc>
+    <lastmod>2026-09-24T05:12:15.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/lectures/01-lecture.html</loc>
+    <lastmod>2026-09-24T06:49:57.794Z</lastmod>
   </url>
 </urlset>

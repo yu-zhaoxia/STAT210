@@ -1,10 +1,38 @@
 [
   {
-    "objectID": "exams/index.html",
-    "href": "exams/index.html",
-    "title": "Exams",
+    "objectID": "lectures/index.html",
+    "href": "lectures/index.html",
+    "title": "Lecture Notes",
     "section": "",
-    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
+    "text": "1 — Simple Linear Regression; pdf"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "HomePage",
+    "section": "",
+    "text": "Welcome to the STAT210C course website."
+  },
+  {
+    "objectID": "index.html#course-materials",
+    "href": "index.html#course-materials",
+    "title": "HomePage",
+    "section": "Course materials",
+    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
+  },
+  {
+    "objectID": "assignments/index.html",
+    "href": "assignments/index.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "STAT210 Assignment 1: Due on xxxday, October 00, 2026"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "assignments/assignment1.html",
@@ -35,31 +63,255 @@
     "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "exams/index.html",
+    "href": "exams/index.html",
+    "title": "Exams",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
   },
   {
-    "objectID": "assignments/index.html",
-    "href": "assignments/index.html",
-    "title": "Assignments",
+    "objectID": "lectures/01-lecture.html",
+    "href": "lectures/01-lecture.html",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "",
-    "text": "STAT210 Assignment 1: Due on xxxday, October 00, 2026"
+    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”\n\n\n\n\n\nGalton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line.\n\n\n\n\n\n\n\n\nGalton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”. \n\n\n\n\n\n\n1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests\n\n\n\n\n\nFoundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences\n\n\n\n\n\n\nResponse variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGalaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "HomePage",
+    "objectID": "lectures/01-lecture.html#history-of-regression",
+    "href": "lectures/01-lecture.html#history-of-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "",
-    "text": "Welcome to the STAT210C course website."
+    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”"
   },
   {
-    "objectID": "index.html#course-materials",
-    "href": "index.html#course-materials",
-    "title": "HomePage",
-    "section": "Course materials",
-    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
+    "objectID": "lectures/01-lecture.html#regression-towards-mediocrity",
+    "href": "lectures/01-lecture.html#regression-towards-mediocrity",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Galton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#regression-to-the-mean",
+    "href": "lectures/01-lecture.html#regression-to-the-mean",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Galton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#after-galton",
+    "href": "lectures/01-lecture.html#after-galton",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#why-do-we-still-need-to-learn-linear-regression",
+    "href": "lectures/01-lecture.html#why-do-we-still-need-to-learn-linear-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Foundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-leaning-tower-of-pisa",
+    "href": "lectures/01-lecture.html#example-leaning-tower-of-pisa",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Response variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-hubbles-law-1929",
+    "href": "lectures/01-lecture.html#example-hubbles-law-1929",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Galaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#simple-linear-regression",
+    "href": "lectures/01-lecture.html#simple-linear-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.1 Simple Linear Regression",
+    "text": "2.1 Simple Linear Regression\n\nIn a Simple Linear Regression Model, a single predictor (independent/explanatory variable) is used to predict a response/dependent variable"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#simple-linear-regression-1",
+    "href": "lectures/01-lecture.html#simple-linear-regression-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.2 Simple Linear Regression",
+    "text": "2.2 Simple Linear Regression\n\nA simple linear regression line describes a linear relationship between __ and __: \\[E(y|x) = \\beta_0 + \\beta_1 x\\]\nThe simple linear regression model \\[y=\\beta_0 + \\beta_1 x + \\epsilon\\] where \\(\\epsilon\\) is random error."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#notation",
+    "href": "lectures/01-lecture.html#notation",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.3 Notation",
+    "text": "2.3 Notation\n\nFor the individual \\(i\\): \\[y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\]\n\\(\\beta_0, \\beta_1\\): regression coefficients (uknown parameters)\n\n\\(\\beta_0\\): intercept\n\\(\\beta_1\\): slop\n\n\\(y_i\\): observed response value of individual \\(i\\)\n\\(x_i\\): observed predictor value of individual \\(i\\)\n\\(\\epsilon_i\\): random error of individual \\(i\\)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#assumptions-basic-a",
+    "href": "lectures/01-lecture.html#assumptions-basic-a",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.4 Assumptions: Basic (a)",
+    "text": "2.4 Assumptions: Basic (a)\n\nBasic assumptions\n\nLinearity: The relationship between the predictor and the mean of the response is linear. \\[E(y_i|x) = \\beta_0 + \\beta_1 x_i\\] Equivalently,, \\[E(\\epsilon)=0\\]\nUncorrelated errors: The errors are uncorrelated. \\[Cov(\\epsilon_i, \\epsilon_j)=0, \\quad i\\neq j\\]\nHomoscedasticity: The errors have constant variance at all levels of the predictor. \\[Var(\\epsilon_i)=\\sigma^2, i=1, \\cdots, n\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#assumptions-stronger-b",
+    "href": "lectures/01-lecture.html#assumptions-stronger-b",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.5 Assumptions: Stronger (b)",
+    "text": "2.5 Assumptions: Stronger (b)\n\nStronger assumptions\n\nLinearity\nIndependence: The errors are independent.\nNormality: The errors are normally distributed.\n\nThe above assumptions are equivalent to \\[\\epsilon_1, \\cdots, \\epsilon_n \\overset{iid} \\sim N(0, \\sigma^2)\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#implications-of-assumptions-a",
+    "href": "lectures/01-lecture.html#implications-of-assumptions-a",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.6 Implications of Assumptions (a)",
+    "text": "2.6 Implications of Assumptions (a)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the basic assumptions (a) or (b), we have\n\n\\(y_i\\) is a random variable\n\\(E(y_i|x_i) = \\beta_0 + \\beta_1 x_i\\)\n\\(Var(y_i|x_i) = \\sigma^2\\)\n\\(Cov(y_i, y_j|x_i, x_j)=0, i\\neq j\\),"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#implications-of-assumptions-b",
+    "href": "lectures/01-lecture.html#implications-of-assumptions-b",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.7 Implications of Assumptions (b)",
+    "text": "2.7 Implications of Assumptions (b)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the basic assumptions (b), we have\n\n\\(y_i \\sim N(\\beta_0 + \\beta_1 x_i, \\sigma^2)\\)\n\\(y_1, \\cdots, y_n\\) are independent {width=“300”,} fig-align=“center”}"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#estimate-coefficients",
+    "href": "lectures/01-lecture.html#estimate-coefficients",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.1 Estimate coefficients",
+    "text": "3.1 Estimate coefficients\n\nPredicted / Fitted values \\(\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_i\\).\nObserved errors (residuals) \\(e_i = y_i - \\hat{y}_i = y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i\\).\nSum of Squared Errors (SSE), also known as Residual Sum of Squares (RSS): \\[RSS = SSE= \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2=\\sum_{i=1}^n (y_i - \\hat\\beta_0 - \\hat\\beta_1 x_i)^2\\]\nThe Least Squares Estimation (LSE) criterion chooses \\(\\hat{\\beta}_0, \\hat{\\beta}_1\\) that minimizes RSS (SSE)."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#normal-equations",
+    "href": "lectures/01-lecture.html#normal-equations",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.2 Normal Equations",
+    "text": "3.2 Normal Equations\n\nThe normal equations are obtained by setting the partial derivatives of RSS with respect to \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to zero: \\[\\frac{\\partial RSS}{\\partial \\hat{\\beta}_0} = -2 \\sum_{i=1}^n (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i) = 0\\] \\[\\frac{\\partial RSS}{\\partial \\hat{\\beta}_1} = -2 \\sum_{i=1}^n x_i (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i) = 0\\]\nSolving these equations gives the least squares estimates."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#least-squares-estimates",
+    "href": "lectures/01-lecture.html#least-squares-estimates",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.3 Least Squares Estimates",
+    "text": "3.3 Least Squares Estimates\n\nThe least squares estimates for the coefficients are: \\[\\hat{\\beta}_1 = \\frac{\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\sum_{i=1}^n (x_i - \\bar{x})^2}\\] \\[\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\] where \\(\\bar{x} = \\frac{1}{n} \\sum_{i=1}^n x_i\\) and \\(\\bar{y} = \\frac{1}{n} \\sum_{i=1}^n y_i\\) are the sample means of \\(x\\) and \\(y\\), respectively.\n\n\\(\\hat\\beta_0, \\hat\\beta_1\\) are called least squares estimators."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#sum-of-squares-in-simple-linear-regression",
+    "href": "lectures/01-lecture.html#sum-of-squares-in-simple-linear-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.4 Sum of Squares in Simple Linear Regression",
+    "text": "3.4 Sum of Squares in Simple Linear Regression\n\n\\(S_{yy}=\\sum_{i=1}^n (y_i - \\bar{y})^2\\), total sum of Squares of \\(y\\)\n\\(S_{xx}=\\sum_{i=1}^n (x_i - \\bar{x})^2\\), total sum of Squares of \\(x\\)\n\\(S_{xy}=\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})\\), covariance sum of Squares.\n\nThe least squares estimates can be expressed as: \\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\quad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\] It can be shown that \\(SSE=S_{yy} - \\hat\\beta_1 S_{xy} = S_{yy} - \\frac{S_{xy}^2}{S_{xx}}\\)."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#properties-of-fitted-values-and-residuals",
+    "href": "lectures/01-lecture.html#properties-of-fitted-values-and-residuals",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.5 Properties of Fitted Values and Residuals",
+    "text": "3.5 Properties of Fitted Values and Residuals\n\nThe sum of the residuals is zero: \\(\\sum_{i=1}^n e_i = 0\\).\nThe least squares regression line passes through the point \\((\\bar{x}, \\bar{y})\\) because \\(\\hat\\beta_0 + \\hat\\beta_1 \\bar x = \\bar y\\) (by the normal equation).\nThe sum of the observed values = the sum of the fitted values: \\[\\sum_{i=1}^n y_i = \\sum_{i=1}^n \\hat{y}_i\\]\nThe sum of the residuals weighted by the predictor values or predicted values is zero: \\[\\sum_{i=1}^n x_i e_i = 0, \\sum_{i=1}^n \\hat{y}_i e_i  = 0\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#estimate-sigma2",
+    "href": "lectures/01-lecture.html#estimate-sigma2",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "4.1 Estimate \\(\\sigma^2\\)",
+    "text": "4.1 Estimate \\(\\sigma^2\\)\n\nAn intuitive estimate of \\(\\sigma^2\\) might be: \\[s^2 = \\frac{1}{n} \\sum_{i=1}^n e_i^2 = \\frac{SSE}{n}\\]\nHowever, this estimate is biased because the residuals \\(e_i\\) are not independent and have less variability than the true errors \\(\\epsilon_i\\).\nAn unbiased estimate of \\(\\sigma^2\\) is: \\[s^2 = \\frac{1}{n-2} \\sum_{i=1}^n e_i^2 = \\frac{SSE}{n-2}=MSE\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#sum-of-squares-decomposition",
+    "href": "lectures/01-lecture.html#sum-of-squares-decomposition",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.1 Sum of Squares Decomposition",
+    "text": "5.1 Sum of Squares Decomposition\n\nTotal Sum of Squares (SST): \\[SST = \\sum_{i=1}^n (y_i - \\bar{y})^2\\]\nRegression Sum of Squares (SSR): \\[SSR = \\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2\\] The variation explained by the predictor (regression model).\nError Sum of Squares (SSE): \\[SSE = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#sums-of-squares",
+    "href": "lectures/01-lecture.html#sums-of-squares",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.2 Sums of Squares",
+    "text": "5.2 Sums of Squares\n\nIt can be shown that: \\[SST = SSR + SSE\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#coefficient-of-determination-r2",
+    "href": "lectures/01-lecture.html#coefficient-of-determination-r2",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.3 Coefficient of Determination \\(R^2\\)",
+    "text": "5.3 Coefficient of Determination \\(R^2\\)\n\nThe coefficient of determination \\(R^2\\) is defined as: \\[R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}\\]\n\\(R^2\\) represents the proportion of variance in the response variable that is explained by the predictor variable."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#correlation",
+    "href": "lectures/01-lecture.html#correlation",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.4 Correlation",
+    "text": "5.4 Correlation\n\nThe correlation coefficient, \\(\\rho\\), provides a measure of the strength and direction of a linear relationship between two variables, \\(x\\) and \\(y\\).\nThe sample correlation coefficient \\(r\\) between \\(x\\) and \\(y\\) is given by: \\[r = \\frac{\\sum_{i=1}^n (x_i - \\bar x)(y_i -\\bar y)}{\\sqrt{\\sum_{i=1}^n (x_i-\\bar x)^2 \\sum_{i=1}^n (y_i - \\bar y)^2}} =\\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}}\\]\nIt can be shown that in simple linear regression, the coefficient of determination \\(R^2\\) is equal to the square of the sample correlation coefficient \\(r\\):"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#summary",
+    "href": "lectures/01-lecture.html#summary",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.5 Summary",
+    "text": "5.5 Summary\n\nLSE of \\(\\beta_0, \\beta_1\\): \\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\quad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\]\nVariance estimate: \\[s^2 = \\frac{SSE}{n-2}= \\frac{1}{n-2} (S_{yy}- \\frac{S_{xy}^2}{S_{xx}})\\]\nCoefficient of determination: \\[R^2 = \\frac{SSR}{SST} = \\frac{SST-SSE}{SST} = \\frac{S_{xy}^2}{S_{xx} S_{yy}} = r^2\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#useful-formulas",
+    "href": "lectures/01-lecture.html#useful-formulas",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.6 Useful Formulas",
+    "text": "5.6 Useful Formulas\n\nUseful formulas for calculating \\(S_{XX}, S_{YY}, S_{XY}\\): \\[\\sum_{i=1}^n (x_i - \\bar x)^2 = \\sum_{i=1}^n x_i^2 - n \\bar x^2\\] \\[\\sum_{i=1}^n (y_i - \\bar y)^2 = \\sum_{i=1}^n y_i^2 - n \\bar y^2\\] \\[\\sum_{i=1}^n (x_i - \\bar x)(y_i - \\bar y) = \\sum_{i=1}^n x_i y_i - n \\bar x \\bar y\\]\nSufficient statistics for conducting regression analysis : \\(n, \\sum x_i, \\sum y_i, \\sum x_i^2, \\sum y_i^2, \\sum x_i y_i\\)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data",
+    "href": "lectures/01-lecture.html#example-battery-data",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.1 Example: Battery data",
+    "text": "6.1 Example: Battery data\nBackground: Predicting cycle life of lithium-ion batteries from initial cycles\nSource: MathWorks Predictive Maintenance Toolbox\n\n\\(x\\): difference in discharge capacity as a function of voltage between 100th and 10th cycle\n\\(y\\): cycle life (number of cycles until the battery capacity falls below 80% of its initial capacity)\nlog10 both variables to get a linear relationship"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-1",
+    "href": "lectures/01-lecture.html#example-battery-data-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.2 Example: Battery data",
+    "text": "6.2 Example: Battery data\nScatter plot:"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-2",
+    "href": "lectures/01-lecture.html#example-battery-data-2",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.3 Example: Battery data",
+    "text": "6.3 Example: Battery data\n\nFit a linear regression"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-3",
+    "href": "lectures/01-lecture.html#example-battery-data-3",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.4 Example: Battery data",
+    "text": "6.4 Example: Battery data\n\nSummary of the fitted model"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-4",
+    "href": "lectures/01-lecture.html#example-battery-data-4",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.5 Example: Battery data",
+    "text": "6.5 Example: Battery data\nDo the calculations ``manually’’:\n\nsufficient statistics:\n\n\n\n[1] 41\n\n\n[1] -149.953\n\n\n[1] 115.0934\n\n\n[1] 554.024\n\n\n[1] 324.0225\n\n\n[1] -423.0244\n\n\n[1] -3.65739\n\n\n[1] 2.807155\n\n\n[1] 5.587388\n\n\n[1] 0.9375112\n\n\n[1] -2.083033\n\n\n[1] -0.3728098\n\n\n[1] 1.443645\n\n\n[1] 0.00412657"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",
+    "href": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.6 How to Calculate Simple Linear Regression Estimates",
+    "text": "6.6 How to Calculate Simple Linear Regression Estimates\nGiven summary statistics\n- \\(n = 41\\)\n- \\(\\sum x_i = -149.953,\\; \\sum y_i = 115.0934\\)\n- \\(\\sum x_i^2 = 554.024,\\; \\sum y_i^2 = 324.0225\\)\n- \\(\\sum x_i y_i = -423.0244\\)\n\nStep 1. Compute sufficient statistics\n\\[\n\\bar{x} = \\tfrac{-149.953}{41} \\approx -3.66,\n\\quad\n\\bar{y} = \\tfrac{115.0934}{41} \\approx 2.81\n\\]\n\\[\nS_{xx} = 554.024 - \\tfrac{(-149.953)^2}{41} \\approx 5.59\n\\]\n\\[\nS_{yy} = 324.0225 - \\tfrac{(115.0934)^2}{41} \\approx 0.94\n\\]\n\\[\nS_{xy} = -423.0244 - \\tfrac{(-149.953)(115.0934)}{41} \\approx -2.08\n\\]\n\nStep 2. Regression coefficients\n\\[\n\\hat\\beta_1 = \\tfrac{S_{xy}}{S_{xx}} \\approx \\tfrac{-2.08}{5.59} \\approx -0.37\n\\]\n\\[\n\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}\n   \\approx 2.81 - (-0.37)(-3.66)\n   \\approx 1.46\n\\]\n\nStep 3. Error variance\n\\[\n\\hat\\sigma^2 = \\tfrac{1}{n-2}\\left(S_{yy} - \\hat\\beta_1 S_{xy}\\right)\n= \\tfrac{1}{39}(0.94 - (-0.37)(-2.08))\n\\approx \\tfrac{0.17}{39}\n\\]\n\\[\n\\hat\\sigma \\approx  \\sqrt{\\ 0.0044} \\approx 0.066;\n\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#interpretation-of-coefficients",
+    "href": "lectures/01-lecture.html#interpretation-of-coefficients",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.7 Interpretation of coefficients",
+    "text": "6.7 Interpretation of coefficients\n\n\\(\\hat\\beta_1 \\approx -0.37\\): For a one unit increase in log10(DeltaQvar), the expected change in log10(cycleLife) is a decrease of approximately 0.37 units.\n\\(\\hat\\beta_0 \\approx 1.46\\):"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#coefficient-of-determination-1",
+    "href": "lectures/01-lecture.html#coefficient-of-determination-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.8 Coefficient of Determination",
+    "text": "6.8 Coefficient of Determination\n\n\\(R^2 = \\frac{S_{xy}^2}{S_{xx} S_{yy}} \\approx \\frac{(-2.08)^2}{5.59 \\times 0.94} \\approx 0.82\\)\nAbout 82% of the variability in log10(cycleLife) can be explained by the linear relationship with log10(DeltaQvar).\n\\(r = \\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}} \\approx \\frac{-2.08}{\\sqrt{5.59 \\times 0.94}} \\approx -0.91\\).\nThe strong negative correlation (-0.91) indicates a strong inverse linear relationship between log10(DeltaQvar) and log10(cycleLife).\nWe will learn more about how to interpret the coefficients when transformation is used in later lectures."
   }
 ]
