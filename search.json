@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "exams/index.html",
+    "href": "exams/index.html",
+    "title": "Exams",
+    "section": "",
+    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "HomePage",
+    "section": "",
+    "text": "Welcome to the STAT210C course website."
+  },
+  {
+    "objectID": "index.html#course-materials",
+    "href": "index.html#course-materials",
+    "title": "HomePage",
+    "section": "Course materials",
+    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
+  }
+]
