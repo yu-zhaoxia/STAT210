@@ -4,3 +4,4 @@ format: html
 ---
 
 - [1 — Simple Linear Regression](01-lecture.qmd); [pdf](STAT210_Lec01.pdf)
+- [2 — Inference in Simple Linear Regression](02-lecture.qmd); [pdf](STAT210_Lec02.pdf)

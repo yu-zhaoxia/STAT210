@@ -19,5 +19,11 @@
   },
   "assignments/assignment1.qmd": {
     "assignment1.html": "1d78f3c5"
+  },
+  "lectures/01-lecture.qmd": {
+    "01-lecture.html": "15cf1e6c"
+  },
+  "lectures/02-lecture.qmd": {
+    "02-lecture.html": "5ff7f419"
   }
 }

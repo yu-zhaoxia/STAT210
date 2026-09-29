@@ -153,7 +153,7 @@ abline(fit, col = "red", lwd = 2)
 -   Basic assumptions
     1.  Linearity: The relationship between the predictor and the mean
         of the response is linear. $$E(y_i|x) = \beta_0 + \beta_1 x_i$$
-        Equivalently,, $$E(\epsilon)=0$$
+        Equivalently, $$E(\epsilon)=0$$
 
     2.  Uncorrelated errors: The errors are uncorrelated.
         $$Cov(\epsilon_i, \epsilon_j)=0, \quad i\neq j$$
@@ -167,7 +167,8 @@ abline(fit, col = "red", lwd = 2)
 -   Stronger assumptions
     1.  Linearity
     2.  Independence: The errors are independent.
-    3.  Normality: The errors are normally distributed.
+    3.  Homoscedasticity
+    4.  Normality: The errors are normally distributed.
 -   The above assumptions are equivalent to
     $$\epsilon_1, \cdots, \epsilon_n \overset{iid} \sim N(0, \sigma^2)$$
 
