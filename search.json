@@ -4,70 +4,7 @@
     "href": "lectures/index.html",
     "title": "Lecture Notes",
     "section": "",
-    "text": "1 — Simple Linear Regression; pdf"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "HomePage",
-    "section": "",
-    "text": "Welcome to the STAT210C course website."
-  },
-  {
-    "objectID": "index.html#course-materials",
-    "href": "index.html#course-materials",
-    "title": "HomePage",
-    "section": "Course materials",
-    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
-  },
-  {
-    "objectID": "assignments/index.html",
-    "href": "assignments/index.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "STAT210 Assignment 1: Due on xxxday, October 00, 2026"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "assignments/assignment1.html",
-    "href": "assignments/assignment1.html",
-    "title": "STAT200C Assignment 1",
-    "section": "",
-    "text": "A subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
-  },
-  {
-    "objectID": "assignments/assignment1.html#section",
-    "href": "assignments/assignment1.html#section",
-    "title": "STAT200C Assignment 1",
-    "section": "",
-    "text": "A subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
-  },
-  {
-    "objectID": "assignments/assignment1.html#section-1",
-    "href": "assignments/assignment1.html#section-1",
-    "title": "STAT200C Assignment 1",
-    "section": "2.",
-    "text": "2.\nIn one simple linear regression model, we have sample size \\(n=10\\), \\(\\bar{x}=1.03\\), \\(\\bar{y}=2.51\\),\n\\[\n\\sum_{i=1}^{n} x_i^{2}=20.37,\\qquad\n\\sum_{i=1}^{n} y_i^{2}=116.56,\\qquad\n\\sum_{i=1}^{n} x_i y_i=46.85.\n\\]\na) Find the values of the least squares estimators: \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\nb) Calculate \\(\\mathrm{SST}\\), \\(\\mathrm{SSR}\\), and \\(\\mathrm{SSE}\\).\nc) Calculate the sample estimate of the variance \\(\\sigma^{2}\\) for the regression model.\nd) What is the value of \\(R^{2}\\) here?\nHint. The following formulae may be useful (can be used without proof):\n\\[\n\\sum (x_i-\\bar{x})^2\n=\n\\sum x_i^2-n\\bar{x}^{\\,2},\n\\]\n\\[\n\\sum (x_i-\\bar{x})(y_i-\\bar{y})\n=\n\\sum x_i y_i-n\\bar{x}\\,\\bar{y}.\n\\]"
-  },
-  {
-    "objectID": "assignments/assignment1.html#section-2",
-    "href": "assignments/assignment1.html#section-2",
-    "title": "STAT200C Assignment 1",
-    "section": "3.",
-    "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
-  },
-  {
-    "objectID": "exams/index.html",
-    "href": "exams/index.html",
-    "title": "Exams",
-    "section": "",
-    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
+    "text": "1 — Simple Linear Regression; pdf\n2 — Inference in Simple Linear Regression; pdf"
   },
   {
     "objectID": "lectures/01-lecture.html",
@@ -158,14 +95,14 @@
     "href": "lectures/01-lecture.html#assumptions-basic-a",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "2.4 Assumptions: Basic (a)",
-    "text": "2.4 Assumptions: Basic (a)\n\nBasic assumptions\n\nLinearity: The relationship between the predictor and the mean of the response is linear. \\[E(y_i|x) = \\beta_0 + \\beta_1 x_i\\] Equivalently,, \\[E(\\epsilon)=0\\]\nUncorrelated errors: The errors are uncorrelated. \\[Cov(\\epsilon_i, \\epsilon_j)=0, \\quad i\\neq j\\]\nHomoscedasticity: The errors have constant variance at all levels of the predictor. \\[Var(\\epsilon_i)=\\sigma^2, i=1, \\cdots, n\\]"
+    "text": "2.4 Assumptions: Basic (a)\n\nBasic assumptions\n\nLinearity: The relationship between the predictor and the mean of the response is linear. \\[E(y_i|x) = \\beta_0 + \\beta_1 x_i\\] Equivalently, \\[E(\\epsilon)=0\\]\nUncorrelated errors: The errors are uncorrelated. \\[Cov(\\epsilon_i, \\epsilon_j)=0, \\quad i\\neq j\\]\nHomoscedasticity: The errors have constant variance at all levels of the predictor. \\[Var(\\epsilon_i)=\\sigma^2, i=1, \\cdots, n\\]"
   },
   {
     "objectID": "lectures/01-lecture.html#assumptions-stronger-b",
     "href": "lectures/01-lecture.html#assumptions-stronger-b",
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "2.5 Assumptions: Stronger (b)",
-    "text": "2.5 Assumptions: Stronger (b)\n\nStronger assumptions\n\nLinearity\nIndependence: The errors are independent.\nNormality: The errors are normally distributed.\n\nThe above assumptions are equivalent to \\[\\epsilon_1, \\cdots, \\epsilon_n \\overset{iid} \\sim N(0, \\sigma^2)\\]"
+    "text": "2.5 Assumptions: Stronger (b)\n\nStronger assumptions\n\nLinearity\nIndependence: The errors are independent.\nHomoscedasticity\nNormality: The errors are normally distributed.\n\nThe above assumptions are equivalent to \\[\\epsilon_1, \\cdots, \\epsilon_n \\overset{iid} \\sim N(0, \\sigma^2)\\]"
   },
   {
     "objectID": "lectures/01-lecture.html#implications-of-assumptions-a",
@@ -320,5 +257,334 @@
     "title": "Lec 01: Introduction to Simple Linear Regression",
     "section": "6.8 Coefficient of Determination",
     "text": "6.8 Coefficient of Determination\n\n\\(R^2 = \\frac{S_{xy}^2}{S_{xx} S_{yy}} \\approx \\frac{(-2.08)^2}{5.59 \\times 0.94} \\approx 0.82\\)\nAbout 82% of the variability in log10(cycleLife) can be explained by the linear relationship with log10(DeltaQvar).\n\\(r = \\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}} \\approx \\frac{-2.08}{\\sqrt{5.59 \\times 0.94}} \\approx -0.91\\).\nThe strong negative correlation (-0.91) indicates a strong inverse linear relationship between log10(DeltaQvar) and log10(cycleLife).\nWe will learn more about how to interpret the coefficients when transformation is used in later lectures."
+  },
+  {
+    "objectID": "exams/index.html",
+    "href": "exams/index.html",
+    "title": "Exams",
+    "section": "",
+    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
+  },
+  {
+    "objectID": "assignments/assignment1.html",
+    "href": "assignments/assignment1.html",
+    "title": "STAT200C Assignment 1",
+    "section": "",
+    "text": "A subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
+  },
+  {
+    "objectID": "assignments/assignment1.html#section",
+    "href": "assignments/assignment1.html#section",
+    "title": "STAT200C Assignment 1",
+    "section": "",
+    "text": "A subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
+  },
+  {
+    "objectID": "assignments/assignment1.html#section-1",
+    "href": "assignments/assignment1.html#section-1",
+    "title": "STAT200C Assignment 1",
+    "section": "2.",
+    "text": "2.\nIn one simple linear regression model, we have sample size \\(n=10\\), \\(\\bar{x}=1.03\\), \\(\\bar{y}=2.51\\),\n\\[\n\\sum_{i=1}^{n} x_i^{2}=20.37,\\qquad\n\\sum_{i=1}^{n} y_i^{2}=116.56,\\qquad\n\\sum_{i=1}^{n} x_i y_i=46.85.\n\\]\na) Find the values of the least squares estimators: \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\nb) Calculate \\(\\mathrm{SST}\\), \\(\\mathrm{SSR}\\), and \\(\\mathrm{SSE}\\).\nc) Calculate the sample estimate of the variance \\(\\sigma^{2}\\) for the regression model.\nd) What is the value of \\(R^{2}\\) here?\nHint. The following formulae may be useful (can be used without proof):\n\\[\n\\sum (x_i-\\bar{x})^2\n=\n\\sum x_i^2-n\\bar{x}^{\\,2},\n\\]\n\\[\n\\sum (x_i-\\bar{x})(y_i-\\bar{y})\n=\n\\sum x_i y_i-n\\bar{x}\\,\\bar{y}.\n\\]"
+  },
+  {
+    "objectID": "assignments/assignment1.html#section-2",
+    "href": "assignments/assignment1.html#section-2",
+    "title": "STAT200C Assignment 1",
+    "section": "3.",
+    "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "assignments/index.html",
+    "href": "assignments/index.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "STAT210 Assignment 1: Due on xxxday, October 00, 2026"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "HomePage",
+    "section": "",
+    "text": "Welcome to the STAT210C course website."
+  },
+  {
+    "objectID": "index.html#course-materials",
+    "href": "index.html#course-materials",
+    "title": "HomePage",
+    "section": "Course materials",
+    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
+  },
+  {
+    "objectID": "lectures/02-lecture.html",
+    "href": "lectures/02-lecture.html",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "",
+    "text": "History of regression\nSimple linear regression model\nLeast squares estimate\nEstimate coefficients and variance\nCoefficient of determination\nInterpretation of coefficients\n\n\n\n\n\nIntroduction to Inference in SLR\nHypothesis testing for regression coefficients\nConfidence intervals for regression coefficients\nEstimation and confidence intervals for mean response\nPrediction and Prediction intervals for new observations\nANOVA for SLR"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#review",
+    "href": "lectures/02-lecture.html#review",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "",
+    "text": "History of regression\nSimple linear regression model\nLeast squares estimate\nEstimate coefficients and variance\nCoefficient of determination\nInterpretation of coefficients"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#outline",
+    "href": "lectures/02-lecture.html#outline",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "",
+    "text": "Introduction to Inference in SLR\nHypothesis testing for regression coefficients\nConfidence intervals for regression coefficients\nEstimation and confidence intervals for mean response\nPrediction and Prediction intervals for new observations\nANOVA for SLR"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#what-is-statistical-inference",
+    "href": "lectures/02-lecture.html#what-is-statistical-inference",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "2.1 What is Statistical Inference",
+    "text": "2.1 What is Statistical Inference\n\nBroadly speaking, statistical inference is the process of drawing conclusions about a population based on a sample of data from that population.\nThere are different types of statistical inference, including:\n\nEstimation: Estimating population parameters (e.g., mean, variance) based on sample statistics.\nHypothesis Testing: Testing assumptions or claims about population parameters using sample data.\nPrediction: Making predictions about future observations based on a fitted model.\n\nSo far, we have learned how to estimate \\(\\beta_0, \\beta_1\\) and \\(\\sigma^2\\) in SLR. Next, we will learn how to do inference in SLR."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#inference-problems-in-slr",
+    "href": "lectures/02-lecture.html#inference-problems-in-slr",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "2.2 Inference Problems in SLR",
+    "text": "2.2 Inference Problems in SLR\n\nHypothesis testing for regression coefficients. Example, \\(H_0: \\beta_1=0\\) vs \\(H_a: \\beta_1\\neq 0\\).\nConfidence intervals for regression coefficients. Example, a 95% CI for \\(\\beta_1\\).\nPrediction () and confidence intervals for mean response. Example, estimation and a 95% CI for \\(E(y|x=x^*)\\).\nPrediction intervals for new observations. Example, a 95% PI for a new observation \\(y_{new}\\) at \\(x=x^*\\).\nANOVA for SLR. Example, test if the regression model is useful."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#how-did-we-do-inference-for-one-sample-problems",
+    "href": "lectures/02-lecture.html#how-did-we-do-inference-for-one-sample-problems",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "2.3 How did we do inference for one-sample problems?",
+    "text": "2.3 How did we do inference for one-sample problems?\n\nTo understand inference in SLR, let’s first review how we did inference for one-sample problems.\nA random sample \\(y_1, y_2, \\cdots, y_n \\overset{iid}\\sim N(\\mu, \\sigma^2)\\).\nThe parameter of interest: \\(\\mu\\) (unknown).\nPoint estimate of \\(\\mu\\). \\(\\bar{y}=\\frac{1}{n}\\sum_{i=1}^n y_i\\) to estimate the population mean \\(\\mu\\).\nSampling distribution of \\(\\bar{y}\\): \\(\\bar{y} \\sim N(\\mu, \\frac{\\sigma^2}{n})\\).\nBut \\(\\sigma^2\\) is unknown. We estimate it by \\(s^2=\\frac{1}{n-1}\\sum_{i=1}^n (y_i-\\bar{y})^2\\).\nStandard error (SE) of \\(\\bar{y}\\): \\(SE(\\bar{y}) = \\frac{s}{\\sqrt{n}}\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#inference-hypothesis-testing",
+    "href": "lectures/02-lecture.html#inference-hypothesis-testing",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "2.4 Inference: hypothesis testing",
+    "text": "2.4 Inference: hypothesis testing\n\nHypothesis test: \\(H_0: \\mu=\\mu_0\\) vs \\(H_a: \\mu\\neq \\mu_0\\).\nTest statistic: \\[t=\\frac{\\bar{y}-\\mu_0}{SE(\\bar{y})}=\\frac{\\bar{y}-\\mu_0}{s/\\sqrt{n}} \\overset{H_0}\\sim t_{n-1}\\]\nNot normal? \\(y_1, y_2, \\cdots, y_n \\overset{iid}\\sim (\\mu, \\sigma^2)\\). The results can still be used when \\(n\\) is large enough. Why?"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#inference-confidence-interval",
+    "href": "lectures/02-lecture.html#inference-confidence-interval",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "2.5 Inference Confidence Interval",
+    "text": "2.5 Inference Confidence Interval\n\nA 100(1-\\(\\alpha\\))% confidence interval for \\(\\mu\\) is given by: \\[\\bar{y} \\pm t_{\\alpha/2, n-1} \\times SE(\\bar{y}) = \\bar{y} \\pm t_{\\alpha/2, n-1} \\frac{s}{\\sqrt{n}}\\]\nThe standard error (SE) quantifies the precision of the estimate. The smaller the SE, the more precise the estimate.\nThe critical value \\(t_{\\alpha/2, n-1}\\) determines the width of the confidence interval. A larger critical value (smaller \\(\\alpha\\)) results in a wider interval."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#outline-1",
+    "href": "lectures/02-lecture.html#outline-1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "3.1 Outline",
+    "text": "3.1 Outline\nModel: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\) where \\(\\epsilon_i \\overset{iid}\\sim N(0, \\sigma^2)\\).\nWe will derive the following results\n\n\\(E[\\hat\\beta_0]= \\beta_0\\), \\(E[\\hat\\beta_1]=\\beta_1\\). The LSE is unbiased.\n\\(Var(\\hat\\beta_0)=\\sigma^2[\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}]\\), \\(Var(\\hat\\beta_1)=\\frac{\\sigma^2}{S_{xx}}\\). \nSampling distributions of \\(\\hat\\beta_0, \\hat\\beta_1\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#review-properties-of-expectation-and-variance",
+    "href": "lectures/02-lecture.html#review-properties-of-expectation-and-variance",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "3.2 Review: Properties of Expectation and Variance",
+    "text": "3.2 Review: Properties of Expectation and Variance\nA random variable \\(X\\sim (\\mu, \\sigma^2)\\), i.e., \\(E(X)=\\mu, Var(X)=E[(X-\\mu)^2]=\\sigma^2\\)\n\n\\(E(aX+b)=aE(X)+b=a\\mu+b\\)\n\\(Var(aX+b)=a^2 Var(X)=a^2 \\sigma^2\\)\n\nFor random variables \\(X_1, X_2\\),\n\n\\(E(X_1+X_2)=E(X_1)+E(X_2)\\)\nIf \\(X_1, X_2\\) are independent, then \\(Var(X_1+X_2)=Var(X_1)+Var(X_2)\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#expectation-of-hatbeta_1",
+    "href": "lectures/02-lecture.html#expectation-of-hatbeta_1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "3.3 Expectation of \\(\\hat\\beta_1\\)",
+    "text": "3.3 Expectation of \\(\\hat\\beta_1\\)\n\nRecall that \\[\\begin{eqnarray*}\n\\hat{\\beta_1} &=& \\frac{S_{xy}}{S_{xx}} = \\frac{\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{S_{xx}}\\\\\n&=&\\frac{\\sum_{i=1}^n (x_i - \\bar{x})y_i}{S_{xx}} - \\frac{\\bar y \\sum_{i=1}^n (x_i - \\bar{x})}{S_{xx}}\n\\end{eqnarray*}\\]\nSince \\(\\sum_{i=1}^n (x_i - \\bar{x})=0\\), we have \\[\\hat\\beta_1 =\\frac{\\sum_{i=1}^n (x_i - \\bar{x})y_i}{\\sum_{i=1}^n (x_i - \\bar{x})^2}\\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#expectation-of-hatbeta_1-1",
+    "href": "lectures/02-lecture.html#expectation-of-hatbeta_1-1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "3.4 Expectation of \\(\\hat\\beta_1\\)",
+    "text": "3.4 Expectation of \\(\\hat\\beta_1\\)\n\nSince \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i\\) and \\(E[\\epsilon_i]=0\\), we have\n\n\\[\n\\begin{aligned}\nE(\\hat{\\beta}_1)\n&= E\\!\\left[\n\\frac{\\sum_{i=1}^n (x_i-\\bar{x})y_i}{S_{xx}}\n\\right] \\\\[6pt]\n&= \\frac{1}{S_{xx}}\n   \\sum_{i=1}^n (x_i-\\bar{x})E(y_i) \\\\[6pt]\n&= \\frac{1}{S_{xx}}\n   \\sum_{i=1}^n (x_i-\\bar{x})(\\beta_0+\\beta_1x_i) \\\\[6pt]\n&= \\frac{\\beta_1}{S_{xx}}\n   \\sum_{i=1}^n (x_i-\\bar{x})x_i \\\\[6pt]\n&= \\beta_1.\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#variance-of-hatbeta_1",
+    "href": "lectures/02-lecture.html#variance-of-hatbeta_1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "3.5 Variance of \\(\\hat\\beta_1\\)",
+    "text": "3.5 Variance of \\(\\hat\\beta_1\\)\n\nRecall that \\(Var(y_i)=Var(\\epsilon_i)=\\sigma^2\\) and \\(y_i's\\) are uncorrelated (a stronger assumption is independence)\n\n\n\\[\n\\begin{aligned}\n\\operatorname{Var}(\\hat{\\beta}_1)\n&= \\operatorname{Var}\\!\\left[\n\\frac{\\sum_{i=1}^n (x_i-\\bar{x})y_i}{S_{xx}}\n\\right] \\\\[6pt]\n&= \\frac{1}{S_{xx}^2}\\,\n   \\operatorname{Var}\\!\\left[\n   \\sum_{i=1}^n (x_i-\\bar{x})y_i\n   \\right] \\\\[6pt]\n&= \\frac{1}{S_{xx}^2}\n   \\sum_{i=1}^n (x_i-\\bar{x})^2\\,\n   \\operatorname{Var}(y_i) \\\\[6pt]\n&= \\frac{\\sigma^2}{S_{xx}^2}\n   \\sum_{i=1}^n (x_i-\\bar{x})^2 \\\\[6pt]\n&= \\frac{\\sigma^2}{S_{xx}}.\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#distribution-of-hatbeta_1-when-sigma2-is-known",
+    "href": "lectures/02-lecture.html#distribution-of-hatbeta_1-when-sigma2-is-known",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "4.1 Distribution of \\(\\hat\\beta_1\\) when \\(\\sigma^2\\) is known",
+    "text": "4.1 Distribution of \\(\\hat\\beta_1\\) when \\(\\sigma^2\\) is known\n\nSince \\(\\hat\\beta_1\\) is a linear combination of \\(y_i's\\) and \\(y_i's\\) are normally distributed, \\(\\hat\\beta_1\\) is also normally distributed.\nThus, when \\(\\sigma^2\\) is known, we have \\[\\hat\\beta_1 \\sim N(\\beta_1, \\frac{\\sigma^2}{S_{xx}})\\]\nThe standardized version: \\[Z=\\frac{\\hat\\beta_1 - \\beta_1}{\\sqrt{Var(\\hat\\beta_1)}} = \\frac{\\hat\\beta_1 - \\beta_1}{\\sqrt{\\sigma^2/S_{xx}}}=\\frac{\\hat\\beta_1 - \\beta_1}{\\sigma/\\sqrt{S_{xx}}} \\sim N(0, 1)\\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#ci-for-beta_1-when-sigma2-is-known",
+    "href": "lectures/02-lecture.html#ci-for-beta_1-when-sigma2-is-known",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "4.2 CI for \\(\\beta_1\\) when \\(\\sigma^2\\) is known",
+    "text": "4.2 CI for \\(\\beta_1\\) when \\(\\sigma^2\\) is known\n\nBecause \\(\\frac{\\hat\\beta_1 - \\beta_1}{\\sigma/\\sqrt{S_{xx}}}  \\sim N(0, 1)\\), we have\n\n\\[P\\left(-z_{1-\\alpha/2} \\leq \\frac{\\hat\\beta_1 - \\beta_1}{\\sigma/\\sqrt{S_{xx}}} \\leq z_{1-\\alpha/2}\\right) = 1-\\alpha\\] Therefore, a 100(1-\\(\\alpha\\))% confidence interval for \\(\\beta_1\\) is given by: \\[(\\hat\\beta_1 - z_{1-\\alpha/2} \\frac{\\sigma}{\\sqrt{S_{xx}}}, \\hat\\beta_1 + z_{1-\\alpha/2} \\frac{\\sigma}{\\sqrt{S_{xx}}})\\] Note \\(-z_{1-\\alpha/2} = z_{\\alpha/2}\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#distribution-of-hatbeta_1-when-sigma2-is-unknown",
+    "href": "lectures/02-lecture.html#distribution-of-hatbeta_1-when-sigma2-is-unknown",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "4.3 Distribution of \\(\\hat\\beta_1\\) when \\(\\sigma^2\\) is unknown",
+    "text": "4.3 Distribution of \\(\\hat\\beta_1\\) when \\(\\sigma^2\\) is unknown\n\nWhen \\(\\sigma^2\\) is unknown, we estimate it by \\(s^2=\\frac{SSE}{n-2}\\).\nWe define \\(\\hat{Var}(\\hat{\\beta_1})=\\frac{s^2}{S_{xx}}\\) and the estimated standard error \\(SE(\\hat\\beta_1)=\\sqrt{\\hat{Var}(\\hat{\\beta_1})}=\\frac{s}{\\sqrt{S_{xx}}}\\).\nThe standardized version: \\[\\frac{\\hat\\beta_1 - \\beta_1}{SE(\\hat\\beta_1)} = \\frac{\\hat\\beta_1 - \\beta_1}{s/\\sqrt{S_{xx}}} \\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#how-to-construct-a-t-distributed-statistic",
+    "href": "lectures/02-lecture.html#how-to-construct-a-t-distributed-statistic",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "4.4 How to construct a t-distributed statistic?",
+    "text": "4.4 How to construct a t-distributed statistic?\n\nLet \\(Z\\) be a standard normal random variable\nLet \\(U\\) be a chi-square random variable with \\(v\\) degrees of freedom\nSuppose \\(Z\\) and \\(U\\) are independent\nThen the random variable \\[T=\\frac{Z}{\\sqrt{U/v}}\\] has a t-distribution with \\(v\\) degrees of freedom, i.e., \\(T\\sim t_v\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#details-about-the-t-statistic-in-slr",
+    "href": "lectures/02-lecture.html#details-about-the-t-statistic-in-slr",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "4.5 Details about the t-statistic in SLR",
+    "text": "4.5 Details about the t-statistic in SLR\nThe assumptions of the SLR model: 1. \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad \\text{where } \\epsilon_1, \\cdots, \\epsilon_n \\overset{iid}\\sim N(0, \\sigma^2)\\)\nUnder the assumptions, we can show\n\n\\(\\hat\\beta_1 \\sim N(\\beta_1, \\frac{\\sigma^2}{S_{xx}})\\), which implies that \\[Z=\\frac{\\hat\\beta_1 - \\beta_1}{\\sigma/\\sqrt{S_{xx}}} \\sim N(0, 1)\\]\n\\(\\hat\\beta_1\\) and \\(s^2\\) are independent, which implies that \\(Z\\) and \\(s^2\\) are independent.\n\\(\\frac{(n-2)s^2}{\\sigma^2}=\\frac{SSE}{\\sigma^2} \\sim \\chi^2_{n-2}\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#details-about-the-t-statistic-in-slr-1",
+    "href": "lectures/02-lecture.html#details-about-the-t-statistic-in-slr-1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "4.6 Details about the t-statistic in SLR",
+    "text": "4.6 Details about the t-statistic in SLR\n\nBy the way to construct a t-distributed statistic, we have \\[T=\\frac{Z}{\\sqrt{U/(n-2)}}\\sim t_{n-2}\\] where \\(Z=\\frac{\\hat\\beta_1 - \\beta_1}{\\sigma/\\sqrt{S_{xx}}}\\) and \\(U=\\frac{(n-2)s^2}{\\sigma^2}\\).\n\nThus, we have \\[T=\\frac{\\hat\\beta_1 - \\beta_1}{s/\\sqrt{S_{xx}}} =\\frac{\\hat\\beta_1 - \\beta_1}{SE(\\hat\\beta_1)}  \\sim t_{n-2}\\]\n\nNote that we have \\(n-2\\) degrees of freedom because we estimated two parameters \\(\\beta_0\\) and \\(\\beta_1\\) in SLR."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#ci-for-beta_1-when-sigma2-is-unknown",
+    "href": "lectures/02-lecture.html#ci-for-beta_1-when-sigma2-is-unknown",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.1 CI for \\(\\beta_1\\) when \\(\\sigma^2\\) is unknown",
+    "text": "5.1 CI for \\(\\beta_1\\) when \\(\\sigma^2\\) is unknown\n\nBecause \\(\\frac{\\hat\\beta_1 - \\beta_1}{SE(\\hat\\beta_1)} \\sim t_{n-2}\\), we have\n\n\\[P\\left(-t_{n-2, 1-\\alpha/2} \\leq \\frac{\\hat\\beta_1 - \\beta_1}{SE(\\hat\\beta_1)} \\leq t_{n-2, 1-\\alpha/2}\\right) = 1-\\alpha\\]\n\nTherefore, a 100(1-\\(\\alpha\\))% confidence interval for \\(\\beta_1\\) is given by: \\[(\\hat\\beta_1 - t_{n-2, 1-\\alpha/2} SE(\\hat\\beta_1), \\hat\\beta_1 + t_{n-2, 1-\\alpha/2} SE(\\hat\\beta_1))\\] where \\(SE(\\hat\\beta_1)=\\frac{s}{\\sqrt{S_{xx}}}\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.2 Example: Mount Airy and Charleston",
+    "text": "5.2 Example: Mount Airy and Charleston\nSummer temperature averages in Mount Airy, NC and Charleston, SC (1937-2021)"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-1",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.3 Example: Mount Airy and Charleston",
+    "text": "5.3 Example: Mount Airy and Charleston\n\n\nCode\nmtair=read.csv(\"../data/mta1.csv\", head=TRUE)\nplot(mtair$MtAiry, mtair$Charl,\n     xlab=\"MtAiry\",\n     ylab=\"Charl\",\n     main=\"Mount Airy and Charleston\")\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nabline(fit, col=\"red\", lwd=2)"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-2",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-2",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.4 Example: Mount Airy and Charleston",
+    "text": "5.4 Example: Mount Airy and Charleston"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-the-fitting-regression-model",
+    "href": "lectures/02-lecture.html#example-the-fitting-regression-model",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.5 Example: The fitting regression model",
+    "text": "5.5 Example: The fitting regression model\n\nThe fitted regression model is \\[\\hat{y} = 17.6 + 0.39 x.\\]\nInterpretation of coefficients:\n\n\\(\\hat\\beta_0 = 17.6\\): When MtAiry is 0, the expected value of Charl is 17.6. Warning: this interpretation is not meaningful because MtAiry=0 is outside the range of the data.\n\\(\\hat\\beta_1 = 0.39\\): For a one unit increase in MtAiry, the expected change in Charl is an increase of approximately 0.39 units."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-3",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-3",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.6 Example: Mount Airy and Charleston",
+    "text": "5.6 Example: Mount Airy and Charleston\n\n\nCode\nsummary(fit)\n\n\n\nCall:\nlm(formula = Charl ~ MtAiry, data = mtair)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.7502 -0.6291 -0.0123  0.5585  1.9484 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  17.6208     2.8325   6.221 1.91e-08 ***\nMtAiry        0.3921     0.1209   3.244   0.0017 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.7581 on 83 degrees of freedom\nMultiple R-squared:  0.1125,    Adjusted R-squared:  0.1018 \nF-statistic: 10.52 on 1 and 83 DF,  p-value: 0.001701"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-4",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-4",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.7 Example: Mount Airy and Charleston",
+    "text": "5.7 Example: Mount Airy and Charleston\nTo obtain a 95% CI for \\(\\beta_1\\), we need the following values from the R output\n\n\\(\\hat\\beta_1 \\approx 0.39\\)\n\\(se(\\hat\\beta) \\approx 0.1209\\)\n\\(n-2=83\\) (degrees of freedom) and \\(t_{83, 0.975} \\approx 1.99\\).\nTherefore, a 95% CI for \\(\\beta_1\\) is given by: \\[(0.39 - 1.99 \\times 0.1209, 0.39 + 1.99 \\times 0.1209) = (0.15, 0.63)\\] \n\n\n\nCode\nc(0.39 - qt(0.973, 83)* 0.1209, 0.39 + qt(0.973, 83)* 0.1209)\n\n\n[1] 0.1536919 0.6263081"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-5",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-5",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "5.8 Example: Mount Airy and Charleston",
+    "text": "5.8 Example: Mount Airy and Charleston\nWe can also use the R function confint() to obtain the confidence intervals for regression coefficients.\n\n\nCode\nconfint(fit, level=0.95)\n\n\n                 2.5 %     97.5 %\n(Intercept) 11.9870442 23.2545143\nMtAiry       0.1516618  0.6325081\n\n\nCode\nconfint(fit, \"MtAiry\", level=0.95)\n\n\n           2.5 %    97.5 %\nMtAiry 0.1516618 0.6325081\n\n\nTherefore: \\(\\hat\\beta_1 \\approx 0.39\\) and a 95% CI for \\(\\beta_1\\) is (0.15, 0.63).\nInterpretation of the 95% CI for \\(\\beta_1\\): With 95% confidence, the estimated average summer temp in Charleston increases between 0.15 and 0.63 degrees Celsius per degree Celsius increment in average summer temp in Mount Airy."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#hypothesis-testing-in-slr",
+    "href": "lectures/02-lecture.html#hypothesis-testing-in-slr",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.1 Hypothesis Testing in SLR",
+    "text": "6.1 Hypothesis Testing in SLR\n\nWe will focus on hypothesis testing for \\(\\beta_1\\).\nIn SLR, we are often interested in testing whether there is a linear relationship between \\(x\\) and \\(y\\).\nThe null hypothesis is that there is no linear relationship, i.e., \\(\\beta_1=0\\).\nThe alternative hypothesis is that there is a linear relationship, i.e., \\(\\beta_1 \\neq 0\\).\nThus, we want to test the following hypotheses: \\[H_0: \\beta_1=0 \\quad \\text{vs} \\quad H_a: \\beta_1 \\neq 0\\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#hypothesis-testing-in-general-five-steps",
+    "href": "lectures/02-lecture.html#hypothesis-testing-in-general-five-steps",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.2 Hypothesis testing in general: Five steps",
+    "text": "6.2 Hypothesis testing in general: Five steps\n\nStep 1: State the null and alternative hypotheses.\nStep 2: Choose a significance level \\(\\alpha\\).\nStep 3: Calculate a test statistic using the sample.\nStep 4: Determine the rejection region or p-value.\nStep 5: Make a decision and interpret the results."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#test-statistic-for-beta_1",
+    "href": "lectures/02-lecture.html#test-statistic-for-beta_1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.3 Test Statistic for \\(\\beta_1\\)",
+    "text": "6.3 Test Statistic for \\(\\beta_1\\)\n\nThe test statistic is given by: \\[T=\\frac{\\hat\\beta_1 - 0}{SE(\\hat\\beta_1)} = \\frac{\\hat\\beta_1}{s/\\sqrt{S_{xx}}}\\]\nWhen \\(H_0\\) is true, i.e., \\(\\beta_1=0\\), \\(T \\sim t_{n-2}\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#rejectioncritical-region-and-p-value",
+    "href": "lectures/02-lecture.html#rejectioncritical-region-and-p-value",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.4 Rejection/critical Region and p-value",
+    "text": "6.4 Rejection/critical Region and p-value\n\nRejection region approach: Reject \\(H_0\\) if \\(|T| &gt; t_{n-2, 1-\\alpha/2}\\).\np-value approach: The p-value (two-sided) is given by \\[p-value = 2P(T \\geq |t_{obs}|)\\] where \\(t_{obs}\\) is the observed value of the test statistic \\(T\\). What is the distribution of \\(T\\)?\n\nIf \\(p-value &lt; \\alpha\\), we reject \\(H_0\\).\nIf \\(p-value \\geq \\alpha\\), we fail to reject \\(H_0\\). (there is not enough evidence to reject \\(H_0\\))."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#rejectioncritical-region-and-p-value-1",
+    "href": "lectures/02-lecture.html#rejectioncritical-region-and-p-value-1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.5 Rejection/critical Region and p-value",
+    "text": "6.5 Rejection/critical Region and p-value\n\n\nCode\nknitr::include_graphics(\"../images/clipboard-1967123261.png\")"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-6",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-6",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.6 Example: Mount Airy and Charleston",
+    "text": "6.6 Example: Mount Airy and Charleston\n\nRecall that \\(\\hat\\beta_1= 0.39\\) and \\(SE(\\hat\\beta_1)=0.1209\\).\nThe t-statistic is \\(T=\\frac{0.3921-0}{0.1209} \\approx 3.24\\).\nThe degrees of freedom is \\(n-2=83\\).\nThe critical value \\(t_{83, 0.975} \\approx 1.99\\). In R, use ``qt(0.975, 83)’’. We reject the null hypothesis because \\(|3.24| &gt; 1.99\\).\nThe p-value is given by \\(2P(T \\geq 3.24) \\approx 0.0017\\) (using R). We reject the null hypothesis because \\(0.0017 &lt; 0.05\\).\nWe conclude that there is a significant linear relationship between the average summer temperatures in Mount Airy and Charleston."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-7",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-7",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.7 Example: Mount Airy and Charleston",
+    "text": "6.7 Example: Mount Airy and Charleston\n\n\nCode\nsummary(fit)\n\n\n\nCall:\nlm(formula = Charl ~ MtAiry, data = mtair)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.7502 -0.6291 -0.0123  0.5585  1.9484 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  17.6208     2.8325   6.221 1.91e-08 ***\nMtAiry        0.3921     0.1209   3.244   0.0017 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.7581 on 83 degrees of freedom\nMultiple R-squared:  0.1125,    Adjusted R-squared:  0.1018 \nF-statistic: 10.52 on 1 and 83 DF,  p-value: 0.001701"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#one-sided-tests-h_1-beta_1-0",
+    "href": "lectures/02-lecture.html#one-sided-tests-h_1-beta_1-0",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.8 One-sided tests: \\(H_1: \\beta_1 > 0\\)",
+    "text": "6.8 One-sided tests: \\(H_1: \\beta_1 &gt; 0\\)\n\nWe can also perform one-sided tests. For example, to test \\[H_0: \\beta_1 \\leq 0 \\quad \\text{vs} \\quad H_a: \\beta_1 &gt; 0\\]\n\nRejection region approach: Reject \\(H_0\\) if \\(T &gt; t_{n-2, 1-\\alpha}\\).\np-value approach: The p-value (right-sided) is given by \\[p-value = P(T \\geq t_{obs})\\] We reject \\(H_0\\) if \\(p-value &lt; \\alpha\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#one-sided-tests-h_1-beta_1-0-1",
+    "href": "lectures/02-lecture.html#one-sided-tests-h_1-beta_1-0-1",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.9 One-sided tests: \\(H_1: \\beta_1 > 0\\)",
+    "text": "6.9 One-sided tests: \\(H_1: \\beta_1 &gt; 0\\)\n\nIn some applications, we may be interested in testing one-sided alternatives. For example, we would like to know whether Mount Airy has a positive linear relationship with Charleston, i.e.,\n\\[H_0: \\beta_1 \\geq 0 \\quad \\text{vs} \\quad H_a: \\beta_1 &lt; 0\\]\n\nRejection region approach: Reject \\(H_0\\) if \\(T &lt; -t_{n-2, 1-\\alpha}\\).\np-value approach: The p-value (left-sided) is given by \\[p-value = P(T \\leq t_{obs})\\]"
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-8",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-8",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.10 Example: Mount Airy and Charleston",
+    "text": "6.10 Example: Mount Airy and Charleston\n\nFor the Mount Airy and Charleston example, we have \\(t_{obs} = 3.24\\) and \\(n-2=83\\).\nThe critical value \\(t_{83, 0.95} \\approx 1.66\\). We reject the null hypothesis because \\(3.24 &gt; 1.66\\).\nThe p-value is given by \\(P(T \\geq 3.24) \\approx 0.00085\\) (using R). We reject the null hypothesis because \\(0.00085 &lt; 0.05\\)."
+  },
+  {
+    "objectID": "lectures/02-lecture.html#example-mount-airy-and-charleston-9",
+    "href": "lectures/02-lecture.html#example-mount-airy-and-charleston-9",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "6.11 Example: Mount Airy and Charleston",
+    "text": "6.11 Example: Mount Airy and Charleston\n\n\nCode\nknitr::include_graphics(\"../images/clipboard-690570661.png\")"
   }
 ]
