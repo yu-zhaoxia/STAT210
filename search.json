@@ -4,7 +4,7 @@
     "href": "lectures/index.html",
     "title": "Lecture Notes",
     "section": "",
-    "text": "1 — Simple Linear Regression; pdf\n2 — Inference in Simple Linear Regression; pdf\n3 - Inference in Simple Linear Regression (cont.); pdf\n4 - ANOVA and Diagnostics In Simple Linear Regression; pdf\n5 - Diagnostics In Simple Linear Regression; pdf\n6 - Lack of Fit Test and Data Transformation; pdf\n7 - Multiple Linear Regression - Introduction; pdf"
+    "text": "1 — Simple Linear Regression; pdf\n2 — Inference in Simple Linear Regression; pdf\n3 - Inference in Simple Linear Regression (cont.); pdf\n4 - ANOVA and Diagnostics In Simple Linear Regression; pdf\n5 - Diagnostics In Simple Linear Regression; pdf\n6 - Lack of Fit Test and Data Transformation; pdf\n7 - Multiple Linear Regression - Introduction; pdf\n8 - Multiple Linear Regression - Inference; pdf\n9 - Multiple Linear Regression - Sums of Squares, ANOVA, F-tests; pdf\n10 - Multiple Linear Regression - Extra Sums of Squares, Partial F Tests; pdf\n11 - Multiple Linear Regression - Multicollinearity; pdf\n12 - Multiple Linear Regression - Categorical Variables; pdf\n13 - Multiple Linear Regression - Interactions; pdf\n14, 15 - Multiple Linear Regression - Model Selection; pdf\n16 - Multiple Linear Regression - Outliers; pdf\n17 - Multiple Linear Regression - Influential Points; pdf\n18 - Weighted Least Squares; pdf"
   },
   {
     "objectID": "lectures/01-lecture.html",
