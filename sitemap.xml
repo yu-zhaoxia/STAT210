@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yu-zhaoxia.github.io/STAT210/lectures/index.html</loc>
-    <lastmod>2026-09-30T00:15:24.487Z</lastmod>
+    <lastmod>2026-09-30T18:59:36.524Z</lastmod>
   </url>
   <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/lectures/01-lecture.html</loc>
-    <lastmod>2026-09-24T19:17:19.550Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/exams/index.html</loc>
-    <lastmod>2026-09-24T05:12:15.682Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/assignments/assignment1.html</loc>
-    <lastmod>2026-09-29T05:59:22.421Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/about.html</loc>
-    <lastmod>2026-09-24T05:12:15.680Z</lastmod>
-  </url>
-  <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/assignments/index.html</loc>
-    <lastmod>2026-09-29T06:04:48.459Z</lastmod>
+    <loc>https://yu-zhaoxia.github.io/STAT210/lectures/02-lecture.html</loc>
+    <lastmod>2026-09-29T05:29:10.562Z</lastmod>
   </url>
   <url>
     <loc>https://yu-zhaoxia.github.io/STAT210/index.html</loc>
     <lastmod>2026-09-29T06:06:02.379Z</lastmod>
   </url>
   <url>
-    <loc>https://yu-zhaoxia.github.io/STAT210/lectures/02-lecture.html</loc>
-    <lastmod>2026-09-29T05:29:10.562Z</lastmod>
+    <loc>https://yu-zhaoxia.github.io/STAT210/assignments/index.html</loc>
+    <lastmod>2026-09-30T19:12:11.399Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/about.html</loc>
+    <lastmod>2026-09-24T05:12:15.680Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/assignments/assignment1.html</loc>
+    <lastmod>2026-09-29T05:59:22.421Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/exams/index.html</loc>
+    <lastmod>2026-09-24T05:12:15.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/lectures/01-lecture.html</loc>
+    <lastmod>2026-09-24T19:17:19.550Z</lastmod>
+  </url>
+  <url>
+    <loc>https://yu-zhaoxia.github.io/STAT210/lectures/03-lecture.html</loc>
+    <lastmod>2026-09-30T19:22:10.400Z</lastmod>
   </url>
 </urlset>

@@ -4,322 +4,7 @@
     "href": "lectures/index.html",
     "title": "Lecture Notes",
     "section": "",
-    "text": "Simple Linear Regression\n\n1 — Introduction; pdf\n2 — Inference; pdf\n3 — Inference (cont.); pdf\n4 — ANOVA and Diagnostics; pdf\n5 — Diagnostics; pdf\n6 — Lack of Fit Test and Data Transformation; pdf\n\nMultiple Linear Regression\n\n7 — Introduction; pdf\n8 — Inference; pdf\n9 — Sums of Squares, ANOVA, F-tests; pdf\n10 — Extra Sums of Squares, Partial F Tests; pdf\n11 — Multicollinearity; pdf\n12 — Categorical Variables; pdf\n13 — Interactions; pdf\n14, 15 — Model Selection; pdf\n16 — Outliers; pdf\n17 — Influential Points; pdf\n\nAdditional Topics\n\n18 — Weighted Least Squares; pdf"
-  },
-  {
-    "objectID": "lectures/01-lecture.html",
-    "href": "lectures/01-lecture.html",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”\n\n\n\n\n\nGalton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line.\n\n\n\n\n\n\n\n\n\n\n\n\nGalton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”. \n\n\n\n\n\n\n\n\n\n\n1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests\n\n\n\n\n\nFoundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences\n\n\n\n\n\n\nResponse variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Pisa tower data\npisa &lt;- data.frame(\n  obs  = 1:13,\n  year = 75:87,\n  lean = c(642, 644, 656, 667, 673, 688, \n           696, 698, 713, 717, 725, 742, 757)\n)\n\n# Scatter plot with regression line\nplot(pisa$year, pisa$lean,\n     pch = 19, col = \"blue\",\n     xlab = \"Year (19xx)\",\n     ylab = \"Lean (mm)\",\n     main = \"Leaning of the Pisa Tower Over Time\")\n\n# Add regression line\nfit &lt;- lm(lean ~ year, data = pisa)\nabline(fit, col = \"red\", lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\nGalaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#history-of-regression",
-    "href": "lectures/01-lecture.html#history-of-regression",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#regression-towards-mediocrity",
-    "href": "lectures/01-lecture.html#regression-towards-mediocrity",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "Galton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#regression-to-the-mean",
-    "href": "lectures/01-lecture.html#regression-to-the-mean",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "Galton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#after-galton",
-    "href": "lectures/01-lecture.html#after-galton",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#why-do-we-still-need-to-learn-linear-regression",
-    "href": "lectures/01-lecture.html#why-do-we-still-need-to-learn-linear-regression",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "Foundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-leaning-tower-of-pisa",
-    "href": "lectures/01-lecture.html#example-leaning-tower-of-pisa",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "Response variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-leaning-tower-of-pisa-1",
-    "href": "lectures/01-lecture.html#example-leaning-tower-of-pisa-1",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "Code\n# Pisa tower data\npisa &lt;- data.frame(\n  obs  = 1:13,\n  year = 75:87,\n  lean = c(642, 644, 656, 667, 673, 688, \n           696, 698, 713, 717, 725, 742, 757)\n)\n\n# Scatter plot with regression line\nplot(pisa$year, pisa$lean,\n     pch = 19, col = \"blue\",\n     xlab = \"Year (19xx)\",\n     ylab = \"Lean (mm)\",\n     main = \"Leaning of the Pisa Tower Over Time\")\n\n# Add regression line\nfit &lt;- lm(lean ~ year, data = pisa)\nabline(fit, col = \"red\", lwd = 2)"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-hubbles-law-1929",
-    "href": "lectures/01-lecture.html#example-hubbles-law-1929",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "",
-    "text": "Galaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#simple-linear-regression",
-    "href": "lectures/01-lecture.html#simple-linear-regression",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.1 Simple Linear Regression",
-    "text": "2.1 Simple Linear Regression\n\nIn a Simple Linear Regression Model, a single predictor (independent/explanatory variable) is used to predict a response/dependent variable"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#simple-linear-regression-1",
-    "href": "lectures/01-lecture.html#simple-linear-regression-1",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.2 Simple Linear Regression",
-    "text": "2.2 Simple Linear Regression\n\nA simple linear regression line describes a linear relationship between __ and __: \\[E(y|x) = \\beta_0 + \\beta_1 x\\]\nThe simple linear regression model \\[y=\\beta_0 + \\beta_1 x + \\epsilon\\] where \\(\\epsilon\\) is random error."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#notation",
-    "href": "lectures/01-lecture.html#notation",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.3 Notation",
-    "text": "2.3 Notation\n\nFor the individual \\(i\\): \\[y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\]\n\\(\\beta_0, \\beta_1\\): regression coefficients (uknown parameters)\n\n\\(\\beta_0\\): intercept\n\\(\\beta_1\\): slop\n\n\\(y_i\\): observed response value of individual \\(i\\)\n\\(x_i\\): observed predictor value of individual \\(i\\)\n\\(\\epsilon_i\\): random error of individual \\(i\\)"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#assumptions-basic-a",
-    "href": "lectures/01-lecture.html#assumptions-basic-a",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.4 Assumptions: Basic (a)",
-    "text": "2.4 Assumptions: Basic (a)\n\nBasic assumptions\n\nLinearity: The relationship between the predictor and the mean of the response is linear. \\[E(y_i|x) = \\beta_0 + \\beta_1 x_i\\] Equivalently, \\[E(\\epsilon)=0\\]\nUncorrelated errors: The errors are uncorrelated. \\[Cov(\\epsilon_i, \\epsilon_j)=0, \\quad i\\neq j\\]\nHomoscedasticity: The errors have constant variance at all levels of the predictor. \\[Var(\\epsilon_i)=\\sigma^2, i=1, \\cdots, n\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#assumptions-stronger-b",
-    "href": "lectures/01-lecture.html#assumptions-stronger-b",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.5 Assumptions: Stronger (b)",
-    "text": "2.5 Assumptions: Stronger (b)\n\nStronger assumptions\n\nLinearity\nIndependence: The errors are independent.\nHomoscedasticity\nNormality: The errors are normally distributed.\n\nThe above assumptions are equivalent to \\[\\epsilon_1, \\cdots, \\epsilon_n \\overset{iid} \\sim N(0, \\sigma^2)\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#implications-of-assumptions-a",
-    "href": "lectures/01-lecture.html#implications-of-assumptions-a",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.6 Implications of Assumptions (a)",
-    "text": "2.6 Implications of Assumptions (a)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the basic assumptions (a) or (b), we have\n\n\\(y_i\\) is a random variable\n\\(E(y_i|x_i) = \\beta_0 + \\beta_1 x_i\\)\n\\(Var(y_i|x_i) = \\sigma^2\\)\n\\(Cov(y_i, y_j|x_i, x_j)=0, i\\neq j\\),"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#implications-of-assumptions-b",
-    "href": "lectures/01-lecture.html#implications-of-assumptions-b",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "2.7 Implications of Assumptions (b)",
-    "text": "2.7 Implications of Assumptions (b)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the assumptions (b), we have\n\n\\(y_i \\sim N(\\beta_0 + \\beta_1 x_i, \\sigma^2)\\)\n\\(y_1, \\cdots, y_n\\) are independent"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#estimate-coefficients",
-    "href": "lectures/01-lecture.html#estimate-coefficients",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "3.1 Estimate coefficients",
-    "text": "3.1 Estimate coefficients\n\nPredicted / Fitted values \\(\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_i\\).\nObserved errors (residuals) \\(e_i = y_i - \\hat{y}_i = y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i\\).\nSum of Squared Errors (SSE), also known as Residual Sum of Squares (RSS): \\[RSS = SSE= \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2=\\sum_{i=1}^n (y_i - \\hat\\beta_0 - \\hat\\beta_1 x_i)^2\\]\nThe Least Squares Estimation (LSE) criterion chooses \\(\\hat{\\beta}_0, \\hat{\\beta}_1\\) that minimizes RSS (SSE)."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#normal-equations",
-    "href": "lectures/01-lecture.html#normal-equations",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "3.2 Normal Equations",
-    "text": "3.2 Normal Equations\n\nThe normal equations are obtained by setting the partial derivatives of RSS with respect to \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to zero: \\[\\frac{\\partial RSS}{\\partial \\hat{\\beta}_0} = -2 \\sum_{i=1}^n (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i) = 0\\] \\[\\frac{\\partial RSS}{\\partial \\hat{\\beta}_1} = -2 \\sum_{i=1}^n x_i (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i) = 0\\]\nSolving these equations gives the least squares estimates."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#least-squares-estimates",
-    "href": "lectures/01-lecture.html#least-squares-estimates",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "3.3 Least Squares Estimates",
-    "text": "3.3 Least Squares Estimates\n\nThe least squares estimates for the coefficients are: \\[\\hat{\\beta}_1 = \\frac{\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\sum_{i=1}^n (x_i - \\bar{x})^2}\\] \\[\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\] where \\(\\bar{x} = \\frac{1}{n} \\sum_{i=1}^n x_i\\) and \\(\\bar{y} = \\frac{1}{n} \\sum_{i=1}^n y_i\\) are the sample means of \\(x\\) and \\(y\\), respectively.\n\n\\(\\hat\\beta_0, \\hat\\beta_1\\) are called least squares estimators."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#sum-of-squares-in-simple-linear-regression",
-    "href": "lectures/01-lecture.html#sum-of-squares-in-simple-linear-regression",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "3.4 Sum of Squares in Simple Linear Regression",
-    "text": "3.4 Sum of Squares in Simple Linear Regression\n\n\\(S_{yy}=\\sum_{i=1}^n (y_i - \\bar{y})^2\\), total sum of Squares of \\(y\\)\n\\(S_{xx}=\\sum_{i=1}^n (x_i - \\bar{x})^2\\), total sum of Squares of \\(x\\)\n\\(S_{xy}=\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})\\), covariance sum of Squares.\n\nThe least squares estimates can be expressed as: \\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\quad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\] It can be shown that \\(SSE=S_{yy} - \\hat\\beta_1 S_{xy} = S_{yy} - \\frac{S_{xy}^2}{S_{xx}}\\)."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#properties-of-fitted-values-and-residuals",
-    "href": "lectures/01-lecture.html#properties-of-fitted-values-and-residuals",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "3.5 Properties of Fitted Values and Residuals",
-    "text": "3.5 Properties of Fitted Values and Residuals\n\nThe sum of the residuals is zero: \\(\\sum_{i=1}^n e_i = 0\\).\nThe least squares regression line passes through the point \\((\\bar{x}, \\bar{y})\\) because \\(\\hat\\beta_0 + \\hat\\beta_1 \\bar x = \\bar y\\) (by the normal equation).\nThe sum of the observed values = the sum of the fitted values: \\[\\sum_{i=1}^n y_i = \\sum_{i=1}^n \\hat{y}_i\\]\nThe sum of the residuals weighted by the predictor values or predicted values is zero: \\[\\sum_{i=1}^n x_i e_i = 0, \\sum_{i=1}^n \\hat{y}_i e_i  = 0\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#estimate-sigma2",
-    "href": "lectures/01-lecture.html#estimate-sigma2",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "4.1 Estimate \\(\\sigma^2\\)",
-    "text": "4.1 Estimate \\(\\sigma^2\\)\n\nAn intuitive estimate of \\(\\sigma^2\\) might be: \\[s^2 = \\frac{1}{n} \\sum_{i=1}^n e_i^2 = \\frac{SSE}{n}\\]\nHowever, this estimate is biased because the residuals \\(e_i\\) are not independent and have less variability than the true errors \\(\\epsilon_i\\).\nAn unbiased estimate of \\(\\sigma^2\\) is: \\[s^2 = \\frac{1}{n-2} \\sum_{i=1}^n e_i^2 = \\frac{SSE}{n-2}=MSE\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#sum-of-squares-decomposition",
-    "href": "lectures/01-lecture.html#sum-of-squares-decomposition",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "5.1 Sum of Squares Decomposition",
-    "text": "5.1 Sum of Squares Decomposition\n\nTotal Sum of Squares (SST): \\[SST = \\sum_{i=1}^n (y_i - \\bar{y})^2\\]\nRegression Sum of Squares (SSR): \\[SSR = \\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2\\] The variation explained by the predictor (regression model).\nError Sum of Squares (SSE): \\[SSE = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#sums-of-squares",
-    "href": "lectures/01-lecture.html#sums-of-squares",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "5.2 Sums of Squares",
-    "text": "5.2 Sums of Squares\n\nIt can be shown that: \\[SST = SSR + SSE\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#coefficient-of-determination-r2",
-    "href": "lectures/01-lecture.html#coefficient-of-determination-r2",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "5.3 Coefficient of Determination \\(R^2\\)",
-    "text": "5.3 Coefficient of Determination \\(R^2\\)\n\nThe coefficient of determination \\(R^2\\) is defined as: \\[R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}\\]\n\\(R^2\\) represents the proportion of variance in the response variable that is explained by the predictor variable."
-  },
-  {
-    "objectID": "lectures/01-lecture.html#correlation",
-    "href": "lectures/01-lecture.html#correlation",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "5.4 Correlation",
-    "text": "5.4 Correlation\n\nThe correlation coefficient, \\(\\rho\\), provides a measure of the strength and direction of a linear relationship between two variables, \\(x\\) and \\(y\\).\nThe sample correlation coefficient \\(r\\) between \\(x\\) and \\(y\\) is given by: \\[r = \\frac{\\sum_{i=1}^n (x_i - \\bar x)(y_i -\\bar y)}{\\sqrt{\\sum_{i=1}^n (x_i-\\bar x)^2 \\sum_{i=1}^n (y_i - \\bar y)^2}} =\\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}}\\]\nIt can be shown that in simple linear regression, the coefficient of determination \\(R^2\\) is equal to the square of the sample correlation coefficient \\(r\\):"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#summary",
-    "href": "lectures/01-lecture.html#summary",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "5.5 Summary",
-    "text": "5.5 Summary\n\nLSE of \\(\\beta_0, \\beta_1\\): \\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\quad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\]\nVariance estimate: \\[s^2 = \\frac{SSE}{n-2}= \\frac{1}{n-2} (S_{yy}- \\frac{S_{xy}^2}{S_{xx}})\\]\nCoefficient of determination: \\[R^2 = \\frac{SSR}{SST} = \\frac{SST-SSE}{SST} = \\frac{S_{xy}^2}{S_{xx} S_{yy}} = r^2\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#useful-formulas",
-    "href": "lectures/01-lecture.html#useful-formulas",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "5.6 Useful Formulas",
-    "text": "5.6 Useful Formulas\n\nUseful formulas for calculating \\(S_{XX}, S_{YY}, S_{XY}\\): \\[\\sum_{i=1}^n (x_i - \\bar x)^2 = \\sum_{i=1}^n x_i^2 - n \\bar x^2\\] \\[\\sum_{i=1}^n (y_i - \\bar y)^2 = \\sum_{i=1}^n y_i^2 - n \\bar y^2\\] \\[\\sum_{i=1}^n (x_i - \\bar x)(y_i - \\bar y) = \\sum_{i=1}^n x_i y_i - n \\bar x \\bar y\\]\nSufficient statistics for conducting regression analysis : \\(n, \\sum x_i, \\sum y_i, \\sum x_i^2, \\sum y_i^2, \\sum x_i y_i\\)"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-battery-data",
-    "href": "lectures/01-lecture.html#example-battery-data",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.1 Example: Battery data",
-    "text": "6.1 Example: Battery data\nBackground: Predicting cycle life of lithium-ion batteries from initial cycles\nSource: MathWorks Predictive Maintenance Toolbox\n\n\\(x\\): difference in discharge capacity as a function of voltage between 100th and 10th cycle\n\\(y\\): cycle life (number of cycles until the battery capacity falls below 80% of its initial capacity)\nlog10 both variables to get a linear relationship"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-battery-data-1",
-    "href": "lectures/01-lecture.html#example-battery-data-1",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.2 Example: Battery data",
-    "text": "6.2 Example: Battery data\nScatter plot:\n\n\nCode\nbattery=read.csv(\"../data/battery.csv\")\n#names(battery)\n#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-battery-data-2",
-    "href": "lectures/01-lecture.html#example-battery-data-2",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.3 Example: Battery data",
-    "text": "6.3 Example: Battery data\n\nFit a linear regression\n\n\n\nCode\nfit &lt;- lm(log10(cycleLife) ~ log10(DeltaQvar), data = battery)\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")\nabline(fit, col=\"red\", lwd=2)"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-battery-data-3",
-    "href": "lectures/01-lecture.html#example-battery-data-3",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.4 Example: Battery data",
-    "text": "6.4 Example: Battery data\n\nSummary of the fitted model"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#example-battery-data-4",
-    "href": "lectures/01-lecture.html#example-battery-data-4",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.5 Example: Battery data",
-    "text": "6.5 Example: Battery data\nDo the calculations ``manually’’:\n\nsufficient statistics:\n\n\n\nCode\nn = nrow(battery)\nsum_x = sum(log10(battery$DeltaQvar))\nsum_y = sum(log10(battery$cycleLife))\nsum_x2 = sum(log10(battery$DeltaQvar)^2)\nsum_y2 = sum(log10(battery$cycleLife)^2)\nsum_xy = sum(log10(battery$DeltaQvar)*log10(battery$cycleLife))\nn; sum_x; sum_y; sum_x2; sum_y2; sum_xy\n\n\n[1] 41\n\n\n[1] -149.953\n\n\n[1] 115.0934\n\n\n[1] 554.024\n\n\n[1] 324.0225\n\n\n[1] -423.0244\n\n\nCode\nmean_x = sum_x/n\nmean_y = sum_y/n\nmean_x; mean_y\n\n\n[1] -3.65739\n\n\n[1] 2.807155\n\n\nCode\nS_xx = sum_x2 - n*mean_x^2\nS_yy = sum_y2 - n*mean_y^2\nS_xy = sum_xy - n*mean_x*mean_y\nS_xx; S_yy; S_xy\n\n\n[1] 5.587388\n\n\n[1] 0.9375112\n\n\n[1] -2.083033\n\n\nCode\nb1_hat = S_xy/S_xx\nb0_hat = mean_y - b1_hat*mean_x\nb1_hat; b0_hat\n\n\n[1] -0.3728098\n\n\n[1] 1.443645\n\n\nCode\nSSE = S_yy - b1_hat*S_xy\nsigma2_hat = SSE/(n-2)\nsigma2_hat\n\n\n[1] 0.00412657"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",
-    "href": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.6 How to Calculate Simple Linear Regression Estimates",
-    "text": "6.6 How to Calculate Simple Linear Regression Estimates\nGiven summary statistics\n- \\(n = 41\\)\n- \\(\\sum x_i = -149.953,\\; \\sum y_i = 115.0934\\)\n- \\(\\sum x_i^2 = 554.024,\\; \\sum y_i^2 = 324.0225\\)\n- \\(\\sum x_i y_i = -423.0244\\)\n\nStep 1. Compute sufficient statistics\n\\[\n\\bar{x} = \\tfrac{-149.953}{41} \\approx -3.66,\n\\quad\n\\bar{y} = \\tfrac{115.0934}{41} \\approx 2.81\n\\]\n\\[\nS_{xx} = 554.024 - \\tfrac{(-149.953)^2}{41} \\approx 5.59\n\\]\n\\[\nS_{yy} = 324.0225 - \\tfrac{(115.0934)^2}{41} \\approx 0.94\n\\]\n\\[\nS_{xy} = -423.0244 - \\tfrac{(-149.953)(115.0934)}{41} \\approx -2.08\n\\]\n\nStep 2. Regression coefficients\n\\[\n\\hat\\beta_1 = \\tfrac{S_{xy}}{S_{xx}} \\approx \\tfrac{-2.08}{5.59} \\approx -0.37\n\\]\n\\[\n\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}\n   \\approx 2.81 - (-0.37)(-3.66)\n   \\approx 1.46\n\\]\n\nStep 3. Error variance\n\\[\n\\hat\\sigma^2 = \\tfrac{1}{n-2}\\left(S_{yy} - \\hat\\beta_1 S_{xy}\\right)\n= \\tfrac{1}{39}(0.94 - (-0.37)(-2.08))\n\\approx \\tfrac{0.17}{39}\n\\]\n\\[\n\\hat\\sigma \\approx  \\sqrt{\\ 0.0044} \\approx 0.066;\n\\]"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#interpretation-of-coefficients",
-    "href": "lectures/01-lecture.html#interpretation-of-coefficients",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.7 Interpretation of coefficients",
-    "text": "6.7 Interpretation of coefficients\n\n\\(\\hat\\beta_1 \\approx -0.37\\): For a one unit increase in log10(DeltaQvar), the expected change in log10(cycleLife) is a decrease of approximately 0.37 units.\n\\(\\hat\\beta_0 \\approx 1.46\\):"
-  },
-  {
-    "objectID": "lectures/01-lecture.html#coefficient-of-determination-1",
-    "href": "lectures/01-lecture.html#coefficient-of-determination-1",
-    "title": "Lec 01: Introduction to Simple Linear Regression",
-    "section": "6.8 Coefficient of Determination",
-    "text": "6.8 Coefficient of Determination\n\n\\(R^2 = \\frac{S_{xy}^2}{S_{xx} S_{yy}} \\approx \\frac{(-2.08)^2}{5.59 \\times 0.94} \\approx 0.82\\)\nAbout 82% of the variability in log10(cycleLife) can be explained by the linear relationship with log10(DeltaQvar).\n\\(r = \\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}} \\approx \\frac{-2.08}{\\sqrt{5.59 \\times 0.94}} \\approx -0.91\\).\nThe strong negative correlation (-0.91) indicates a strong inverse linear relationship between log10(DeltaQvar) and log10(cycleLife).\nWe will learn more about how to interpret the coefficients when transformation is used in later lectures."
-  },
-  {
-    "objectID": "exams/index.html",
-    "href": "exams/index.html",
-    "title": "Exams",
-    "section": "",
-    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
-  },
-  {
-    "objectID": "assignments/assignment1.html",
-    "href": "assignments/assignment1.html",
-    "title": "STAT200C Assignment 1",
-    "section": "",
-    "text": "Most data used in class or the assignments can be found here."
-  },
-  {
-    "objectID": "assignments/assignment1.html#section",
-    "href": "assignments/assignment1.html#section",
-    "title": "STAT200C Assignment 1",
-    "section": "1.",
-    "text": "1.\nA subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
-  },
-  {
-    "objectID": "assignments/assignment1.html#section-1",
-    "href": "assignments/assignment1.html#section-1",
-    "title": "STAT200C Assignment 1",
-    "section": "2.",
-    "text": "2.\nIn one simple linear regression model, we have sample size \\(n=10\\), \\(\\bar{x}=1.03\\), \\(\\bar{y}=2.51\\),\n\\[\n\\sum_{i=1}^{n} x_i^{2}=20.37,\\qquad\n\\sum_{i=1}^{n} y_i^{2}=116.56,\\qquad\n\\sum_{i=1}^{n} x_i y_i=46.85.\n\\]\na) Find the values of the least squares estimators: \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\nb) Calculate \\(\\mathrm{SST}\\), \\(\\mathrm{SSR}\\), and \\(\\mathrm{SSE}\\).\nc) Calculate the sample estimate of the variance \\(\\sigma^{2}\\) for the regression model.\nd) What is the value of \\(R^{2}\\) here?\nHint. The following formulae may be useful (can be used without proof):\n\\[\n\\sum (x_i-\\bar{x})^2\n=\n\\sum x_i^2-n\\bar{x}^{\\,2},\n\\]\n\\[\n\\sum (x_i-\\bar{x})(y_i-\\bar{y})\n=\n\\sum x_i y_i-n\\bar{x}\\,\\bar{y}.\n\\]"
-  },
-  {
-    "objectID": "assignments/assignment1.html#section-2",
-    "href": "assignments/assignment1.html#section-2",
-    "title": "STAT200C Assignment 1",
-    "section": "3.",
-    "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "assignments/index.html",
-    "href": "assignments/index.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "STAT210 Assignment 1: Due on Friday, October 9, 2026"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "HomePage",
-    "section": "",
-    "text": "Welcome to the STAT210 course website."
-  },
-  {
-    "objectID": "index.html#course-materials",
-    "href": "index.html#course-materials",
-    "title": "HomePage",
-    "section": "Course materials",
-    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
+    "text": "Simple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nSep 24\n1 — Introduction\nPDF\n\n\nSep 29\n2 — Inference\nPDF\n\n\nOct 1\n3 — Inference\nPDF\n\n\nOct 6\n4 — ANOVA and Diagnostics\nPDF\n\n\nOct 8\n5 — Diagnostics\nPDF\n\n\nOct 13\n6 — Lack of Fit Test and Data Transformation\nPDF\n\n\n\n\n\nMultiple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nOct 15\n7 — Introduction\nPDF\n\n\nOct 20\n8 — Inference\nPDF\n\n\nOct 22\n9 — Sums of Squares, ANOVA, F-tests\nPDF\n\n\nOct 27\n10 — Extra Sums of Squares, Partial F Tests\nPDF\n\n\nOct 29\n11 — Multicollinearity\nPDF\n\n\n\nNov 3: Midterm\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nNov 5\n12 — Categorical Variables\nPDF\n\n\nNov 10\n13 — Interactions\nPDF\n\n\nNov 12\n14 — Model Selection\nPDF\n\n\nNov 17\n15 — Model Selection\nPDF\n\n\nNov 19\n16 — Outliers\nPDF\n\n\nNov 24\n17 — Influential Points\nPDF\n\n\n\n\n\nAdditional Topics\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nDec 1\n18 — Weighted Least Squares\nPDF\n\n\nDec 3\n[19 — TBA]\n[PDF]"
   },
   {
     "objectID": "lectures/02-lecture.html",
@@ -586,5 +271,327 @@
     "title": "Lec 02: Inference In Simple Linear Regressionn",
     "section": "6.11 Example: Mount Airy and Charleston",
     "text": "6.11 Example: Mount Airy and Charleston\n\n\nCode\nknitr::include_graphics(\"../images/clipboard-690570661.png\")"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "HomePage",
+    "section": "",
+    "text": "Welcome to the STAT210 course website."
+  },
+  {
+    "objectID": "index.html#course-materials",
+    "href": "index.html#course-materials",
+    "title": "HomePage",
+    "section": "Course materials",
+    "text": "Course materials\n\nLecture Notes\nAssignments\nExams"
+  },
+  {
+    "objectID": "assignments/index.html",
+    "href": "assignments/index.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "STAT210 Assignment 1: Due on Friday, October 9, 2026\nSTAT210 Assignment 2: Due on Monday, October 26, 2026\nSTAT210 Assignment 3: Due on Monday, November 16, 2026\nSTAT210 Assignment 4: Due on Monday, December 7, 2026"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "assignments/assignment1.html",
+    "href": "assignments/assignment1.html",
+    "title": "STAT200C Assignment 1",
+    "section": "",
+    "text": "Most data used in class or the assignments can be found here."
+  },
+  {
+    "objectID": "assignments/assignment1.html#section",
+    "href": "assignments/assignment1.html#section",
+    "title": "STAT200C Assignment 1",
+    "section": "1.",
+    "text": "1.\nA subset of observations were randomly selected from the cars dataset. There are two variables: speed (numeric speed in mph) and dist (numeric stopping distance in ft). We fit a linear model and extracted the summary of the linear model in R.\n\n\n\nCall:\nlm(formula = dist ~ speed, data = cars_sub)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-25.637  -8.143  -1.974   6.110  47.037 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -18.9899     7.3719  -2.576    0.014 *  \nspeed         3.8314     0.4511   8.493  2.6e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 13.65 on 38 degrees of freedom\nMultiple R-squared:  0.6549,    Adjusted R-squared:  0.6459 \nF-statistic: 72.13 on 1 and 38 DF,  p-value: 2.603e-10\n\n\nBased on the summary output, answer the following questions. Please (1) use consistent notation as in the lecture slides and (2) provide justifications (e.g., the questions you use to do the derivations/calculations). Hint: all the formulas you need are in Lecture 03.\na) What is the sample size \\(n\\)?\nb) What is the value of \\(s^2\\), the estimate of the error variance \\(\\sigma^2\\)? What is \\(SSE\\)?\nc) Based on the standard error of \\(\\hat{\\beta}_1\\), and other information you have found in a) and b), find the value of \\(S_{xx}\\). Then find the value of \\(SSR\\) (sum of squares of regression).\nd) Find the value of \\(SST\\) (total sum of squares).\ne) In general, although we cannot find \\(\\bar{x}\\) from the summary data, we can find \\(\\bar{x}^2\\). For this problem, because distance is greater than zero, we can find \\(\\bar{x}\\). Find its value, then the value of \\(\\bar{y}\\).\nf) Find a 95% confidence interval for \\(E[y \\mid x=20]\\).\ng) Find a 95% prediction interval for a new observation when \\(x=20\\)."
+  },
+  {
+    "objectID": "assignments/assignment1.html#section-1",
+    "href": "assignments/assignment1.html#section-1",
+    "title": "STAT200C Assignment 1",
+    "section": "2.",
+    "text": "2.\nIn one simple linear regression model, we have sample size \\(n=10\\), \\(\\bar{x}=1.03\\), \\(\\bar{y}=2.51\\),\n\\[\n\\sum_{i=1}^{n} x_i^{2}=20.37,\\qquad\n\\sum_{i=1}^{n} y_i^{2}=116.56,\\qquad\n\\sum_{i=1}^{n} x_i y_i=46.85.\n\\]\na) Find the values of the least squares estimators: \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\).\nb) Calculate \\(\\mathrm{SST}\\), \\(\\mathrm{SSR}\\), and \\(\\mathrm{SSE}\\).\nc) Calculate the sample estimate of the variance \\(\\sigma^{2}\\) for the regression model.\nd) What is the value of \\(R^{2}\\) here?\nHint. The following formulae may be useful (can be used without proof):\n\\[\n\\sum (x_i-\\bar{x})^2\n=\n\\sum x_i^2-n\\bar{x}^{\\,2},\n\\]\n\\[\n\\sum (x_i-\\bar{x})(y_i-\\bar{y})\n=\n\\sum x_i y_i-n\\bar{x}\\,\\bar{y}.\n\\]"
+  },
+  {
+    "objectID": "assignments/assignment1.html#section-2",
+    "href": "assignments/assignment1.html#section-2",
+    "title": "STAT200C Assignment 1",
+    "section": "3.",
+    "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
+  },
+  {
+    "objectID": "exams/index.html",
+    "href": "exams/index.html",
+    "title": "Exams",
+    "section": "",
+    "text": "Midterm (00, Nov 00, 9:30-10:50am)\nFinal (Thu, Dec 10, 8:00-10:00am)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html",
+    "href": "lectures/01-lecture.html",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”\n\n\n\n\n\nGalton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line.\n\n\n\n\n\n\n\n\n\n\n\n\nGalton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”. \n\n\n\n\n\n\n\n\n\n\n1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests\n\n\n\n\n\nFoundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences\n\n\n\n\n\n\nResponse variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Pisa tower data\npisa &lt;- data.frame(\n  obs  = 1:13,\n  year = 75:87,\n  lean = c(642, 644, 656, 667, 673, 688, \n           696, 698, 713, 717, 725, 742, 757)\n)\n\n# Scatter plot with regression line\nplot(pisa$year, pisa$lean,\n     pch = 19, col = \"blue\",\n     xlab = \"Year (19xx)\",\n     ylab = \"Lean (mm)\",\n     main = \"Leaning of the Pisa Tower Over Time\")\n\n# Add regression line\nfit &lt;- lm(lean ~ year, data = pisa)\nabline(fit, col = \"red\", lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\nGalaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#history-of-regression",
+    "href": "lectures/01-lecture.html#history-of-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "1700: Newton wrote normal equations for least squares, several other researchers did similar calculations\n1805: Legendre published method of least squares\n1809: Gauss claimed to have used least squares since 1795\n1821: Gauss published his method of least squares, introduced maximum likelihood and normal distribution, discussed optimality\n1886: Galton published “Regression towards mediocrity in hereditary stature”"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#regression-towards-mediocrity",
+    "href": "lectures/01-lecture.html#regression-towards-mediocrity",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Galton, F., 1886. Regression towards mediocrity in hereditary stature. The Journal of the Anthropological Institute of Great Britain and Ireland, 15, pp.246-263.\nProvided one of the earliest scatterplots with a fitted line."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#regression-to-the-mean",
+    "href": "lectures/01-lecture.html#regression-to-the-mean",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Galton observed that extreme values on one measurement tend to be associated with less extreme values on another measurement.\nThis phenomenon is now known as “regression to the mean”."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#after-galton",
+    "href": "lectures/01-lecture.html#after-galton",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "1896: Pearson (Galton’s student) developed correlation coefficient\n1901: Yule (Pearson’s student) developed multiple regression\n1920s: Fisher (Pearson’s student) developed analysis of variance (ANOVA), F-tests"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#why-do-we-still-need-to-learn-linear-regression",
+    "href": "lectures/01-lecture.html#why-do-we-still-need-to-learn-linear-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Foundation of statistical modeling\n\nStill widely used today\n\nBasis for many modern methods (GLM, mixed models, ridge, Lasso, deep learning layers, …)\n\nInterpretability\n\nCoefficients have clear meaning: expected change in outcome per unit increase in predictor\n\nProvides intuition about relationships between variables\n\nPractical importance\n\nStill used daily in almost all areas: medicine, economics, engineering, and social sciences"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-leaning-tower-of-pisa",
+    "href": "lectures/01-lecture.html#example-leaning-tower-of-pisa",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Response variable: Lean of the tower (in mm)\nPredictor variable: Year (19xx)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-leaning-tower-of-pisa-1",
+    "href": "lectures/01-lecture.html#example-leaning-tower-of-pisa-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Code\n# Pisa tower data\npisa &lt;- data.frame(\n  obs  = 1:13,\n  year = 75:87,\n  lean = c(642, 644, 656, 667, 673, 688, \n           696, 698, 713, 717, 725, 742, 757)\n)\n\n# Scatter plot with regression line\nplot(pisa$year, pisa$lean,\n     pch = 19, col = \"blue\",\n     xlab = \"Year (19xx)\",\n     ylab = \"Lean (mm)\",\n     main = \"Leaning of the Pisa Tower Over Time\")\n\n# Add regression line\nfit &lt;- lm(lean ~ year, data = pisa)\nabline(fit, col = \"red\", lwd = 2)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-hubbles-law-1929",
+    "href": "lectures/01-lecture.html#example-hubbles-law-1929",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "",
+    "text": "Galaxies are moving away from us\nthe farther away a galaxy is, the faster it is moving away"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#simple-linear-regression",
+    "href": "lectures/01-lecture.html#simple-linear-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.1 Simple Linear Regression",
+    "text": "2.1 Simple Linear Regression\n\nIn a Simple Linear Regression Model, a single predictor (independent/explanatory variable) is used to predict a response/dependent variable"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#simple-linear-regression-1",
+    "href": "lectures/01-lecture.html#simple-linear-regression-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.2 Simple Linear Regression",
+    "text": "2.2 Simple Linear Regression\n\nA simple linear regression line describes a linear relationship between __ and __: \\[E(y|x) = \\beta_0 + \\beta_1 x\\]\nThe simple linear regression model \\[y=\\beta_0 + \\beta_1 x + \\epsilon\\] where \\(\\epsilon\\) is random error."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#notation",
+    "href": "lectures/01-lecture.html#notation",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.3 Notation",
+    "text": "2.3 Notation\n\nFor the individual \\(i\\): \\[y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\]\n\\(\\beta_0, \\beta_1\\): regression coefficients (uknown parameters)\n\n\\(\\beta_0\\): intercept\n\\(\\beta_1\\): slop\n\n\\(y_i\\): observed response value of individual \\(i\\)\n\\(x_i\\): observed predictor value of individual \\(i\\)\n\\(\\epsilon_i\\): random error of individual \\(i\\)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#assumptions-basic-a",
+    "href": "lectures/01-lecture.html#assumptions-basic-a",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.4 Assumptions: Basic (a)",
+    "text": "2.4 Assumptions: Basic (a)\n\nBasic assumptions\n\nLinearity: The relationship between the predictor and the mean of the response is linear. \\[E(y_i|x) = \\beta_0 + \\beta_1 x_i\\] Equivalently, \\[E(\\epsilon)=0\\]\nUncorrelated errors: The errors are uncorrelated. \\[Cov(\\epsilon_i, \\epsilon_j)=0, \\quad i\\neq j\\]\nHomoscedasticity: The errors have constant variance at all levels of the predictor. \\[Var(\\epsilon_i)=\\sigma^2, i=1, \\cdots, n\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#assumptions-stronger-b",
+    "href": "lectures/01-lecture.html#assumptions-stronger-b",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.5 Assumptions: Stronger (b)",
+    "text": "2.5 Assumptions: Stronger (b)\n\nStronger assumptions\n\nLinearity\nIndependence: The errors are independent.\nHomoscedasticity\nNormality: The errors are normally distributed.\n\nThe above assumptions are equivalent to \\[\\epsilon_1, \\cdots, \\epsilon_n \\overset{iid} \\sim N(0, \\sigma^2)\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#implications-of-assumptions-a",
+    "href": "lectures/01-lecture.html#implications-of-assumptions-a",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.6 Implications of Assumptions (a)",
+    "text": "2.6 Implications of Assumptions (a)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the basic assumptions (a) or (b), we have\n\n\\(y_i\\) is a random variable\n\\(E(y_i|x_i) = \\beta_0 + \\beta_1 x_i\\)\n\\(Var(y_i|x_i) = \\sigma^2\\)\n\\(Cov(y_i, y_j|x_i, x_j)=0, i\\neq j\\),"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#implications-of-assumptions-b",
+    "href": "lectures/01-lecture.html#implications-of-assumptions-b",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "2.7 Implications of Assumptions (b)",
+    "text": "2.7 Implications of Assumptions (b)\nRegression Model: \\(y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad i=1, \\cdots, n\\)\n\nFor a given \\(x_i\\), under the assumptions (b), we have\n\n\\(y_i \\sim N(\\beta_0 + \\beta_1 x_i, \\sigma^2)\\)\n\\(y_1, \\cdots, y_n\\) are independent"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#estimate-coefficients",
+    "href": "lectures/01-lecture.html#estimate-coefficients",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.1 Estimate coefficients",
+    "text": "3.1 Estimate coefficients\n\nPredicted / Fitted values \\(\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_i\\).\nObserved errors (residuals) \\(e_i = y_i - \\hat{y}_i = y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i\\).\nSum of Squared Errors (SSE), also known as Residual Sum of Squares (RSS): \\[RSS = SSE= \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2=\\sum_{i=1}^n (y_i - \\hat\\beta_0 - \\hat\\beta_1 x_i)^2\\]\nThe Least Squares Estimation (LSE) criterion chooses \\(\\hat{\\beta}_0, \\hat{\\beta}_1\\) that minimizes RSS (SSE)."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#normal-equations",
+    "href": "lectures/01-lecture.html#normal-equations",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.2 Normal Equations",
+    "text": "3.2 Normal Equations\n\nThe normal equations are obtained by setting the partial derivatives of RSS with respect to \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to zero: \\[\\frac{\\partial RSS}{\\partial \\hat{\\beta}_0} = -2 \\sum_{i=1}^n (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i) = 0\\] \\[\\frac{\\partial RSS}{\\partial \\hat{\\beta}_1} = -2 \\sum_{i=1}^n x_i (y_i - \\hat{\\beta}_0 - \\hat{\\beta}_1 x_i) = 0\\]\nSolving these equations gives the least squares estimates."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#least-squares-estimates",
+    "href": "lectures/01-lecture.html#least-squares-estimates",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.3 Least Squares Estimates",
+    "text": "3.3 Least Squares Estimates\n\nThe least squares estimates for the coefficients are: \\[\\hat{\\beta}_1 = \\frac{\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\sum_{i=1}^n (x_i - \\bar{x})^2}\\] \\[\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\] where \\(\\bar{x} = \\frac{1}{n} \\sum_{i=1}^n x_i\\) and \\(\\bar{y} = \\frac{1}{n} \\sum_{i=1}^n y_i\\) are the sample means of \\(x\\) and \\(y\\), respectively.\n\n\\(\\hat\\beta_0, \\hat\\beta_1\\) are called least squares estimators."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#sum-of-squares-in-simple-linear-regression",
+    "href": "lectures/01-lecture.html#sum-of-squares-in-simple-linear-regression",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.4 Sum of Squares in Simple Linear Regression",
+    "text": "3.4 Sum of Squares in Simple Linear Regression\n\n\\(S_{yy}=\\sum_{i=1}^n (y_i - \\bar{y})^2\\), total sum of Squares of \\(y\\)\n\\(S_{xx}=\\sum_{i=1}^n (x_i - \\bar{x})^2\\), total sum of Squares of \\(x\\)\n\\(S_{xy}=\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})\\), covariance sum of Squares.\n\nThe least squares estimates can be expressed as: \\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\quad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\] It can be shown that \\(SSE=S_{yy} - \\hat\\beta_1 S_{xy} = S_{yy} - \\frac{S_{xy}^2}{S_{xx}}\\)."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#properties-of-fitted-values-and-residuals",
+    "href": "lectures/01-lecture.html#properties-of-fitted-values-and-residuals",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "3.5 Properties of Fitted Values and Residuals",
+    "text": "3.5 Properties of Fitted Values and Residuals\n\nThe sum of the residuals is zero: \\(\\sum_{i=1}^n e_i = 0\\).\nThe least squares regression line passes through the point \\((\\bar{x}, \\bar{y})\\) because \\(\\hat\\beta_0 + \\hat\\beta_1 \\bar x = \\bar y\\) (by the normal equation).\nThe sum of the observed values = the sum of the fitted values: \\[\\sum_{i=1}^n y_i = \\sum_{i=1}^n \\hat{y}_i\\]\nThe sum of the residuals weighted by the predictor values or predicted values is zero: \\[\\sum_{i=1}^n x_i e_i = 0, \\sum_{i=1}^n \\hat{y}_i e_i  = 0\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#estimate-sigma2",
+    "href": "lectures/01-lecture.html#estimate-sigma2",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "4.1 Estimate \\(\\sigma^2\\)",
+    "text": "4.1 Estimate \\(\\sigma^2\\)\n\nAn intuitive estimate of \\(\\sigma^2\\) might be: \\[s^2 = \\frac{1}{n} \\sum_{i=1}^n e_i^2 = \\frac{SSE}{n}\\]\nHowever, this estimate is biased because the residuals \\(e_i\\) are not independent and have less variability than the true errors \\(\\epsilon_i\\).\nAn unbiased estimate of \\(\\sigma^2\\) is: \\[s^2 = \\frac{1}{n-2} \\sum_{i=1}^n e_i^2 = \\frac{SSE}{n-2}=MSE\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#sum-of-squares-decomposition",
+    "href": "lectures/01-lecture.html#sum-of-squares-decomposition",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.1 Sum of Squares Decomposition",
+    "text": "5.1 Sum of Squares Decomposition\n\nTotal Sum of Squares (SST): \\[SST = \\sum_{i=1}^n (y_i - \\bar{y})^2\\]\nRegression Sum of Squares (SSR): \\[SSR = \\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2\\] The variation explained by the predictor (regression model).\nError Sum of Squares (SSE): \\[SSE = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#sums-of-squares",
+    "href": "lectures/01-lecture.html#sums-of-squares",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.2 Sums of Squares",
+    "text": "5.2 Sums of Squares\n\nIt can be shown that: \\[SST = SSR + SSE\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#coefficient-of-determination-r2",
+    "href": "lectures/01-lecture.html#coefficient-of-determination-r2",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.3 Coefficient of Determination \\(R^2\\)",
+    "text": "5.3 Coefficient of Determination \\(R^2\\)\n\nThe coefficient of determination \\(R^2\\) is defined as: \\[R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}\\]\n\\(R^2\\) represents the proportion of variance in the response variable that is explained by the predictor variable."
+  },
+  {
+    "objectID": "lectures/01-lecture.html#correlation",
+    "href": "lectures/01-lecture.html#correlation",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.4 Correlation",
+    "text": "5.4 Correlation\n\nThe correlation coefficient, \\(\\rho\\), provides a measure of the strength and direction of a linear relationship between two variables, \\(x\\) and \\(y\\).\nThe sample correlation coefficient \\(r\\) between \\(x\\) and \\(y\\) is given by: \\[r = \\frac{\\sum_{i=1}^n (x_i - \\bar x)(y_i -\\bar y)}{\\sqrt{\\sum_{i=1}^n (x_i-\\bar x)^2 \\sum_{i=1}^n (y_i - \\bar y)^2}} =\\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}}\\]\nIt can be shown that in simple linear regression, the coefficient of determination \\(R^2\\) is equal to the square of the sample correlation coefficient \\(r\\):"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#summary",
+    "href": "lectures/01-lecture.html#summary",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.5 Summary",
+    "text": "5.5 Summary\n\nLSE of \\(\\beta_0, \\beta_1\\): \\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\quad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\]\nVariance estimate: \\[s^2 = \\frac{SSE}{n-2}= \\frac{1}{n-2} (S_{yy}- \\frac{S_{xy}^2}{S_{xx}})\\]\nCoefficient of determination: \\[R^2 = \\frac{SSR}{SST} = \\frac{SST-SSE}{SST} = \\frac{S_{xy}^2}{S_{xx} S_{yy}} = r^2\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#useful-formulas",
+    "href": "lectures/01-lecture.html#useful-formulas",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "5.6 Useful Formulas",
+    "text": "5.6 Useful Formulas\n\nUseful formulas for calculating \\(S_{XX}, S_{YY}, S_{XY}\\): \\[\\sum_{i=1}^n (x_i - \\bar x)^2 = \\sum_{i=1}^n x_i^2 - n \\bar x^2\\] \\[\\sum_{i=1}^n (y_i - \\bar y)^2 = \\sum_{i=1}^n y_i^2 - n \\bar y^2\\] \\[\\sum_{i=1}^n (x_i - \\bar x)(y_i - \\bar y) = \\sum_{i=1}^n x_i y_i - n \\bar x \\bar y\\]\nSufficient statistics for conducting regression analysis : \\(n, \\sum x_i, \\sum y_i, \\sum x_i^2, \\sum y_i^2, \\sum x_i y_i\\)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data",
+    "href": "lectures/01-lecture.html#example-battery-data",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.1 Example: Battery data",
+    "text": "6.1 Example: Battery data\nBackground: Predicting cycle life of lithium-ion batteries from initial cycles\nSource: MathWorks Predictive Maintenance Toolbox\n\n\\(x\\): difference in discharge capacity as a function of voltage between 100th and 10th cycle\n\\(y\\): cycle life (number of cycles until the battery capacity falls below 80% of its initial capacity)\nlog10 both variables to get a linear relationship"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-1",
+    "href": "lectures/01-lecture.html#example-battery-data-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.2 Example: Battery data",
+    "text": "6.2 Example: Battery data\nScatter plot:\n\n\nCode\nbattery=read.csv(\"../data/battery.csv\")\n#names(battery)\n#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-2",
+    "href": "lectures/01-lecture.html#example-battery-data-2",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.3 Example: Battery data",
+    "text": "6.3 Example: Battery data\n\nFit a linear regression\n\n\n\nCode\nfit &lt;- lm(log10(cycleLife) ~ log10(DeltaQvar), data = battery)\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")\nabline(fit, col=\"red\", lwd=2)"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-3",
+    "href": "lectures/01-lecture.html#example-battery-data-3",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.4 Example: Battery data",
+    "text": "6.4 Example: Battery data\n\nSummary of the fitted model"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#example-battery-data-4",
+    "href": "lectures/01-lecture.html#example-battery-data-4",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.5 Example: Battery data",
+    "text": "6.5 Example: Battery data\nDo the calculations ``manually’’:\n\nsufficient statistics:\n\n\n\nCode\nn = nrow(battery)\nsum_x = sum(log10(battery$DeltaQvar))\nsum_y = sum(log10(battery$cycleLife))\nsum_x2 = sum(log10(battery$DeltaQvar)^2)\nsum_y2 = sum(log10(battery$cycleLife)^2)\nsum_xy = sum(log10(battery$DeltaQvar)*log10(battery$cycleLife))\nn; sum_x; sum_y; sum_x2; sum_y2; sum_xy\n\n\n[1] 41\n\n\n[1] -149.953\n\n\n[1] 115.0934\n\n\n[1] 554.024\n\n\n[1] 324.0225\n\n\n[1] -423.0244\n\n\nCode\nmean_x = sum_x/n\nmean_y = sum_y/n\nmean_x; mean_y\n\n\n[1] -3.65739\n\n\n[1] 2.807155\n\n\nCode\nS_xx = sum_x2 - n*mean_x^2\nS_yy = sum_y2 - n*mean_y^2\nS_xy = sum_xy - n*mean_x*mean_y\nS_xx; S_yy; S_xy\n\n\n[1] 5.587388\n\n\n[1] 0.9375112\n\n\n[1] -2.083033\n\n\nCode\nb1_hat = S_xy/S_xx\nb0_hat = mean_y - b1_hat*mean_x\nb1_hat; b0_hat\n\n\n[1] -0.3728098\n\n\n[1] 1.443645\n\n\nCode\nSSE = S_yy - b1_hat*S_xy\nsigma2_hat = SSE/(n-2)\nsigma2_hat\n\n\n[1] 0.00412657"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",
+    "href": "lectures/01-lecture.html#how-to-calculate-simple-linear-regression-estimates",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.6 How to Calculate Simple Linear Regression Estimates",
+    "text": "6.6 How to Calculate Simple Linear Regression Estimates\nGiven summary statistics\n- \\(n = 41\\)\n- \\(\\sum x_i = -149.953,\\; \\sum y_i = 115.0934\\)\n- \\(\\sum x_i^2 = 554.024,\\; \\sum y_i^2 = 324.0225\\)\n- \\(\\sum x_i y_i = -423.0244\\)\n\nStep 1. Compute sufficient statistics\n\\[\n\\bar{x} = \\tfrac{-149.953}{41} \\approx -3.66,\n\\quad\n\\bar{y} = \\tfrac{115.0934}{41} \\approx 2.81\n\\]\n\\[\nS_{xx} = 554.024 - \\tfrac{(-149.953)^2}{41} \\approx 5.59\n\\]\n\\[\nS_{yy} = 324.0225 - \\tfrac{(115.0934)^2}{41} \\approx 0.94\n\\]\n\\[\nS_{xy} = -423.0244 - \\tfrac{(-149.953)(115.0934)}{41} \\approx -2.08\n\\]\n\nStep 2. Regression coefficients\n\\[\n\\hat\\beta_1 = \\tfrac{S_{xy}}{S_{xx}} \\approx \\tfrac{-2.08}{5.59} \\approx -0.37\n\\]\n\\[\n\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}\n   \\approx 2.81 - (-0.37)(-3.66)\n   \\approx 1.46\n\\]\n\nStep 3. Error variance\n\\[\n\\hat\\sigma^2 = \\tfrac{1}{n-2}\\left(S_{yy} - \\hat\\beta_1 S_{xy}\\right)\n= \\tfrac{1}{39}(0.94 - (-0.37)(-2.08))\n\\approx \\tfrac{0.17}{39}\n\\]\n\\[\n\\hat\\sigma \\approx  \\sqrt{\\ 0.0044} \\approx 0.066;\n\\]"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#interpretation-of-coefficients",
+    "href": "lectures/01-lecture.html#interpretation-of-coefficients",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.7 Interpretation of coefficients",
+    "text": "6.7 Interpretation of coefficients\n\n\\(\\hat\\beta_1 \\approx -0.37\\): For a one unit increase in log10(DeltaQvar), the expected change in log10(cycleLife) is a decrease of approximately 0.37 units.\n\\(\\hat\\beta_0 \\approx 1.46\\):"
+  },
+  {
+    "objectID": "lectures/01-lecture.html#coefficient-of-determination-1",
+    "href": "lectures/01-lecture.html#coefficient-of-determination-1",
+    "title": "Lec 01: Introduction to Simple Linear Regression",
+    "section": "6.8 Coefficient of Determination",
+    "text": "6.8 Coefficient of Determination\n\n\\(R^2 = \\frac{S_{xy}^2}{S_{xx} S_{yy}} \\approx \\frac{(-2.08)^2}{5.59 \\times 0.94} \\approx 0.82\\)\nAbout 82% of the variability in log10(cycleLife) can be explained by the linear relationship with log10(DeltaQvar).\n\\(r = \\frac{S_{xy}}{\\sqrt{S_{xx} S_{yy}}} \\approx \\frac{-2.08}{\\sqrt{5.59 \\times 0.94}} \\approx -0.91\\).\nThe strong negative correlation (-0.91) indicates a strong inverse linear relationship between log10(DeltaQvar) and log10(cycleLife).\nWe will learn more about how to interpret the coefficients when transformation is used in later lectures."
+  },
+  {
+    "objectID": "lectures/03-lecture.html",
+    "href": "lectures/03-lecture.html",
+    "title": "Lec 02: Inference In Simple Linear Regressionn",
+    "section": "",
+    "text": "1 Intro\n\n1.0.1 Review: Lecture 01\n\nIn lecture 01, we introduced the simple linear regression model and the least squares estimation (LSE) method.\nLSE: \\[\\text{SSE} = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2 = \\sum_{i=1}^n (y_i - \\hat\\beta_0 - \\hat\\beta_1 x_i)^2\\] \\[\\{\\hat\\beta_0, \\hat\\beta_1\\} = \\arg\\min_{\\beta_0, \\beta_1} \\sum_{i=1}^n (y_i -\\beta_0 - \\beta_1 x_i)^2\\]\nThe LSEs are \\[\\hat\\beta_1 =\\frac{\\sum_{i=1}^n (x_i - \\bar{x})y_i}{\\sum_{i=1}^n (x_i - \\bar{x})^2}, \\quad \\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}.\\]\n\n\n\n1.0.2 Review: Lecture 02\n\nIn lecture 02, we discussed distribution, confidence interval, and hypothesis testing related to \\(\\beta_1\\). In particular, we showed that\n\\[\\hat\\beta_1 =\\frac{\\sum_{i=1}^n (x_i - \\bar{x})y_i}{\\sum_{i=1}^n (x_i - \\bar{x})^2}\\]\n\\(Var(\\hat\\beta_1)= \\frac{\\sigma^2}{S_{XX}}\\), where \\(S_{XX}=\\sum_{i=1}^n (x_i - \\bar{x})^2\\)\n\\[T=\\frac{\\hat\\beta_1 - \\beta_1}{s/\\sqrt{S_{xx}}} =\\frac{\\hat\\beta_1 - \\beta_1}{se(\\hat\\beta_1)} \\sim t_{n-2}\\]\n\nwhere \\(se(\\hat{\\beta_1}) =\\sqrt{\\hat{Var}(\\hat\\beta_1)}= \\sqrt{\\frac{s^2}{S_{XX}}}\\) and \\(s^2 = \\frac{SSE}{n-2}\\).\n\n\n1.0.3 Outline\n\nIn this lecture, we will continue to discuss inference. We will focus on\n\nestimating a mean response\npredicting a new response\nanalysis of variance (ANOVA)\n\n\n\n\n\n2 Distribution of \\(\\hat\\beta_0\\)\n\n2.0.1 Distribution of \\(\\hat\\beta_0\\)\n\nRecall the simple linear regression model: \\[y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad \\epsilon_i \\stackrel{iid}{\\sim} N(0, \\sigma^2), \\quad i=1,2,\\ldots,n.\\]\nThe least squares estimator of \\(\\beta_0\\) is \\[\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}.\\]\nThe expectation of \\(\\hat\\beta_0\\) is \\[\\begin{align*}\n  E(\\hat\\beta_0) &= E(\\bar{y} - \\hat\\beta_1 \\bar{x}) \\\\\n  &= E(\\bar{y}) - \\bar{x} E(\\hat\\beta_1) \\\\\n  &= \\beta_0 + \\beta_1 \\bar{x} - \\bar{x} \\beta_1 = \\beta_0.\n\\end{align*}\\]\n\n\n\n2.0.2 Distribution of \\(\\hat\\beta_0\\)\n\n\\(\\hat\\beta_0\\) is a linear function of \\(y_i\\)’s: \\[\\begin{align*}\n  \\hat\\beta_0 &= \\bar{y} - \\hat\\beta_1 \\bar{x} \\\\\n  &= \\frac{1}{n} \\sum_{i=1}^n y_i - \\frac{\\bar{x}}{S_{XX}} \\sum_{i=1}^n (x_i - \\bar{x}) y_i \\\\\n  &= \\sum_{i=1}^n \\left( \\frac{1}{n} - \\frac{\\bar{x}}{S_{XX}} (x_i - \\bar{x}) \\right) y_i.\n\\end{align*}\\]\nSince \\(\\hat\\beta_0\\) is a linear combination of \\(y_i\\)’s, it is normally distributed.\nWe have already find its mean (the LSE of \\(\\beta_0\\) is unbiased). Next, we will find its variance.\n\n\n\n2.0.3 Variance of \\(\\hat\\beta_0\\)\n\nThe variance of \\(\\hat\\beta_0\\) is \\[\\begin{align*}\n   \\text{Var}(\\hat\\beta_0) &= \\text{Var}\\left( \\sum_{i=1}^n \\left( \\frac{1}{n} - \\frac{\\bar{x}}{S_{XX}} (x_i - \\bar{x}) \\right) y_i \\right) \\\\\n   &= \\sum_{i=1}^n \\left( \\frac{1}{n} - \\frac{\\bar{x}}{S_{XX}} (x_i - \\bar{x}) \\right)^2 \\text{Var}(y_i) \\\\\n   &= \\sigma^2 \\sum_{i=1}^n \\left( \\frac{1}{n} - \\frac{\\bar{x}}{S_{XX}} (x_i - \\bar{x}) \\right)^2.\n\\end{align*}\\]\nAfter some algebra, we have \\[\\text{Var}(\\hat\\beta_0) = \\sigma^2 \\left( \\frac{1}{n} + \\frac{\\bar{x}^2}{S_{XX}} \\right).\\]\n\n\n\n2.0.4 Distribution of \\(\\hat\\beta_0\\)\n\nWe have shown that \\(\\hat\\beta_0\\) is a linear combination of \\(y_i\\)’s, so it is normally distributed. We have also found its mean and variance. Therefore, \\[\\hat\\beta_0 \\sim N\\left( \\beta_0, \\sigma^2 \\left( \\frac{1}{n} + \\frac{\\bar{x}^2}{S_{XX}} \\right) \\right).\\]\nWhen inference of \\(\\hat\\beta_0\\) is needed, we can construct a t-statistic.\nThe t-statistic for \\(\\beta_0\\) is \\[t = \\frac{\\hat\\beta_0 - \\beta_0}{s \\sqrt{\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{XX}}}} \\sim t_{n-2},\\] where \\(s^2 = \\text{SSE}/(n-2)\\) is the unbiased estimator of \\(\\sigma^2\\).\nConfidence interval and hypothesis testing for \\(\\beta_0\\) can be conducted based on the above t-statistic.\n\n\n\n2.0.5 Variance of \\(\\hat\\beta_0\\): Method 2\n\nWe present a different way to find \\(\\text{Var}(\\hat\\beta_0)\\). \\[\\begin{align*}\n  \\text{Var}(\\hat\\beta_0) &= \\text{Var}(\\bar{y} - \\hat\\beta_1 \\bar{x}) \\\\\n  &= \\text{Var}(\\bar{y}) + \\bar{x}^2 \\text{Var}(\\hat\\beta_1) - 2\\bar{x} \\text{Cov}(\\bar{y}, \\hat\\beta_1).\n\\end{align*}\\]\nNeed to find \\(\\text{Var}(\\bar{y})\\) and \\(\\text{Cov}(\\bar{y}, \\hat\\beta_1)\\).\nVariance of \\(\\bar{y}\\):\n\n\\(\\text{Var}(\\bar{y})=\\text{Var}(\\frac{1}{n}\\sum_{i=1}^n y_i ) = \\frac{1}{n^2} n \\sigma^2 = \\sigma^2/n\\)\n\n\n2.0.6 Covariance of \\(\\bar{y}\\) and \\(\\hat\\beta_1\\)\n\n\n\n2.0.7 Variance of \\(\\hat\\beta_0\\): Method 2\nPutting everything together, we have \\[\\begin{align*}\n\\text{Var}(\\hat\\beta_0)\n&= \\text{Var}(\\bar{y}) + \\bar{x}^2 \\text{Var}(\\hat\\beta_1) - 2\\bar{x} \\text{Cov}(\\bar{y}, \\hat\\beta_1) \\\\\n&= \\frac{\\sigma^2}{n} + \\bar{x}^2 \\frac{\\sigma^2}{S_{XX}} - 2\\bar{x} \\cdot 0 \\\\\n&= \\sigma^2 \\left( \\frac{1}{n} + \\frac{\\bar{x}^2}{S_{XX}} \\right).\n\\end{align*}\\] This is the same result as before.\n\n\n\n3 Cov(\\(\\hat\\beta_0\\), \\(\\hat\\beta_1\\))\n\n3.0.1 Covariance of \\(\\hat\\beta_0\\) and \\(\\hat\\beta_1\\)\n\nIn many inference problems, we need the covariance of \\(\\hat\\beta_0\\) and \\(\\hat\\beta_1\\). With normality assumptions, we can find the joint distribution of \\(\\hat\\beta_0\\) and \\(\\hat\\beta_1\\).\nCovariance of \\(\\hat\\beta_0\\) and \\(\\hat\\beta_1\\): \\[\\begin{align*}\n\\text{Cov}(\\hat\\beta_0,\\hat\\beta_1)\n&= \\text{Cov}(\\bar y - \\hat\\beta_1 \\bar x,\\; \\hat\\beta_1) \\\\\n&= \\text{Cov}(\\bar y,\\hat\\beta_1) - \\bar x\\,\\text{Var}(\\hat\\beta_1) \\\\\n&= 0 - \\bar x \\frac{\\sigma^2}{S_{XX}} \\quad\\text{(from previous results)}\\\\\n&= -\\frac{\\bar x \\sigma^2}{S_{XX}}.\n\\end{align*}\\]\n\n\n\n\n4 Mean Response\n\n4.0.1 Mean Response\n\nA common interest in regression analysis is to estimate the mean response at a given value of \\(x\\), say \\(x_h\\).\nThe mean response at \\(x_h\\) is \\[\\mu_{y|x_h} = E(y|x=x_h) = \\beta_0 + \\beta_1 x_h.\\]\nThe point estimator of \\(\\mu_{y|x_h}\\) is \\[\\hat\\mu_{y|x_h} = \\hat\\beta_0 + \\hat\\beta_1 x_h.\\]\n\n\n\n4.0.2 Distribution of \\(\\hat\\mu_{y|x_h}\\)\n\nSince \\(\\hat\\mu_{y|x_h}\\) is a linear combination of \\(\\hat\\beta_0\\) and \\(\\hat\\beta_1\\), therefore a linear combination of \\(y_i\\)’s (which are independently normal). Thus, \\(\\hat\\mu_{y|x_h}\\) is normally distributed.\nThe expectation of \\(\\hat\\mu_{y|x_h}\\) is \\[\\begin{align*}\n  E(\\hat\\mu_{y|x_h}) &= E(\\hat\\beta_0 + \\hat\\beta_1 x_h) \\\\\n  &= E(\\hat\\beta_0) + x_h E(\\hat\\beta_1) \\\\\n  &= \\beta_0 + x_h \\beta_1 = \\mu_{y|x_h}.\n\\end{align*}\\]\n\n\n\n4.0.3 Distribution of \\(\\hat\\mu_{y|x_h}\\)\n\nThe variance of \\(\\hat\\mu_{y|x_h}\\) is \\[\\begin{align*}\n  \\text{Var}(\\hat\\mu_{y|x_h}) &= \\text{Var}(\\hat\\beta_0 + \\hat\\beta_1 x_h) \\\\\n  &= \\text{Var}(\\hat\\beta_0) + x_h^2 \\text{Var}(\\hat\\beta_1) + 2 x_h \\text{Cov}(\\hat\\beta_0, \\hat\\beta_1).\n\\end{align*}\\]\nPlugging in the previous results, we have \\[\\begin{align*}\n  \\text{Var}(\\hat\\mu_{y|x_h}) &= \\sigma^2 \\left( \\frac{1}{n} + \\frac{\\bar{x}^2}{S_{XX}} \\right) + x_h^2 \\frac{\\sigma^2}{S_{XX}} + 2 x_h \\left( -\\frac{\\bar{x} \\sigma^2}{S_{XX}} \\right) \\\\\n  &= \\sigma^2 \\left( \\frac{1}{n} + \\frac{(x_h - \\bar{x})^2}{S_{XX}} \\right).\n\\end{align*}\\]\nTherefore, \\[\\hat\\mu_{y|x_h} \\sim N\\left( \\mu_{y|x_h}, \\sigma^2 \\left( \\frac{1}{n} + \\frac{(x_h - \\bar{x})^2}{S_{XX}} \\right) \\right).\\] \n\n\n\n4.0.4 Confidence Interval for Mean Response\n\nSince \\(\\hat\\mu_{y|x_h}\\) is normally distributed, we can construct a t-statistic for \\(\\mu_{y|x_h}\\):\n\n\\[t = \\frac{\\hat\\mu_{y|x_h} - \\mu_{y|x_h}}{s \\sqrt{\\frac{1}{n} + \\frac{(x_h - \\bar{x})^2}{S_{XX}}}} \\sim t_{n-2},\\] where \\(s^2 = \\text{SSE}/(n-2)\\) is the unbiased estimator of \\(\\sigma^2\\).\n\nA \\((1-\\alpha)100\\%\\) confidence interval for \\(\\mu_{y|x_h}\\) is \\[\\hat\\mu_{y|x_h} \\pm t_{\\alpha/2, n-2} \\cdot s \\sqrt{\\frac{1}{n} + \\frac{(x_h - \\bar{x})^2}{S_{XX}}},\\] where \\(t_{\\alpha/2, n-2}\\) is the \\((1-\\alpha/2)\\) quantile of the \\(t\\) distribution with \\(n-2\\) degrees of freedom. \n\n\n\n4.0.5 Example: Mount Airy and Charleston\nSummer temperature averages in Mount Airy, NC and Charleston, SC (1937-2021)\n\n\nCode\nmtair=read.csv(\"../data/mta1.csv\", head=TRUE)\nplot(mtair$MtAiry, mtair$Charl,\n     xlab=\"MtAiry\",\n     ylab=\"Charl\",\n     main=\"Mount Airy and Charleston\")\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nabline(fit, col=\"red\", lwd=2)\n\n\n\n\n\n\n\n\n\n\n\nCode\nmtair=read.csv(\"../data/mta1.csv\", head=TRUE)\nplot(mtair$MtAiry, mtair$Charl,\n     xlab=\"MtAiry\",\n     ylab=\"Charl\",\n     main=\"Mount Airy and Charleston\")\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nabline(fit, col=\"red\", lwd=2)\n\n\n\n\n\n\n\n\n\n\nWe are interested in a mean response at \\(x_h=23\\) (Charleston’s average summer temperature).\n\n\n\n4.0.6 Mean response at \\(x_h=23\\)\n\n\nCode\nx_h = 23\nnewdata &lt;- data.frame(MtAiry = x_h)\n#### (1) Using predict()\nci_est &lt;- predict(fit, newdata, interval=\"confidence\", level=0.95)\nci_est\n\n\n       fit      lwr      upr\n1 26.63873 26.44618 26.83129\n\n\n\nImportant: interval=“confidence” should be used to produce the correct CI for a mean response.\n\n\n\n4.0.7 Mean response at \\(x_h=23\\)\n\n\nCode\n#### (2) Semi-manual: extract pieces from the fit and compute CI\nn  &lt;- length(fit$fitted.values)      # should be 85\ndf &lt;- n - length(coef(fit))          # = 83\ntcrit &lt;- qt(0.975, df)               # two-sided 95%\n\nx     &lt;- model.frame(fit)$MtAiry\nyhat  &lt;- coef(fit)[1] + coef(fit)[2]*x_h\ns     &lt;- summary(fit)$sigma          # residual std. error\nxbar  &lt;- mean(x)\nSxx   &lt;- sum( (x - xbar)^2 )\n\nse_mu_formula &lt;- s * sqrt( 1/n + (x_h - xbar)^2 / Sxx )\nci_est_result &lt;- data.frame(fit=yhat, lwr=yhat - tcrit*se_mu_formula, upr= yhat + tcrit*se_mu_formula)\nrow.names(ci_est_result) &lt;- NULL\nci_est_result\n\n\n       fit      lwr      upr\n1 26.63873 26.44618 26.83129\n\n\n\n\n4.0.8 Mean response at \\(x_h=23\\)\n\n\nCode\n# Scatter + fitted line\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nplot(mtair$MtAiry, mtair$Charl,\n     xlab = \"MtAiry\", ylab = \"Charl\",\n     main = \"Mean-response CI at x_h=23\")\nabline(fit, col = \"red\", lwd = 2)\n\n# Point of interest\nxh &lt;- 23\nn  &lt;- nrow(mtair); df &lt;- n - 2\n\n# Mean-response prediction at xh\npr &lt;- predict(fit,\n              newdata = data.frame(MtAiry = xh),\n              se.fit = TRUE,\n              interval = \"confidence\", level = 0.95)\n\nyhat   &lt;- pr$fit[1, \"fit\"]\nci_lwr &lt;- pr$fit[1, \"lwr\"]\nci_upr &lt;- pr$fit[1, \"upr\"]\nse_mu  &lt;- pr$se.fit\n\n# Mark x_h and CI for mean response\nabline(v = xh, lty = 3)\nsegments(xh, ci_lwr, xh, ci_upr, lwd = 3, col = \"blue\")\nsegments(xh - 0.1, ci_lwr, xh + 0.1, ci_lwr, lwd = 2, col = \"blue\")\nsegments(xh - 0.1, ci_upr, xh + 0.1, ci_upr, lwd = 2, col = \"blue\")\npoints(xh, yhat, pch = 19, col = \"blue\")\n\n# Location-scale t density along y; we draw ONLY the right-side curve: x = xh + width(y)\ny_grid &lt;- seq(yhat - 4 * se_mu, yhat + 4 * se_mu, length.out = 400)\ndens   &lt;- dt((y_grid - yhat) / se_mu, df = df) / se_mu\n\n# Map density to a horizontal offset (controls how far the curve sticks out)\nmax_width &lt;- 1.0\nw &lt;- dens / max(dens) * max_width\n\n# pdf\nlines(xh + w, y_grid, lwd = 2)\n\nlegend(\"topleft\",\n       legend = expression(\"Fitted line\", hat(y)[h], \"95% CI\", \"pdf\"),\n       pch    = c(NA, 19, NA, NA),\n       lty    = c(1,  NA, 1,  1),\n       lwd    = c(2,  NA, 3,  2),\n       col    = c(\"red\", \"blue\", \"blue\", \"black\"),\n       bty = \"n\",\n       cex = 0.9,        # shrink text a bit\n       y.intersp = 0.7,  # reduce vertical spacing\n       x.intersp = 0.6,  # reduce gap between keys and labels\n       seg.len = 1.0,    # shorten line keys\n       pt.cex = 0.9,     # shrink point size\n       inset = 0.01)\n\n\n\n\n\n\n\n\n\n\n\n\n5 Prediction of a New Response\n\n5.0.1 Prediction of a New Response\n\nAnother common interest in regression analysis is to predict a new response at a given value of \\(x\\), say \\(x_h\\).\nThe new response at \\(x_h\\) is \\[y_{\\text{new}} = \\beta_0 + \\beta_1 x_h + \\textcolor{red}{\\epsilon},\\] where \\(\\epsilon \\sim N(0, \\sigma^2)\\) is independent of the \\(\\epsilon_i\\)’s in the original model.\nThe point predictor of \\(y_{\\text{new}}\\) is \\[\\hat{y}_{\\text{new}} = \\hat\\beta_0 + \\hat\\beta_1 x_h.\\]\n\n\n\n5.0.2 Mean and Variance of \\(\\hat{y}_{\\text{new}}\\)\n\nNote that \\(\\hat{y}_{\\text{new}}\\) is the same as \\(\\hat\\mu_{y|x_h}\\), the point estimator of the mean response at \\(x_h\\).\nThey have the same mean and variance.\nTo construct a prediction interval for \\(y_{\\text{new}}\\), we need to account for the extra variability due to \\(\\epsilon\\).\nTechnically, we need to find the distribution of \\[\\hat{y}_{\\text{new}} - y_{\\text{new}}\\]\n\n\n\n5.0.3 Distribution of \\(\\hat{y}_{\\text{new}} - y_{\\text{new}}\\)\n\\[\\begin{align*}\n\\hat{y}_{\\text{new}} - y_{\\text{new}}\n&= (\\hat\\beta_0 + \\hat\\beta_1 x_h) - (\\beta_0 + \\beta_1 x_h + \\epsilon) \\\\\n&= (\\hat\\beta_0 - \\beta_0) + (\\hat\\beta_1 - \\beta_1) x_h - \\epsilon.\n\\end{align*}\\]\n\nMean: \\[\\begin{align*}\nE[\\hat{y}_{\\text{new}} - y_{\\text{new}}]\n&= E(\\hat\\beta_0 - \\beta_0) + x_h E(\\hat\\beta_1 - \\beta_1) - E(\\epsilon) \\\\\n&= 0 + x_h \\cdot 0 - 0 = 0.\n\\end{align*}\\]\n\n\n\n5.0.4 Distribution of \\(\\hat{y}_{\\text{new}} - y_{\\text{new}}\\)\n\nVariance: \\[\\begin{align*}\nVar(\\hat{y}_{\\text{new}} - y_{\\text{new}})\n&=  Var(\\hat{y}_{\\text{new}}) + Var(y_{\\text{new}}) + 0\\\\\n&= \\sigma^2 \\left(\\frac{1}{n} + \\frac{(x_h - \\bar{x})^2}{S_{XX}} \\right) + \\textcolor{red}{\\sigma^2}\\\\\n&= \\sigma^2 \\left(\\textcolor{red}{ 1} + \\frac{1}{n} + \\frac{(x_h - \\bar{x})^2}{S_{XX}} \\right).\n\\end{align*}\\]\n\nThe first step is true because \\(y_{\\text{new}}\\) is a new data point, thus is independent of \\(\\hat\\mu_{y|x_h}\\), which replies on the old data.\n\n\n5.0.5 Distribution of \\(\\hat{y}_{\\text{new}} - y_{\\text{new}}\\)\n\nNote that the variance of \\(\\hat{y}_{\\text{new}} - y_{\\text{new}}\\) has an extra \\(\\sigma^2\\) term compared to the variance of \\(\\hat\\mu_{y|x_h}\\).\nThis extra \\(\\sigma^2\\) term accounts for the variability of the new observation \\(y_{\\text{new}}\\) due to the random error \\(\\epsilon\\).\nWe already explained that \\(\\hat\\mu_{y|x_h}\\) follows a normal distribution.\n\\(y_{\\text{new}}\\) also follows a normal distribution and it is independent of \\(\\hat\\mu_{y|x_h}\\) because it is a new data point.\n\n\n\n5.0.6 Distribution of \\(\\hat{y}_{\\text{new}} - y_{\\text{new}}\\)\n\nAs a result, \\(\\hat{y}_{\\text{new}} - y_{\\text{new}}\\) also follows a normal distribution.\nThe standardized version is \\[\\frac{\\hat{y}_{\\text{new}} - y_{\\text{new}}}{\\sigma\\sqrt{\\textcolor{red}{1} + \\frac{1}{n} + \\frac{(x_h - \\bar x)^2}{\\sum_{i=1}^n (x_i-\\bar x)^2}}}\\] which follows a standard normal distribution.\nBut we don’t know \\(\\sigma\\), so we need to estimate it by \\(s=\\sqrt{\\text{SSE}/(n-2)}\\).\nThe resulting distribution is a t-distribution with \\(n-2\\) degrees of freedom.\n\n\n\n5.0.7 Prediction Interval\n\nWe explained that \\[t = \\frac{\\hat{Y}_{\\text{new}} - Y_{\\text{new}}}{s \\sqrt{\\textcolor{red}{1} + \\frac{1}{n} + \\frac{(x_h - \\bar{X})^2}{S_{XX}}}} \\sim t_{n-2},\\] where \\(s^2 = \\text{SSE}/(n-2)\\) is the unbiased estimator of \\(\\sigma^2\\).\nA \\((1-\\alpha)100\\%\\) prediction interval for \\(Y_{\\text{new}}\\) is \\[\\hat{Y}_{\\text{new}} \\pm t_{\\alpha/2, n-2} \\cdot s \\sqrt{\\textcolor{red}{1} + \\frac{1}{n} + \\frac{(x_h - \\bar{X})^2}{S_{XX}}},\\] where \\(t_{\\alpha/2, n-2}\\) is the \\((1-\\alpha/2)\\) quantile of the \\(t\\) distribution with \\(n-2\\) degrees of freedom.\n\n\n\n5.0.8 Prediction at \\(x_h=23\\)\n\n\nCode\nx_h = 23\nnewdata &lt;- data.frame(MtAiry = x_h)\n#### (1) Using predict()\nci_pred &lt;- predict(fit, newdata, interval=\"prediction\", level=0.95)\nci_pred\n\n\n       fit      lwr      upr\n1 26.63873 25.11861 28.15886\n\n\n\n\n5.0.9 Prediction at \\(x_h=23\\)\n\n\nCode\n#### (2) Semi-manual: extract pieces from the fit and compute CI\nn  &lt;- length(fit$fitted.values)      # should be 85\ndf &lt;- n - length(coef(fit))          # = 83\ntcrit &lt;- qt(0.975, df)               # two-sided 95%\n\nx     &lt;- model.frame(fit)$MtAiry\nyhat  &lt;- coef(fit)[1] + coef(fit)[2]*x_h\ns     &lt;- summary(fit)$sigma          # residual std. error\nxbar  &lt;- mean(x)\nSxx   &lt;- sum( (x - xbar)^2 )\n\nse_mu_formula &lt;- s * sqrt(1+ 1/n + (x_h - xbar)^2 / Sxx )\nci_pred_result &lt;- data.frame(fit=yhat, lwr=yhat - tcrit*se_mu_formula, upr=yhat + tcrit*se_mu_formula)\nrow.names(ci_pred_result) &lt;- NULL\nci_pred_result\n\n\n       fit      lwr      upr\n1 26.63873 25.11861 28.15886\n\n\n\n\n5.0.10 Prediction at \\(x_h=23\\)\n\n\nCode\n# Scatter + fitted line\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nplot(mtair$MtAiry, mtair$Charl,\n     xlab = \"MtAiry\", ylab = \"Charl\",\n     main = \"Prediction at x_h = 23 (95% PI)\")\nabline(fit, col = \"red\", lwd = 2)\n\n# Point of interest\nxh &lt;- 23\nn  &lt;- nrow(mtair); df &lt;- n - 2\n\n# Prediction for a NEW observation at xh\npr_pred &lt;- predict(fit,\n                   newdata = data.frame(MtAiry = xh),\n                   se.fit = TRUE,\n                   interval = \"prediction\", level = 0.95)\n\nyhat    &lt;- pr_pred$fit[1, \"fit\"]   # fitted mean at xh\npi_lwr  &lt;- pr_pred$fit[1, \"lwr\"]   # prediction interval lower\npi_upr  &lt;- pr_pred$fit[1, \"upr\"]   # prediction interval upper\nse_mu   &lt;- pr_pred$se.fit          # SE of mean response at xh\ns       &lt;- summary(fit)$sigma      # residual std. error\nse_pred &lt;- sqrt(se_mu^2 + s^2)     # SE for a new obs at xh\n\n# Mark x_h and 95% prediction interval\nabline(v = xh, lty = 3)\nsegments(xh, pi_lwr, xh, pi_upr, lwd = 3, col = \"blue\")\nsegments(xh - 0.1, pi_lwr, xh + 0.1, pi_lwr, lwd = 2, col = \"blue\")\nsegments(xh - 0.1, pi_upr, xh + 0.1, pi_upr, lwd = 2, col = \"blue\")\npoints(xh, yhat, pch = 19, col = \"blue\")  # show ŷ_h\n\n# ---- Single rotated predictive pdf curve at x_h ----\n# Predictive distribution: (Y_new - yhat)/se_pred ~ t_{df}\ny_grid &lt;- seq(yhat - 4 * se_pred, yhat + 4 * se_pred, length.out = 400)\ndens   &lt;- dt((y_grid - yhat) / se_pred, df = df) / se_pred\n\n# Map density to a horizontal offset (controls how far the curve sticks out)\nmax_width &lt;- 1.0\nw &lt;- dens / max(dens) * max_width\n\n# Draw ONE curve (right side). For left side, use xh - w.\nlines(xh + w, y_grid, lwd = 2)\n\n# Compact legend\nlegend(\"topleft\",\n       legend = expression(\"Fitted line\", hat(y)[h], \"95% PI\", \"predictive pdf\"),\n       pch    = c(NA, 19, NA, NA),\n       lty    = c(1,  NA, 1,  1),\n       lwd    = c(2,  NA, 3,  2),\n       col    = c(\"red\", \"blue\", \"blue\", \"black\"),\n       bty = \"n\",\n       cex = 0.9,\n       y.intersp = 0.7,\n       x.intersp = 0.6,\n       seg.len = 1.0,\n       pt.cex = 0.9,\n       inset = 0.01)\n\n\n\n\n\n\n\n\n\n\n\n\n6 Estimate vs Predict\n\n6.0.1 Estimate a mean resonse vs. predict a new response\n\n\nCode\n# Fit once\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\n\n# Common quantities\nxh &lt;- 23\nn  &lt;- nrow(mtair); df &lt;- n - 2\ns  &lt;- summary(fit)$sigma\n\n# Mean-response at xh\npr_conf &lt;- predict(fit, newdata = data.frame(MtAiry = xh),\n                   se.fit = TRUE, interval = \"confidence\", level = 0.95)\nyhat    &lt;- pr_conf$fit[1, \"fit\"]\nci_lwr  &lt;- pr_conf$fit[1, \"lwr\"]\nci_upr  &lt;- pr_conf$fit[1, \"upr\"]\nse_mu   &lt;- pr_conf$se.fit\n\n# Prediction (new obs) at xh\npr_pred &lt;- predict(fit, newdata = data.frame(MtAiry = xh),\n                   se.fit = TRUE, interval = \"prediction\", level = 0.95)\npi_lwr  &lt;- pr_pred$fit[1, \"lwr\"]\npi_upr  &lt;- pr_pred$fit[1, \"upr\"]\nse_pred &lt;- sqrt(se_mu^2 + s^2)\n\n# Helper to draw ONE rotated pdf curve (on the right of xh)\nadd_rot_pdf &lt;- function(xh, center, se, df, max_width = 1, lwd = 2, col = \"black\") {\n  y_grid &lt;- seq(center - 4*se, center + 4*se, length.out = 400)\n  dens   &lt;- dt((y_grid - center)/se, df = df) / se\n  w      &lt;- dens / max(dens) * max_width\n  lines(xh + w, y_grid, lwd = lwd, col = col)\n}\n\n# Two panels: left = mean-response CI, right = prediction PI\noldpar &lt;- par(no.readonly = TRUE)\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1), oma = c(0, 0, 2, 0), cex = 0.95)\n\n## Panel 1: Mean-response CI\nplot(mtair$MtAiry, mtair$Charl,\n     xlab = \"MtAiry\", ylab = \"Charl\",\n     main = \"Mean-response CI\")\nabline(fit, col = \"red\", lwd = 2)\nabline(v = xh, lty = 3)\nsegments(xh, ci_lwr, xh, ci_upr, lwd = 3, col = \"blue\")\nsegments(xh - 0.1, ci_lwr, xh + 0.1, ci_lwr, lwd = 2, col = \"blue\")\nsegments(xh - 0.1, ci_upr, xh + 0.1, ci_upr, lwd = 2, col = \"blue\")\npoints(xh, yhat, pch = 19, col = \"blue\")\nadd_rot_pdf(xh, yhat, se_mu, df, max_width = 1.0, lwd = 2, col = \"black\")\nlegend(\"topleft\",\n       legend = expression(\"Fitted line\", hat(y)[h], \"95% CI\", \"pdf\"),\n       pch    = c(NA, 19, NA, NA),\n       lty    = c(1,  NA, 1,  1),\n       lwd    = c(2,  NA, 3,  2),\n       col    = c(\"red\", \"blue\", \"blue\", \"black\"),\n       bty = \"n\", cex = 0.9, y.intersp = 0.7, x.intersp = 0.6, seg.len = 1.0, pt.cex = 0.9)\n\n## Panel 2: Prediction PI\nplot(mtair$MtAiry, mtair$Charl,\n     xlab = \"MtAiry\", ylab = \"Charl\",\n     main = \"Prediction PI\")\nabline(fit, col = \"red\", lwd = 2)\nabline(v = xh, lty = 3)\nsegments(xh, pi_lwr, xh, pi_upr, lwd = 3, col = \"blue\")\nsegments(xh - 0.1, pi_lwr, xh + 0.1, pi_lwr, lwd = 2, col = \"blue\")\nsegments(xh - 0.1, pi_upr, xh + 0.1, pi_upr, lwd = 2, col = \"blue\")\npoints(xh, yhat, pch = 19, col = \"blue\")\nadd_rot_pdf(xh, yhat, se_pred, df, max_width = 1.0, lwd = 2, col = \"black\")\n\n# Optional overall title across both panels:\nmtext(\"Mount Airy and Charleston: Mean vs Prediction at x_h = 23\", outer = TRUE, cex = 1.0)\n\n\n\n\n\n\n\n\n\nCode\n# Restore par\npar(oldpar)\n\n\n\n\n6.0.2 Pointwise Curves\n\nThe standard errors for mean response and prediction can be computed for a range of \\(x_h\\) values.\n\n\n\nCode\n# Fit once\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nx_seq &lt;- seq(min(mtair$MtAiry), max(mtair$MtAiry), length.out = 100)\nn  &lt;- nrow(mtair); df &lt;- n - 2\ns  &lt;- summary(fit)$sigma\nx  &lt;- model.frame(fit)$MtAiry\nxbar &lt;- mean(x)\nSxx &lt;- sum( (x - xbar)^2 )\n# Compute SE for mean response and prediction at each x in x_seq\nse_mu   &lt;- s * sqrt(1/ n + (x_seq - xbar)^2 / Sxx )\nse_pred &lt;- sqrt(se_mu^2 + s^2)\n# Plot both curves\nplot(x_seq, se_mu, type = \"l\", lwd = 2, col = \"blue\",\n     xlab = \"x_h\", ylab = \"Standard Error\", ylim=c(0, max(se_pred)*1.1),\n     main = \"SE for Mean Response vs Prediction\")\nlines(x_seq, se_pred, lwd = 2, col = \"red\")\nlegend(\"topleft\",\n       legend = c(\"SE for Mean Response\", \"SE for Prediction\"),\n       lwd = 2, col = c(\"blue\", \"red\"),\n       bty = \"n\", cex = 0.9, y.intersp = 0.7, x.intersp = 0.6, seg.len = 1.0)\n\n\n\n\n\n\n\n\n\n\n\n6.0.3 Pointwise Curves for intervals\n\n\nCode\n# Fit once\nfit &lt;- lm(Charl ~ MtAiry, data = mtair)\nx_seq &lt;- seq(min(mtair$MtAiry), max(mtair$MtAiry), length.out = 100)\nn  &lt;- nrow(mtair); df &lt;- n - 2\ns  &lt;- summary(fit)$sigma\nx  &lt;- model.frame(fit)$MtAiry\nxbar &lt;- mean(x)\nSxx &lt;- sum( (x - xbar)^2 )\n# Compute SE for mean response and prediction at each x in x_seq\nse_mu   &lt;- s * sqrt(1/ n + (x_seq - xbar)^2 / Sxx )\nse_pred &lt;- s * sqrt(1 + 1/ n + (x_seq - xbar)^2 / Sxx )\ntcrit &lt;- qt(0.975, df)               # two-sided 95%\n# Compute half-widths for 95% CI and PI\nhw_mu   &lt;- tcrit * se_mu\nhw_pred &lt;- tcrit * se_pred\n# Plot fitted, lower and upper\nplot(x_seq, predict(fit, newdata = data.frame(MtAiry = x_seq)), type = \"l\", lwd = 2, col = \"black\",\n     xlab = \"x_h\", ylab = \"y\", ylim=c(24, 30),\n     main = \"Pointwise CI and PI\")\npoints(mtair$MtAiry, mtair$Charl)\nlines(x_seq, predict(fit, newdata = data.frame(MtAiry = x_seq)) - hw_mu, lwd = 2, col = \"blue\", lty=2)\nlines(x_seq, predict(fit, newdata = data.frame(MtAiry = x_seq)) + hw_mu, lwd = 2, col = \"blue\", lty=2)\nlines(x_seq, predict(fit, newdata = data.frame(MtAiry = x_seq)) - hw_pred, lwd = 2, col = \"red\", lty=3)\nlines(x_seq, predict(fit, newdata = data.frame(MtAiry = x_seq)) + hw_pred, lwd = 2, col = \"red\", lty=3)\nlegend(\"topleft\",\n       legend = c(\"Fitted Line\", \"95% CI for Mean Response\", \"95% PI for New Obs\"),\n       lwd = 2, col = c(\"black\", \"blue\", \"red\"), lty = c(1, 2, 3),\n       bty = \"n\", cex = 0.9, y.intersp = 0.7, x.intersp = 0.6, seg.len = 1.0)\nabline(v=23, col=\"green\")\n\n\n\n\n\n\n\n\n\n\n\n\n7 ANOVA in SLR\n\n7.0.1 Sum of Squares Decomposition\n\nTotal Sum of Squares (SST): \\[SST = \\sum_{i=1}^n (y_i - \\bar{y})^2\\]\nThe total variation in the response variable.\nRegression Sum of Squares (SSR): \\[SSR = \\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2\\] The variation explained by the predictor (regression model).\nError Sum of Squares (SSE): \\[SSE = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\] The variation not explained by the model (regression).\n\n\n\n7.0.2 Sums of Squares\n\n\nCode\nknitr::include_graphics(\"../images/clipboard-4092518543.png\")\n\n\n\n\n\n\n\n\n\n\n\n7.0.3 Decomposition of the Total Sum of Squares\nIt can be shown that: \\[SST = SSR + SSE\\]\nProof: \\[\\begin{align*}\nSST &= \\sum_{i=1}^n (y_i - \\bar{y})^2 \\\\\n    &= \\sum_{i=1}^n \\big[(y_i - \\hat{y}_i) + (\\hat{y}_i - \\bar{y})\\big]^2 \\\\\n    &= \\sum_{i=1}^n (y_i - \\hat{y}_i)^2 + \\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2 + 2\\sum_{i=1}^n (y_i - \\hat{y}_i)(\\hat{y}_i - \\bar{y}) \\\\\n    &= SSE + SSR + 2\\sum_{i=1}^n (y_i - \\hat{y}_i)(\\hat{y}_i - \\bar{y})\n\\end{align*}\\] \nThe last term is zero because\n\n\n7.0.4 ANOVA Table for SLR\nAn analysis of variance (ANOVA) table summarizes the results of the regression analysis. - SSTO is decomposed to SSR and SSE. - An F-test is used for assessing whether there is a linear trend between \\(x\\) and \\(y\\):\n\\(H_0: \\beta_1 = 0\\) vs. \\(H_a: \\beta_1 \\neq 0\\).\n\n\\(R^2\\) can be computed from the table. (how?)\n\n[\n\\[\\begin{array}{|l|c|c|c|c|}\n\\hline\n\\textbf{Source} & \\textbf{DF} & \\textbf{SS} & \\textbf{MS} & \\textbf{F} \\\\\n\\hline\nRegression & 1 & SSR & MSR = SSR/1 & F = MSR/MSE \\\\\nError      & n-2 & SSE & MSE = SSE/(n-2) & \\\\\nTotal      & n-1 & SST & & \\\\\n\\hline\n\\end{array}\\]\n]\n\n\n7.0.5 ANOVA Table for SLR\n\nDF: degrees of freedom\nSS: sum of squares\nMS: mean square (SS divided by corresponding DF)\nF: F-statistic for testing \\(H_0: \\beta_1 = 0\\) vs. \\(H_a: \\beta_1 \\neq 0\\)\nUnder \\(H_0\\), \\(F \\sim F_{1, n-2}\\).\n\n\n\n7.0.6 Expected Mean Squares\n\nWe will rewrite SSR in terms of \\(\\hat\\beta_1\\):\n\n\\[\\begin{align*}\nSSR &= \\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2 \\\\\n    &= \\sum_{i=1}^n (\\hat\\beta_0 + \\hat\\beta_1 X_i - \\bar{y})^2 \\\\\n    &= \\sum_{i=1}^n (\\hat\\beta_1 (X_i - \\bar{X}))^2 \\quad\\text{(since $\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{X}$)}\\\\\n    &= \\hat\\beta_1^2 \\sum_{i=1}^n (X_i - \\bar{X})^2 = \\hat\\beta_1^2 S_{XX}.\n\\end{align*}\\] - Therefore, \\[MSR = SSR/1 = \\hat\\beta_1^2 S_{XX}.\\]\n\n\n7.0.7 Expected Mean Squares\n\nWe find that \\(SSR=\\hat\\beta_1^2 S_{XX}\\). But \\(\\hat\\beta_1 \\sim N(\\beta_1, \\sigma^2/S_{XX})\\). Note that \\(Var(\\hat\\beta_1) = E(\\hat\\beta_1^2) - E^2[\\hat\\beta_1]\\). Therefore, \\[\\begin{align*}\nE[SSR] &= E[\\hat\\beta_1^2 S_{XX}] \\\\\n     &= S_{XX} E[\\hat\\beta_1^2] \\\\\n     &= S_{XX} \\left( \\text{Var}(\\hat\\beta_1) + (E[\\hat\\beta_1])^2 \\right) \\\\\n     &= S_{XX} \\left( \\frac{\\sigma^2}{S_{XX}} + \\beta_1^2 \\right) \\\\\n     &= \\sigma^2 + \\beta_1^2 S_{XX}.\n\\end{align*}\\]\n\nAnd \\(E[MSR] = E[SSR/1] = \\sigma^2 + \\beta_1^2 S_{XX}\\).\n\n\n7.0.8 Expected Mean Squares\n\nIt can be shown that \\[E(MSE) = \\sigma^2.\\]\nWhen \\(\\beta_1=0\\), \\(E(MSR) = E(MSE) = \\sigma^2\\).\nWhen \\(\\beta_1 \\neq 0\\), \\(E(MSR) &gt; E(MSE)\\).\nThis justifies the F-test for testing \\(H_0: \\beta_1 = 0\\) vs. \\(H_a: \\beta_1 \\neq 0\\).\n\n\n\n7.0.9 F Test\n\nFor testing \\(H_0: \\beta_1 = 0\\) vs. \\(H_a: \\beta_1 \\neq 0\\), the F-statistic is \\[F = \\frac{MSR}{MSE}.\\]\nWe reject \\(H_0\\) if \\(F\\) is too large\n\nThe rejection region is \\(F &gt; F_{\\alpha, 1, n-2}\\), where \\(F_{\\alpha, 1, n-2}\\) is the \\((1-\\alpha)\\) quantile of the \\(F\\) distribution with 1 and \\(n-2\\) degrees of freedom.\n\nThe p-value is \\(P(F_{1, n-2} \\geq F_{\\text{obs}})\\), where \\(F_{\\text{obs}}\\) is the observed value of the F-statistic.\n\n\n\n7.0.10 F test and t-test\n\nThe F-statistic can be rewritten as \\[F = \\frac{MSR}{MSE} = \\frac{\\hat\\beta_1^2 S_{XX}}{s^2} = \\left( \\frac{\\hat\\beta_1}{s/\\sqrt{S_{XX}}} \\right)^2 = t^2,\\] where \\(t = \\hat\\beta_1 / (s/\\sqrt{S_{XX}})\\) is the t-statistic for testing \\(H_0: \\beta_1 = 0\\).\nThus, the F-test and the t-test for testing \\(H_0: \\beta_1 = 0\\) are equivalent in SLR.\nIn fact, as \\(F_{1,n-2}\\) distribution is also equivalent to the distribution of the square of a random variable whose distribution is \\(t_{n-2}\\), the F test is equivalent to the two-sided t test.\n\n\n\n7.0.11 Example: ANOVA Table for SLR\n\n\nCode\nsummary(fit)\n\n\n\nCall:\nlm(formula = Charl ~ MtAiry, data = mtair)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.7502 -0.6291 -0.0123  0.5585  1.9484 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  17.6208     2.8325   6.221 1.91e-08 ***\nMtAiry        0.3921     0.1209   3.244   0.0017 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.7581 on 83 degrees of freedom\nMultiple R-squared:  0.1125,    Adjusted R-squared:  0.1018 \nF-statistic: 10.52 on 1 and 83 DF,  p-value: 0.001701\n\n\n\n\n7.0.12 Example: ANOVA Table for SLR\n\n\nCode\nanova(fit)\n\n\nAnalysis of Variance Table\n\nResponse: Charl\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nMtAiry     1  6.047  6.0470  10.521 0.001701 **\nResiduals 83 47.705  0.5748                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   }
 ]
