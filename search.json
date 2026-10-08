@@ -893,14 +893,14 @@
     "href": "lectures/04-lecture.html#f-test-in-slr",
     "title": "Lec 04: ANOVA and Diagnostics In Simple Linear Regression",
     "section": "4.2 F-test in SLR",
-    "text": "4.2 F-test in SLR\n\nIn SLR, we can show that\n\n\\(\\frac{SSE/\\sigma^2}{n-2} \\sim \\chi^2_{n-2}\\)\n\\(\\frac{SSR/\\sigma^2}{1} \\overset{\\textcolor{red}{when?}}\\sim \\chi^2_1\\)\n\\(SSR\\) and \\(SSE\\) are independent.\n\nTherefore, \\[F = \\frac{MSR}{MSE} = \\frac{SSR/1}{SSE/(n-2)}  \\overset{\\textcolor{red}{when?}} \\sim F_{1, n-2}.\\]"
+    "text": "4.2 F-test in SLR\n\nIn SLR, we can show that\n\n\\(SSE/\\sigma^2 \\sim \\chi^2_{n-2}\\)\n\\(SSR/\\sigma^2 \\overset{\\textcolor{red}{when?}}\\sim \\chi^2_1\\)\n\\(SSR\\) and \\(SSE\\) are independent.\n\nTherefore, \\[F = \\frac{MSR}{MSE} = \\frac{SSR/1}{SSE/(n-2)}  \\overset{\\textcolor{red}{when?}} \\sim F_{1, n-2}.\\]"
   },
   {
     "objectID": "lectures/04-lecture.html#f-test-1",
     "href": "lectures/04-lecture.html#f-test-1",
     "title": "Lec 04: ANOVA and Diagnostics In Simple Linear Regression",
     "section": "4.3 F Test",
-    "text": "4.3 F Test\n\nIt turns out that\n\n\\[\\frac{SSR/\\sigma^2}{1} \\overset{\\textcolor{red}{H_0: \\beta_1=0}}\\sim \\chi^2_1\\]\n\nAlso, we have shown that \\[E[MSR] = \\sigma^2 + \\beta_1^2 S_{XX}, E[MSE]=\\sigma^2\\]\nBoth suggest that we should reject \\(H_0: \\beta_1 = 0\\) when the ratio \\(F = MSR/MSE\\) is too large.\nWe reject \\(H_0\\) if \\(F\\) is too large: the rejection region is \\(F &gt; F_{\\alpha, 1, n-2}\\), where \\(F_{\\alpha, 1, n-2}\\) is the \\((1-\\alpha)\\) quantile of the \\(F_{1, n-2}\\) distribution.\nThe p-value is \\(P(F_{1, n-2} \\geq F_{\\text{obs}})\\), where \\(F_{\\text{obs}}\\) is the observed value of the F-statistic."
+    "text": "4.3 F Test\n\nIt turns out that\n\n\\[SSR/\\sigma^2} \\overset{\\textcolor{red}{H_0: \\beta_1=0}}\\sim \\chi^2_1\\]\n\nAlso, we have shown that \\[E[MSR] = \\sigma^2 + \\beta_1^2 S_{XX}, E[MSE]=\\sigma^2\\]\nBoth suggest that we should reject \\(H_0: \\beta_1 = 0\\) when the ratio \\(F = MSR/MSE\\) is too large.\nWe reject \\(H_0\\) if \\(F\\) is too large: the rejection region is \\(F &gt; F_{\\alpha, 1, n-2}\\), where \\(F_{\\alpha, 1, n-2}\\) is the \\((1-\\alpha)\\) quantile of the \\(F_{1, n-2}\\) distribution.\nThe p-value is \\(P(F_{1, n-2} \\geq F_{\\text{obs}})\\), where \\(F_{\\text{obs}}\\) is the observed value of the F-statistic."
   },
   {
     "objectID": "lectures/04-lecture.html#example",
