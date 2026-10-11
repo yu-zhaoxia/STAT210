@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 06: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 06: Lack of Fit Test and Data Transformation – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,75 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro"><span class="header-section-number">1</span> Intro</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-05" id="toc-review-lecture-01-05" class="nav-link" data-scroll-target="#review-lecture-01-05"><span class="header-section-number">1.1</span> Review: Lecture 01-05</a></li>
+  </ul></li>
+  <li><a href="#lack-of-fit-test" id="toc-lack-of-fit-test" class="nav-link" data-scroll-target="#lack-of-fit-test"><span class="header-section-number">2</span> Lack of Fit Test</a>
+  <ul class="collapse">
+  <li><a href="#lack-of-fit-test-in-slr" id="toc-lack-of-fit-test-in-slr" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr"><span class="header-section-number">2.1</span> Lack of Fit Test in SLR</a></li>
+  <li><a href="#lack-of-fit-test-in-slr-notations" id="toc-lack-of-fit-test-in-slr-notations" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr-notations"><span class="header-section-number">2.2</span> Lack of Fit Test in SLR: Notations</a></li>
+  <li><a href="#lack-of-fit-test-in-slr-1" id="toc-lack-of-fit-test-in-slr-1" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr-1"><span class="header-section-number">2.3</span> Lack of Fit Test in SLR</a></li>
+  <li><a href="#lack-of-fit-test-in-slr-sum-of-squares" id="toc-lack-of-fit-test-in-slr-sum-of-squares" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr-sum-of-squares"><span class="header-section-number">2.4</span> Lack of Fit Test in SLR: Sum of Squares</a></li>
+  <li><a href="#lack-of-fit-test-in-slr-f-test" id="toc-lack-of-fit-test-in-slr-f-test" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr-f-test"><span class="header-section-number">2.5</span> Lack of Fit Test in SLR: F-test</a></li>
+  <li><a href="#lack-of-fit-test-in-slr-decomposition-of-sse" id="toc-lack-of-fit-test-in-slr-decomposition-of-sse" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr-decomposition-of-sse"><span class="header-section-number">2.6</span> Lack of Fit Test in SLR: Decomposition of SSE</a></li>
+  <li><a href="#lack-of-fit-test-in-slr-degrees-of-freedom" id="toc-lack-of-fit-test-in-slr-degrees-of-freedom" class="nav-link" data-scroll-target="#lack-of-fit-test-in-slr-degrees-of-freedom"><span class="header-section-number">2.7</span> Lack of Fit Test in SLR: degrees of freedom</a></li>
+  <li><a href="#anova-table-for-lack-of-fit-test-in-slr" id="toc-anova-table-for-lack-of-fit-test-in-slr" class="nav-link" data-scroll-target="#anova-table-for-lack-of-fit-test-in-slr"><span class="header-section-number">2.8</span> ANOVA Table for Lack of Fit Test in SLR</a></li>
+  <li><a href="#lof-test-example-1" id="toc-lof-test-example-1" class="nav-link" data-scroll-target="#lof-test-example-1"><span class="header-section-number">2.9</span> LOF Test: Example 1</a></li>
+  <li><a href="#visualize-lof-example-1" id="toc-visualize-lof-example-1" class="nav-link" data-scroll-target="#visualize-lof-example-1"><span class="header-section-number">2.10</span> Visualize LOF: Example 1</a></li>
+  <li><a href="#interpretation-of-lof-example-1" id="toc-interpretation-of-lof-example-1" class="nav-link" data-scroll-target="#interpretation-of-lof-example-1"><span class="header-section-number">2.11</span> Interpretation of LOF: Example 1</a></li>
+  <li><a href="#lof-example-2" id="toc-lof-example-2" class="nav-link" data-scroll-target="#lof-example-2"><span class="header-section-number">2.12</span> LOF: Example 2</a></li>
+  <li><a href="#visualize-lof-example-2" id="toc-visualize-lof-example-2" class="nav-link" data-scroll-target="#visualize-lof-example-2"><span class="header-section-number">2.13</span> Visualize LOF: Example 2</a></li>
+  <li><a href="#interpretation-of-lof-example-2" id="toc-interpretation-of-lof-example-2" class="nav-link" data-scroll-target="#interpretation-of-lof-example-2"><span class="header-section-number">2.14</span> Interpretation of LOF: Example 2</a></li>
+  <li><a href="#lof-test-when-replicated-x-values-are-not-available" id="toc-lof-test-when-replicated-x-values-are-not-available" class="nav-link" data-scroll-target="#lof-test-when-replicated-x-values-are-not-available"><span class="header-section-number">2.15</span> LOF Test: When replicated x values are not available</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">2.16</span> </a></li>
+  <li><a href="#visualize-linear-vs-polynomial" id="toc-visualize-linear-vs-polynomial" class="nav-link" data-scroll-target="#visualize-linear-vs-polynomial"><span class="header-section-number">2.17</span> Visualize Linear vs Polynomial</a></li>
+  <li><a href="#when-assume-model-is-not-reasonableadequate" id="toc-when-assume-model-is-not-reasonableadequate" class="nav-link" data-scroll-target="#when-assume-model-is-not-reasonableadequate"><span class="header-section-number">2.18</span> When Assume Model Is not Reasonable/Adequate</a></li>
+  </ul></li>
+  <li><a href="#data-transformation" id="toc-data-transformation" class="nav-link" data-scroll-target="#data-transformation"><span class="header-section-number">3</span> Data Transformation</a>
+  <ul class="collapse">
+  <li><a href="#data-transformation-general-rules" id="toc-data-transformation-general-rules" class="nav-link" data-scroll-target="#data-transformation-general-rules"><span class="header-section-number">3.1</span> Data Transformation: General Rules</a></li>
+  <li><a href="#data-transformation-general-rules-1" id="toc-data-transformation-general-rules-1" class="nav-link" data-scroll-target="#data-transformation-general-rules-1"><span class="header-section-number">3.2</span> Data Transformation: General Rules</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">3.3</span> Example 1</a></li>
+  <li><a href="#example-1-original-vs-transformed" id="toc-example-1-original-vs-transformed" class="nav-link" data-scroll-target="#example-1-original-vs-transformed"><span class="header-section-number">3.4</span> Example 1: : Original vs Transformed</a></li>
+  <li><a href="#example-2-senic" id="toc-example-2-senic" class="nav-link" data-scroll-target="#example-2-senic"><span class="header-section-number">3.5</span> Example 2: SENIC</a></li>
+  <li><a href="#example-2-lm-fit-and-residuals" id="toc-example-2-lm-fit-and-residuals" class="nav-link" data-scroll-target="#example-2-lm-fit-and-residuals"><span class="header-section-number">3.6</span> Example 2: LM Fit and Residuals</a></li>
+  <li><a href="#example-2-transform-y" id="toc-example-2-transform-y" class="nav-link" data-scroll-target="#example-2-transform-y"><span class="header-section-number">3.7</span> Example 2: Transform y</a></li>
+  <li><a href="#example-2-transform-x" id="toc-example-2-transform-x" class="nav-link" data-scroll-target="#example-2-transform-x"><span class="header-section-number">3.8</span> Example 2: Transform x</a></li>
+  <li><a href="#example-2-transform-both-x-and-y" id="toc-example-2-transform-both-x-and-y" class="nav-link" data-scroll-target="#example-2-transform-both-x-and-y"><span class="header-section-number">3.9</span> Example 2: Transform both x and y</a></li>
+  <li><a href="#example-2-results-and-interpretation" id="toc-example-2-results-and-interpretation" class="nav-link" data-scroll-target="#example-2-results-and-interpretation"><span class="header-section-number">3.10</span> Example 2: Results and Interpretation</a></li>
+  <li><a href="#example-2-results-and-interpretation-1" id="toc-example-2-results-and-interpretation-1" class="nav-link" data-scroll-target="#example-2-results-and-interpretation-1"><span class="header-section-number">3.11</span> Example 2: Results and Interpretation</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">3.12</span> Example 3:</a></li>
+  <li><a href="#example-3-original-vs-transformed" id="toc-example-3-original-vs-transformed" class="nav-link" data-scroll-target="#example-3-original-vs-transformed"><span class="header-section-number">3.13</span> Example 3: Original vs Transformed</a></li>
+  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">3.14</span> Example 4</a></li>
+  <li><a href="#example-4-battery-data" id="toc-example-4-battery-data" class="nav-link" data-scroll-target="#example-4-battery-data"><span class="header-section-number">3.15</span> Example 4: Battery Data</a></li>
+  <li><a href="#example-4-results" id="toc-example-4-results" class="nav-link" data-scroll-target="#example-4-results"><span class="header-section-number">3.16</span> Example 4: Results</a></li>
+  </ul></li>
+  <li><a href="#box-cox-transformation" id="toc-box-cox-transformation" class="nav-link" data-scroll-target="#box-cox-transformation"><span class="header-section-number">4</span> Box-Cox Transformation</a>
+  <ul class="collapse">
+  <li><a href="#box-cox-transformation-1" id="toc-box-cox-transformation-1" class="nav-link" data-scroll-target="#box-cox-transformation-1"><span class="header-section-number">4.1</span> Box-Cox Transformation</a></li>
+  <li><a href="#box-cox-transformation-for-senic-data" id="toc-box-cox-transformation-for-senic-data" class="nav-link" data-scroll-target="#box-cox-transformation-for-senic-data"><span class="header-section-number">4.2</span> Box-Cox Transformation for SENIC Data</a></li>
+  <li><a href="#box-cox-transformation-for-senic-data-1" id="toc-box-cox-transformation-for-senic-data-1" class="nav-link" data-scroll-target="#box-cox-transformation-for-senic-data-1"><span class="header-section-number">4.3</span> Box-Cox Transformation for SENIC Data</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">5.1</span> Conclusion</a></li>
+  <li><a href="#conclusion-2" id="toc-conclusion-2" class="nav-link" data-scroll-target="#conclusion-2"><span class="header-section-number">5.2</span> Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 06:</h1>
+<h1 class="title">Lec 06: Lack of Fit Test and Data Transformation</h1>
 </div>
 
 
@@ -139,8 +262,942 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="intro" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Intro</h1>
+<section id="review-lecture-01-05" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-05"><span class="header-section-number">1.1</span> Review: Lecture 01-05</h2>
+<ul>
+<li><p>Lecture 01: LSE: <span class="math inline">\(\{\hat\beta_0, \hat\beta_1\} = \arg\min_{\beta_0, \beta_1} \sum_{i=1}^n (y_i -\beta_0 - \beta_1 x_i)^2\)</span> <span class="math display">\[\hat\beta_1 =\frac{\sum_{i=1}^n (x_i - \bar{x})y_i}{\sum_{i=1}^n (x_i - \bar{x})^2}=\sum_{i=1}^n\frac{(x_i - \bar{x})}{S_{XX}}y_i.\]</span> <span class="math display">\[\hat\beta_0 = \bar{y} - \hat\beta_1 \bar{x}
+= \sum_{i=1}^n \left(\frac{1}{n} - \frac{\bar{x}}{S_{XX}}(x_i - \bar{x})\right) y_i\]</span></p></li>
+<li><p>Lecture 02: CI, and hypothesis testing related to <span class="math inline">\(\beta_1\)</span>.</p></li>
+<li><p>Lecture 03: Estimation and prediction.</p></li>
+<li><p>Lecture 04: ANOVA.</p></li>
+<li><p>Lecture 05: Diagnostics in SLR.</p></li>
+<li><p>This lecture: data transformation and lack of fit test.</p></li>
+</ul>
+</section>
+</section>
+<section id="lack-of-fit-test" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Lack of Fit Test</h1>
+<section id="lack-of-fit-test-in-slr" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lack-of-fit-test-in-slr"><span class="header-section-number">2.1</span> Lack of Fit Test in SLR</h2>
+<ul>
+<li><p>We have introduced visualization methods to check the linear model assumptions.</p></li>
+<li><p>Goodness-of-fit tests (GOF) are often used to assess whether a statistical model/distribution fits the data well.</p>
+<ul>
+<li><p>For example, the Chi-square goodness-of-fit test is used to test whether observed categorical data follow a specified distribution.</p></li>
+<li><p>For simple linear regression, we consider the lack for fit test (LOF), which is an F-test, to test whether the linear regression model is a good fit for the data.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="lack-of-fit-test-in-slr-notations" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="lack-of-fit-test-in-slr-notations"><span class="header-section-number">2.2</span> Lack of Fit Test in SLR: Notations</h2>
+<ul>
+<li>LOF test requires replicated <span class="math inline">\(x\)</span> values (i.e., multiple <span class="math inline">\(y\)</span> values for the same <span class="math inline">\(x\)</span> value).</li>
+<li><span class="math inline">\(k\)</span>: the number of unique <span class="math inline">\(x\)</span> values</li>
+<li><span class="math inline">\(n_i\)</span>: the number of replicates for the <span class="math inline">\(i\)</span>th unique <span class="math inline">\(x\)</span> value</li>
+<li><span class="math inline">\(n = \sum_{i=1}^k n_i\)</span>: the total number of observations.</li>
+<li><span class="math inline">\(y_{ij}\)</span>: the <span class="math inline">\(j\)</span>th observation of the response variable <span class="math inline">\(y\)</span> at the <span class="math inline">\(i\)</span>th unique value of the predictor variable <span class="math inline">\(x\)</span>, where <span class="math inline">\(i = 1, 2, \ldots, k\)</span> and <span class="math inline">\(j = 1, 2, \ldots, n_i\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">each=</span><span class="dv">3</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># true model is quadratic</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Reduced model: y_i = beta_0 + beta_1 x_i + epsilon_i</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>fit_reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> data)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># Full model: y_i = mu_i + epsilon_i</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">factor</span>(x), <span class="at">data =</span> data)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">plot</span>(data<span class="sc">$</span>x, data<span class="sc">$</span>y, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">xlab=</span><span class="st">"x"</span>, <span class="at">ylab=</span><span class="st">"y"</span>, <span class="at">main=</span><span class="st">"Lack of Fit Test Example 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lack-of-fit-test-in-slr-1" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="lack-of-fit-test-in-slr-1"><span class="header-section-number">2.3</span> Lack of Fit Test in SLR</h2>
+<p>A LOF test compares two models:</p>
+<ul>
+<li><p>Reduced model <span class="math inline">\(H_0\)</span>: <span class="math inline">\(y_{ij} = \beta_0 + \beta_1 x_i + \epsilon_{ij}\)</span>; assumes a linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p></li>
+<li><p>Full model <span class="math inline">\(H_1\)</span>: <span class="math inline">\(y_{ij} = \mu_i + \epsilon_{ij}\)</span>, where <span class="math inline">\(\mu_i\)</span> is the mean of the <span class="math inline">\(y\)</span> values for the <span class="math inline">\(i\)</span>th unique <span class="math inline">\(x\)</span> value; uses a separate mean for each unique <span class="math inline">\(x\)</span> value.</p></li>
+</ul>
+</section>
+<section id="lack-of-fit-test-in-slr-sum-of-squares" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="lack-of-fit-test-in-slr-sum-of-squares"><span class="header-section-number">2.4</span> Lack of Fit Test in SLR: Sum of Squares</h2>
+<ul>
+<li><p>The reduced model (<span class="math inline">\(H_0\)</span>), which is the SLR: <span class="math display">\[SSE_R = \sum_{i=1}^k \sum_{j=1}^{n_i} (y_{ij} - \hat{y}_{ij})=(y_{ij}-\hat{\beta}_0 - \hat{\beta}_1 x_i)^2\]</span> where <span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1\)</span> are the LSE of the SLR, and <span class="math inline">\(SSE_R\)</span> is the SEE of the SLR.</p></li>
+<li><p>The full model (<span class="math inline">\(H_1)\)</span>): <span class="math display">\[SSE_F = \sum_{i=1}^k \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2\]</span> where <span class="math inline">\(\bar{y}_i\)</span> is the mean of the <span class="math inline">\(y\)</span> values for the <span class="math inline">\(i\)</span>th unique <span class="math inline">\(x\)</span> value.</p></li>
+<li><p>Which one is smaller? Why?</p></li>
+</ul>
+</section>
+<section id="lack-of-fit-test-in-slr-f-test" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="lack-of-fit-test-in-slr-f-test"><span class="header-section-number">2.5</span> Lack of Fit Test in SLR: F-test</h2>
+<ul>
+<li>The full model has more parameters and thus fits the data at least as well as the reduced model. As a result, <span class="math inline">\(SSE_F \leq SSE_R\)</span>.</li>
+<li>We can construct the following F-statistic to compare the SSEs: <span class="math display">\[F = \frac{(SSE_R - SSE_F)/(df_R - df_F)}{SSE_F/df_F}\]</span> where <span class="math inline">\(df_F\)</span> and <span class="math inline">\(df_R\)</span> are the degrees of freedom for the full and reduced models, respectively.</li>
+<li>Under <span class="math inline">\(H_0\)</span>: the linear model fits the data well, <span class="math inline">\(F \sim F_{df_R - df_F, df_F}\)</span>.</li>
+<li>What are <span class="math inline">\(df_F\)</span> and <span class="math inline">\(df_R\)</span>?</li>
+</ul>
+</section>
+<section id="lack-of-fit-test-in-slr-decomposition-of-sse" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="lack-of-fit-test-in-slr-decomposition-of-sse"><span class="header-section-number">2.6</span> Lack of Fit Test in SLR: Decomposition of SSE</h2>
+<ul>
+<li><p><span class="math inline">\(SSE_R\)</span> can be decomposed <span class="math display">\[\begin{align*}
+SSE_R &amp;= \sum_{i=1}^k \sum_{j=1}^{n_i} (y_{ij} - \hat{y}_{ij})^2 = \sum_{i=1}^k \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i + \bar{y}_i - \hat{y}_{ij})^2 \\
+&amp;= \sum_{i=1}^k \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 + \sum_{i=1}^k \sum_{j=1}^{n_i} (\bar{y}_i - \hat{y}_{ij})^2 + 2\sum_{i=1}^k \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)(\bar{y}_i - \hat{y}_{ij}) \\
+&amp;= SSE_F + SS_{LF} + 0 \\
+&amp;= SSE_F + SS_{LF}
+\end{align*}\]</span></p></li>
+<li><p>where <span class="math inline">\(SS_{LOF} = \sum_{i=1}^k \sum_{j=1}^{n_i} (\bar{y}_i - \hat{y}_{ij})^2\)</span> is the sum of squares due to lack of fit.</p></li>
+</ul>
+</section>
+<section id="lack-of-fit-test-in-slr-degrees-of-freedom" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="lack-of-fit-test-in-slr-degrees-of-freedom"><span class="header-section-number">2.7</span> Lack of Fit Test in SLR: degrees of freedom</h2>
+<ul>
+<li>We need to find the degrees of freedom for the full and reduced models.</li>
+<li>For the full model, we estimate <span class="math inline">\(k\)</span> means (<span class="math inline">\(\mu_1, \mu_2, \ldots, \mu_k\)</span>) from <span class="math inline">\(n\)</span> observations. Thus, <span class="math inline">\(df_F = n - k\)</span>.</li>
+<li>For the reduced model, we estimate 2 parameters (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>) from <span class="math inline">\(n\)</span> observations. Thus, <span class="math inline">\(df_R = n - 2\)</span>.</li>
+<li>Therefore, the F-statistic can be rewritten as <span class="math display">\[F = \frac{(SSE_R - SSE_F)/(k - 2)}{SSE_F/(n - k)} = \frac{SS_{LOF}/(k - 2)}{SSE_F/(n - k)}\]</span></li>
+<li>Under <span class="math inline">\(H_0\)</span>: the linear model fits the data well, <span class="math inline">\(F \sim F_{k - 2, n - k}\)</span>.</li>
+</ul>
+</section>
+<section id="anova-table-for-lack-of-fit-test-in-slr" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="anova-table-for-lack-of-fit-test-in-slr"><span class="header-section-number">2.8</span> ANOVA Table for Lack of Fit Test in SLR</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>DF</th>
+<th>SS</th>
+<th>MS</th>
+<th>F</th>
+<th>P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Regression</td>
+<td>1</td>
+<td><span class="math inline">\(SSR\)</span></td>
+<td><span class="math inline">\(MSR = \frac{SSR}{1}\)</span></td>
+<td>F = <span class="math inline">\(\frac{MSR}{MSE}\)</span></td>
+<td><span class="math inline">\(H_0: \beta_1=0\)</span></td>
+</tr>
+<tr class="even">
+<td>Residual</td>
+<td>n - 2</td>
+<td><span class="math inline">\(SSE_R\)</span></td>
+<td><span class="math inline">\(MSE = \frac{SSE_R}{n-2}\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Lack of Fit</td>
+<td>k - 2</td>
+<td><span class="math inline">\(SS_{LF}\)</span></td>
+<td><span class="math inline">\(MS_{LF}=\frac{SS_{LF}}{k-2}\)</span></td>
+<td>F* = <span class="math inline">\(\frac{MS_{LF}}{MSE_F}\)</span></td>
+<td><span class="math inline">\(H_0: E[y]=\beta_0 + \beta_1 x\)</span></td>
+</tr>
+<tr class="even">
+<td>Pure Error</td>
+<td>n - k</td>
+<td><span class="math inline">\(SSE_F\)</span></td>
+<td><span class="math inline">\(MSE_F = \frac{SSE_F}{n-k}\)</span></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lof-test-example-1" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="lof-test-example-1"><span class="header-section-number">2.9</span> LOF Test: Example 1</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Data with replicated x values</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.2</span>, <span class="fl">2.8</span>, <span class="fl">3.6</span>, <span class="fl">3.9</span>, <span class="fl">4.4</span>, <span class="fl">5.1</span>, <span class="fl">5.5</span>, <span class="fl">5.7</span>, <span class="fl">6.2</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Reduced model: y_i = beta_0 + beta_1 x_i + epsilon_i</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>fit_reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> data)</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># Full model: y_i = mu_i + epsilon_i</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">factor</span>(x), <span class="at">data =</span> data)</span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">anova</span>(fit_reduced, fit_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ factor(x)
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1      7 2.0089                           
+2      6 1.9733  1  0.035556 0.1081 0.7535</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(SSE_R = 2.0089, df_R=9-2\)</span>, <span class="math inline">\(SSE_F = 1.9733, df_F=9-3\)</span>.</p>
+</section>
+<section id="visualize-lof-example-1" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="visualize-lof-example-1"><span class="header-section-number">2.10</span> Visualize LOF: Example 1</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>x, data<span class="sc">$</span>y, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">xlab=</span><span class="st">"x"</span>, <span class="at">ylab=</span><span class="st">"y"</span>, <span class="at">main=</span><span class="st">"Lack of Fit Test Example"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">abline</span>(fit_reduced, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">lines</span>(data<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_full), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">4</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">points</span>(data<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_full), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">4</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Reduced Model"</span>, <span class="st">"Full Model"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">pch=</span><span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">4</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation-of-lof-example-1" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="interpretation-of-lof-example-1"><span class="header-section-number">2.11</span> Interpretation of LOF: Example 1</h2>
+<ul>
+<li>The ANOVA table shows the comparison between the reduced and full models.</li>
+<li>The plot shows the data points, the fitted line from the reduced model (in blue), and the fitted means from the full model (in red). They are very close to each other.</li>
+<li>The p-value for the LOF test is 0.75, which is greater than the significance level of 0.05.</li>
+<li>Therefore, we do not reject the null hypothesis and conclude that the linear model fits the data well.</li>
+</ul>
+</section>
+<section id="lof-example-2" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="lof-example-2"><span class="header-section-number">2.12</span> LOF: Example 2</h2>
+<ul>
+<li>In this example, the true model is not linear</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">each=</span><span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># true model is quadratic</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># Reduced model: y_i = beta_0 + beta_1 x_i + epsilon_i</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>fit_reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> data)</span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># Full model: y_i = mu_i + epsilon_i</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">factor</span>(x), <span class="at">data =</span> data)</span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="fu">anova</span>(fit_reduced, fit_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ factor(x)
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     13 54.565                                  
+2     10  7.760  3    46.804 20.104 0.0001479 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-lof-example-2" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="visualize-lof-example-2"><span class="header-section-number">2.13</span> Visualize LOF: Example 2</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>x, data<span class="sc">$</span>y, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">xlab=</span><span class="st">"x"</span>, <span class="at">ylab=</span><span class="st">"y"</span>, <span class="at">main=</span><span class="st">"Lack of Fit Test Example 2"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">abline</span>(fit_reduced, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">lines</span>(data<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_full), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">4</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="fu">points</span>(data<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_full), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">pch=</span><span class="dv">4</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">legend</span>(<span class="st">"top"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Reduced Model"</span>, <span class="st">"Full Model"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">pch=</span><span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">4</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation-of-lof-example-2" class="level2" data-number="2.14">
+<h2 data-number="2.14" class="anchored" data-anchor-id="interpretation-of-lof-example-2"><span class="header-section-number">2.14</span> Interpretation of LOF: Example 2</h2>
+<ul>
+<li>The ANOVA table shows the comparison between the reduced and full models.</li>
+<li>The plot shows the data points, the fitted line from the reduced model (in blue), and the fitted means from the full model (in red). They are quite different.</li>
+<li>The p-value for the LOF test is 0.0001, which is less than the significance level of 0.05.</li>
+<li>Therefore, we reject the null hypothesis and conclude that the linear model does not fit the data well.</li>
+</ul>
+</section>
+<section id="lof-test-when-replicated-x-values-are-not-available" class="level2" data-number="2.15">
+<h2 data-number="2.15" class="anchored" data-anchor-id="lof-test-when-replicated-x-values-are-not-available"><span class="header-section-number">2.15</span> LOF Test: When replicated x values are not available</h2>
+<ul>
+<li>When there is no replicated <span class="math inline">\(x\)</span> values, we cannot perform the LOF test.</li>
+<li>There are several options. For example, Linear vs polynomial (quadratic/cubic)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>x<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">by=</span><span class="fl">0.5</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>y<span class="ot">=</span>(x<span class="dv">-3</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x), <span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>d<span class="ot">=</span><span class="fu">data.frame</span>(x, y)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>fit_lin  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> d)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>fit_poly2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> d)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>fit_poly3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">3</span>), <span class="at">data =</span> d)</span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">anova</span>(fit_lin, fit_poly2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ x + I(x^2)
+  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     17 1008.50                                  
+2     16   46.65  1    961.85 329.92 4.202e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="level2" data-number="2.16">
+<h2 data-number="2.16" class="anchored" data-anchor-id="section"><span class="header-section-number">2.16</span> </h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">anova</span>(fit_lin, fit_poly3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ x
+Model 2: y ~ x + I(x^2) + I(x^3)
+  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     17 1008.50                                  
+2     15   46.37  2    962.13 155.62 9.315e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">anova</span>(fit_poly2, fit_poly3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ x + I(x^2)
+Model 2: y ~ x + I(x^2) + I(x^3)
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     16 46.647                           
+2     15 46.370  1   0.27721 0.0897 0.7687</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-linear-vs-polynomial" class="level2" data-number="2.17">
+<h2 data-number="2.17" class="anchored" data-anchor-id="visualize-linear-vs-polynomial"><span class="header-section-number">2.17</span> Visualize Linear vs Polynomial</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">plot</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">xlab=</span><span class="st">"x"</span>, <span class="at">ylab=</span><span class="st">"y"</span>, <span class="at">main=</span><span class="st">"Linear vs Polynomial"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">lines</span>(d<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_lin), <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">lines</span>(d<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_poly2), <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">lines</span>(d<span class="sc">$</span>x, <span class="fu">fitted</span>(fit_poly3), <span class="at">col=</span><span class="st">"green"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="fu">legend</span>(<span class="st">"top"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Linear"</span>, <span class="st">"Quadratic"</span>, <span class="st">"Cubic"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="when-assume-model-is-not-reasonableadequate" class="level2" data-number="2.18">
+<h2 data-number="2.18" class="anchored" data-anchor-id="when-assume-model-is-not-reasonableadequate"><span class="header-section-number">2.18</span> When Assume Model Is not Reasonable/Adequate</h2>
+<ul>
+<li>When one or several assumptions of the linear model are violated, what can we do?</li>
+<li>Consider more complex models. For example,
+<ul>
+<li>If the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is not linear, we may consider polynomial regression or other types of regression (e.g., spline regression, generalized additive models).</li>
+<li>If the variance of the errors is not constant, we may consider weighted least squares or generalized least squares.</li>
+</ul></li>
+<li>We may consider data transformation.</li>
+</ul>
+<p>Next, we present how to transform the data to address non-linearity or non-constant variance.</p>
+</section>
+</section>
+<section id="data-transformation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data Transformation</h1>
+<section id="data-transformation-general-rules" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="data-transformation-general-rules"><span class="header-section-number">3.1</span> Data Transformation: General Rules</h2>
+<ul>
+<li><p>Transformations are often used to achieve linearity, constant variance, and normality of errors.</p></li>
+<li><p>Transform <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span>?</p></li>
+<li><p>Not linear: If the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is not linear but residuals are generally normal and have constant variance, we may consider transforming <span class="math inline">\(x\)</span>.</p></li>
+<li><p>Not constant variance: If the variance of <span class="math inline">\(y\)</span> varies with <span class="math inline">\(x\)</span>, consider transforming <span class="math inline">\(y\)</span> (e.g., log or square root).</p></li>
+<li><p>If both the relationship and the variance are problematic, we may consider transforming <span class="math inline">\(y\)</span> to stabilize variance first and then try transforming <span class="math inline">\(x\)</span>.</p></li>
+</ul>
+</section>
+<section id="data-transformation-general-rules-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="data-transformation-general-rules-1"><span class="header-section-number">3.2</span> Data Transformation: General Rules</h2>
+<ul>
+<li>Common transformations include:
+<ul>
+<li>Logarithmic transformation: <span class="math inline">\(y' = \log(y)\)</span> or <span class="math inline">\(x' = \log(x)\)</span></li>
+<li>Square root transformation: <span class="math inline">\(y' = \sqrt{y}\)</span> or <span class="math inline">\(x' = \sqrt{x}\)</span></li>
+<li>Reciprocal transformation: <span class="math inline">\(y' = 1/y\)</span> or <span class="math inline">\(x' = 1/x\)</span></li>
+<li>Box-Cox transformation: a family of power transformations that includes the above as special cases.</li>
+</ul></li>
+<li>The choice of transformation depends on the specific characteristics of the data and the goals of the analysis.</li>
+</ul>
+</section>
+<section id="example-1" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="example-1"><span class="header-section-number">3.3</span> Example 1</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>n <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb15-4"><a href="#cb15-4"></a>beta0 <span class="ot">&lt;-</span> <span class="dv">1</span>; beta1 <span class="ot">&lt;-</span> <span class="fl">0.25</span>; sigma <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>y <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta0 <span class="sc">+</span> beta1<span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma))  <span class="co"># multiplicative noise</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co"># Fit wrong scale (linear on original y) vs right scale (linear on log y)</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>fit_bad  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb15-9"><a href="#cb15-9"></a>fit_logy <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(y) <span class="sc">~</span> x)</span>
+<span id="cb15-10"><a href="#cb15-10"></a></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="do">## Plot 1: Data + fitted lines on original scale</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>, </span>
+<span id="cb15-13"><a href="#cb15-13"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Transform <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span>? Why?</li>
+</ul>
+</section>
+<section id="example-1-original-vs-transformed" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="example-1-original-vs-transformed"><span class="header-section-number">3.4</span> Example 1: : Original vs Transformed</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>n <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>beta0 <span class="ot">&lt;-</span> <span class="dv">1</span>; beta1 <span class="ot">&lt;-</span> <span class="fl">0.25</span>; sigma <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>y <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta0 <span class="sc">+</span> beta1<span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma))  <span class="co"># multiplicative noise</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># Fit wrong scale (linear on original y) vs right scale (linear on log y)</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>fit_bad  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb16-9"><a href="#cb16-9"></a>fit_logy <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(y) <span class="sc">~</span> x)</span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="do">## Plot 1: Data + fitted lines on original scale</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>, </span>
+<span id="cb16-14"><a href="#cb16-14"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15"></a>ord <span class="ot">&lt;-</span> <span class="fu">order</span>(x)</span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="fu">lines</span>(x[ord], <span class="fu">fitted</span>(fit_bad)[ord], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="co"># Back-transform the log-fit (median fit on y-scale)</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="fu">lines</span>(x[ord], <span class="fu">exp</span>(<span class="fu">fitted</span>(fit_logy))[ord], <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co">#legend("topleft", bty = "n", lwd = 2, lty = c(2,1), col = c(1,4),</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co">#       legend = c("Linear on y (misspecified)", "exp{ linear on log(y) }"))</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a></span>
+<span id="cb16-22"><a href="#cb16-22"></a><span class="do">## Plot 2: Residual diagnostics</span></span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_bad), <span class="fu">resid</span>(fit_bad), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb16-24"><a href="#cb16-24"></a><span class="at">xlab =</span> <span class="st">"Fitted"</span>,</span>
+<span id="cb16-25"><a href="#cb16-25"></a>     <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span>
+<span id="cb16-26"><a href="#cb16-26"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb16-27"><a href="#cb16-27"></a><span class="co"># Heteroscedastic fan shape expected for fit_bad</span></span>
+<span id="cb16-28"><a href="#cb16-28"></a></span>
+<span id="cb16-29"><a href="#cb16-29"></a><span class="fu">plot</span>(x, <span class="fu">log</span>(y), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb16-30"><a href="#cb16-30"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"log(y)"</span>)</span>
+<span id="cb16-31"><a href="#cb16-31"></a></span>
+<span id="cb16-32"><a href="#cb16-32"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_logy), <span class="fu">resid</span>(fit_logy), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb16-33"><a href="#cb16-33"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Residual with logy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Transform <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span>? Why?</li>
+</ul>
+</section>
+<section id="example-2-senic" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="example-2-senic"><span class="header-section-number">3.5</span> Example 2: SENIC</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>senic<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/SENIC.csv"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#scatter plot services on nurses</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">plot</span>(senic<span class="sc">$</span>services, senic<span class="sc">$</span>nurses,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>     <span class="at">xlab=</span><span class="st">"services"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>     <span class="at">ylab=</span><span class="st">"nurses"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>A random sample of 113 hospitals taken from a Study in the Efficacy of Nosocomial Infection Control (SENIC Project).</p></li>
+<li><p>nurses: Average number of full-time equivalent registered and licensed practical nurses</p></li>
+<li><p>service: Percent of 35 potential facilities and services provided by the hospital</p></li>
+</ul>
+</section>
+<section id="example-2-lm-fit-and-residuals" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="example-2-lm-fit-and-residuals"><span class="header-section-number">3.6</span> Example 2: LM Fit and Residuals</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>senic_fit<span class="ot">=</span><span class="fu">lm</span>(nurses<span class="sc">~</span>services, <span class="at">data=</span>senic)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">plot</span>(senic<span class="sc">$</span>services, senic<span class="sc">$</span>nurses,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5"></a>     <span class="at">xlab=</span><span class="st">"services"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6"></a>     <span class="at">ylab=</span><span class="st">"nurses"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="fu">abline</span>(senic_fit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="fu">plot</span>(senic_fit<span class="sc">$</span>fitted.values, senic_fit<span class="sc">$</span>residuals,</span>
+<span id="cb19-9"><a href="#cb19-9"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb19-10"><a href="#cb19-10"></a>     <span class="at">xlab=</span><span class="st">"fitted values"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11"></a>     <span class="at">ylab=</span><span class="st">"residuals"</span>)</span>
+<span id="cb19-12"><a href="#cb19-12"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-2-transform-y" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="example-2-transform-y"><span class="header-section-number">3.7</span> Example 2: Transform y</h2>
+<ul>
+<li>Let’s try log transformation on y.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>senic_logy_fit<span class="ot">=</span><span class="fu">lm</span>(<span class="fu">log</span>(nurses)<span class="sc">~</span>services, <span class="at">data=</span>senic)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">plot</span>(senic<span class="sc">$</span>services, <span class="fu">log</span>(senic<span class="sc">$</span>nurses),</span>
+<span id="cb21-4"><a href="#cb21-4"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>     <span class="at">xlab=</span><span class="st">"services"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6"></a>     <span class="at">ylab=</span><span class="st">"log(nurses)"</span>)</span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="fu">abline</span>(senic_logy_fit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="fu">plot</span>(senic_logy_fit<span class="sc">$</span>fitted.values, senic_logy_fit<span class="sc">$</span>residuals,</span>
+<span id="cb21-9"><a href="#cb21-9"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10"></a>     <span class="at">xlab=</span><span class="st">"fitted values"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11"></a>     <span class="at">ylab=</span><span class="st">"residuals"</span>)</span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-2-transform-x" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="example-2-transform-x"><span class="header-section-number">3.8</span> Example 2: Transform x</h2>
+<ul>
+<li>Let’s try log transformation on x.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>senic_logx_fit<span class="ot">=</span><span class="fu">lm</span>(nurses<span class="sc">~</span><span class="fu">log</span>(services), <span class="at">data=</span>senic)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">plot</span>(<span class="fu">log</span>(senic<span class="sc">$</span>services), senic<span class="sc">$</span>nurses,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>     <span class="at">xlab=</span><span class="st">"log(services)"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6"></a>     <span class="at">ylab=</span><span class="st">"nurses"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="fu">abline</span>(senic_logx_fit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb23-8"><a href="#cb23-8"></a><span class="fu">plot</span>(senic_logx_fit<span class="sc">$</span>fitted.values, senic_logx_fit<span class="sc">$</span>residuals,</span>
+<span id="cb23-9"><a href="#cb23-9"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10"></a>     <span class="at">xlab=</span><span class="st">"fitted values"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11"></a>     <span class="at">ylab=</span><span class="st">"residuals"</span>)</span>
+<span id="cb23-12"><a href="#cb23-12"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-2-transform-both-x-and-y" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="example-2-transform-both-x-and-y"><span class="header-section-number">3.9</span> Example 2: Transform both x and y</h2>
+<ul>
+<li>Let’s try log transformation on both x and y.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>senic_logxy_fit<span class="ot">=</span><span class="fu">lm</span>(<span class="fu">log</span>(nurses)<span class="sc">~</span><span class="fu">log</span>(services), <span class="at">data=</span>senic)</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="fu">plot</span>(<span class="fu">log</span>(senic<span class="sc">$</span>services), <span class="fu">log</span>(senic<span class="sc">$</span>nurses),</span>
+<span id="cb25-4"><a href="#cb25-4"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>     <span class="at">xlab=</span><span class="st">"log(services)"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6"></a>     <span class="at">ylab=</span><span class="st">"log(nurses)"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="fu">abline</span>(senic_logxy_fit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="fu">plot</span>(senic_logxy_fit<span class="sc">$</span>fitted.values, senic_logxy_fit<span class="sc">$</span>residuals,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10"></a>     <span class="at">xlab=</span><span class="st">"fitted values"</span>,</span>
+<span id="cb25-11"><a href="#cb25-11"></a>     <span class="at">ylab=</span><span class="st">"residuals"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>What is your choice?</li>
+</ul>
+</section>
+<section id="example-2-results-and-interpretation" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="example-2-results-and-interpretation"><span class="header-section-number">3.10</span> Example 2: Results and Interpretation</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">summary</span>(senic_logy_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(nurses) ~ services, data = senic)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.00519 -0.26450  0.04573  0.26862  1.17838 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 2.826546   0.125500   22.52   &lt;2e-16 ***
+services    0.046588   0.002744   16.98   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4414 on 111 degrees of freedom
+Multiple R-squared:  0.722, Adjusted R-squared:  0.7195 
+F-statistic: 288.2 on 1 and 111 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="example-2-results-and-interpretation-1" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="example-2-results-and-interpretation-1"><span class="header-section-number">3.11</span> Example 2: Results and Interpretation</h2>
+<ul>
+<li>Fitted model: <span class="math display">\[
+\log(\text{Nurses}) \;=\; \hat\beta_0 \;+\; \hat\beta_1\,\text{Services} \;,
+\qquad \hat\beta_1 = 0.047.\]</span></li>
+</ul>
+<p>For a 1-unit increase in () (from (x) to (x+1)),</p>
+[
+<span class="math display">\[\begin{aligned}
+\log\big(\text{Nurses}\mid x+1\big) - \log\big(\text{Nurses}\mid x\big)
+&amp;= \hat\beta_1,\\[3pt]
+\Rightarrow\quad
+\frac{\text{Nurses}\mid x+1}{\text{Nurses}\mid x}
+&amp;= \exp(\hat\beta_1).
+\end{aligned}\]</span>
+<p>]</p>
+<ul>
+<li><p>Thus the expected (and median) number of nurses is - by ((_1)) for each +1 in (). With (_1=0.047): ((0.047)), i.e., about a .</p></li>
+<li><p>How about for k-unit increase in services?</p></li>
+</ul>
+</section>
+<section id="example-3" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="example-3"><span class="header-section-number">3.12</span> Example 3:</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a>n <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="fl">0.5</span>, <span class="dv">50</span>)                    <span class="co"># positive, wide range</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>a0 <span class="ot">&lt;-</span> <span class="dv">3</span>; a1 <span class="ot">&lt;-</span> <span class="dv">2</span>; sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>y <span class="ot">&lt;-</span> a0 <span class="sc">+</span> a1<span class="sc">*</span><span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma)</span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a>fit_lin   <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)                    <span class="co"># wrong: linear in x</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>fit_logx  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(x))               <span class="co"># right: linear in log x</span></span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb29-10"><a href="#cb29-10"></a><span class="do">## Plot 1: Data with fitted lines</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>)</span>
+<span id="cb29-12"><a href="#cb29-12"></a>xx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb29-13"><a href="#cb29-13"></a><span class="fu">lines</span>(xx, <span class="fu">predict</span>(fit_lin, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> xx)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb29-14"><a href="#cb29-14"></a><span class="fu">lines</span>(xx, <span class="fu">predict</span>(fit_logx, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> xx)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb29-15"><a href="#cb29-15"></a></span>
+<span id="cb29-16"><a href="#cb29-16"></a><span class="do">## Plot 2: Residuals vs Fitted (linear-in-x shows curvature)</span></span>
+<span id="cb29-17"><a href="#cb29-17"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_lin), <span class="fu">resid</span>(fit_lin), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb29-18"><a href="#cb29-18"></a>     <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span>
+<span id="cb29-19"><a href="#cb29-19"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-3-original-vs-transformed" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="example-3-original-vs-transformed"><span class="header-section-number">3.13</span> Example 3: Original vs Transformed</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>n <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="fl">0.5</span>, <span class="dv">50</span>)                    <span class="co"># positive, wide range</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>a0 <span class="ot">&lt;-</span> <span class="dv">3</span>; a1 <span class="ot">&lt;-</span> <span class="dv">2</span>; sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>y <span class="ot">&lt;-</span> a0 <span class="sc">+</span> a1<span class="sc">*</span><span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma)</span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a>fit_lin   <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)                    <span class="co"># wrong: linear in x</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>fit_logx  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(x))               <span class="co"># right: linear in log x</span></span>
+<span id="cb31-9"><a href="#cb31-9"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb31-10"><a href="#cb31-10"></a><span class="do">## Plot 1: Data with fitted lines</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a><span class="fu">plot</span>(x, y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>)</span>
+<span id="cb31-12"><a href="#cb31-12"></a>xx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb31-13"><a href="#cb31-13"></a><span class="fu">lines</span>(xx, <span class="fu">predict</span>(fit_lin, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> xx)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb31-14"><a href="#cb31-14"></a><span class="fu">lines</span>(xx, <span class="fu">predict</span>(fit_logx, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> xx)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb31-15"><a href="#cb31-15"></a></span>
+<span id="cb31-16"><a href="#cb31-16"></a><span class="do">## Plot 2: Residuals vs Fitted (linear-in-x shows curvature)</span></span>
+<span id="cb31-17"><a href="#cb31-17"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_lin), <span class="fu">resid</span>(fit_lin), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb31-18"><a href="#cb31-18"></a>     <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span>
+<span id="cb31-19"><a href="#cb31-19"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb31-20"><a href="#cb31-20"></a></span>
+<span id="cb31-21"><a href="#cb31-21"></a><span class="fu">plot</span>(<span class="fu">log</span>(x), y, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>, <span class="at">xlab =</span> <span class="st">"log(x)"</span>, <span class="at">ylab =</span> <span class="st">"y"</span>)</span>
+<span id="cb31-22"><a href="#cb31-22"></a></span>
+<span id="cb31-23"><a href="#cb31-23"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_logx), <span class="fu">resid</span>(fit_logx), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb31-24"><a href="#cb31-24"></a>     <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residual"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-4" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="example-4"><span class="header-section-number">3.14</span> Example 4</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>battery<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/battery.csv"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="co">#names(battery)</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="co">#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="fu">plot</span>(battery<span class="sc">$</span>DeltaQvar, battery<span class="sc">$</span>cycleLife,</span>
+<span id="cb33-5"><a href="#cb33-5"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6"></a>     <span class="at">xlab=</span><span class="st">"x"</span>,</span>
+<span id="cb33-7"><a href="#cb33-7"></a>     <span class="at">ylab=</span><span class="st">"y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-4-battery-data" class="level2" data-number="3.15">
+<h2 data-number="3.15" class="anchored" data-anchor-id="example-4-battery-data"><span class="header-section-number">3.15</span> Example 4: Battery Data</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>battery<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/battery.csv"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="co">#names(battery)</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="co">#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="fu">plot</span>(<span class="fu">log10</span>(battery<span class="sc">$</span>DeltaQvar), <span class="fu">log10</span>(battery<span class="sc">$</span>cycleLife),</span>
+<span id="cb34-5"><a href="#cb34-5"></a>     <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>,</span>
+<span id="cb34-6"><a href="#cb34-6"></a>     <span class="at">xlab=</span><span class="st">"log10(DeltaQvar)"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7"></a>     <span class="at">ylab=</span><span class="st">"log10(cycleLife)"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8"></a>     <span class="at">main=</span><span class="st">"Battery Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-4-results" class="level2" data-number="3.16">
+<h2 data-number="3.16" class="anchored" data-anchor-id="example-4-results"><span class="header-section-number">3.16</span> Example 4: Results</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(cycleLife) <span class="sc">~</span> <span class="fu">log10</span>(DeltaQvar), <span class="at">data =</span> battery)</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log10(cycleLife) ~ log10(DeltaQvar), data = battery)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.107697 -0.056378  0.009384  0.056817  0.103507 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       1.44364    0.09990   14.45   &lt;2e-16 ***
+log10(DeltaQvar) -0.37281    0.02718  -13.72   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.06424 on 39 degrees of freedom
+Multiple R-squared:  0.8283,    Adjusted R-squared:  0.8239 
+F-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li>Interpretation of the slope: A 1% increase in DeltaQvar is associated with an approximate ___ decrease in cycleLife, on average.</li>
+</ul>
+</section>
+</section>
+<section id="box-cox-transformation" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Box-Cox Transformation</h1>
+<section id="box-cox-transformation-1" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="box-cox-transformation-1"><span class="header-section-number">4.1</span> Box-Cox Transformation</h2>
+<ul>
+<li><p>Box-Cox transformation is defined as: <span class="math display">\[
+y^{(\lambda)} = \begin{cases}
+\frac{y^\lambda - 1}{\lambda}, &amp; \lambda \neq 0 \\
+\log(y), &amp; \lambda = 0
+\end{cases}
+\]</span> E.g., when <span class="math inline">\(\lambda=0.5\)</span>, it is a square root transformation, i.e., <span class="math inline">\(y'=\sqrt{y}\)</span>.</p></li>
+<li><p>How to find <span class="math inline">\(\lambda\)</span>? Box-Cox transformation finds the optimal <span class="math inline">\(\lambda\)</span> by maximizing the log-likelihood function.</p></li>
+</ul>
+<p><span class="math display">\[y_i^{(\lambda)} = \beta_0 + \beta_1 x_i + \epsilon_i, \quad \epsilon_i \overset{iid}\sim N(0, \sigma^2)\]</span> - The fucntion ``boxcox’’ in MASS package in R can be used to find the optimal <span class="math inline">\(\lambda\)</span>.</p>
+</section>
+<section id="box-cox-transformation-for-senic-data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="box-cox-transformation-for-senic-data"><span class="header-section-number">4.2</span> Box-Cox Transformation for SENIC Data</h2>
+<ul>
+<li>In this example, the optimal value of <span class="math inline">\(\lambda\)</span> is around 0, which suggests a log transformation on y.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb37-2"><a href="#cb37-2"></a>senic<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/SENIC.csv"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3"></a>senic_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nurses <span class="sc">~</span> services, <span class="at">data =</span> senic)</span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="fu">boxcox</span>(senic_fit, <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.1</span>),</span>
+<span id="cb37-5"><a href="#cb37-5"></a>       <span class="at">xlab =</span> <span class="fu">expression</span>(lambda),</span>
+<span id="cb37-6"><a href="#cb37-6"></a>       <span class="at">ylab =</span> <span class="st">"Log-Likelihood"</span>,</span>
+<span id="cb37-7"><a href="#cb37-7"></a>       <span class="at">main =</span> <span class="st">"Box-Cox Transformation for SENIC Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="box-cox-transformation-for-senic-data-1" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="box-cox-transformation-for-senic-data-1"><span class="header-section-number">4.3</span> Box-Cox Transformation for SENIC Data</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb38-2"><a href="#cb38-2"></a>senic_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nurses <span class="sc">~</span> services, <span class="at">data =</span> senic)</span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="fu">boxcox</span>(senic_fit, <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.1</span>),</span>
+<span id="cb38-4"><a href="#cb38-4"></a>       <span class="at">xlab =</span> <span class="fu">expression</span>(lambda),</span>
+<span id="cb38-5"><a href="#cb38-5"></a>       <span class="at">ylab =</span> <span class="st">"Log-Likelihood"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6"></a>       <span class="at">main =</span> <span class="st">"Box-Cox Transformation for SENIC Data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="06-lecture_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Conclusion</h1>
+<section id="conclusion-1" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">5.1</span> Conclusion</h2>
+<p><img src="images/clipboard-3789437798.png" class="img-fluid"></p>
+</section>
+<section id="conclusion-2" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="conclusion-2"><span class="header-section-number">5.2</span> Conclusion</h2>
+<p><img src="images/clipboard-1476262165.png" class="img-fluid"></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

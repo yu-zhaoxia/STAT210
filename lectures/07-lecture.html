@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 07: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 07: Multiple Linear Regression - Introduction – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,71 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro"><span class="header-section-number">1</span> Intro</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-06" id="toc-review-lecture-01-06" class="nav-link" data-scroll-target="#review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</a></li>
+  </ul></li>
+  <li><a href="#mlr" id="toc-mlr" class="nav-link" data-scroll-target="#mlr"><span class="header-section-number">2</span> MLR</a>
+  <ul class="collapse">
+  <li><a href="#slr-vs-mlr" id="toc-slr-vs-mlr" class="nav-link" data-scroll-target="#slr-vs-mlr"><span class="header-section-number">2.1</span> SLR vs MLR</a></li>
+  <li><a href="#mlr-1" id="toc-mlr-1" class="nav-link" data-scroll-target="#mlr-1"><span class="header-section-number">2.2</span> MLR</a></li>
+  <li><a href="#notations" id="toc-notations" class="nav-link" data-scroll-target="#notations"><span class="header-section-number">2.3</span> Notations</a></li>
+  <li><a href="#matrix-form" id="toc-matrix-form" class="nav-link" data-scroll-target="#matrix-form"><span class="header-section-number">2.4</span> Matrix Form</a></li>
+  <li><a href="#matrix-form-1" id="toc-matrix-form-1" class="nav-link" data-scroll-target="#matrix-form-1"><span class="header-section-number">2.5</span> Matrix Form</a></li>
+  <li><a href="#matrix-form-2" id="toc-matrix-form-2" class="nav-link" data-scroll-target="#matrix-form-2"><span class="header-section-number">2.6</span> Matrix Form</a></li>
+  </ul></li>
+  <li><a href="#normal-equations" id="toc-normal-equations" class="nav-link" data-scroll-target="#normal-equations"><span class="header-section-number">3</span> Normal Equations</a>
+  <ul class="collapse">
+  <li><a href="#least-squares-estimation-lse-for-mlr" id="toc-least-squares-estimation-lse-for-mlr" class="nav-link" data-scroll-target="#least-squares-estimation-lse-for-mlr"><span class="header-section-number">3.1</span> Least Squares Estimation (LSE) for MLR</a></li>
+  <li><a href="#lse-for-mlr-p2" id="toc-lse-for-mlr-p2" class="nav-link" data-scroll-target="#lse-for-mlr-p2"><span class="header-section-number">3.2</span> LSE for MLR: <span class="math inline">\(p=2\)</span></a></li>
+  <li><a href="#normal-equations-p2" id="toc-normal-equations-p2" class="nav-link" data-scroll-target="#normal-equations-p2"><span class="header-section-number">3.3</span> Normal Equations: <span class="math inline">\(p=2\)</span></a></li>
+  <li><a href="#normal-equations-p2-1" id="toc-normal-equations-p2-1" class="nav-link" data-scroll-target="#normal-equations-p2-1"><span class="header-section-number">3.4</span> Normal Equations: <span class="math inline">\(p=2\)</span></a></li>
+  <li><a href="#normal-equations-matrix-form-for-p2" id="toc-normal-equations-matrix-form-for-p2" class="nav-link" data-scroll-target="#normal-equations-matrix-form-for-p2"><span class="header-section-number">3.5</span> Normal Equations: Matrix Form for <span class="math inline">\(p=2\)</span></a></li>
+  </ul></li>
+  <li><a href="#lse-and-fitted-values" id="toc-lse-and-fitted-values" class="nav-link" data-scroll-target="#lse-and-fitted-values"><span class="header-section-number">4</span> LSE and Fitted Values</a>
+  <ul class="collapse">
+  <li><a href="#normal-equations-matrix-form-for-general-p" id="toc-normal-equations-matrix-form-for-general-p" class="nav-link" data-scroll-target="#normal-equations-matrix-form-for-general-p"><span class="header-section-number">4.1</span> Normal Equations: Matrix Form for general <span class="math inline">\(p\)</span></a></li>
+  <li><a href="#matrix-form-deriviation-of-lse" id="toc-matrix-form-deriviation-of-lse" class="nav-link" data-scroll-target="#matrix-form-deriviation-of-lse"><span class="header-section-number">4.2</span> Matrix Form Deriviation of LSE</a></li>
+  <li><a href="#mlr-fitted-values" id="toc-mlr-fitted-values" class="nav-link" data-scroll-target="#mlr-fitted-values"><span class="header-section-number">4.3</span> MLR: fitted values</a></li>
+  </ul></li>
+  <li><a href="#residuals" id="toc-residuals" class="nav-link" data-scroll-target="#residuals"><span class="header-section-number">5</span> Residuals</a>
+  <ul class="collapse">
+  <li><a href="#sse-and-mse" id="toc-sse-and-mse" class="nav-link" data-scroll-target="#sse-and-mse"><span class="header-section-number">5.1</span> SSE and MSE</a></li>
+  </ul></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">6</span> Example</a>
+  <ul class="collapse">
+  <li><a href="#example-heights" id="toc-example-heights" class="nav-link" data-scroll-target="#example-heights"><span class="header-section-number">6.1</span> Example: Heights</a></li>
+  <li><a href="#example-heights-1" id="toc-example-heights-1" class="nav-link" data-scroll-target="#example-heights-1"><span class="header-section-number">6.2</span> Example: Heights</a></li>
+  <li><a href="#example-heights-visualize-data" id="toc-example-heights-visualize-data" class="nav-link" data-scroll-target="#example-heights-visualize-data"><span class="header-section-number">6.3</span> Example: Heights: Visualize data</a></li>
+  <li><a href="#example-heights-visualize-data-1" id="toc-example-heights-visualize-data-1" class="nav-link" data-scroll-target="#example-heights-visualize-data-1"><span class="header-section-number">6.4</span> Example: Heights: Visualize data</a></li>
+  <li><a href="#example-heights-mlr-results" id="toc-example-heights-mlr-results" class="nav-link" data-scroll-target="#example-heights-mlr-results"><span class="header-section-number">6.5</span> Example: Heights: MLR Results</a></li>
+  <li><a href="#example-heights-fitted-model" id="toc-example-heights-fitted-model" class="nav-link" data-scroll-target="#example-heights-fitted-model"><span class="header-section-number">6.6</span> Example: Heights: Fitted Model</a></li>
+  <li><a href="#example-heights-mlr-fitted-model" id="toc-example-heights-mlr-fitted-model" class="nav-link" data-scroll-target="#example-heights-mlr-fitted-model"><span class="header-section-number">6.7</span> Example: Heights: MLR Fitted Model</a></li>
+  <li><a href="#example-heights-mlr-results-1" id="toc-example-heights-mlr-results-1" class="nav-link" data-scroll-target="#example-heights-mlr-results-1"><span class="header-section-number">6.8</span> Example: Heights: MLR Results</a></li>
+  <li><a href="#residual-plots" id="toc-residual-plots" class="nav-link" data-scroll-target="#residual-plots"><span class="header-section-number">6.9</span> Residual Plots</a></li>
+  </ul></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference"><span class="header-section-number">7</span> Inference</a>
+  <ul class="collapse">
+  <li><a href="#statistical-inference-about-regression-parameters" id="toc-statistical-inference-about-regression-parameters" class="nav-link" data-scroll-target="#statistical-inference-about-regression-parameters"><span class="header-section-number">7.1</span> Statistical Inference About Regression Parameters</a></li>
+  <li><a href="#t-tests-for-regression-parameters" id="toc-t-tests-for-regression-parameters" class="nav-link" data-scroll-target="#t-tests-for-regression-parameters"><span class="header-section-number">7.2</span> t-tests For Regression Parameters</a></li>
+  <li><a href="#t-tests-for-regression-parameters-1" id="toc-t-tests-for-regression-parameters-1" class="nav-link" data-scroll-target="#t-tests-for-regression-parameters-1"><span class="header-section-number">7.3</span> t-tests For Regression Parameters</a></li>
+  <li><a href="#confidence-intervals-for-regression-parameters" id="toc-confidence-intervals-for-regression-parameters" class="nav-link" data-scroll-target="#confidence-intervals-for-regression-parameters"><span class="header-section-number">7.4</span> Confidence Intervals For Regression Parameters</a></li>
+  <li><a href="#more-inference-problems" id="toc-more-inference-problems" class="nav-link" data-scroll-target="#more-inference-problems"><span class="header-section-number">7.5</span> More Inference Problems</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 07:</h1>
+<h1 class="title">Lec 07: Multiple Linear Regression - Introduction</h1>
 </div>
 
 
@@ -139,8 +258,414 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="intro" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Intro</h1>
+<section id="review-lecture-01-06" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</h2>
+<ul>
+<li>Lecture 01: LSE in simple linear regression (SLR)</li>
+<li>Lectures 02-04: statistical inference in SLR, t-test, F-test, ANOVA.</li>
+<li>Lecture 05: Diagnostics in SLR.</li>
+<li>Lecture 06: data transformation and lack of fit test.</li>
+<li>Today: Multiple Linear Regression (MLR) - Introduction.</li>
+</ul>
+</section>
+</section>
+<section id="mlr" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> MLR</h1>
+<section id="slr-vs-mlr" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="slr-vs-mlr"><span class="header-section-number">2.1</span> SLR vs MLR</h2>
+<ul>
+<li><p>SLR: In a simple linear regression (SLR) model, we have one response variable <span class="math inline">\(y\)</span> and one predictor variable <span class="math inline">\(x\)</span>. <span class="math display">\[y=\beta_0 + \beta_1 x + \epsilon\]</span></p>
+<ul>
+<li>For individual <span class="math inline">\(i\)</span>, <span class="math inline">\(i=1, \ldots, n\)</span>, <span class="math display">\[y_i= \beta_0 + \beta_1 x_i + \epsilon_i\]</span></li>
+</ul></li>
+<li><p>MLR: In a multiple linear regression (MLR) model, we have one response variable <span class="math inline">\(t\)</span> and multiple predictor variables <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>. <span class="math display">\[y= \beta_0 + \beta_1 x_1 + \cdots, \beta_p x_p + \epsilon\]</span></p></li>
+</ul>
+</section>
+<section id="mlr-1" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="mlr-1"><span class="header-section-number">2.2</span> MLR</h2>
+<ul>
+<li><p>For indivuidual <span class="math inline">\(i\)</span>, <span class="math inline">\(i=1, \ldots, n\)</span>, <span class="math display">\[y_i= \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \epsilon_i\]</span> where</p></li>
+<li><p><span class="math inline">\(y_i\)</span> is the response variable for individual <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(x_{ij}\)</span> is the value of predictor variable <span class="math inline">\(j\)</span> for individual <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(\epsilon_i\)</span>’s are errors:</p>
+<ul>
+<li>The assumptions on <span class="math inline">\(\epsilon_i\)</span>’s are the same as those in SLR.</li>
+<li>weaker version: <span class="math inline">\(\epsilon_i\)</span>’s are independent with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>Strong version: <span class="math inline">\(\epsilon_i\)</span>’s are i.i.d. <span class="math inline">\(N(0, \sigma^2)\)</span>.</li>
+</ul></li>
+<li><p>The parameters to be estimated are <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_p\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p></li>
+</ul>
+</section>
+<section id="notations" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="notations"><span class="header-section-number">2.3</span> Notations</h2>
+<ul>
+<li>When putting all individuals together, we have <span class="math display">\[\begin{align*}
+y_1 &amp;= \beta_0 + \beta_1 x_{11} + \cdots + \beta_p x_{1p} + \epsilon_1 \\
+y_2 &amp;= \beta_0 + \beta_1 x_{21} + \cdots + \beta_p x_{2p} + \epsilon_2 \\
+&amp;\vdots \\
+y_n &amp;= \beta_0 + \beta_1 x_{n1} + \cdots + \beta_p x_{np} + \epsilon_n
+\end{align*}\]</span></li>
+</ul>
+</section>
+<section id="matrix-form" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="matrix-form"><span class="header-section-number">2.4</span> Matrix Form</h2>
+<ul>
+<li>In matrix form, we have <span class="math display">\[\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{bmatrix} = \begin{bmatrix}1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\ 1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np}\end{bmatrix} \begin{bmatrix}\beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_p\end{bmatrix} + \begin{bmatrix}\epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_n\end{bmatrix}\]</span></li>
+</ul>
+</section>
+<section id="matrix-form-1" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="matrix-form-1"><span class="header-section-number">2.5</span> Matrix Form</h2>
+<p>More compactly, <span class="math display">\[\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}\]</span></p>
+<p>here</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{y}\)</span> is the response vector of size <span class="math inline">\(n \times 1\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbf{X}\)</span> is the design matrix of size <span class="math inline">\(n \times (p+1)\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\beta}\)</span> is the parameter vector of size <span class="math inline">\((p+1) \times 1\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\epsilon}\)</span> is the error vector of size <span class="math inline">\(n \times 1\)</span>, where <span class="math inline">\(E(\boldsymbol{\epsilon}) = \mathbf{0}\)</span> and <span class="math inline">\(Var(\boldsymbol{\epsilon}) = \sigma^2 \mathbf{I}_n\)</span>. Here <span class="math inline">\(\sigma^2 \mathbf{I}_n\)</span> is the variance covariance of <span class="math inline">\(\boldsymbol{\epsilon}\)</span> - it is a diagonal matrix with diagonal elements <span class="math inline">\(\sigma^2\)</span>.</p></li>
+</ul>
+</section>
+<section id="matrix-form-2" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="matrix-form-2"><span class="header-section-number">2.6</span> Matrix Form</h2>
+<ul>
+<li><span class="math inline">\(\mathbf{y} = \begin{bmatrix}y_1 \\ \vdots \\ y_n\end{bmatrix}\)</span> is the response vector of size <span class="math inline">\(n \times 1\)</span>.</li>
+<li><span class="math inline">\(\mathbf{X} = \begin{bmatrix}1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\  \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np}\end{bmatrix}\)</span> is the design matrix of size <span class="math inline">\(n \times (p+1)\)</span>.</li>
+<li><span class="math inline">\(\boldsymbol{\beta} = \begin{bmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_p\end{bmatrix}\)</span> is the parameter vector of size <span class="math inline">\((p+1) \times 1\)</span>.</li>
+<li><span class="math inline">\(\boldsymbol{\epsilon} = \begin{bmatrix}\epsilon_1 \\ \vdots \\ \epsilon_n\end{bmatrix}\)</span> is the error vector of size <span class="math inline">\(n \times 1\)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="normal-equations" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Normal Equations</h1>
+<section id="least-squares-estimation-lse-for-mlr" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="least-squares-estimation-lse-for-mlr"><span class="header-section-number">3.1</span> Least Squares Estimation (LSE) for MLR</h2>
+<ul>
+<li>The least squares estimation (LSE) of <span class="math inline">\(\boldsymbol{\beta}\)</span> is obtained by minimizing the residual sum of squares (RSS): <span class="math display">\[RSS(\boldsymbol{\beta}) = \sum_{i=1}^n (y_i - E[y_i])^2 = (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\]</span> where <span class="math inline">\(E[y_i] = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}\)</span> is the fitted value for individual <span class="math inline">\(i\)</span>.</li>
+</ul>
+</section>
+<section id="lse-for-mlr-p2" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="lse-for-mlr-p2"><span class="header-section-number">3.2</span> LSE for MLR: <span class="math inline">\(p=2\)</span></h2>
+<ul>
+<li>Let’s consider <span class="math inline">\(p=2\)</span> for illustration: <span class="math display">\[RSS(\beta_0, \beta_1, \beta_2) = \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_{i1} - \beta_2 x_{i2})^2\]</span></li>
+<li>To find the minimum, we take the partial derivatives with respect to <span class="math inline">\(\beta_0, \beta_1, \beta_2\)</span> and set them to zero:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+\frac{\partial RSS}{\partial \beta_0} &amp;= -2 \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_{i1} - \beta_2 x_{i2}) = 0 \\
+\frac{\partial RSS}{\partial \beta_1} &amp;= -2 \sum_{i=1}^n x_{i1} (y_i - \beta_0 - \beta_1 x_{i1} - \beta_2 x_{i2}) = 0 \\
+\frac{\partial RSS}{\partial \beta_2} &amp;= -2 \sum_{i=1}^n x_{i2} (y_i - \beta_0 - \beta_1 x_{i1} - \beta_2 x_{i2}) = 0
+\end{align*}\]</span></p>
+</section>
+<section id="normal-equations-p2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="normal-equations-p2"><span class="header-section-number">3.3</span> Normal Equations: <span class="math inline">\(p=2\)</span></h2>
+<ul>
+<li><p>Note that there are three linear equations. They can be rewritten as: <span class="math display">\[\begin{align*}
+n \beta_0 + \beta_1 \sum_{i=1}^n x_{i1} + \beta_2 \sum_{i=1}^n x_{i2} &amp; = \sum_{i=1}^n y_i\\
+\beta_0 \sum_{i=1}^n x_{i1} + \beta_1 \sum_{i=1}^n x_{i1}^2 + \beta_2 \sum_{i=1}^n x_{i1} x_{i2} &amp; = \sum_{i=1}^n x_{i1} y_i\\
+\beta_0 \sum_{i=1}^n x_{i2} + \beta_1 \sum_{i=1}^n x_{i1} x_{i2} + \beta_2 \sum_{i=1}^n x_{i2}^2 &amp; = \sum_{i=1}^n x_{i2} y_i
+\end{align*}\]</span></p></li>
+<li><p>These equations are called the normal equations.</p></li>
+</ul>
+</section>
+<section id="normal-equations-p2-1" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="normal-equations-p2-1"><span class="header-section-number">3.4</span> Normal Equations: <span class="math inline">\(p=2\)</span></h2>
+<ul>
+<li>To connect the normal equations to their matrix form, we can write them as: <span class="math display">\[\begin{bmatrix}n &amp; \sum_{i=1}^n x_{i1} &amp; \sum_{i=1}^n x_{i2} \\ \sum_{i=1}^n x_{i1} &amp; \sum_{i=1}^n x_{i1}^2 &amp; \sum_{i=1}^n x_{i1} x_{i2} \\ \sum_{i=1}^n x_{i2} &amp; \sum_{i=1}^n x_{i1} x_{i2} &amp; \sum_{i=1}^n x_{i2}^2\end{bmatrix} \begin{bmatrix}\beta_0 \\ \beta_1 \\ \beta_2\end{bmatrix} = \begin{bmatrix}\sum_{i=1}^n y_i \\ \sum_{i=1}^n x_{i1} y_i \\ \sum_{i=1}^n x_{i2} y_i\end{bmatrix}\]</span></li>
+</ul>
+</section>
+<section id="normal-equations-matrix-form-for-p2" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="normal-equations-matrix-form-for-p2"><span class="header-section-number">3.5</span> Normal Equations: Matrix Form for <span class="math inline">\(p=2\)</span></h2>
+<p>Recall that</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{X} = \begin{bmatrix}1 &amp; x_{11} &amp; x_{12}\\  1 &amp; x_{21} &amp; x_{22}\\ \vdots &amp; \vdots &amp; \vdots\\ 1 &amp; x_{n1} &amp; x_{n2}\end{bmatrix}\)</span> is the design matrix of size <span class="math inline">\(n \times (p+1)\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\beta}= \begin{bmatrix}\beta_0 \\ \beta_1  \\ \beta_2\end{bmatrix}\)</span> is the parameter vector of size <span class="math inline">\((p+1) \times 1\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbf{y} = \begin{bmatrix}y_1 \\ \vdots \\ y_n\end{bmatrix}\)</span> is the response vector of size <span class="math inline">\(n \times 1\)</span>.</p></li>
+<li><p>We can verify that the normal equations can be written as: <span class="math display">\[\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{y}\]</span></p></li>
+<li><p>How to solve for <span class="math inline">\(\boldsymbol{\beta}\)</span>?</p></li>
+</ul>
+</section>
+</section>
+<section id="lse-and-fitted-values" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> LSE and Fitted Values</h1>
+<section id="normal-equations-matrix-form-for-general-p" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="normal-equations-matrix-form-for-general-p"><span class="header-section-number">4.1</span> Normal Equations: Matrix Form for general <span class="math inline">\(p\)</span></h2>
+<ul>
+<li><p>For general <span class="math inline">\(p\)</span>, the normal equations can be written as: <span class="math display">\[\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{y}\]</span></p></li>
+<li><p>If <span class="math inline">\(\mathbf{X}^T \mathbf{X}\)</span> is invertible, the LSE of <span class="math inline">\(\boldsymbol{\beta}\)</span> is given by: <span class="math display">\[\hat{\boldsymbol{\beta}} =\begin{bmatrix}\hat{\beta}_0 \\ \hat{\beta}_1 \\ \vdots \\ \hat{\beta}_p\end{bmatrix}
+=(\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}\]</span></p></li>
+</ul>
+</section>
+<section id="matrix-form-deriviation-of-lse" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="matrix-form-deriviation-of-lse"><span class="header-section-number">4.2</span> Matrix Form Deriviation of LSE</h2>
+
+</section>
+<section id="mlr-fitted-values" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="mlr-fitted-values"><span class="header-section-number">4.3</span> MLR: fitted values</h2>
+<ul>
+<li><p>The fitted values can be computed as: <span class="math display">\[\hat{\mathbf{y}} =\begin{bmatrix}\hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_n\end{bmatrix}
+=\mathbf{X} \hat{\boldsymbol{\beta}} = \mathbf{X} (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}\]</span></p></li>
+<li><p>The hat matrix: <span class="math display">\[\mathbf{H} = \mathbf{X} (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T\]</span></p></li>
+</ul>
+<p>Note that <span class="math inline">\(\hat{\mathbf{y}}= \mathbf{H} \mathbf{y}\)</span>.</p>
+</section>
+</section>
+<section id="residuals" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Residuals</h1>
+<ul>
+<li>The residuals can be computed as: <span class="math display">\[\hat{\boldsymbol{\epsilon}} = \begin{bmatrix}\hat{\epsilon}_1 \\ \hat{\epsilon}_2 \\ \vdots \\ \hat{\epsilon}_n\end{bmatrix}=\begin{bmatrix}y_1 - \hat{y}_1 \\ y_2 - \hat{y}_2 \\ \vdots \\ y_n - \hat{y}_n\end{bmatrix}
+=\mathbf{y} - \hat{\mathbf{y}} = \mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}= (\mathbf{I}_n - \mathbf{H}) \mathbf{y}\]</span></li>
+</ul>
+<section id="sse-and-mse" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sse-and-mse"><span class="header-section-number">5.1</span> SSE and MSE</h2>
+<ul>
+<li><p>The sum of squared errors (SSE) can be computed as: <span class="math display">\[\begin{align*}
+SSE &amp; = \sum_{i=1}^n (y_i -\hat y_i)^2 = \hat{\boldsymbol{\epsilon}}^T \hat{\boldsymbol{\epsilon}} = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})\\
+&amp;=[(\mathbf{I}_n - \mathbf{H}) \mathbf{y}]^T (\mathbf{I}_n - \mathbf{H}) \mathbf{y}\\
+&amp;=\mathbf{y}^T (\mathbf{I}_n - \mathbf{H}) \mathbf{y} \\
+\end{align*}\]</span></p></li>
+<li><p>The mean squared error (MSE) is given by: <span class="math display">\[MSE = \frac{SSE}{n-(p+1)}\]</span> where <span class="math inline">\(n-(p+1)\)</span> is the degrees of freedom (d.f.) for error.</p></li>
+<li><p>An unbiased estimator of <span class="math inline">\(\sigma^2\)</span> is given by <span class="math inline">\(\hat{\sigma}^2 = MSE\)</span>.</p></li>
+</ul>
+</section>
+</section>
+<section id="example" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Example</h1>
+<section id="example-heights" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="example-heights"><span class="header-section-number">6.1</span> Example: Heights</h2>
+<ul>
+<li>This is a simulated data set to practice MLR.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>); n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>parents <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n,</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="at">mu    =</span> <span class="fu">c</span>(<span class="fl">69.1</span>, <span class="fl">63.7</span>),                 </span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span><span class="sc">^</span><span class="dv">2</span>, <span class="fl">0.2</span><span class="sc">*</span><span class="dv">3</span><span class="sc">*</span><span class="fl">2.8</span>,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>                   <span class="fl">0.2</span><span class="sc">*</span><span class="dv">3</span><span class="sc">*</span><span class="fl">2.8</span>, <span class="fl">2.8</span><span class="sc">^</span><span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb1-7"><a href="#cb1-7"></a>f.height <span class="ot">&lt;-</span> parents[,<span class="dv">1</span>]; m.height <span class="ot">&lt;-</span> parents[,<span class="dv">2</span>]</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>sex     <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"son"</span>,<span class="st">"daughter"</span>), n, <span class="cn">TRUE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>sex_eff <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(sex<span class="sc">==</span><span class="st">"son"</span>, <span class="fl">2.7</span>, <span class="sc">-</span><span class="fl">2.7</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>midp    <span class="ot">&lt;-</span> (f.height <span class="sc">+</span> m.height)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>c.height <span class="ot">&lt;-</span> (<span class="fl">69.1</span> <span class="sc">-</span> <span class="fl">0.60</span><span class="sc">*</span>((<span class="fl">69.1+63.7</span>)<span class="sc">/</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fl">2.7</span>) <span class="sc">+</span> </span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="fl">0.60</span><span class="sc">*</span>midp <span class="sc">+</span> sex_eff <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">2.5</span>)</span>
+<span id="cb1-14"><a href="#cb1-14"></a>height.data<span class="ot">=</span> <span class="fu">data.frame</span>(c.height, f.height, m.height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-heights-1" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="example-heights-1"><span class="header-section-number">6.2</span> Example: Heights</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">head</span>(height.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  c.height f.height m.height
+1 60.73932 66.01638 60.48351
+2 63.06214 69.39601 66.39173
+3 63.26804 70.51269 59.71977
+4 59.67623 68.41591 61.17775
+5 68.99239 68.18297 62.76237
+6 70.61082 69.78964 63.31624</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">summary</span>(height.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    c.height        f.height        m.height    
+ Min.   :58.63   Min.   :59.37   Min.   :59.07  
+ 1st Qu.:63.12   1st Qu.:66.97   1st Qu.:61.39  
+ Median :66.52   Median :69.50   Median :63.49  
+ Mean   :66.12   Mean   :69.34   Mean   :63.55  
+ 3rd Qu.:68.96   3rd Qu.:70.89   3rd Qu.:65.61  
+ Max.   :73.89   Max.   :77.56   Max.   :68.57  </code></pre>
+</div>
+</div>
+</section>
+<section id="example-heights-visualize-data" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="example-heights-visualize-data"><span class="header-section-number">6.3</span> Example: Heights: Visualize data</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#Visualize data</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">hist</span>(height.data<span class="sc">$</span>c.height, <span class="at">main=</span><span class="st">"c.height"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="fu">hist</span>(height.data<span class="sc">$</span>f.height, <span class="at">main=</span><span class="st">"f.height"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">hist</span>(height.data<span class="sc">$</span>m.height, <span class="at">main=</span><span class="st">"m.height"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="07-lecture_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-heights-visualize-data-1" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="example-heights-visualize-data-1"><span class="header-section-number">6.4</span> Example: Heights: Visualize data</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#Visualize data</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">pairs</span>(height.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="07-lecture_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-heights-mlr-results" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="example-heights-mlr-results"><span class="header-section-number">6.5</span> Example: Heights: MLR Results</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>height.lm<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data=</span>height.data)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">summary</span>(height.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = c.height ~ f.height + m.height, data = height.data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.0987 -2.8324 -0.0332  2.2544  7.1131 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  16.2580    14.1585   1.148   0.2567  
+f.height      0.2949     0.1508   1.955   0.0565 .
+m.height      0.4628     0.2148   2.155   0.0363 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.568 on 47 degrees of freedom
+Multiple R-squared:  0.2128,    Adjusted R-squared:  0.1793 
+F-statistic: 6.352 on 2 and 47 DF,  p-value: 0.003615</code></pre>
+</div>
+</div>
+</section>
+<section id="example-heights-fitted-model" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="example-heights-fitted-model"><span class="header-section-number">6.6</span> Example: Heights: Fitted Model</h2>
+<p><span class="math display">\[\hat{c.height} = 16.26 + 0.29 \cdot f.height + 0.46 \cdot m.height\]</span></p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">library</span>(scatterplot3d)</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data =</span> height.data)</span>
+<span id="cb10-4"><a href="#cb10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5"></a>s3d <span class="ot">&lt;-</span> <span class="fu">scatterplot3d</span>(height.data<span class="sc">$</span>f.height,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>                     height.data<span class="sc">$</span>m.height,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>                     height.data<span class="sc">$</span>c.height,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>                     <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">color =</span> <span class="st">"royalblue"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>                     <span class="at">xlab =</span> <span class="st">"Father's height (in)"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>                     <span class="at">ylab =</span> <span class="st">"Mother's height (in)"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>                     <span class="at">zlab =</span> <span class="st">"Child height (in)"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12"></a>                     <span class="at">ylab.pos =</span> <span class="dv">4</span>,        <span class="co"># &lt;-- move y-axis label to the outer side</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>                     <span class="at">angle =</span> <span class="dv">55</span>, <span class="at">grid =</span> <span class="cn">TRUE</span>, <span class="at">box =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a>s3d<span class="sc">$</span><span class="fu">plane3d</span>(fit, <span class="at">draw_polygon =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-16"><a href="#cb10-16"></a>            <span class="at">polygon_args =</span> <span class="fu">list</span>(<span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"orange"</span>, <span class="at">alpha.f =</span> <span class="fl">0.35</span>), <span class="at">border =</span> <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="07-lecture_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-heights-mlr-fitted-model" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="example-heights-mlr-fitted-model"><span class="header-section-number">6.7</span> Example: Heights: MLR Fitted Model</h2>
+<ul>
+<li><p>The fitted model is: <span class="math display">\[\hat{c.height} = 16.26 + 0.29 \cdot f.height + 0.46 \cdot m.height\]</span></p></li>
+<li><p>Interpretation of coefficients:</p>
+<ul>
+<li>For a one unit increase in father’s height, the son’s/daughter’s height is expected to increase by 0.29 inches, holding mother’s height constant.</li>
+<li>For a one unit increase in mother’s height, the son’s/daughter’s height is expected to increase by 0.46 inches, holding father’s height constant.</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-heights-mlr-results-1" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="example-heights-mlr-results-1"><span class="header-section-number">6.8</span> Example: Heights: MLR Results</h2>
+<p>From the summary,</p>
+<ul>
+<li><p><span class="math inline">\(n=\)</span>___, the number of observations.</p></li>
+<li><p><span class="math inline">\(R^2=\)</span>___, the variance explained by the model (the two predictors, parents’ heights).</p></li>
+<li><p><span class="math inline">\(s=\)</span>___, the estimated <span class="math inline">\(\sigma\)</span>. Recall that <span class="math inline">\(s^2=MSE=SSE/(n-(p+1))\)</span>.</p></li>
+<li><p>What else can you learn from the summary output?</p></li>
+</ul>
+</section>
+<section id="residual-plots" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="residual-plots"><span class="header-section-number">6.9</span> Residual Plots</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">plot</span>(height.lm, <span class="at">which=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="07-lecture_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="inference" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Inference</h1>
+<section id="statistical-inference-about-regression-parameters" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="statistical-inference-about-regression-parameters"><span class="header-section-number">7.1</span> Statistical Inference About Regression Parameters</h2>
+<ul>
+<li>Under the strong version of the model assumptions, we have: <span class="math display">\[\hat{\boldsymbol{\beta}} \sim N(\boldsymbol{\beta}, \sigma^2 (\mathbf{X}^T \mathbf{X})^{-1})\]</span></li>
+<li>The variance (var-cov) of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> can be estimated by: <span class="math display">\[\widehat{Var}(\hat{\boldsymbol{\beta}}) = s^2 (\mathbf{X}^T \mathbf{X})^{-1}\]</span></li>
+<li>The standard error (SE) of <span class="math inline">\(\hat{\beta}_j\)</span> is given by: <span class="math display">\[SE(\hat{\beta}_j) = s \sqrt{ \cdot [(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}}\]</span> where <span class="math inline">\([(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}\)</span> is the <span class="math inline">\(j\)</span>-th diagonal element of the matrix <span class="math inline">\((\mathbf{X}^T \mathbf{X})^{-1}\)</span>.</li>
+</ul>
+</section>
+<section id="t-tests-for-regression-parameters" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="t-tests-for-regression-parameters"><span class="header-section-number">7.2</span> t-tests For Regression Parameters</h2>
+<ul>
+<li>To test the significance of each predictor variable, we can use the t-test: <span class="math display">\[t = \frac{\hat{\beta}_j - \beta_{j0}}{SE(\hat{\beta}_j)}\]</span> where <span class="math inline">\(\beta_{j0}\)</span> is the hypothesized value of <span class="math inline">\(\beta_j\)</span> under the null hypothesis.</li>
+<li>Under the null hypothesis <span class="math inline">\(H_0: \beta_j = \beta_{j0}\)</span>, the test statistic follows a t-distribution with <span class="math inline">\(n-(p+1)\)</span> degrees of freedom: <span class="math display">\[t \sim t_{n-(p+1)}\]</span></li>
+</ul>
+</section>
+<section id="t-tests-for-regression-parameters-1" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="t-tests-for-regression-parameters-1"><span class="header-section-number">7.3</span> t-tests For Regression Parameters</h2>
+<ul>
+<li>We mentioned that <span class="math inline">\(\hat\beta_j\)</span> follows a normal distribution. To construct a t statistic, we also need the following.</li>
+<li>It can be shown that <span class="math inline">\(\hat\beta_j\)</span> and <span class="math inline">\(s^2\)</span> are independent, and <span class="math display">\[\frac{(n-(p+1))s^2}{\sigma^2} = \frac{SSE}{\sigma^2} \sim \chi^2_{n-(p+1)}\]</span></li>
+<li>Therefore, we have <span class="math display">\[\frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} = \frac{\hat{\beta}_j - \beta_j}{\sqrt{\sigma^2 [(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}}} \bigg/ \sqrt{\frac{(n-(p+1))s^2}{\sigma^2 (n-(p+1))}} \sim t_{n-(p+1)}\]</span></li>
+</ul>
+</section>
+<section id="confidence-intervals-for-regression-parameters" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="confidence-intervals-for-regression-parameters"><span class="header-section-number">7.4</span> Confidence Intervals For Regression Parameters</h2>
+<ul>
+<li><p>A <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\beta_j\)</span> is given by: <span class="math display">\[\hat{\beta}_j \pm t_{\alpha/2, n-(p+1)} \cdot SE(\hat{\beta}_j)\]</span> where <span class="math inline">\(t_{\alpha/2, n-(p+1)}\)</span> is the <span class="math inline">\((1-\alpha/2)\)</span> quantile of the t-distribution with <span class="math inline">\(n-(p+1)\)</span> degrees of freedom.</p></li>
+<li><p>This confidence is derived from the t-test statistic, as follows: <span class="math display">\[\begin{align*}
+1-\alpha=P\left(-t_{\alpha/2, n-(p+1)} \leq \frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} \leq t_{\alpha/2, n-(p+1)}\right) &amp;\\
+= P\left(\hat{\beta}_j - t_{\alpha/2, n-(p+1)} SE(\hat{\beta}_j) \leq \beta_j \leq \hat{\beta}_j + t_{\alpha/2, n-(p+1)} SE(\hat{\beta}_j)\right)&amp;
+\end{align*}\]</span></p></li>
+</ul>
+</section>
+<section id="more-inference-problems" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="more-inference-problems"><span class="header-section-number">7.5</span> More Inference Problems</h2>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

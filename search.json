@@ -7,6 +7,223 @@
     "text": "Simple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nSep 24\n1 — Introduction\nPDF\n\n\nSep 29\n2 — Inference\nPDF\n\n\nOct 1\n3 — Inference\nPDF\n\n\nOct 6\n4 — ANOVA and Diagnostics\nPDF\n\n\nOct 8\n5 — Diagnostics\nPDF\n\n\nOct 13\n6 — Lack of Fit Test and Data Transformation\nPDF\n\n\n\n\n\nMultiple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nOct 15\n7 — Introduction\nPDF\n\n\nOct 20\n8 — Inference\nPDF\n\n\nOct 22\n9 — Sums of Squares, ANOVA, F-tests\nPDF\n\n\nOct 27\n10 — Extra Sums of Squares, Partial F Tests\nPDF\n\n\nOct 29\n11 — Multicollinearity\nPDF\n\n\n\nNov 3: Midterm\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nNov 5\n12 — Categorical Variables\nPDF\n\n\nNov 10\n13 — Interactions\nPDF\n\n\nNov 12\n14 — Model Selection\nPDF\n\n\nNov 17\n15 — Model Selection\nPDF\n\n\nNov 19\n16 — Outliers\nPDF\n\n\nNov 24\n17 — Influential Points\nPDF\n\n\n\n\n\nAdditional Topics\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nDec 1\n18 — Weighted Least Squares\nPDF\n\n\nDec 3\n[19 — TBA]\n[PDF]"
   },
   {
+    "objectID": "lectures/07-lecture.html",
+    "href": "lectures/07-lecture.html",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "",
+    "text": "Lecture 01: LSE in simple linear regression (SLR)\nLectures 02-04: statistical inference in SLR, t-test, F-test, ANOVA.\nLecture 05: Diagnostics in SLR.\nLecture 06: data transformation and lack of fit test.\nToday: Multiple Linear Regression (MLR) - Introduction."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#review-lecture-01-06",
+    "href": "lectures/07-lecture.html#review-lecture-01-06",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "",
+    "text": "Lecture 01: LSE in simple linear regression (SLR)\nLectures 02-04: statistical inference in SLR, t-test, F-test, ANOVA.\nLecture 05: Diagnostics in SLR.\nLecture 06: data transformation and lack of fit test.\nToday: Multiple Linear Regression (MLR) - Introduction."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#slr-vs-mlr",
+    "href": "lectures/07-lecture.html#slr-vs-mlr",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "2.1 SLR vs MLR",
+    "text": "2.1 SLR vs MLR\n\nSLR: In a simple linear regression (SLR) model, we have one response variable \\(y\\) and one predictor variable \\(x\\). \\[y=\\beta_0 + \\beta_1 x + \\epsilon\\]\n\nFor individual \\(i\\), \\(i=1, \\ldots, n\\), \\[y_i= \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\nMLR: In a multiple linear regression (MLR) model, we have one response variable \\(t\\) and multiple predictor variables \\(X_1, X_2, \\ldots, X_p\\). \\[y= \\beta_0 + \\beta_1 x_1 + \\cdots, \\beta_p x_p + \\epsilon\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#mlr-1",
+    "href": "lectures/07-lecture.html#mlr-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "2.2 MLR",
+    "text": "2.2 MLR\n\nFor indivuidual \\(i\\), \\(i=1, \\ldots, n\\), \\[y_i= \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip} + \\epsilon_i\\] where\n\\(y_i\\) is the response variable for individual \\(i\\).\n\\(x_{ij}\\) is the value of predictor variable \\(j\\) for individual \\(i\\).\n\\(\\epsilon_i\\)’s are errors:\n\nThe assumptions on \\(\\epsilon_i\\)’s are the same as those in SLR.\nweaker version: \\(\\epsilon_i\\)’s are independent with mean 0 and constant variance \\(\\sigma^2\\).\nStrong version: \\(\\epsilon_i\\)’s are i.i.d. \\(N(0, \\sigma^2)\\).\n\nThe parameters to be estimated are \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) and \\(\\sigma^2\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#notations",
+    "href": "lectures/07-lecture.html#notations",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "2.3 Notations",
+    "text": "2.3 Notations\n\nWhen putting all individuals together, we have \\[\\begin{align*}\ny_1 &= \\beta_0 + \\beta_1 x_{11} + \\cdots + \\beta_p x_{1p} + \\epsilon_1 \\\\\ny_2 &= \\beta_0 + \\beta_1 x_{21} + \\cdots + \\beta_p x_{2p} + \\epsilon_2 \\\\\n&\\vdots \\\\\ny_n &= \\beta_0 + \\beta_1 x_{n1} + \\cdots + \\beta_p x_{np} + \\epsilon_n\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#matrix-form",
+    "href": "lectures/07-lecture.html#matrix-form",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "2.4 Matrix Form",
+    "text": "2.4 Matrix Form\n\nIn matrix form, we have \\[\\begin{bmatrix}y_1 \\\\ y_2 \\\\ \\vdots \\\\ y_n\\end{bmatrix} = \\begin{bmatrix}1 & x_{11} & x_{12} & \\cdots & x_{1p} \\\\ 1 & x_{21} & x_{22} & \\cdots & x_{2p} \\\\ \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_{n1} & x_{n2} & \\cdots & x_{np}\\end{bmatrix} \\begin{bmatrix}\\beta_0 \\\\ \\beta_1 \\\\ \\beta_2 \\\\ \\vdots \\\\ \\beta_p\\end{bmatrix} + \\begin{bmatrix}\\epsilon_1 \\\\ \\epsilon_2 \\\\ \\vdots \\\\ \\epsilon_n\\end{bmatrix}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#matrix-form-1",
+    "href": "lectures/07-lecture.html#matrix-form-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "2.5 Matrix Form",
+    "text": "2.5 Matrix Form\nMore compactly, \\[\\mathbf{y} = \\mathbf{X} \\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\]\nhere\n\n\\(\\mathbf{y}\\) is the response vector of size \\(n \\times 1\\).\n\\(\\mathbf{X}\\) is the design matrix of size \\(n \\times (p+1)\\).\n\\(\\boldsymbol{\\beta}\\) is the parameter vector of size \\((p+1) \\times 1\\).\n\\(\\boldsymbol{\\epsilon}\\) is the error vector of size \\(n \\times 1\\), where \\(E(\\boldsymbol{\\epsilon}) = \\mathbf{0}\\) and \\(Var(\\boldsymbol{\\epsilon}) = \\sigma^2 \\mathbf{I}_n\\). Here \\(\\sigma^2 \\mathbf{I}_n\\) is the variance covariance of \\(\\boldsymbol{\\epsilon}\\) - it is a diagonal matrix with diagonal elements \\(\\sigma^2\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#matrix-form-2",
+    "href": "lectures/07-lecture.html#matrix-form-2",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "2.6 Matrix Form",
+    "text": "2.6 Matrix Form\n\n\\(\\mathbf{y} = \\begin{bmatrix}y_1 \\\\ \\vdots \\\\ y_n\\end{bmatrix}\\) is the response vector of size \\(n \\times 1\\).\n\\(\\mathbf{X} = \\begin{bmatrix}1 & x_{11} & x_{12} & \\cdots & x_{1p} \\\\  \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_{n1} & x_{n2} & \\cdots & x_{np}\\end{bmatrix}\\) is the design matrix of size \\(n \\times (p+1)\\).\n\\(\\boldsymbol{\\beta} = \\begin{bmatrix}\\beta_0 \\\\ \\beta_1 \\\\ \\vdots \\\\ \\beta_p\\end{bmatrix}\\) is the parameter vector of size \\((p+1) \\times 1\\).\n\\(\\boldsymbol{\\epsilon} = \\begin{bmatrix}\\epsilon_1 \\\\ \\vdots \\\\ \\epsilon_n\\end{bmatrix}\\) is the error vector of size \\(n \\times 1\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#least-squares-estimation-lse-for-mlr",
+    "href": "lectures/07-lecture.html#least-squares-estimation-lse-for-mlr",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "3.1 Least Squares Estimation (LSE) for MLR",
+    "text": "3.1 Least Squares Estimation (LSE) for MLR\n\nThe least squares estimation (LSE) of \\(\\boldsymbol{\\beta}\\) is obtained by minimizing the residual sum of squares (RSS): \\[RSS(\\boldsymbol{\\beta}) = \\sum_{i=1}^n (y_i - E[y_i])^2 = (\\mathbf{y} - \\mathbf{X}\\boldsymbol{\\beta})^T (\\mathbf{y} - \\mathbf{X}\\boldsymbol{\\beta})\\] where \\(E[y_i] = \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip}\\) is the fitted value for individual \\(i\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#lse-for-mlr-p2",
+    "href": "lectures/07-lecture.html#lse-for-mlr-p2",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "3.2 LSE for MLR: \\(p=2\\)",
+    "text": "3.2 LSE for MLR: \\(p=2\\)\n\nLet’s consider \\(p=2\\) for illustration: \\[RSS(\\beta_0, \\beta_1, \\beta_2) = \\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_{i1} - \\beta_2 x_{i2})^2\\]\nTo find the minimum, we take the partial derivatives with respect to \\(\\beta_0, \\beta_1, \\beta_2\\) and set them to zero:\n\n\\[\\begin{align*}\n\\frac{\\partial RSS}{\\partial \\beta_0} &= -2 \\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_{i1} - \\beta_2 x_{i2}) = 0 \\\\\n\\frac{\\partial RSS}{\\partial \\beta_1} &= -2 \\sum_{i=1}^n x_{i1} (y_i - \\beta_0 - \\beta_1 x_{i1} - \\beta_2 x_{i2}) = 0 \\\\\n\\frac{\\partial RSS}{\\partial \\beta_2} &= -2 \\sum_{i=1}^n x_{i2} (y_i - \\beta_0 - \\beta_1 x_{i1} - \\beta_2 x_{i2}) = 0\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#normal-equations-p2",
+    "href": "lectures/07-lecture.html#normal-equations-p2",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "3.3 Normal Equations: \\(p=2\\)",
+    "text": "3.3 Normal Equations: \\(p=2\\)\n\nNote that there are three linear equations. They can be rewritten as: \\[\\begin{align*}\nn \\beta_0 + \\beta_1 \\sum_{i=1}^n x_{i1} + \\beta_2 \\sum_{i=1}^n x_{i2} & = \\sum_{i=1}^n y_i\\\\\n\\beta_0 \\sum_{i=1}^n x_{i1} + \\beta_1 \\sum_{i=1}^n x_{i1}^2 + \\beta_2 \\sum_{i=1}^n x_{i1} x_{i2} & = \\sum_{i=1}^n x_{i1} y_i\\\\\n\\beta_0 \\sum_{i=1}^n x_{i2} + \\beta_1 \\sum_{i=1}^n x_{i1} x_{i2} + \\beta_2 \\sum_{i=1}^n x_{i2}^2 & = \\sum_{i=1}^n x_{i2} y_i\n\\end{align*}\\]\nThese equations are called the normal equations."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#normal-equations-p2-1",
+    "href": "lectures/07-lecture.html#normal-equations-p2-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "3.4 Normal Equations: \\(p=2\\)",
+    "text": "3.4 Normal Equations: \\(p=2\\)\n\nTo connect the normal equations to their matrix form, we can write them as: \\[\\begin{bmatrix}n & \\sum_{i=1}^n x_{i1} & \\sum_{i=1}^n x_{i2} \\\\ \\sum_{i=1}^n x_{i1} & \\sum_{i=1}^n x_{i1}^2 & \\sum_{i=1}^n x_{i1} x_{i2} \\\\ \\sum_{i=1}^n x_{i2} & \\sum_{i=1}^n x_{i1} x_{i2} & \\sum_{i=1}^n x_{i2}^2\\end{bmatrix} \\begin{bmatrix}\\beta_0 \\\\ \\beta_1 \\\\ \\beta_2\\end{bmatrix} = \\begin{bmatrix}\\sum_{i=1}^n y_i \\\\ \\sum_{i=1}^n x_{i1} y_i \\\\ \\sum_{i=1}^n x_{i2} y_i\\end{bmatrix}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#normal-equations-matrix-form-for-p2",
+    "href": "lectures/07-lecture.html#normal-equations-matrix-form-for-p2",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "3.5 Normal Equations: Matrix Form for \\(p=2\\)",
+    "text": "3.5 Normal Equations: Matrix Form for \\(p=2\\)\nRecall that\n\n\\(\\mathbf{X} = \\begin{bmatrix}1 & x_{11} & x_{12}\\\\  1 & x_{21} & x_{22}\\\\ \\vdots & \\vdots & \\vdots\\\\ 1 & x_{n1} & x_{n2}\\end{bmatrix}\\) is the design matrix of size \\(n \\times (p+1)\\).\n\\(\\boldsymbol{\\beta}= \\begin{bmatrix}\\beta_0 \\\\ \\beta_1  \\\\ \\beta_2\\end{bmatrix}\\) is the parameter vector of size \\((p+1) \\times 1\\).\n\\(\\mathbf{y} = \\begin{bmatrix}y_1 \\\\ \\vdots \\\\ y_n\\end{bmatrix}\\) is the response vector of size \\(n \\times 1\\).\nWe can verify that the normal equations can be written as: \\[\\mathbf{X}^T \\mathbf{X} \\boldsymbol{\\beta} = \\mathbf{X}^T \\mathbf{y}\\]\nHow to solve for \\(\\boldsymbol{\\beta}\\)?"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#normal-equations-matrix-form-for-general-p",
+    "href": "lectures/07-lecture.html#normal-equations-matrix-form-for-general-p",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "4.1 Normal Equations: Matrix Form for general \\(p\\)",
+    "text": "4.1 Normal Equations: Matrix Form for general \\(p\\)\n\nFor general \\(p\\), the normal equations can be written as: \\[\\mathbf{X}^T \\mathbf{X} \\boldsymbol{\\beta} = \\mathbf{X}^T \\mathbf{y}\\]\nIf \\(\\mathbf{X}^T \\mathbf{X}\\) is invertible, the LSE of \\(\\boldsymbol{\\beta}\\) is given by: \\[\\hat{\\boldsymbol{\\beta}} =\\begin{bmatrix}\\hat{\\beta}_0 \\\\ \\hat{\\beta}_1 \\\\ \\vdots \\\\ \\hat{\\beta}_p\\end{bmatrix}\n=(\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T \\mathbf{y}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#matrix-form-deriviation-of-lse",
+    "href": "lectures/07-lecture.html#matrix-form-deriviation-of-lse",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "4.2 Matrix Form Deriviation of LSE",
+    "text": "4.2 Matrix Form Deriviation of LSE"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#mlr-fitted-values",
+    "href": "lectures/07-lecture.html#mlr-fitted-values",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "4.3 MLR: fitted values",
+    "text": "4.3 MLR: fitted values\n\nThe fitted values can be computed as: \\[\\hat{\\mathbf{y}} =\\begin{bmatrix}\\hat{y}_1 \\\\ \\hat{y}_2 \\\\ \\vdots \\\\ \\hat{y}_n\\end{bmatrix}\n=\\mathbf{X} \\hat{\\boldsymbol{\\beta}} = \\mathbf{X} (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T \\mathbf{y}\\]\nThe hat matrix: \\[\\mathbf{H} = \\mathbf{X} (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T\\]\n\nNote that \\(\\hat{\\mathbf{y}}= \\mathbf{H} \\mathbf{y}\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#sse-and-mse",
+    "href": "lectures/07-lecture.html#sse-and-mse",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "5.1 SSE and MSE",
+    "text": "5.1 SSE and MSE\n\nThe sum of squared errors (SSE) can be computed as: \\[\\begin{align*}\nSSE & = \\sum_{i=1}^n (y_i -\\hat y_i)^2 = \\hat{\\boldsymbol{\\epsilon}}^T \\hat{\\boldsymbol{\\epsilon}} = (\\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}})^T (\\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}})\\\\\n&=[(\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}]^T (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}\\\\\n&=\\mathbf{y}^T (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y} \\\\\n\\end{align*}\\]\nThe mean squared error (MSE) is given by: \\[MSE = \\frac{SSE}{n-(p+1)}\\] where \\(n-(p+1)\\) is the degrees of freedom (d.f.) for error.\nAn unbiased estimator of \\(\\sigma^2\\) is given by \\(\\hat{\\sigma}^2 = MSE\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights",
+    "href": "lectures/07-lecture.html#example-heights",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.1 Example: Heights",
+    "text": "6.1 Example: Heights\n\nThis is a simulated data set to practice MLR.\n\n\n\nCode\nset.seed(42); n &lt;- 50\nlibrary(MASS)\nparents &lt;- mvrnorm(n,\n  mu    = c(69.1, 63.7),                 \n  Sigma = matrix(c(3^2, 0.2*3*2.8,\n                   0.2*3*2.8, 2.8^2), 2, 2))\nf.height &lt;- parents[,1]; m.height &lt;- parents[,2]\n\nsex     &lt;- sample(c(\"son\",\"daughter\"), n, TRUE)\nsex_eff &lt;- ifelse(sex==\"son\", 2.7, -2.7)\nmidp    &lt;- (f.height + m.height)/2\nc.height &lt;- (69.1 - 0.60*((69.1+63.7)/2) - 2.7) + \n  0.60*midp + sex_eff + rnorm(n, 0, 2.5)\nheight.data= data.frame(c.height, f.height, m.height)"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-1",
+    "href": "lectures/07-lecture.html#example-heights-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.2 Example: Heights",
+    "text": "6.2 Example: Heights\n\n\nCode\nhead(height.data)\n\n\n  c.height f.height m.height\n1 60.73932 66.01638 60.48351\n2 63.06214 69.39601 66.39173\n3 63.26804 70.51269 59.71977\n4 59.67623 68.41591 61.17775\n5 68.99239 68.18297 62.76237\n6 70.61082 69.78964 63.31624\n\n\nCode\nsummary(height.data)\n\n\n    c.height        f.height        m.height    \n Min.   :58.63   Min.   :59.37   Min.   :59.07  \n 1st Qu.:63.12   1st Qu.:66.97   1st Qu.:61.39  \n Median :66.52   Median :69.50   Median :63.49  \n Mean   :66.12   Mean   :69.34   Mean   :63.55  \n 3rd Qu.:68.96   3rd Qu.:70.89   3rd Qu.:65.61  \n Max.   :73.89   Max.   :77.56   Max.   :68.57"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-visualize-data",
+    "href": "lectures/07-lecture.html#example-heights-visualize-data",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.3 Example: Heights: Visualize data",
+    "text": "6.3 Example: Heights: Visualize data\n\n\nCode\n#Visualize data\npar(mfrow=c(1,3))\nhist(height.data$c.height, main=\"c.height\")\nhist(height.data$f.height, main=\"f.height\")\nhist(height.data$m.height, main=\"m.height\")"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-visualize-data-1",
+    "href": "lectures/07-lecture.html#example-heights-visualize-data-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.4 Example: Heights: Visualize data",
+    "text": "6.4 Example: Heights: Visualize data\n\n\nCode\n#Visualize data\npairs(height.data)"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-mlr-results",
+    "href": "lectures/07-lecture.html#example-heights-mlr-results",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.5 Example: Heights: MLR Results",
+    "text": "6.5 Example: Heights: MLR Results\n\n\nCode\nheight.lm= lm(c.height ~ f.height + m.height, data=height.data)\nsummary(height.lm)\n\n\n\nCall:\nlm(formula = c.height ~ f.height + m.height, data = height.data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-6.0987 -2.8324 -0.0332  2.2544  7.1131 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)  \n(Intercept)  16.2580    14.1585   1.148   0.2567  \nf.height      0.2949     0.1508   1.955   0.0565 .\nm.height      0.4628     0.2148   2.155   0.0363 *\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.568 on 47 degrees of freedom\nMultiple R-squared:  0.2128,    Adjusted R-squared:  0.1793 \nF-statistic: 6.352 on 2 and 47 DF,  p-value: 0.003615"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-fitted-model",
+    "href": "lectures/07-lecture.html#example-heights-fitted-model",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.6 Example: Heights: Fitted Model",
+    "text": "6.6 Example: Heights: Fitted Model\n\\[\\hat{c.height} = 16.26 + 0.29 \\cdot f.height + 0.46 \\cdot m.height\\]\n\n\nCode\nlibrary(scatterplot3d)\n\nfit &lt;- lm(c.height ~ f.height + m.height, data = height.data)\n\ns3d &lt;- scatterplot3d(height.data$f.height,\n                     height.data$m.height,\n                     height.data$c.height,\n                     pch = 16, color = \"royalblue\",\n                     xlab = \"Father's height (in)\",\n                     ylab = \"Mother's height (in)\",\n                     zlab = \"Child height (in)\",\n                     ylab.pos = 4,        # &lt;-- move y-axis label to the outer side\n                     angle = 55, grid = TRUE, box = FALSE)\n\ns3d$plane3d(fit, draw_polygon = TRUE,\n            polygon_args = list(col = adjustcolor(\"orange\", alpha.f = 0.35), border = NA))"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-mlr-fitted-model",
+    "href": "lectures/07-lecture.html#example-heights-mlr-fitted-model",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.7 Example: Heights: MLR Fitted Model",
+    "text": "6.7 Example: Heights: MLR Fitted Model\n\nThe fitted model is: \\[\\hat{c.height} = 16.26 + 0.29 \\cdot f.height + 0.46 \\cdot m.height\\]\nInterpretation of coefficients:\n\nFor a one unit increase in father’s height, the son’s/daughter’s height is expected to increase by 0.29 inches, holding mother’s height constant.\nFor a one unit increase in mother’s height, the son’s/daughter’s height is expected to increase by 0.46 inches, holding father’s height constant."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#example-heights-mlr-results-1",
+    "href": "lectures/07-lecture.html#example-heights-mlr-results-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.8 Example: Heights: MLR Results",
+    "text": "6.8 Example: Heights: MLR Results\nFrom the summary,\n\n\\(n=\\)___, the number of observations.\n\\(R^2=\\)___, the variance explained by the model (the two predictors, parents’ heights).\n\\(s=\\)___, the estimated \\(\\sigma\\). Recall that \\(s^2=MSE=SSE/(n-(p+1))\\).\nWhat else can you learn from the summary output?"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#residual-plots",
+    "href": "lectures/07-lecture.html#residual-plots",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "6.9 Residual Plots",
+    "text": "6.9 Residual Plots\n\n\nCode\npar(mfrow=c(1,2))\nplot(height.lm, which=1:2)"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#statistical-inference-about-regression-parameters",
+    "href": "lectures/07-lecture.html#statistical-inference-about-regression-parameters",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "7.1 Statistical Inference About Regression Parameters",
+    "text": "7.1 Statistical Inference About Regression Parameters\n\nUnder the strong version of the model assumptions, we have: \\[\\hat{\\boldsymbol{\\beta}} \\sim N(\\boldsymbol{\\beta}, \\sigma^2 (\\mathbf{X}^T \\mathbf{X})^{-1})\\]\nThe variance (var-cov) of \\(\\hat{\\boldsymbol{\\beta}}\\) can be estimated by: \\[\\widehat{Var}(\\hat{\\boldsymbol{\\beta}}) = s^2 (\\mathbf{X}^T \\mathbf{X})^{-1}\\]\nThe standard error (SE) of \\(\\hat{\\beta}_j\\) is given by: \\[SE(\\hat{\\beta}_j) = s \\sqrt{ \\cdot [(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}}\\] where \\([(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}\\) is the \\(j\\)-th diagonal element of the matrix \\((\\mathbf{X}^T \\mathbf{X})^{-1}\\)."
+  },
+  {
+    "objectID": "lectures/07-lecture.html#t-tests-for-regression-parameters",
+    "href": "lectures/07-lecture.html#t-tests-for-regression-parameters",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "7.2 t-tests For Regression Parameters",
+    "text": "7.2 t-tests For Regression Parameters\n\nTo test the significance of each predictor variable, we can use the t-test: \\[t = \\frac{\\hat{\\beta}_j - \\beta_{j0}}{SE(\\hat{\\beta}_j)}\\] where \\(\\beta_{j0}\\) is the hypothesized value of \\(\\beta_j\\) under the null hypothesis.\nUnder the null hypothesis \\(H_0: \\beta_j = \\beta_{j0}\\), the test statistic follows a t-distribution with \\(n-(p+1)\\) degrees of freedom: \\[t \\sim t_{n-(p+1)}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#t-tests-for-regression-parameters-1",
+    "href": "lectures/07-lecture.html#t-tests-for-regression-parameters-1",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "7.3 t-tests For Regression Parameters",
+    "text": "7.3 t-tests For Regression Parameters\n\nWe mentioned that \\(\\hat\\beta_j\\) follows a normal distribution. To construct a t statistic, we also need the following.\nIt can be shown that \\(\\hat\\beta_j\\) and \\(s^2\\) are independent, and \\[\\frac{(n-(p+1))s^2}{\\sigma^2} = \\frac{SSE}{\\sigma^2} \\sim \\chi^2_{n-(p+1)}\\]\nTherefore, we have \\[\\frac{\\hat{\\beta}_j - \\beta_j}{SE(\\hat{\\beta}_j)} = \\frac{\\hat{\\beta}_j - \\beta_j}{\\sqrt{\\sigma^2 [(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}}} \\bigg/ \\sqrt{\\frac{(n-(p+1))s^2}{\\sigma^2 (n-(p+1))}} \\sim t_{n-(p+1)}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#confidence-intervals-for-regression-parameters",
+    "href": "lectures/07-lecture.html#confidence-intervals-for-regression-parameters",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "7.4 Confidence Intervals For Regression Parameters",
+    "text": "7.4 Confidence Intervals For Regression Parameters\n\nA \\((1-\\alpha)100\\%\\) confidence interval for \\(\\beta_j\\) is given by: \\[\\hat{\\beta}_j \\pm t_{\\alpha/2, n-(p+1)} \\cdot SE(\\hat{\\beta}_j)\\] where \\(t_{\\alpha/2, n-(p+1)}\\) is the \\((1-\\alpha/2)\\) quantile of the t-distribution with \\(n-(p+1)\\) degrees of freedom.\nThis confidence is derived from the t-test statistic, as follows: \\[\\begin{align*}\n1-\\alpha=P\\left(-t_{\\alpha/2, n-(p+1)} \\leq \\frac{\\hat{\\beta}_j - \\beta_j}{SE(\\hat{\\beta}_j)} \\leq t_{\\alpha/2, n-(p+1)}\\right) &\\\\\n= P\\left(\\hat{\\beta}_j - t_{\\alpha/2, n-(p+1)} SE(\\hat{\\beta}_j) \\leq \\beta_j \\leq \\hat{\\beta}_j + t_{\\alpha/2, n-(p+1)} SE(\\hat{\\beta}_j)\\right)&\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "lectures/07-lecture.html#more-inference-problems",
+    "href": "lectures/07-lecture.html#more-inference-problems",
+    "title": "Lec 07: Multiple Linear Regression - Introduction",
+    "section": "7.5 More Inference Problems",
+    "text": "7.5 More Inference Problems"
+  },
+  {
     "objectID": "lectures/05-lecture.html",
     "href": "lectures/05-lecture.html",
     "title": "Lec 05: Diagnostics In Simple Linear Regression",
@@ -455,6 +672,55 @@
     "text": "Midterm (Tue, Nov 3, 9:30-10:50am). Practice Midterm\nFinal (Thu, Dec 10, 8:00-10:00am)"
   },
   {
+    "objectID": "assignments/assignment2.html",
+    "href": "assignments/assignment2.html",
+    "title": "STAT200C Assignment 2",
+    "section": "",
+    "text": "Data: Most data used in class or the assignments can be found here.\nInstructions: Submit one document that answers every question in context with clear prose, includes the minimal R code used to obtain each result, and shows the relevant output/figures you discuss; for each sub-question, provide (i) a concise written answer interpreting the result in the problem setting, (ii) the code that produced it (readable and reproducible), and (iii) the key output (tables/statistics and, if applicable, plots with informative labels and brief captions)—note that code/output without a written answer will earn at most 50% credit."
+  },
+  {
+    "objectID": "assignments/assignment2.html#transformations-and-model-diagnostics-senic-data",
+    "href": "assignments/assignment2.html#transformations-and-model-diagnostics-senic-data",
+    "title": "STAT200C Assignment 2",
+    "section": "1. Transformations and model diagnostics: SENIC data",
+    "text": "1. Transformations and model diagnostics: SENIC data\n(R required) We model service score (response) using the number of registered nurses (predictor). The goal is to decide whether a log transformation of the response is needed.\n(a) Make a histogram and Normal Q–Q plot of the service score (the response). Does its distribution look approximately Normal? Why or why not?\n(b) Apply a log transformation to the response using log(); then make a histogram and Normal Q–Q plot of log(service score). Does the Normality look improved? Explain.\n(c) Based on (a)–(b), is a log transform of the response a reasonable choice? Justify your answer briefly.\n(d) Use the Box–Cox method to assess a suitable transformation for the response (use MASS::boxcox()). Report the \\(\\lambda\\) maximizing the profile and the 95% CI. State whether \\(\\lambda = 0\\) (log) is supported.\n(e) Fit a simple linear regression with the log-transformed response: [ () ;=; _0+_1,()+. ] Report the fitted slope and provide a one-sentence interpretation on the original scale (i.e., multiplicative change in the median service score per unit increase in nurses).\n(f) For the model in (e), plot residuals vs. fitted and the Normal Q–Q plot of residuals. Comment on linearity, constant variance, and Normality.\n(g) Refit the model using log10() instead of log() for the response. Compare results from log() vs log10(). Are inferences different? (Hint: they should be numerically rescaled but substantively equivalent; explain why.)"
+  },
+  {
+    "objectID": "assignments/assignment2.html#lack-of-fit-r-required",
+    "href": "assignments/assignment2.html#lack-of-fit-r-required",
+    "title": "STAT200C Assignment 2",
+    "section": "2. Lack of fit (R required)",
+    "text": "2. Lack of fit (R required)\nWe will examine whether a polynomial regression is needed in the SENIC data to model risk using the number of beds. (Both risk and beds are variables in the SENIC dataset.)\n(a) Make a scatter plot of risk vs beds. Comment on whether the relationship appears linear (consider overall trend and spread).\n(b) Fit the simple linear regression model with risk as the response and beds as the predictor. Assess whether the linear model is adequate by performing a lack-of-fit check:\n(c) Fit polynomial regressions of degrees 2 and 3 (i.e., add beds^2, then beds^3). Use anova() to compare the nested models\nlinear vs quadratic vs cubic, and comment on whether a polynomial term is warranted (report the F-tests and p-values). Conclude whether a polynomial regression is needed and, if so, which degree is sufficient."
+  },
+  {
+    "objectID": "assignments/assignment2.html#interpreting-coefficients-in-when-both-x-and-y-are-log-transformed.",
+    "href": "assignments/assignment2.html#interpreting-coefficients-in-when-both-x-and-y-are-log-transformed.",
+    "title": "STAT200C Assignment 2",
+    "section": "3. Interpreting coefficients in when both \\(x\\) and \\(y\\) are log-transformed.",
+    "text": "3. Interpreting coefficients in when both \\(x\\) and \\(y\\) are log-transformed.\nIn the battery life example, we first took log10 transformation on both response variable cycleLife and predictor variable DeltaQvar, then fit a simple linear regression model. The summary output is shown below.\n\n\n\nCall:\nlm(formula = log10(cycleLife) ~ log10(DeltaQvar), data = battery)\n\nResiduals:\n      Min        1Q    Median        3Q       Max \n-0.107697 -0.056378  0.009384  0.056817  0.103507 \n\nCoefficients:\n                 Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)       1.44364    0.09990   14.45   &lt;2e-16 ***\nlog10(DeltaQvar) -0.37281    0.02718  -13.72   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.06424 on 39 degrees of freedom\nMultiple R-squared:  0.8283,    Adjusted R-squared:  0.8239 \nF-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16\n\n\n\nBased on the summary output, write down the fitted regression equation in terms of \\(\\widehat{\\log_{10}(\\mathrm{cycleLife})}\\) and \\(\\log_{10}(\\mathrm{DeltaQvar})\\).\nInterpret \\(\\hat\\beta_1\\) in the change in cycle life for a one-unit increase in \\(\\log_{10}(\\mathrm{DeltaQvar})\\) (i.e., a tenfold increase in DeltaQvar).\nInterpret \\(\\hat\\beta_1\\) in terms of percentage change in cycle life when DeltaQvar increases by 1%.\nFor (b) and (c), find the corresponding confidence intervals. Hint: intervals should be first found on the log10 scale, then transformed back to the original scale."
+  },
+  {
+    "objectID": "assignments/assignment2.html#hat-matrix-as-a-projection",
+    "href": "assignments/assignment2.html#hat-matrix-as-a-projection",
+    "title": "STAT200C Assignment 2",
+    "section": "4. Hat matrix as a projection",
+    "text": "4. Hat matrix as a projection\nIn this problem, you will prove that the hat matrix (H) is a projection matrix by showting that it satsifies both (a) and (b). Recall [ H ;=; X,(XX){-1}X^. ]\n(a) Show that (H) is idempotent, i.e., (H^2 = H).\n(b) Show that (H) is symmetric, i.e., (H^= H).\nNote. A projection matrix satisfies (H^2=H). When, in addition, (H) is symmetric, it is the matrix of an orthogonal projection onto ((X))."
+  },
+  {
+    "objectID": "assignments/assignment2.html#multiple-linear-regression-via-matrix-operations",
+    "href": "assignments/assignment2.html#multiple-linear-regression-via-matrix-operations",
+    "title": "STAT200C Assignment 2",
+    "section": "5 . Multiple Linear Regression via Matrix Operations",
+    "text": "5 . Multiple Linear Regression via Matrix Operations\n(R required) MLR: The purpose of this problem is to reproduce what lm() does using basic vector–matrix operations. After completing this problem, you should be able to understand the matrix form of MLR.\n\nLoad the height data from ../data/height_data.csv. Create the response vector y and the design matrix X, as shown in the R code below. Then use dim and head functions to check the dimensions and the first five rows of X.\n\n\nUse matrix operations to compute the least squares estimate of the regression parameters \\(\\hat\\beta = (X^TX)^{-1}X^Ty\\).\n\n\nThere several ways to compute \\(X^TX\\) and \\(X^Ty\\) in R: using %*% operator, using t() function to compute transpose, or using crossprod() function.\nThere are also different ways to find the inverse of \\(X^TX\\). One way is to use the solve() function.\n\n\nCompare your estimate in (b) with the one obtained from lm() function.\nNext, we would like to reproduce the fitted values and residuals. Recall that \\[\\hat{y} = X\\hat{\\boldsymbol{\\beta}},\\] and \\[e = y - \\hat{y}.\\] Compute \\(\\hat y\\) and \\(e\\) using matrix operations (results don’t need to be printed), and draw the residual plot (residuals vs fitted values).\nUse the residuals you obtained in (d) to compute \\(SSE\\), \\(MSE\\), and \\(s\\). Is the \\(s\\) you obtained the same as the one from summary(lm())?\nNext, we would like to reproduce the inference of the regression coefficients. Recall that \\[V\\hat ar(\\hat{\\boldsymbol{\\beta}})=s^2(\\mathbf{X}^T \\mathbf{X})^{-1},\\] where \\(s^2\\) is the estimated variance of the error term. Obtain the variance-covariance matrix of \\(\\hat{\\boldsymbol{\\beta}}\\) using the formula above. Then compute the standard errors, t-statistics, and p-values for each regression coefficient. Are these values the same as those from summary(lm())?\nFinally, we would like to compute the F-statistic of the model. Recall that \\[F=\\frac{MSR}{MSE}=\\frac{(SSTO-SSE)/p}{SSE/(n-p-1)},\\] where \\(p\\) is the number of predictors (excluding the intercept) and \\(n\\) is the sample size. Here the \\(SSTO\\) can be computed as \\(SSTO = \\sum_{i=1}^n (y_i - \\bar{y})^2\\). In R, there are several ways to do this:\n\n\nUse the sum() function: sum((y - mean(y))^2).\nUse the var() function to compute the variance of y, then multiply it by (n-1) to get \\(SSTO\\).\nUse the crossprod() function to compute the sum of squares directly: as.numeric(crossprod(y - mean(y))).\n\nCompute the F-statistic using the formula above. Is the value the same as that from summary(lm())?\n\nLastly, we would like derive a t-test for \\(H_0: \\beta_f=\\beta_m\\) (equivalently, \\(\\beta_f - \\beta_m = 0\\)). In words, what does this hypothesis mean?\nRecall that for a linear combination of the regression parameters \\(c^T \\beta\\), the variance is given by \\[Var(c^T \\hat{\\boldsymbol{\\beta}}) = c^T Var(\\hat{\\boldsymbol{\\beta}}) c.\\] Here, we have \\(c = [0, 1, -1]^T\\) to test \\(H_0: \\beta_f - \\beta_m = 0\\). Compute the t-statistic and p-value for this test. Is the result the same as that from linearHypothesis() function in the car package?\n\nHere is part of the R code to get you started and you need complete the rest of the steps 5-7 and then make a conclusion in the context of the problem."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
     "objectID": "assignments/assignment1.html",
     "href": "assignments/assignment1.html",
     "title": "STAT200C Assignment 1",
@@ -481,13 +747,6 @@
     "title": "STAT200C Assignment 1",
     "section": "3.",
     "text": "3.\nConsider the simple linear regression model\n\\[\ny_i=\\beta_0+\\beta_1x_i+\\varepsilon_i,\\qquad i=1,\\ldots,n,\n\\]\nwhere we assume:\n\n\\(\\mathbb{E}(\\varepsilon_i)=0,\\ \\forall i\\);\n\\(\\operatorname{Var}(\\varepsilon_i)=\\sigma^2,\\ \\forall i\\);\n\\(\\operatorname{Cov}(\\varepsilon_i,\\varepsilon_j)=0,\\ \\forall i,j\\text{ with }i\\neq j\\).\n\nFor the following questions, prove or verify the results. You can choose either one of the two ways:\n\nProve: You can prove them mathematically.\nVerify: You can verify them using a data set (real or simulated) in R. Be sure to show your code and the results.\n\n\na)\nFor the least squares estimators \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\), the following hold.\n\\[\n\\text{i.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}(y_i-\\bar{y})(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2},\n\\]\n\\[\n\\text{ii.}\\quad\n\\hat{\\beta}_1\n=\n\\frac{\\sum_{i=1}^{n}y_i\\,(x_i-\\bar{x})}\n{\\sum_{i=1}^{n}(x_i-\\bar{x})^2}.\n\\]\n\n\n\nb)\nLet the residuals be\n\\[\ne_i=y_i-\\hat{\\beta}_0-\\hat{\\beta}_1x_i.\n\\]\nThe following holds:\n\\[\n0\n=\n\\sum_{i=1}^{n}x_i e_i\n=\n\\sum_{i=1}^{n}e_i\n=\n\\sum_{i=1}^{n}\\hat{y}_i e_i.\n\\]"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "assignments/index.html",
@@ -1013,5 +1272,292 @@
     "title": "Lec 04: ANOVA and Diagnostics In Simple Linear Regression",
     "section": "7.4 Beta Distribution",
     "text": "7.4 Beta Distribution\n\n\nCode\n# Beta distribution shapes (no title)\nxs &lt;- seq(0.01, 0.99, length.out = 1000)\n\n# Parameter list: (alpha, beta)\nbetas &lt;- list(\n  \"Beta(1,1)\" = c(1, 1),\n  \"Beta(1,2)\" = c(1,  2),\n  \"Beta(1,5)\" = c(1,  5),\n  \"Beta(5,1)\" = c(5,  1),\n  \"Beta(0.5,0.5)\" = c(0.5,  0.5),\n  \"Beta(5,5)\" = c(5,  5)\n)\n\ncols &lt;- c(\"black\", \"steelblue\", \"tomato\", \"forestgreen\", \"orange\", \"purple\")\n\n# Compute ymax to set a good y-axis limit\nymax &lt;- 0\nfor (ab in betas) {\n  ytmp &lt;- dbeta(xs, ab[1], ab[2])\n  ymax &lt;- max(ymax, ytmp, na.rm = TRUE)\n}\n\nplot(xs, 0*xs, type = \"n\",\n     xlab = \"x\", ylab = \"density\",\n     ylim = c(0, ymax), main = \"\")\n\ni &lt;- 1\nfor (nm in names(betas)) {\n  ab &lt;- betas[[nm]]\n  lines(xs, dbeta(xs, ab[1], ab[2]), lwd = 2, col = cols[i])\n  i &lt;- i + 1\n}\n\nlegend(\"topright\",\n       legend = names(betas),\n       col = cols, lwd = 2, bty = \"n\",\n       cex = 0.8,          # smaller text\n       pt.cex = 0.8,\n       ncol = 2)           # two columns to save space"
+  },
+  {
+    "objectID": "lectures/06-lecture.html",
+    "href": "lectures/06-lecture.html",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "",
+    "text": "Lecture 01: LSE: \\(\\{\\hat\\beta_0, \\hat\\beta_1\\} = \\arg\\min_{\\beta_0, \\beta_1} \\sum_{i=1}^n (y_i -\\beta_0 - \\beta_1 x_i)^2\\) \\[\\hat\\beta_1 =\\frac{\\sum_{i=1}^n (x_i - \\bar{x})y_i}{\\sum_{i=1}^n (x_i - \\bar{x})^2}=\\sum_{i=1}^n\\frac{(x_i - \\bar{x})}{S_{XX}}y_i.\\] \\[\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}\n= \\sum_{i=1}^n \\left(\\frac{1}{n} - \\frac{\\bar{x}}{S_{XX}}(x_i - \\bar{x})\\right) y_i\\]\nLecture 02: CI, and hypothesis testing related to \\(\\beta_1\\).\nLecture 03: Estimation and prediction.\nLecture 04: ANOVA.\nLecture 05: Diagnostics in SLR.\nThis lecture: data transformation and lack of fit test."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#review-lecture-01-05",
+    "href": "lectures/06-lecture.html#review-lecture-01-05",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "",
+    "text": "Lecture 01: LSE: \\(\\{\\hat\\beta_0, \\hat\\beta_1\\} = \\arg\\min_{\\beta_0, \\beta_1} \\sum_{i=1}^n (y_i -\\beta_0 - \\beta_1 x_i)^2\\) \\[\\hat\\beta_1 =\\frac{\\sum_{i=1}^n (x_i - \\bar{x})y_i}{\\sum_{i=1}^n (x_i - \\bar{x})^2}=\\sum_{i=1}^n\\frac{(x_i - \\bar{x})}{S_{XX}}y_i.\\] \\[\\hat\\beta_0 = \\bar{y} - \\hat\\beta_1 \\bar{x}\n= \\sum_{i=1}^n \\left(\\frac{1}{n} - \\frac{\\bar{x}}{S_{XX}}(x_i - \\bar{x})\\right) y_i\\]\nLecture 02: CI, and hypothesis testing related to \\(\\beta_1\\).\nLecture 03: Estimation and prediction.\nLecture 04: ANOVA.\nLecture 05: Diagnostics in SLR.\nThis lecture: data transformation and lack of fit test."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.1 Lack of Fit Test in SLR",
+    "text": "2.1 Lack of Fit Test in SLR\n\nWe have introduced visualization methods to check the linear model assumptions.\nGoodness-of-fit tests (GOF) are often used to assess whether a statistical model/distribution fits the data well.\n\nFor example, the Chi-square goodness-of-fit test is used to test whether observed categorical data follow a specified distribution.\nFor simple linear regression, we consider the lack for fit test (LOF), which is an F-test, to test whether the linear regression model is a good fit for the data."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr-notations",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr-notations",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.2 Lack of Fit Test in SLR: Notations",
+    "text": "2.2 Lack of Fit Test in SLR: Notations\n\nLOF test requires replicated \\(x\\) values (i.e., multiple \\(y\\) values for the same \\(x\\) value).\n\\(k\\): the number of unique \\(x\\) values\n\\(n_i\\): the number of replicates for the \\(i\\)th unique \\(x\\) value\n\\(n = \\sum_{i=1}^k n_i\\): the total number of observations.\n\\(y_{ij}\\): the \\(j\\)th observation of the response variable \\(y\\) at the \\(i\\)th unique value of the predictor variable \\(x\\), where \\(i = 1, 2, \\ldots, k\\) and \\(j = 1, 2, \\ldots, n_i\\).\n\n\n\nCode\nset.seed(123)\nx &lt;- rep(1:5, each=3)\ny &lt;- x^2 + rnorm(15, 0, 1) # true model is quadratic\ndata &lt;- data.frame(x = x, y = y)\n# Reduced model: y_i = beta_0 + beta_1 x_i + epsilon_i\nfit_reduced &lt;- lm(y ~ x, data = data)\n# Full model: y_i = mu_i + epsilon_i\nfit_full &lt;- lm(y ~ factor(x), data = data)\nplot(data$x, data$y, pch=19, xlab=\"x\", ylab=\"y\", main=\"Lack of Fit Test Example 2\")"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr-1",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.3 Lack of Fit Test in SLR",
+    "text": "2.3 Lack of Fit Test in SLR\nA LOF test compares two models:\n\nReduced model \\(H_0\\): \\(y_{ij} = \\beta_0 + \\beta_1 x_i + \\epsilon_{ij}\\); assumes a linear relationship between \\(x\\) and \\(y\\).\nFull model \\(H_1\\): \\(y_{ij} = \\mu_i + \\epsilon_{ij}\\), where \\(\\mu_i\\) is the mean of the \\(y\\) values for the \\(i\\)th unique \\(x\\) value; uses a separate mean for each unique \\(x\\) value."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr-sum-of-squares",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr-sum-of-squares",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.4 Lack of Fit Test in SLR: Sum of Squares",
+    "text": "2.4 Lack of Fit Test in SLR: Sum of Squares\n\nThe reduced model (\\(H_0\\)), which is the SLR: \\[SSE_R = \\sum_{i=1}^k \\sum_{j=1}^{n_i} (y_{ij} - \\hat{y}_{ij})=(y_{ij}-\\hat{\\beta}_0 - \\hat{\\beta}_1 x_i)^2\\] where \\(\\hat{\\beta}_0, \\hat{\\beta}_1\\) are the LSE of the SLR, and \\(SSE_R\\) is the SEE of the SLR.\nThe full model (\\(H_1)\\)): \\[SSE_F = \\sum_{i=1}^k \\sum_{j=1}^{n_i} (y_{ij} - \\bar{y}_i)^2\\] where \\(\\bar{y}_i\\) is the mean of the \\(y\\) values for the \\(i\\)th unique \\(x\\) value.\nWhich one is smaller? Why?"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr-f-test",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr-f-test",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.5 Lack of Fit Test in SLR: F-test",
+    "text": "2.5 Lack of Fit Test in SLR: F-test\n\nThe full model has more parameters and thus fits the data at least as well as the reduced model. As a result, \\(SSE_F \\leq SSE_R\\).\nWe can construct the following F-statistic to compare the SSEs: \\[F = \\frac{(SSE_R - SSE_F)/(df_R - df_F)}{SSE_F/df_F}\\] where \\(df_F\\) and \\(df_R\\) are the degrees of freedom for the full and reduced models, respectively.\nUnder \\(H_0\\): the linear model fits the data well, \\(F \\sim F_{df_R - df_F, df_F}\\).\nWhat are \\(df_F\\) and \\(df_R\\)?"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr-decomposition-of-sse",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr-decomposition-of-sse",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.6 Lack of Fit Test in SLR: Decomposition of SSE",
+    "text": "2.6 Lack of Fit Test in SLR: Decomposition of SSE\n\n\\(SSE_R\\) can be decomposed \\[\\begin{align*}\nSSE_R &= \\sum_{i=1}^k \\sum_{j=1}^{n_i} (y_{ij} - \\hat{y}_{ij})^2 = \\sum_{i=1}^k \\sum_{j=1}^{n_i} (y_{ij} - \\bar{y}_i + \\bar{y}_i - \\hat{y}_{ij})^2 \\\\\n&= \\sum_{i=1}^k \\sum_{j=1}^{n_i} (y_{ij} - \\bar{y}_i)^2 + \\sum_{i=1}^k \\sum_{j=1}^{n_i} (\\bar{y}_i - \\hat{y}_{ij})^2 + 2\\sum_{i=1}^k \\sum_{j=1}^{n_i} (y_{ij} - \\bar{y}_i)(\\bar{y}_i - \\hat{y}_{ij}) \\\\\n&= SSE_F + SS_{LF} + 0 \\\\\n&= SSE_F + SS_{LF}\n\\end{align*}\\]\nwhere \\(SS_{LOF} = \\sum_{i=1}^k \\sum_{j=1}^{n_i} (\\bar{y}_i - \\hat{y}_{ij})^2\\) is the sum of squares due to lack of fit."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lack-of-fit-test-in-slr-degrees-of-freedom",
+    "href": "lectures/06-lecture.html#lack-of-fit-test-in-slr-degrees-of-freedom",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.7 Lack of Fit Test in SLR: degrees of freedom",
+    "text": "2.7 Lack of Fit Test in SLR: degrees of freedom\n\nWe need to find the degrees of freedom for the full and reduced models.\nFor the full model, we estimate \\(k\\) means (\\(\\mu_1, \\mu_2, \\ldots, \\mu_k\\)) from \\(n\\) observations. Thus, \\(df_F = n - k\\).\nFor the reduced model, we estimate 2 parameters (\\(\\beta_0\\) and \\(\\beta_1\\)) from \\(n\\) observations. Thus, \\(df_R = n - 2\\).\nTherefore, the F-statistic can be rewritten as \\[F = \\frac{(SSE_R - SSE_F)/(k - 2)}{SSE_F/(n - k)} = \\frac{SS_{LOF}/(k - 2)}{SSE_F/(n - k)}\\]\nUnder \\(H_0\\): the linear model fits the data well, \\(F \\sim F_{k - 2, n - k}\\)."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#anova-table-for-lack-of-fit-test-in-slr",
+    "href": "lectures/06-lecture.html#anova-table-for-lack-of-fit-test-in-slr",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.8 ANOVA Table for Lack of Fit Test in SLR",
+    "text": "2.8 ANOVA Table for Lack of Fit Test in SLR\n\n\n\n\n\n\n\n\n\n\n\nSource\nDF\nSS\nMS\nF\nP-value\n\n\n\n\nRegression\n1\n\\(SSR\\)\n\\(MSR = \\frac{SSR}{1}\\)\nF = \\(\\frac{MSR}{MSE}\\)\n\\(H_0: \\beta_1=0\\)\n\n\nResidual\nn - 2\n\\(SSE_R\\)\n\\(MSE = \\frac{SSE_R}{n-2}\\)\n\n\n\n\nLack of Fit\nk - 2\n\\(SS_{LF}\\)\n\\(MS_{LF}=\\frac{SS_{LF}}{k-2}\\)\nF* = \\(\\frac{MS_{LF}}{MSE_F}\\)\n\\(H_0: E[y]=\\beta_0 + \\beta_1 x\\)\n\n\nPure Error\nn - k\n\\(SSE_F\\)\n\\(MSE_F = \\frac{SSE_F}{n-k}\\)"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lof-test-example-1",
+    "href": "lectures/06-lecture.html#lof-test-example-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.9 LOF Test: Example 1",
+    "text": "2.9 LOF Test: Example 1\n\n\nCode\n# Data with replicated x values\nx &lt;- c(1, 1, 1, 2, 2, 2, 3, 3, 3)\ny &lt;- c(2.2, 2.8, 3.6, 3.9, 4.4, 5.1, 5.5, 5.7, 6.2)\ndata &lt;- data.frame(x = x, y = y)\n# Reduced model: y_i = beta_0 + beta_1 x_i + epsilon_i\nfit_reduced &lt;- lm(y ~ x, data = data)\n# Full model: y_i = mu_i + epsilon_i\nfit_full &lt;- lm(y ~ factor(x), data = data)\nanova(fit_reduced, fit_full)\n\n\nAnalysis of Variance Table\n\nModel 1: y ~ x\nModel 2: y ~ factor(x)\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1      7 2.0089                           \n2      6 1.9733  1  0.035556 0.1081 0.7535\n\n\n\\(SSE_R = 2.0089, df_R=9-2\\), \\(SSE_F = 1.9733, df_F=9-3\\)."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#visualize-lof-example-1",
+    "href": "lectures/06-lecture.html#visualize-lof-example-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.10 Visualize LOF: Example 1",
+    "text": "2.10 Visualize LOF: Example 1\n\n\nCode\nplot(data$x, data$y, pch=19, xlab=\"x\", ylab=\"y\", main=\"Lack of Fit Test Example\")\nabline(fit_reduced, col=\"blue\")\nlines(data$x, fitted(fit_full), col=\"red\", pch=4)\npoints(data$x, fitted(fit_full), col=\"red\", pch=4)\nlegend(\"topleft\", legend=c(\"Reduced Model\", \"Full Model\"), col=c(\"blue\", \"red\"), pch=c(NA, 4), lty=c(1, NA))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#interpretation-of-lof-example-1",
+    "href": "lectures/06-lecture.html#interpretation-of-lof-example-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.11 Interpretation of LOF: Example 1",
+    "text": "2.11 Interpretation of LOF: Example 1\n\nThe ANOVA table shows the comparison between the reduced and full models.\nThe plot shows the data points, the fitted line from the reduced model (in blue), and the fitted means from the full model (in red). They are very close to each other.\nThe p-value for the LOF test is 0.75, which is greater than the significance level of 0.05.\nTherefore, we do not reject the null hypothesis and conclude that the linear model fits the data well."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lof-example-2",
+    "href": "lectures/06-lecture.html#lof-example-2",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.12 LOF: Example 2",
+    "text": "2.12 LOF: Example 2\n\nIn this example, the true model is not linear\n\n\n\nCode\nset.seed(123)\nx &lt;- rep(1:5, each=3)\ny &lt;- x^2 + rnorm(15, 0, 1) # true model is quadratic\ndata &lt;- data.frame(x = x, y = y)\n# Reduced model: y_i = beta_0 + beta_1 x_i + epsilon_i\nfit_reduced &lt;- lm(y ~ x, data = data)\n# Full model: y_i = mu_i + epsilon_i\nfit_full &lt;- lm(y ~ factor(x), data = data)\nanova(fit_reduced, fit_full)\n\n\nAnalysis of Variance Table\n\nModel 1: y ~ x\nModel 2: y ~ factor(x)\n  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    \n1     13 54.565                                  \n2     10  7.760  3    46.804 20.104 0.0001479 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#visualize-lof-example-2",
+    "href": "lectures/06-lecture.html#visualize-lof-example-2",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.13 Visualize LOF: Example 2",
+    "text": "2.13 Visualize LOF: Example 2\n\n\nCode\nplot(data$x, data$y, pch=19, xlab=\"x\", ylab=\"y\", main=\"Lack of Fit Test Example 2\")\nabline(fit_reduced, col=\"blue\")\nlines(data$x, fitted(fit_full), col=\"red\", pch=4)\npoints(data$x, fitted(fit_full), col=\"red\", pch=4)\nlegend(\"top\", legend=c(\"Reduced Model\", \"Full Model\"), col=c(\"blue\", \"red\"), pch=c(NA, 4), lty=c(1, NA))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#interpretation-of-lof-example-2",
+    "href": "lectures/06-lecture.html#interpretation-of-lof-example-2",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.14 Interpretation of LOF: Example 2",
+    "text": "2.14 Interpretation of LOF: Example 2\n\nThe ANOVA table shows the comparison between the reduced and full models.\nThe plot shows the data points, the fitted line from the reduced model (in blue), and the fitted means from the full model (in red). They are quite different.\nThe p-value for the LOF test is 0.0001, which is less than the significance level of 0.05.\nTherefore, we reject the null hypothesis and conclude that the linear model does not fit the data well."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#lof-test-when-replicated-x-values-are-not-available",
+    "href": "lectures/06-lecture.html#lof-test-when-replicated-x-values-are-not-available",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.15 LOF Test: When replicated x values are not available",
+    "text": "2.15 LOF Test: When replicated x values are not available\n\nWhen there is no replicated \\(x\\) values, we cannot perform the LOF test.\nThere are several options. For example, Linear vs polynomial (quadratic/cubic)\n\n\n\nCode\nset.seed(12)\nx=seq(1, 10, by=0.5)\ny=(x-3)^2 + rnorm(length(x), 0, 2)\nd=data.frame(x, y)\nfit_lin  &lt;- lm(y ~ x, data = d)\nfit_poly2 &lt;- lm(y ~ x + I(x^2), data = d)\nfit_poly3 &lt;- lm(y ~ x + I(x^2) + I(x^3), data = d)\nanova(fit_lin, fit_poly2) \n\n\nAnalysis of Variance Table\n\nModel 1: y ~ x\nModel 2: y ~ x + I(x^2)\n  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    \n1     17 1008.50                                  \n2     16   46.65  1    961.85 329.92 4.202e-12 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#section",
+    "href": "lectures/06-lecture.html#section",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.16 ",
+    "text": "2.16 \n\n\nCode\nanova(fit_lin, fit_poly3)\n\n\nAnalysis of Variance Table\n\nModel 1: y ~ x\nModel 2: y ~ x + I(x^2) + I(x^3)\n  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    \n1     17 1008.50                                  \n2     15   46.37  2    962.13 155.62 9.315e-11 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\nanova(fit_poly2, fit_poly3)\n\n\nAnalysis of Variance Table\n\nModel 1: y ~ x + I(x^2)\nModel 2: y ~ x + I(x^2) + I(x^3)\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1     16 46.647                           \n2     15 46.370  1   0.27721 0.0897 0.7687"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#visualize-linear-vs-polynomial",
+    "href": "lectures/06-lecture.html#visualize-linear-vs-polynomial",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.17 Visualize Linear vs Polynomial",
+    "text": "2.17 Visualize Linear vs Polynomial\n\n\nCode\nplot(d$x, d$y, pch=19, xlab=\"x\", ylab=\"y\", main=\"Linear vs Polynomial\")\nlines(d$x, fitted(fit_lin), col=\"blue\")\nlines(d$x, fitted(fit_poly2), col=\"red\")\nlines(d$x, fitted(fit_poly3), col=\"green\")\nlegend(\"top\", legend=c(\"Linear\", \"Quadratic\", \"Cubic\"), col=c(\"blue\", \"red\", \"green\"), lty=1)"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#when-assume-model-is-not-reasonableadequate",
+    "href": "lectures/06-lecture.html#when-assume-model-is-not-reasonableadequate",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "2.18 When Assume Model Is not Reasonable/Adequate",
+    "text": "2.18 When Assume Model Is not Reasonable/Adequate\n\nWhen one or several assumptions of the linear model are violated, what can we do?\nConsider more complex models. For example,\n\nIf the relationship between \\(x\\) and \\(y\\) is not linear, we may consider polynomial regression or other types of regression (e.g., spline regression, generalized additive models).\nIf the variance of the errors is not constant, we may consider weighted least squares or generalized least squares.\n\nWe may consider data transformation.\n\nNext, we present how to transform the data to address non-linearity or non-constant variance."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#data-transformation-general-rules",
+    "href": "lectures/06-lecture.html#data-transformation-general-rules",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.1 Data Transformation: General Rules",
+    "text": "3.1 Data Transformation: General Rules\n\nTransformations are often used to achieve linearity, constant variance, and normality of errors.\nTransform \\(x\\) or \\(y\\)?\nNot linear: If the relationship between \\(x\\) and \\(y\\) is not linear but residuals are generally normal and have constant variance, we may consider transforming \\(x\\).\nNot constant variance: If the variance of \\(y\\) varies with \\(x\\), consider transforming \\(y\\) (e.g., log or square root).\nIf both the relationship and the variance are problematic, we may consider transforming \\(y\\) to stabilize variance first and then try transforming \\(x\\)."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#data-transformation-general-rules-1",
+    "href": "lectures/06-lecture.html#data-transformation-general-rules-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.2 Data Transformation: General Rules",
+    "text": "3.2 Data Transformation: General Rules\n\nCommon transformations include:\n\nLogarithmic transformation: \\(y' = \\log(y)\\) or \\(x' = \\log(x)\\)\nSquare root transformation: \\(y' = \\sqrt{y}\\) or \\(x' = \\sqrt{x}\\)\nReciprocal transformation: \\(y' = 1/y\\) or \\(x' = 1/x\\)\nBox-Cox transformation: a family of power transformations that includes the above as special cases.\n\nThe choice of transformation depends on the specific characteristics of the data and the goals of the analysis."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-1",
+    "href": "lectures/06-lecture.html#example-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.3 Example 1",
+    "text": "3.3 Example 1\n\n\nCode\nset.seed(1)\nn &lt;- 150\nx &lt;- runif(n, 0, 10)\nbeta0 &lt;- 1; beta1 &lt;- 0.25; sigma &lt;- 0.4\ny &lt;- exp(beta0 + beta1*x + rnorm(n, 0, sigma))  # multiplicative noise\n\n# Fit wrong scale (linear on original y) vs right scale (linear on log y)\nfit_bad  &lt;- lm(y ~ x)\nfit_logy &lt;- lm(log(y) ~ x)\n\n## Plot 1: Data + fitted lines on original scale\nplot(x, y, pch = 19, cex = .6, \n     xlab = \"x\", ylab = \"y\")\n\n\n\n\n\n\n\n\n\n\nTransform \\(x\\) or \\(y\\)? Why?"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-1-original-vs-transformed",
+    "href": "lectures/06-lecture.html#example-1-original-vs-transformed",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.4 Example 1: : Original vs Transformed",
+    "text": "3.4 Example 1: : Original vs Transformed\n\n\nCode\nset.seed(1)\nn &lt;- 150\nx &lt;- runif(n, 0, 10)\nbeta0 &lt;- 1; beta1 &lt;- 0.25; sigma &lt;- 0.4\ny &lt;- exp(beta0 + beta1*x + rnorm(n, 0, sigma))  # multiplicative noise\n\n# Fit wrong scale (linear on original y) vs right scale (linear on log y)\nfit_bad  &lt;- lm(y ~ x)\nfit_logy &lt;- lm(log(y) ~ x)\n\npar(mfrow=c(2,2))\n## Plot 1: Data + fitted lines on original scale\nplot(x, y, pch = 19, cex = .6, \n     xlab = \"x\", ylab = \"y\")\nord &lt;- order(x)\nlines(x[ord], fitted(fit_bad)[ord], lwd = 2, lty = 2)\n# Back-transform the log-fit (median fit on y-scale)\nlines(x[ord], exp(fitted(fit_logy))[ord], lwd = 2, col = 4)\n#legend(\"topleft\", bty = \"n\", lwd = 2, lty = c(2,1), col = c(1,4),\n#       legend = c(\"Linear on y (misspecified)\", \"exp{ linear on log(y) }\"))\n\n## Plot 2: Residual diagnostics\nplot(fitted(fit_bad), resid(fit_bad), pch = 19, cex = .6,\nxlab = \"Fitted\",\n     ylab = \"Residual\")\nabline(h = 0, lty = 2)\n# Heteroscedastic fan shape expected for fit_bad\n\nplot(x, log(y), pch = 19, cex = .6,\n     xlab = \"x\", ylab = \"log(y)\")\n\nplot(fitted(fit_logy), resid(fit_logy), pch = 19, cex = .6,\n     xlab = \"x\", ylab = \"Residual with logy\")\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))\n\n\n\nTransform \\(x\\) or \\(y\\)? Why?"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-senic",
+    "href": "lectures/06-lecture.html#example-2-senic",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.5 Example 2: SENIC",
+    "text": "3.5 Example 2: SENIC\n\n\nCode\nsenic=read.csv(\"../data/SENIC.csv\")\n#scatter plot services on nurses\nplot(senic$services, senic$nurses,\n     pch=19, col=\"blue\",\n     xlab=\"services\",\n     ylab=\"nurses\")\n\n\n\n\n\n\n\n\n\n\nA random sample of 113 hospitals taken from a Study in the Efficacy of Nosocomial Infection Control (SENIC Project).\nnurses: Average number of full-time equivalent registered and licensed practical nurses\nservice: Percent of 35 potential facilities and services provided by the hospital"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-lm-fit-and-residuals",
+    "href": "lectures/06-lecture.html#example-2-lm-fit-and-residuals",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.6 Example 2: LM Fit and Residuals",
+    "text": "3.6 Example 2: LM Fit and Residuals\n\n\nCode\nsenic_fit=lm(nurses~services, data=senic)\npar(mfrow=c(1,2))\nplot(senic$services, senic$nurses,\n     pch=19, col=\"blue\",\n     xlab=\"services\",\n     ylab=\"nurses\")\nabline(senic_fit, col=\"red\", lwd=2)\nplot(senic_fit$fitted.values, senic_fit$residuals,\n     pch=19, col=\"blue\",\n     xlab=\"fitted values\",\n     ylab=\"residuals\")\nabline(h=0, lty=2)\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-transform-y",
+    "href": "lectures/06-lecture.html#example-2-transform-y",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.7 Example 2: Transform y",
+    "text": "3.7 Example 2: Transform y\n\nLet’s try log transformation on y.\n\n\n\nCode\nsenic_logy_fit=lm(log(nurses)~services, data=senic)\npar(mfrow=c(1,2))\nplot(senic$services, log(senic$nurses),\n     pch=19, col=\"blue\",\n     xlab=\"services\",\n     ylab=\"log(nurses)\")\nabline(senic_logy_fit, col=\"red\", lwd=2)\nplot(senic_logy_fit$fitted.values, senic_logy_fit$residuals,\n     pch=19, col=\"blue\",\n     xlab=\"fitted values\",\n     ylab=\"residuals\")\nabline(h=0, lty=2)\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-transform-x",
+    "href": "lectures/06-lecture.html#example-2-transform-x",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.8 Example 2: Transform x",
+    "text": "3.8 Example 2: Transform x\n\nLet’s try log transformation on x.\n\n\n\nCode\nsenic_logx_fit=lm(nurses~log(services), data=senic)\npar(mfrow=c(1,2))\nplot(log(senic$services), senic$nurses,\n     pch=19, col=\"blue\",\n     xlab=\"log(services)\",\n     ylab=\"nurses\")\nabline(senic_logx_fit, col=\"red\", lwd=2)\nplot(senic_logx_fit$fitted.values, senic_logx_fit$residuals,\n     pch=19, col=\"blue\",\n     xlab=\"fitted values\",\n     ylab=\"residuals\")\nabline(h=0, lty=2)\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-transform-both-x-and-y",
+    "href": "lectures/06-lecture.html#example-2-transform-both-x-and-y",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.9 Example 2: Transform both x and y",
+    "text": "3.9 Example 2: Transform both x and y\n\nLet’s try log transformation on both x and y.\n\n\n\nCode\nsenic_logxy_fit=lm(log(nurses)~log(services), data=senic)\npar(mfrow=c(1,2))\nplot(log(senic$services), log(senic$nurses),\n     pch=19, col=\"blue\",\n     xlab=\"log(services)\",\n     ylab=\"log(nurses)\")\nabline(senic_logxy_fit, col=\"red\", lwd=2)\nplot(senic_logxy_fit$fitted.values, senic_logxy_fit$residuals,\n     pch=19, col=\"blue\",\n     xlab=\"fitted values\",\n     ylab=\"residuals\")\nabline(h=0, lty=2)\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))\n\n\n\nWhat is your choice?"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-results-and-interpretation",
+    "href": "lectures/06-lecture.html#example-2-results-and-interpretation",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.10 Example 2: Results and Interpretation",
+    "text": "3.10 Example 2: Results and Interpretation\n\n\nCode\nsummary(senic_logy_fit)\n\n\n\nCall:\nlm(formula = log(nurses) ~ services, data = senic)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-1.00519 -0.26450  0.04573  0.26862  1.17838 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 2.826546   0.125500   22.52   &lt;2e-16 ***\nservices    0.046588   0.002744   16.98   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.4414 on 111 degrees of freedom\nMultiple R-squared:  0.722, Adjusted R-squared:  0.7195 \nF-statistic: 288.2 on 1 and 111 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-2-results-and-interpretation-1",
+    "href": "lectures/06-lecture.html#example-2-results-and-interpretation-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.11 Example 2: Results and Interpretation",
+    "text": "3.11 Example 2: Results and Interpretation\n\nFitted model: \\[\n\\log(\\text{Nurses}) \\;=\\; \\hat\\beta_0 \\;+\\; \\hat\\beta_1\\,\\text{Services} \\;,\n\\qquad \\hat\\beta_1 = 0.047.\\]\n\nFor a 1-unit increase in () (from (x) to (x+1)),\n[\n\\[\\begin{aligned}\n\\log\\big(\\text{Nurses}\\mid x+1\\big) - \\log\\big(\\text{Nurses}\\mid x\\big)\n&= \\hat\\beta_1,\\\\[3pt]\n\\Rightarrow\\quad\n\\frac{\\text{Nurses}\\mid x+1}{\\text{Nurses}\\mid x}\n&= \\exp(\\hat\\beta_1).\n\\end{aligned}\\]\n]\n\nThus the expected (and median) number of nurses is - by ((_1)) for each +1 in (). With (_1=0.047): ((0.047)), i.e., about a .\nHow about for k-unit increase in services?"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-3",
+    "href": "lectures/06-lecture.html#example-3",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.12 Example 3:",
+    "text": "3.12 Example 3:\n\n\nCode\nset.seed(2)\nn &lt;- 150\nx &lt;- runif(n, 0.5, 50)                    # positive, wide range\na0 &lt;- 3; a1 &lt;- 2; sigma &lt;- 1\ny &lt;- a0 + a1*log(x) + rnorm(n, 0, sigma)\n\nfit_lin   &lt;- lm(y ~ x)                    # wrong: linear in x\nfit_logx  &lt;- lm(y ~ log(x))               # right: linear in log x\npar(mfrow=c(1,2))\n## Plot 1: Data with fitted lines\nplot(x, y, pch = 19, cex = .6, xlab = \"x\", ylab = \"y\")\nxx &lt;- seq(min(x), max(x), length.out = 200)\nlines(xx, predict(fit_lin, newdata = data.frame(x = xx)), lwd = 2, lty = 2)\nlines(xx, predict(fit_logx, newdata = data.frame(x = xx)), lwd = 2, col = 4)\n\n## Plot 2: Residuals vs Fitted (linear-in-x shows curvature)\nplot(fitted(fit_lin), resid(fit_lin), pch = 19, cex = .6,\n     xlab = \"Fitted\", ylab = \"Residual\")\nabline(h = 0, lty = 2)\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-3-original-vs-transformed",
+    "href": "lectures/06-lecture.html#example-3-original-vs-transformed",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.13 Example 3: Original vs Transformed",
+    "text": "3.13 Example 3: Original vs Transformed\n\n\nCode\nset.seed(2)\nn &lt;- 150\nx &lt;- runif(n, 0.5, 50)                    # positive, wide range\na0 &lt;- 3; a1 &lt;- 2; sigma &lt;- 1\ny &lt;- a0 + a1*log(x) + rnorm(n, 0, sigma)\n\nfit_lin   &lt;- lm(y ~ x)                    # wrong: linear in x\nfit_logx  &lt;- lm(y ~ log(x))               # right: linear in log x\npar(mfrow=c(2,2))\n## Plot 1: Data with fitted lines\nplot(x, y, pch = 19, cex = .6, xlab = \"x\", ylab = \"y\")\nxx &lt;- seq(min(x), max(x), length.out = 200)\nlines(xx, predict(fit_lin, newdata = data.frame(x = xx)), lwd = 2, lty = 2)\nlines(xx, predict(fit_logx, newdata = data.frame(x = xx)), lwd = 2, col = 4)\n\n## Plot 2: Residuals vs Fitted (linear-in-x shows curvature)\nplot(fitted(fit_lin), resid(fit_lin), pch = 19, cex = .6,\n     xlab = \"Fitted\", ylab = \"Residual\")\nabline(h = 0, lty = 2)\n\nplot(log(x), y, pch = 19, cex = .6, xlab = \"log(x)\", ylab = \"y\")\n\nplot(fitted(fit_logx), resid(fit_logx), pch = 19, cex = .6,\n     xlab = \"Fitted\", ylab = \"Residual\")\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow=c(1,1))"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-4",
+    "href": "lectures/06-lecture.html#example-4",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.14 Example 4",
+    "text": "3.14 Example 4\n\n\nCode\nbattery=read.csv(\"../data/battery.csv\")\n#names(battery)\n#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale\nplot(battery$DeltaQvar, battery$cycleLife,\n     pch=19, col=\"blue\",\n     xlab=\"x\",\n     ylab=\"y\")"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-4-battery-data",
+    "href": "lectures/06-lecture.html#example-4-battery-data",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.15 Example 4: Battery Data",
+    "text": "3.15 Example 4: Battery Data\n\n\nCode\nbattery=read.csv(\"../data/battery.csv\")\n#names(battery)\n#draw scatter plot x=DeltaQvar, y=cycleLife with log10 scale\nplot(log10(battery$DeltaQvar), log10(battery$cycleLife),\n     pch=19, col=\"blue\",\n     xlab=\"log10(DeltaQvar)\",\n     ylab=\"log10(cycleLife)\",\n     main=\"Battery Data\")"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#example-4-results",
+    "href": "lectures/06-lecture.html#example-4-results",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "3.16 Example 4: Results",
+    "text": "3.16 Example 4: Results\n\n\nCode\nfit &lt;- lm(log10(cycleLife) ~ log10(DeltaQvar), data = battery)\nsummary(fit)\n\n\n\nCall:\nlm(formula = log10(cycleLife) ~ log10(DeltaQvar), data = battery)\n\nResiduals:\n      Min        1Q    Median        3Q       Max \n-0.107697 -0.056378  0.009384  0.056817  0.103507 \n\nCoefficients:\n                 Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)       1.44364    0.09990   14.45   &lt;2e-16 ***\nlog10(DeltaQvar) -0.37281    0.02718  -13.72   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.06424 on 39 degrees of freedom\nMultiple R-squared:  0.8283,    Adjusted R-squared:  0.8239 \nF-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16\n\n\n\nInterpretation of the slope: A 1% increase in DeltaQvar is associated with an approximate ___ decrease in cycleLife, on average."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#box-cox-transformation-1",
+    "href": "lectures/06-lecture.html#box-cox-transformation-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "4.1 Box-Cox Transformation",
+    "text": "4.1 Box-Cox Transformation\n\nBox-Cox transformation is defined as: \\[\ny^{(\\lambda)} = \\begin{cases}\n\\frac{y^\\lambda - 1}{\\lambda}, & \\lambda \\neq 0 \\\\\n\\log(y), & \\lambda = 0\n\\end{cases}\n\\] E.g., when \\(\\lambda=0.5\\), it is a square root transformation, i.e., \\(y'=\\sqrt{y}\\).\nHow to find \\(\\lambda\\)? Box-Cox transformation finds the optimal \\(\\lambda\\) by maximizing the log-likelihood function.\n\n\\[y_i^{(\\lambda)} = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\quad \\epsilon_i \\overset{iid}\\sim N(0, \\sigma^2)\\] - The fucntion ``boxcox’’ in MASS package in R can be used to find the optimal \\(\\lambda\\)."
+  },
+  {
+    "objectID": "lectures/06-lecture.html#box-cox-transformation-for-senic-data",
+    "href": "lectures/06-lecture.html#box-cox-transformation-for-senic-data",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "4.2 Box-Cox Transformation for SENIC Data",
+    "text": "4.2 Box-Cox Transformation for SENIC Data\n\nIn this example, the optimal value of \\(\\lambda\\) is around 0, which suggests a log transformation on y.\n\n\n\nCode\nlibrary(MASS)\nsenic=read.csv(\"../data/SENIC.csv\")\nsenic_fit &lt;- lm(nurses ~ services, data = senic)\nboxcox(senic_fit, lambda = seq(-2, 2, by = 0.1),\n       xlab = expression(lambda),\n       ylab = \"Log-Likelihood\",\n       main = \"Box-Cox Transformation for SENIC Data\")"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#box-cox-transformation-for-senic-data-1",
+    "href": "lectures/06-lecture.html#box-cox-transformation-for-senic-data-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "4.3 Box-Cox Transformation for SENIC Data",
+    "text": "4.3 Box-Cox Transformation for SENIC Data\n\n\nCode\nlibrary(MASS)\nsenic_fit &lt;- lm(nurses ~ services, data = senic)\nboxcox(senic_fit, lambda = seq(-2, 2, by = 0.1),\n       xlab = expression(lambda),\n       ylab = \"Log-Likelihood\",\n       main = \"Box-Cox Transformation for SENIC Data\")"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#conclusion-1",
+    "href": "lectures/06-lecture.html#conclusion-1",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "5.1 Conclusion",
+    "text": "5.1 Conclusion"
+  },
+  {
+    "objectID": "lectures/06-lecture.html#conclusion-2",
+    "href": "lectures/06-lecture.html#conclusion-2",
+    "title": "Lec 06: Lack of Fit Test and Data Transformation",
+    "section": "5.2 Conclusion",
+    "text": "5.2 Conclusion"
   }
 ]
