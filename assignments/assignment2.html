@@ -194,7 +194,9 @@ window.Quarto = {
 <p><strong>(b)</strong> Apply a log transformation to the <strong>response</strong> using <code>log()</code>; then make a histogram and Normal Q–Q plot of <code>log(service score)</code>. Does the Normality look improved? Explain.</p>
 <p><strong>(c)</strong> Based on (a)–(b), is a <strong>log transform of the response</strong> a reasonable choice? Justify your answer briefly.</p>
 <p><strong>(d)</strong> Use the <strong>Box–Cox</strong> method to assess a suitable transformation for the <strong>response</strong> (use <code>MASS::boxcox()</code>). Report the <span class="math inline">\(\lambda\)</span> maximizing the profile and the 95% CI. State whether <span class="math inline">\(\lambda = 0\)</span> (log) is supported.</p>
-<p><strong>(e)</strong> Fit a simple linear regression with the <strong>log-transformed response</strong>: [ () ;=; _0+_1,()+. ] Report the fitted slope and provide a one-sentence interpretation on the original scale (i.e., multiplicative change in the <strong>median</strong> service score per unit increase in nurses).</p>
+<p><strong>(e)</strong> Fit a simple linear regression with the <strong>log-transformed response</strong>: <span class="math display">\[
+\log(\text{service score}) \;=\; \beta_0+\beta_1\,(\text{nurses})+\varepsilon.\]</span></p>
+<p>Report the fitted slope and provide a one-sentence interpretation on the original scale (i.e., multiplicative change in the <strong>median</strong> service score per unit increase in nurses).</p>
 <p><strong>(f)</strong> For the model in (e), plot <strong>residuals vs.&nbsp;fitted</strong> and the <strong>Normal Q–Q plot</strong> of residuals. Comment on linearity, constant variance, and Normality.</p>
 <p><strong>(g)</strong> Refit the model using <code>log10()</code> instead of <code>log()</code> for the response. Compare results from <code>log()</code> vs <code>log10()</code>. Are inferences different? (Hint: they should be numerically rescaled but <strong>substantively equivalent</strong>; explain why.)</p>
 <div style="page-break-after: always;"></div>
@@ -241,10 +243,10 @@ F-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="hat-matrix-as-a-projection" class="level2">
 <h2 class="anchored" data-anchor-id="hat-matrix-as-a-projection">4. Hat matrix as a projection</h2>
-<p>In this problem, you will prove that the hat matrix (H) is a projection matrix by showting that it satsifies both (a) and (b). Recall [ H ;=; X,(X<sup>X)</sup>{-1}X^. ]</p>
-<p><strong>(a)</strong> Show that (H) is <strong>idempotent</strong>, i.e., (H^2 = H).</p>
-<p><strong>(b)</strong> Show that (H) is <strong>symmetric</strong>, i.e., (H^= H).</p>
-<p><em>Note.</em> A <strong>projection matrix</strong> satisfies (H^2=H). When, in addition, (H) is symmetric, it is the matrix of an <strong>orthogonal projection</strong> onto ((X)).</p>
+<p>In this problem, you will prove that the hat matrix <span class="math inline">\(H\)</span> is a projection matrix by showting that it satsifies both (a) and (b). Recall <span class="math display">\[H \;=\; X\,(X^\top X)^{-1}X^\top .\]</span></p>
+<p><strong>(a)</strong> Show that <span class="math inline">\(H\)</span> is <strong>idempotent</strong>, i.e., <span class="math inline">\(H^2 = H\)</span>.</p>
+<p><strong>(b)</strong> Show that <span class="math inline">\(H\)</span> is <strong>symmetric</strong>, i.e., <span class="math inline">\(H^\top = H\)</span>.</p>
+<p><em>Note.</em> A <strong>projection matrix</strong> satisfies <span class="math inline">\(H^2=H\)</span>. When, in addition, <span class="math inline">\(H\)</span> is symmetric, it is the matrix of an <strong>orthogonal projection</strong> onto <span class="math inline">\(\operatorname{col}(X)\)</span>.</p>
 </section>
 <section id="multiple-linear-regression-via-matrix-operations" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-linear-regression-via-matrix-operations">5 . Multiple Linear Regression via Matrix Operations</h2>
