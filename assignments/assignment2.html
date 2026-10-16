@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -190,6 +224,12 @@ window.Quarto = {
 <section id="transformations-and-model-diagnostics-senic-data" class="level2">
 <h2 class="anchored" data-anchor-id="transformations-and-model-diagnostics-senic-data">1. Transformations and model diagnostics: SENIC data</h2>
 <p>(<strong>R required</strong>) We model <strong>service score</strong> (response) using the <strong>number of registered nurses</strong> (predictor). The goal is to decide whether a <strong>log transformation of the response</strong> is needed.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>senic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/SENIC.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <p><strong>(a)</strong> Make a histogram and Normal Q–Q plot of the <strong>service score</strong> (the response). Does its distribution look approximately Normal? Why or why not?</p>
 <p><strong>(b)</strong> Apply a log transformation to the <strong>response</strong> using <code>log()</code>; then make a histogram and Normal Q–Q plot of <code>log(service score)</code>. Does the Normality look improved? Explain.</p>
 <p><strong>(c)</strong> Based on (a)–(b), is a <strong>log transform of the response</strong> a reasonable choice? Justify your answer briefly.</p>
@@ -213,6 +253,12 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="interpreting-coefficients-in-when-both-x-and-y-are-log-transformed.">3. Interpreting coefficients in when both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are log-transformed.</h2>
 <p>In the battery life example, we first took log10 transformation on both response variable cycleLife and predictor variable DeltaQvar, then fit a simple linear regression model. The summary output is shown below.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>battery<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/battery.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(cycleLife) <span class="sc">~</span> <span class="fu">log10</span>(DeltaQvar), <span class="at">data =</span> battery)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -254,6 +300,16 @@ F-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ol type="a">
 <li>Load the height data from <code>../data/height_data.csv</code>. Create the response vector y and the design matrix X, as shown in the R code below. Then use <code>dim</code> and <code>head</code> functions to check the dimensions and the first five rows of X.</li>
 </ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>height.data<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(height.data<span class="sc">$</span>c.height)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Intercept =</span> <span class="dv">1</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">f.height  =</span> height.data<span class="sc">$</span>f.height,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">m.height  =</span> height.data<span class="sc">$</span>m.height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <ol start="2" type="a">
 <li>Use matrix operations to compute the least squares estimate of the regression parameters <span class="math inline">\(\hat\beta = (X^TX)^{-1}X^Ty\)</span>.</li>
 </ol>
@@ -279,6 +335,31 @@ F-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>Recall that for a linear combination of the regression parameters <span class="math inline">\(c^T \beta\)</span>, the variance is given by <span class="math display">\[Var(c^T \hat{\boldsymbol{\beta}}) = c^T Var(\hat{\boldsymbol{\beta}}) c.\]</span> Here, we have <span class="math inline">\(c = [0, 1, -1]^T\)</span> to test <span class="math inline">\(H_0: \beta_f - \beta_m = 0\)</span>. Compute the t-statistic and p-value for this test. Is the result the same as that from <code>linearHypothesis()</code> function in the <code>car</code> package?</p></li>
 </ol>
 <p>Here is part of the R code to get you started and you need complete the rest of the steps 5-7 and then make a conclusion in the context of the problem.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1. Import data and load necessary library </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>height.data<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#2. Define the contrast vector</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#3. Compute the variance of the linear combination. Here var_beta_hat is the variance-covariance matrix of beta_hat that you obtained in (e).</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>var_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> var_beta_hat <span class="sc">%*%</span> c</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#4. Compute the estimate of the linear combination</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>estimate_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> beta_hat</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#5. compute the standard error of the linear combination</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#6. Compute the t-statistic</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#7. Compute the p-value</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#8. Compare your results with linearHypothesis() function. Note, you need to convert your t-statistic to F-statistic, as the linearHypothesis() function reports F-statistic.</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data =</span> height.data)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(fit, <span class="st">"f.height - m.height = 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <!--the normal equations, a linear combination of the regression parameters, and the variance of the predicted value.
 
 linear contrasts, or use variance covariance matrix of the estimated parameters to find the variance of a linear combination of the parameters.
