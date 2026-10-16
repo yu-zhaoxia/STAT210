@@ -25,7 +25,7 @@
     "href": "lectures/07-lecture.html#slr-vs-mlr",
     "title": "Lec 07: Multiple Linear Regression - Introduction",
     "section": "2.1 SLR vs MLR",
-    "text": "2.1 SLR vs MLR\n\nSLR: In a simple linear regression (SLR) model, we have one response variable \\(y\\) and one predictor variable \\(x\\). \\[y=\\beta_0 + \\beta_1 x + \\epsilon\\]\n\nFor individual \\(i\\), \\(i=1, \\ldots, n\\), \\[y_i= \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\nMLR: In a multiple linear regression (MLR) model, we have one response variable \\(t\\) and multiple predictor variables \\(X_1, X_2, \\ldots, X_p\\). \\[y= \\beta_0 + \\beta_1 x_1 + \\cdots, \\beta_p x_p + \\epsilon\\]"
+    "text": "2.1 SLR vs MLR\n\nSLR: In a simple linear regression (SLR) model, we have one response variable \\(y\\) and one predictor variable \\(x\\). \\[y=\\beta_0 + \\beta_1 x + \\epsilon\\]\n\nFor individual \\(i\\), \\(i=1, \\ldots, n\\), \\[y_i= \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\nMLR: In a multiple linear regression (MLR) model, we have one response variable \\(y\\) and multiple predictor variables \\(X_1, X_2, \\ldots, X_p\\). \\[y= \\beta_0 + \\beta_1 x_1 + \\cdots, \\beta_p x_p + \\epsilon\\]"
   },
   {
     "objectID": "lectures/07-lecture.html#mlr-1",
