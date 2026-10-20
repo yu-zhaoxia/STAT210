@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 08: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 08: Multiple Linear Regression - Inference – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,72 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">1</span> Review</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-06" id="toc-review-lecture-01-06" class="nav-link" data-scroll-target="#review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</a></li>
+  <li><a href="#lecture-07" id="toc-lecture-07" class="nav-link" data-scroll-target="#lecture-07"><span class="header-section-number">1.2</span> Lecture 07:</a></li>
+  <li><a href="#mlr-notations-and-assumptions" id="toc-mlr-notations-and-assumptions" class="nav-link" data-scroll-target="#mlr-notations-and-assumptions"><span class="header-section-number">1.3</span> MLR Notations and Assumptions</a></li>
+  <li><a href="#matrix-form" id="toc-matrix-form" class="nav-link" data-scroll-target="#matrix-form"><span class="header-section-number">1.4</span> Matrix Form</a></li>
+  <li><a href="#normal-equations-matrix-form" id="toc-normal-equations-matrix-form" class="nav-link" data-scroll-target="#normal-equations-matrix-form"><span class="header-section-number">1.5</span> Normal Equations: Matrix Form</a></li>
+  <li><a href="#fitted-values-and-residules" id="toc-fitted-values-and-residules" class="nav-link" data-scroll-target="#fitted-values-and-residules"><span class="header-section-number">1.6</span> Fitted values and Residules</a></li>
+  <li><a href="#sse-and-mse" id="toc-sse-and-mse" class="nav-link" data-scroll-target="#sse-and-mse"><span class="header-section-number">1.7</span> SSE and MSE</a></li>
+  </ul></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><span class="header-section-number">2</span> t-test</a>
+  <ul class="collapse">
+  <li><a href="#distribution-of-hatbeta_j" id="toc-distribution-of-hatbeta_j" class="nav-link" data-scroll-target="#distribution-of-hatbeta_j"><span class="header-section-number">2.1</span> Distribution of <span class="math inline">\(\hat{\beta}_j\)</span></a></li>
+  <li><a href="#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta" id="toc-the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta" class="nav-link" data-scroll-target="#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta"><span class="header-section-number">2.2</span> The Estimated Variance-Covariance Matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+  <li><a href="#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1" id="toc-the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1" class="nav-link" data-scroll-target="#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1"><span class="header-section-number">2.3</span> The Estimated Variance-Covariance Matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+  <li><a href="#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2" id="toc-the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2" class="nav-link" data-scroll-target="#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2"><span class="header-section-number">2.4</span> The Estimated Variance-Covariance Matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+  <li><a href="#t-test-for-beta_j" id="toc-t-test-for-beta_j" class="nav-link" data-scroll-target="#t-test-for-beta_j"><span class="header-section-number">2.5</span> t-test For <span class="math inline">\(\beta_j\)</span></a></li>
+  <li><a href="#derive-t-test-for-beta_j" id="toc-derive-t-test-for-beta_j" class="nav-link" data-scroll-target="#derive-t-test-for-beta_j"><span class="header-section-number">2.6</span> Derive t-test For <span class="math inline">\(\beta_j\)</span></a></li>
+  <li><a href="#t-test-for-beta_j-1" id="toc-t-test-for-beta_j-1" class="nav-link" data-scroll-target="#t-test-for-beta_j-1"><span class="header-section-number">2.7</span> t-test For <span class="math inline">\(\beta_j\)</span></a></li>
+  <li><a href="#example-t-statistic-for-beta_f" id="toc-example-t-statistic-for-beta_f" class="nav-link" data-scroll-target="#example-t-statistic-for-beta_f"><span class="header-section-number">2.8</span> Example: t-statistic for <span class="math inline">\(\beta_f\)</span></a></li>
+  <li><a href="#example-t-statistic-for-beta_f-1" id="toc-example-t-statistic-for-beta_f-1" class="nav-link" data-scroll-target="#example-t-statistic-for-beta_f-1"><span class="header-section-number">2.9</span> Example: t-statistic for <span class="math inline">\(\beta_f\)</span></a></li>
+  <li><a href="#example-ci-for-beta_f" id="toc-example-ci-for-beta_f" class="nav-link" data-scroll-target="#example-ci-for-beta_f"><span class="header-section-number">2.10</span> Example: CI for <span class="math inline">\(\beta_f\)</span></a></li>
+  </ul></li>
+  <li><a href="#a-linear-function-of-betas" id="toc-a-linear-function-of-betas" class="nav-link" data-scroll-target="#a-linear-function-of-betas"><span class="header-section-number">3</span> A Linear Function of <span class="math inline">\(\beta\)</span>’s</a>
+  <ul class="collapse">
+  <li><a href="#inference-of-a-linear-combination-of-betas" id="toc-inference-of-a-linear-combination-of-betas" class="nav-link" data-scroll-target="#inference-of-a-linear-combination-of-betas"><span class="header-section-number">3.1</span> Inference of a linear combination of <span class="math inline">\(\beta\)</span>’s</a></li>
+  <li><a href="#variance-of-a-linear-combination-of-betas" id="toc-variance-of-a-linear-combination-of-betas" class="nav-link" data-scroll-target="#variance-of-a-linear-combination-of-betas"><span class="header-section-number">3.2</span> Variance of A Linear Combination of <span class="math inline">\(\beta\)</span>’s</a></li>
+  <li><a href="#example-se-for-beta_f---beta_m" id="toc-example-se-for-beta_f---beta_m" class="nav-link" data-scroll-target="#example-se-for-beta_f---beta_m"><span class="header-section-number">3.3</span> Example: SE for <span class="math inline">\(\beta_f - \beta_m\)</span></a></li>
+  <li><a href="#example-t-test-for-beta_f---beta_m" id="toc-example-t-test-for-beta_f---beta_m" class="nav-link" data-scroll-target="#example-t-test-for-beta_f---beta_m"><span class="header-section-number">3.4</span> Example: t-test for <span class="math inline">\(\beta_f - \beta_m\)</span></a></li>
+  <li><a href="#example-ci-for-beta_f---beta_m" id="toc-example-ci-for-beta_f---beta_m" class="nav-link" data-scroll-target="#example-ci-for-beta_f---beta_m"><span class="header-section-number">3.5</span> Example: CI for <span class="math inline">\(\beta_f - \beta_m\)</span></a></li>
+  <li><a href="#t-test-for-a-linear-combination-of-betas" id="toc-t-test-for-a-linear-combination-of-betas" class="nav-link" data-scroll-target="#t-test-for-a-linear-combination-of-betas"><span class="header-section-number">3.6</span> t-test for a linear combination of <span class="math inline">\(\beta\)</span>’s</a></li>
+  <li><a href="#t-test-for-a-linear-combination-of-betas-1" id="toc-t-test-for-a-linear-combination-of-betas-1" class="nav-link" data-scroll-target="#t-test-for-a-linear-combination-of-betas-1"><span class="header-section-number">3.7</span> t-test for a linear combination of <span class="math inline">\(\beta\)</span>’s</a></li>
+  <li><a href="#example-t-test-for-beta_f---beta_m-1" id="toc-example-t-test-for-beta_f---beta_m-1" class="nav-link" data-scroll-target="#example-t-test-for-beta_f---beta_m-1"><span class="header-section-number">3.8</span> Example: t-test for <span class="math inline">\(\beta_f - \beta_m\)</span></a></li>
+  </ul></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">4</span> R</a></li>
+  <li><a href="#a-linear-test-a-reduced-model" id="toc-a-linear-test-a-reduced-model" class="nav-link" data-scroll-target="#a-linear-test-a-reduced-model"><span class="header-section-number">5</span> A Linear Test &lt;–&gt; A Reduced Model</a>
+  <ul class="collapse">
+  <li><a href="#example-heights-full-model" id="toc-example-heights-full-model" class="nav-link" data-scroll-target="#example-heights-full-model"><span class="header-section-number">5.1</span> Example: Heights: Full Model</a></li>
+  <li><a href="#example-heights-reparameterized-full-model" id="toc-example-heights-reparameterized-full-model" class="nav-link" data-scroll-target="#example-heights-reparameterized-full-model"><span class="header-section-number">5.2</span> Example: Heights: Reparameterized Full Model</a></li>
+  <li><a href="#example-heights-reduced-model" id="toc-example-heights-reduced-model" class="nav-link" data-scroll-target="#example-heights-reduced-model"><span class="header-section-number">5.3</span> Example: Heights: Reduced Model</a></li>
+  <li><a href="#example-heights-reduced-model-in-r" id="toc-example-heights-reduced-model-in-r" class="nav-link" data-scroll-target="#example-heights-reduced-model-in-r"><span class="header-section-number">5.4</span> Example: Heights: Reduced Model in R</a></li>
+  <li><a href="#example-heights-reduced-model-in-r-1" id="toc-example-heights-reduced-model-in-r-1" class="nav-link" data-scroll-target="#example-heights-reduced-model-in-r-1"><span class="header-section-number">5.5</span> Example: Heights: Reduced Model in R</a></li>
+  </ul></li>
+  <li><a href="#anova-table-for-mlr" id="toc-anova-table-for-mlr" class="nav-link" data-scroll-target="#anova-table-for-mlr"><span class="header-section-number">6</span> ANOVA Table for MLR</a>
+  <ul class="collapse">
+  <li><a href="#anova-table-for-mlr-1" id="toc-anova-table-for-mlr-1" class="nav-link" data-scroll-target="#anova-table-for-mlr-1"><span class="header-section-number">6.1</span> ANOVA Table for MLR</a></li>
+  <li><a href="#the-full-model" id="toc-the-full-model" class="nav-link" data-scroll-target="#the-full-model"><span class="header-section-number">6.2</span> The Full Model</a></li>
+  <li><a href="#the-reduced-model" id="toc-the-reduced-model" class="nav-link" data-scroll-target="#the-reduced-model"><span class="header-section-number">6.3</span> The Reduced Model</a></li>
+  <li><a href="#derive-the-f-statistic-for-mlr" id="toc-derive-the-f-statistic-for-mlr" class="nav-link" data-scroll-target="#derive-the-f-statistic-for-mlr"><span class="header-section-number">6.4</span> Derive the F-statistic for MLR</a></li>
+  <li><a href="#derive-the-f-statistic-for-mlr-1" id="toc-derive-the-f-statistic-for-mlr-1" class="nav-link" data-scroll-target="#derive-the-f-statistic-for-mlr-1"><span class="header-section-number">6.5</span> Derive the F-statistic for MLR</a></li>
+  <li><a href="#example-heights-anova-table" id="toc-example-heights-anova-table" class="nav-link" data-scroll-target="#example-heights-anova-table"><span class="header-section-number">6.6</span> Example: Heights: ANOVA Table</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 08:</h1>
+<h1 class="title">Lec 08: Multiple Linear Regression - Inference</h1>
 </div>
 
 
@@ -139,8 +259,557 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review</h1>
+<section id="review-lecture-01-06" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</h2>
+<ul>
+<li>Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.</li>
+<li>Lecture 07: Multiple Linear Regression (MLR): least squares estimate.</li>
+<li>This lecture: MLR inference (CI, t-test, linear functions, ANOVA).</li>
+<li>Heads up: next lecture (Lecture 09): Sums of squares, more on F-tests and ANOVA.</li>
+</ul>
+</section>
+<section id="lecture-07" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="lecture-07"><span class="header-section-number">1.2</span> Lecture 07:</h2>
+<ul>
+<li><p>MLR: In a multiple linear regression (MLR) model, we have one response variable <span class="math inline">\(y\)</span> and multiple predictor variables <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>. <span class="math display">\[y= \beta_0 + \beta_1 x_1 + \cdots, \beta_p x_p + \epsilon\]</span></p></li>
+<li><p>For individual <span class="math inline">\(i\)</span>, <span class="math inline">\(i=1, \ldots, n\)</span>, <span class="math display">\[y_i= \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \epsilon_i\]</span></p></li>
+</ul>
+</section>
+<section id="mlr-notations-and-assumptions" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="mlr-notations-and-assumptions"><span class="header-section-number">1.3</span> MLR Notations and Assumptions</h2>
+<ul>
+<li><p><span class="math inline">\(y_i\)</span> is the response variable for individual <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(x_{ij}\)</span> is the value of predictor variable <span class="math inline">\(j\)</span> for individual <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(\epsilon_i\)</span>’s are errors:</p>
+<ul>
+<li>The assumptions on <span class="math inline">\(\epsilon_i\)</span>’s are the same as those in SLR.</li>
+<li>weaker version: <span class="math inline">\(\epsilon_i\)</span>’s are independent with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>Strong version: <span class="math inline">\(\epsilon_i\)</span>’s are i.i.d. <span class="math inline">\(N(0, \sigma^2)\)</span>.</li>
+</ul></li>
+<li><p>The parameters to be estimated are <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_p\)</span> and <span class="math inline">\(\sigma^2\)</span>.</p></li>
+</ul>
+</section>
+<section id="matrix-form" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="matrix-form"><span class="header-section-number">1.4</span> Matrix Form</h2>
+<ul>
+<li><p>In matrix form, we have <span class="math display">\[\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{bmatrix} = \begin{bmatrix}1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\ 1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np}\end{bmatrix} \begin{bmatrix}\beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_p\end{bmatrix} + \begin{bmatrix}\epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_n\end{bmatrix}\]</span></p></li>
+<li><p>More compactly, <span class="math display">\[\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}\]</span></p></li>
+<li><p>Assumptions: weaker version: <span class="math inline">\(E(\boldsymbol{\epsilon}) = \mathbf{0}\)</span> and <span class="math inline">\(Var(\boldsymbol{\epsilon}) = \sigma^2 \mathbf{I}_n\)</span>; strong version: <span class="math inline">\(\boldsymbol{\epsilon} \sim N(\mathbf{0}, \sigma^2 \mathbf{I}_n)\)</span>.</p></li>
+</ul>
+</section>
+<section id="normal-equations-matrix-form" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="normal-equations-matrix-form"><span class="header-section-number">1.5</span> Normal Equations: Matrix Form</h2>
+<ul>
+<li>For general <span class="math inline">\(p\)</span>, the normal equations can be written as: <span class="math display">\[\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{y}\]</span></li>
+</ul>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} =(\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}\]</span></p>
+</section>
+<section id="fitted-values-and-residules" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="fitted-values-and-residules"><span class="header-section-number">1.6</span> Fitted values and Residules</h2>
+<ul>
+<li><p>The fitted values can be computed as: <span class="math display">\[\hat{\mathbf{y}}
+=\mathbf{X} \hat{\boldsymbol{\beta}} =\textcolor{red} {\mathbf{X} (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T} \mathbf{y}=\textcolor{red}{\mathbf H} \mathbf y\]</span></p></li>
+<li><p>The hat matrix <span class="math inline">\(\mathbf{H} = \mathbf{X} (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T\)</span> is a projection matrix, i.e.,</p>
+<ul>
+<li><span class="math inline">\(\mathbf{H} = \mathbf{H}^T\)</span> (symmetric) and</li>
+<li><span class="math inline">\(\mathbf{H}^2 = \mathbf{H}\)</span> (idempotent).</li>
+</ul></li>
+<li><p>The residuals can be computed as: <span class="math display">\[\hat{\boldsymbol{\epsilon}}
+=\mathbf{y} - \hat{\mathbf{y}} = \mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}= (\mathbf{I}_n - \mathbf{H}) \mathbf{y}\]</span></p></li>
+<li><p><span class="math inline">\(\mathbf{I}_n - \mathbf{H}\)</span> is also a projection matrix.</p></li>
+</ul>
+</section>
+<section id="sse-and-mse" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="sse-and-mse"><span class="header-section-number">1.7</span> SSE and MSE</h2>
+<ul>
+<li><p>The sum of squared errors (SSE) can be computed as: <span class="math display">\[\begin{align*}
+SSE &amp; = \sum_{i=1}^n (y_i -\hat y_i)^2 = \hat{\boldsymbol{\epsilon}}^T \hat{\boldsymbol{\epsilon}} = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})\\
+&amp;=[(\mathbf{I}_n - \mathbf{H}) \mathbf{y}]^T (\mathbf{I}_n - \mathbf{H}) \mathbf{y}\\
+&amp;=\mathbf{y}^T (\mathbf{I}_n - \mathbf{H}) \mathbf{y} \\
+\end{align*}\]</span></p></li>
+<li><p>The mean squared error (MSE) is given by: <span class="math display">\[MSE = \frac{SSE}{n-(p+1)}\]</span> where <span class="math inline">\(n-(p+1)\)</span> is the degrees of freedom (d.f.) for error.</p></li>
+<li><p>An unbiased estimator of <span class="math inline">\(\sigma^2\)</span> is given by <span class="math inline">\(s^2=\hat{\sigma}^2 = MSE\)</span>.</p></li>
+</ul>
+</section>
+</section>
+<section id="t-test" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> t-test</h1>
+<section id="distribution-of-hatbeta_j" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="distribution-of-hatbeta_j"><span class="header-section-number">2.1</span> Distribution of <span class="math inline">\(\hat{\beta}_j\)</span></h2>
+<ul>
+<li>Under the strong version of the model assumptions, i.e., <span class="math inline">\(\boldsymbol{\epsilon}\sim N(\mathbf{0}, \sigma^2 \mathbf{I}_n)\)</span>, or equivalently, <span class="math inline">\(\epsilon_i\)</span>’s are i.i.d. <span class="math inline">\(N(0, \sigma^2)\)</span>, we have:</li>
+</ul>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} \sim N(\boldsymbol{\beta}, \sigma^2 (\mathbf{X}^T \mathbf{X})^{-1})\]</span></p>
+<ul>
+<li><p>This is because a linear function of a multivariate normal random vector is still a multivariate normal random vector.</p></li>
+<li><p>The variance-covariance matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is given by: <span class="math display">\[Var(\hat{\boldsymbol{\beta}}) = \sigma^2 (\mathbf{X}^T \mathbf{X})^{-1}\]</span></p></li>
+</ul>
+</section>
+<section id="the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta"><span class="header-section-number">2.2</span> The Estimated Variance-Covariance Matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></h2>
+<ul>
+<li><p>An estimator of the variance-covariance matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is given by: <span class="math display">\[\widehat{Var}(\hat{\boldsymbol{\beta}}) = s^2 (\mathbf{X}^T \mathbf{X})^{-1}\]</span> where <span class="math inline">\(s^2 = MSE\)</span>.</p></li>
+<li><p>For example, in the height data set, the fitted Model is <span class="math display">\[\hat{c.height} = 16.26 + 0.29 \cdot f.height + 0.46 \cdot m.height\]</span></p></li>
+<li><p>The estimated variance-covariance matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> can be obtained using the <code>vcov</code> function in R.</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>height.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>height.lm<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data=</span>height.data)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">vcov</span>(height.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            (Intercept)    f.height    m.height
+(Intercept) 200.4619078 -0.88888954 -2.18030362
+f.height     -0.8888895  0.02274562 -0.01083111
+m.height     -2.1803036 -0.01083111  0.04612353</code></pre>
+</div>
+</div>
+</section>
+<section id="the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1"><span class="header-section-number">2.3</span> The Estimated Variance-Covariance Matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></h2>
+<ul>
+<li>Let’s verify the calculation of the estimated variance-covariance matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> using the formula.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(height.lm)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>XtX_inv <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>s2 <span class="ot">&lt;-</span> <span class="fu">summary</span>(height.lm)<span class="sc">$</span>sigma<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>vcov_manual <span class="ot">&lt;-</span> s2 <span class="sc">*</span> XtX_inv</span>
+<span id="cb3-5"><a href="#cb3-5"></a>vcov_manual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            (Intercept)    f.height    m.height
+(Intercept) 200.4619078 -0.88888954 -2.18030362
+f.height     -0.8888895  0.02274562 -0.01083111
+m.height     -2.1803036 -0.01083111  0.04612353</code></pre>
+</div>
+</div>
+</section>
+<section id="the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2"><span class="header-section-number">2.4</span> The Estimated Variance-Covariance Matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></h2>
+<ul>
+<li>Based on the var-cov matrix, we can extract the estimated variances and covariances of the regression parameters. For example,
+<ul>
+<li>the estimated variances are on the diagonal of the matrix.</li>
+<li>the estimated variance of a linear combination of regression parameters can be computed using the var-cov matrix.</li>
+</ul></li>
+</ul>
+</section>
+<section id="t-test-for-beta_j" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="t-test-for-beta_j"><span class="header-section-number">2.5</span> t-test For <span class="math inline">\(\beta_j\)</span></h2>
+<ul>
+<li><p>The LSE <span class="math inline">\(\hat{\beta}_j\)</span> follows a normal distribution: <span class="math display">\[\hat{\beta}_j \sim N(\beta_j, \sigma^2 [(\mathbf{X}^T \mathbf{X})^{-1}]_{jj})\]</span> where <span class="math inline">\([(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}\)</span> is the <span class="math inline">\(j\)</span>-th diagonal element of the matrix <span class="math inline">\((\mathbf{X}^T \mathbf{X})^{-1}\)</span>.</p></li>
+<li><p>An estimator of the variance of <span class="math inline">\(\hat{\beta}_j\)</span> is given by: <span class="math display">\[\widehat{Var}(\hat{\beta}_j) = s^2 [(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}\]</span> where <span class="math inline">\(s^2 = MSE\)</span>.</p></li>
+<li><p>The standard error (SE) of <span class="math inline">\(\hat{\beta}_j\)</span> is given by: <span class="math display">\[SE(\hat{\beta}_j) = s \sqrt{ [(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}}\]</span></p></li>
+</ul>
+</section>
+<section id="derive-t-test-for-beta_j" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="derive-t-test-for-beta_j"><span class="header-section-number">2.6</span> Derive t-test For <span class="math inline">\(\beta_j\)</span></h2>
+<ul>
+<li>It can be shown that <span class="math inline">\(\hat\beta_j\)</span> and <span class="math inline">\(s^2\)</span> are independent, and <span class="math display">\[\frac{(n-(p+1))s^2}{\sigma^2} = \frac{SSE}{\sigma^2} \sim \chi^2_{n-(p+1)}\]</span></li>
+<li>Therefore, we have <span class="math display">\[\frac{\hat{\beta}_j - \beta_j}{SE(\hat{\beta}_j)} = \frac{\hat{\beta}_j - \beta_j}{\sqrt{\sigma^2 [(\mathbf{X}^T \mathbf{X})^{-1}]_{jj}}} \bigg/ \sqrt{\frac{(n-(p+1))s^2}{\sigma^2 (n-(p+1))}} \sim t_{n-(p+1)}\]</span></li>
+</ul>
+</section>
+<section id="t-test-for-beta_j-1" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="t-test-for-beta_j-1"><span class="header-section-number">2.7</span> t-test For <span class="math inline">\(\beta_j\)</span></h2>
+<ul>
+<li>To test the significance of each predictor variable, we can use the t-test: <span class="math display">\[t = \frac{\hat{\beta}_j - \beta_{j0}}{SE(\hat{\beta}_j)}\]</span> where <span class="math inline">\(\beta_{j0}\)</span> is the hypothesized value of <span class="math inline">\(\beta_j\)</span> under the null hypothesis.</li>
+<li>Under the null hypothesis <span class="math inline">\(H_0: \beta_j = \beta_{j0}\)</span>, the test statistic follows a t-distribution with <span class="math inline">\(n-(p+1)\)</span> degrees of freedom: <span class="math display">\[t \sim t_{n-(p+1)}\]</span></li>
+</ul>
+</section>
+<section id="example-t-statistic-for-beta_f" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="example-t-statistic-for-beta_f"><span class="header-section-number">2.8</span> Example: t-statistic for <span class="math inline">\(\beta_f\)</span></h2>
+<ul>
+<li>In the height data set, to test <span class="math inline">\(H_0: \beta_f = 0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \beta_f \neq 0\)</span>, we have</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>beta_f_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(height.lm)[<span class="st">"f.height"</span>]</span>
+<span id="cb5-2"><a href="#cb5-2"></a>se_beta_f <span class="ot">&lt;-</span> <span class="fu">summary</span>(height.lm)<span class="sc">$</span>coefficients[<span class="st">"f.height"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb5-3"><a href="#cb5-3"></a>beta_f_0 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>t_stat <span class="ot">&lt;-</span> (beta_f_hat <span class="sc">-</span> beta_f_0) <span class="sc">/</span> se_beta_f</span>
+<span id="cb5-5"><a href="#cb5-5"></a>t_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>f.height 
+1.955048 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#two-sided p-value</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t_stat), <span class="at">df =</span> height.lm<span class="sc">$</span>df.residual)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  f.height 
+0.05653888 </code></pre>
+</div>
+</div>
+</section>
+<section id="example-t-statistic-for-beta_f-1" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="example-t-statistic-for-beta_f-1"><span class="header-section-number">2.9</span> Example: t-statistic for <span class="math inline">\(\beta_f\)</span></h2>
+<ul>
+<li>Compare the result to the summary output:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">summary</span>(height.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = c.height ~ f.height + m.height, data = height.data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.0987 -2.8324 -0.0332  2.2544  7.1131 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  16.2580    14.1585   1.148   0.2567  
+f.height      0.2949     0.1508   1.955   0.0565 .
+m.height      0.4628     0.2148   2.155   0.0363 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.568 on 47 degrees of freedom
+Multiple R-squared:  0.2128,    Adjusted R-squared:  0.1793 
+F-statistic: 6.352 on 2 and 47 DF,  p-value: 0.003615</code></pre>
+</div>
+</div>
+</section>
+<section id="example-ci-for-beta_f" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="example-ci-for-beta_f"><span class="header-section-number">2.10</span> Example: CI for <span class="math inline">\(\beta_f\)</span></h2>
+<ul>
+<li>A <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\beta_j\)</span> is given by: <span class="math display">\[\hat{\beta}_j \pm t_{\alpha/2, n-(p+1)} \cdot SE(\hat{\beta}_j)\]</span> where <span class="math inline">\(t_{\alpha/2, n-(p+1)}\)</span> is the <span class="math inline">\((1-\alpha/2)\)</span> quantile of the t-distribution with <span class="math inline">\(n-(p+1)\)</span> degrees of freedom.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>t_alpha_2 <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="at">df =</span> height.lm<span class="sc">$</span>df.residual)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>ci_lower <span class="ot">&lt;-</span> beta_f_hat <span class="sc">-</span> t_alpha_2 <span class="sc">*</span> se_beta_f</span>
+<span id="cb11-4"><a href="#cb11-4"></a>ci_upper <span class="ot">&lt;-</span> beta_f_hat <span class="sc">+</span> t_alpha_2 <span class="sc">*</span> se_beta_f</span>
+<span id="cb11-5"><a href="#cb11-5"></a>ci <span class="ot">&lt;-</span> <span class="fu">c</span>(ci_lower, ci_upper)</span>
+<span id="cb11-6"><a href="#cb11-6"></a>ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    f.height     f.height 
+-0.008550141  0.598257182 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># compare to confint function</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">confint</span>(height.lm, <span class="st">"f.height"</span>, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %    97.5 %
+f.height -0.008550141 0.5982572</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="a-linear-function-of-betas" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> A Linear Function of <span class="math inline">\(\beta\)</span>’s</h1>
+<section id="inference-of-a-linear-combination-of-betas" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="inference-of-a-linear-combination-of-betas"><span class="header-section-number">3.1</span> Inference of a linear combination of <span class="math inline">\(\beta\)</span>’s</h2>
+<ul>
+<li><p>The mean response at given predictor values is a linear combination of <span class="math inline">\(\beta\)</span>’s. We have seen that in SLR.</p></li>
+<li><p>In the height example, one interesting question is whether the effect of father’s height is the same as that of mother’s height on child’s height, i.e., testing <span class="math inline">\(H_0: \beta_f = \beta_m\)</span> vs.&nbsp;<span class="math inline">\(H_a: \beta_f \neq \beta_m\)</span>.</p></li>
+<li><p>This is equivalent to testing <span class="math inline">\(H_0: \beta_f - \beta_m = 0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \beta_f - \beta_m \neq 0\)</span>.</p></li>
+<li><p>An obvious estimate of <span class="math inline">\(\beta_f - \beta_m\)</span> is <span class="math inline">\(\hat{\beta}_f - \hat{\beta}_m\)</span>.</p></li>
+</ul>
+</section>
+<section id="variance-of-a-linear-combination-of-betas" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="variance-of-a-linear-combination-of-betas"><span class="header-section-number">3.2</span> Variance of A Linear Combination of <span class="math inline">\(\beta\)</span>’s</h2>
+<ul>
+<li><p>It can be ``standardized’’ to form a t-test statistic if we can compute the standard error of <span class="math inline">\(\hat{\beta}_f - \hat{\beta}_m\)</span>.</p></li>
+<li><p>The variance of <span class="math inline">\(\hat{\beta}_f - \hat{\beta}_m\)</span> can be computed using the var-cov matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. Specifically, <span class="math display">\[\widehat{Var}(\hat{\beta}_f - \hat{\beta}_m) = \widehat{Var}(\hat{\beta}_f) + \widehat{Var}(\hat{\beta}_m) - 2 \widehat{Cov}(\hat{\beta}_f, \hat{\beta}_m)\]</span></p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">vcov</span>(height.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            (Intercept)    f.height    m.height
+(Intercept) 200.4619078 -0.88888954 -2.18030362
+f.height     -0.8888895  0.02274562 -0.01083111
+m.height     -2.1803036 -0.01083111  0.04612353</code></pre>
+</div>
+</div>
+</section>
+<section id="example-se-for-beta_f---beta_m" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="example-se-for-beta_f---beta_m"><span class="header-section-number">3.3</span> Example: SE for <span class="math inline">\(\beta_f - \beta_m\)</span></h2>
+<ul>
+<li>Thus, the estimated variance of <span class="math inline">\(\hat{\beta}_f - \hat{\beta}_m\)</span> is given by:</li>
+</ul>
+<p><span class="math display">\[\widehat{Var}(\hat{\beta}_f - \hat{\beta}_m) = 0.02274562 + 0.04612353 - 2*(-0.01083111)=0.09053137\]</span></p>
+<ul>
+<li>The standard error (SE) of <span class="math inline">\(\hat{\beta}_f - \hat{\beta}_m\)</span> is given by: <span class="math display">\[SE(\hat{\beta}_f - \hat{\beta}_m) = \sqrt{Var(\hat{\beta}_f - \hat{\beta}_m)}=\sqrt{0.09053137}=0.3008843\]</span></li>
+</ul>
+</section>
+<section id="example-t-test-for-beta_f---beta_m" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="example-t-test-for-beta_f---beta_m"><span class="header-section-number">3.4</span> Example: t-test for <span class="math inline">\(\beta_f - \beta_m\)</span></h2>
+<ul>
+<li>The t-test statistic is given by: <span class="math display">\[t = \frac{(\hat{\beta}_f - \hat{\beta}_m) - 0}{SE(\hat{\beta}_f - \hat{\beta}_m)}=\frac{0.2949-0.4628}{0.3008843}=-0.5580218\]</span></li>
+<li>The p-value can be found using the t-distribution with <span class="math inline">\(n-(p+1)=n-3\)</span> degrees of freedom.</li>
+</ul>
+</section>
+<section id="example-ci-for-beta_f---beta_m" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="example-ci-for-beta_f---beta_m"><span class="header-section-number">3.5</span> Example: CI for <span class="math inline">\(\beta_f - \beta_m\)</span></h2>
+<ul>
+<li>A <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\beta_f - \beta_m\)</span> is given by: <span class="math display">\[\hat{\beta}_f - \hat{\beta}_m \pm t_{\alpha/2, n-(p+1)} \cdot SE(\hat{\beta}_f - \hat{\beta}_m)\]</span> where <span class="math inline">\(t_{\alpha/2, n-(p+1)}\)</span> is the <span class="math inline">\((1-\alpha/2)\)</span> quantile of the t-distribution with <span class="math inline">\(n-(p+1)\)</span> degrees of freedom.</li>
+</ul>
+<p><span class="math display">\[CI: (0.2949 \pm 2.011741 \cdot 0.3008843) = (-0.31, 1.07)\]</span></p>
+</section>
+<section id="t-test-for-a-linear-combination-of-betas" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="t-test-for-a-linear-combination-of-betas"><span class="header-section-number">3.6</span> t-test for a linear combination of <span class="math inline">\(\beta\)</span>’s</h2>
+<ul>
+<li>Let <span class="math inline">\(L =c_0 \beta_0+ c_1 \beta_1 + c_2 \beta_2 + \cdots + c_p \beta_p\)</span> be a linear combination of regression parameters.</li>
+<li>An estimator of <span class="math inline">\(L\)</span> is given by: <span class="math display">\[\hat{L} = c_0\beta_0 + c_1 \hat{\beta}_1 + c_2 \hat{\beta}_2 + \cdots + c_p \hat{\beta}_p\]</span></li>
+<li>The variance of <span class="math inline">\(\hat{L}\)</span> can be computed using the var-cov matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>: <span class="math display">\[\widehat{Var}(\hat{L}) = \mathbf{c}^T \widehat{Var}(\hat{\boldsymbol{\beta}}) \mathbf{c} = s^2 \mathbf{c}^T (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{c}\]</span> where <span class="math inline">\(\mathbf{c} = [c_0, c_1, c_2, \ldots, c_p]^T\)</span>.</li>
+<li>The standard error (SE) of <span class="math inline">\(\hat{L}\)</span> is given by: <span class="math display">\[SE(\hat{L}) = s \sqrt{\mathbf{c}^T (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{c}}\]</span></li>
+</ul>
+</section>
+<section id="t-test-for-a-linear-combination-of-betas-1" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="t-test-for-a-linear-combination-of-betas-1"><span class="header-section-number">3.7</span> t-test for a linear combination of <span class="math inline">\(\beta\)</span>’s</h2>
+<ul>
+<li>To test <span class="math inline">\(H_0: L = l_0\)</span> vs.&nbsp;<span class="math inline">\(H_a: L \neq l_0\)</span>, we can use the t-test: <span class="math display">\[t = \frac{\hat{L} - l_0}{SE(\hat{L})}\]</span> where <span class="math inline">\(l_0\)</span> is the hypothesized value of <span class="math inline">\(L\)</span> under the null hypothesis.</li>
+<li>Under the null hypothesis <span class="math inline">\(H_0: L = l_0\)</span>, the test statistic follows a t-distribution with <span class="math inline">\(n-(p+1)\)</span> degrees of freedom: <span class="math display">\[t \sim t_{n-(p+1)}\]</span></li>
+</ul>
+</section>
+<section id="example-t-test-for-beta_f---beta_m-1" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="example-t-test-for-beta_f---beta_m-1"><span class="header-section-number">3.8</span> Example: t-test for <span class="math inline">\(\beta_f - \beta_m\)</span></h2>
+<ul>
+<li>In the height data set, to test <span class="math inline">\(H_0: \beta_f - \beta_m = 0\)</span> vs.&nbsp;<span class="math inline">\(H_a: \beta_f - \beta_m \neq 0\)</span>, we have</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>beta_f_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(height.lm)[<span class="st">"f.height"</span>]</span>
+<span id="cb17-2"><a href="#cb17-2"></a>beta_m_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(height.lm)[<span class="st">"m.height"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3"></a>se_beta_f <span class="ot">&lt;-</span> <span class="fu">summary</span>(height.lm)<span class="sc">$</span>coefficients[<span class="st">"f.height"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb17-4"><a href="#cb17-4"></a>se_beta_m <span class="ot">&lt;-</span> <span class="fu">summary</span>(height.lm)<span class="sc">$</span>coefficients[<span class="st">"m.height"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb17-5"><a href="#cb17-5"></a>cov_beta_fm <span class="ot">&lt;-</span> <span class="fu">vcov</span>(height.lm)[<span class="st">"f.height"</span>, <span class="st">"m.height"</span>]</span>
+<span id="cb17-6"><a href="#cb17-6"></a>beta_diff_hat <span class="ot">&lt;-</span> beta_f_hat <span class="sc">-</span> beta_m_hat</span>
+<span id="cb17-7"><a href="#cb17-7"></a>se_beta_diff <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(se_beta_f<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se_beta_m<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> cov_beta_fm)</span>
+<span id="cb17-8"><a href="#cb17-8"></a>beta_diff_0 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>t_stat <span class="ot">&lt;-</span> (beta_diff_hat <span class="sc">-</span> beta_diff_0) <span class="sc">/</span> se_beta_diff</span>
+<span id="cb17-10"><a href="#cb17-10"></a>t_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  f.height 
+-0.5582448 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#two-sided p-value</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t_stat), <span class="at">df =</span> height.lm<span class="sc">$</span>df.residual)</span>
+<span id="cb19-3"><a href="#cb19-3"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>f.height 
+0.579327 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="r" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> R</h1>
+<ul>
+<li>There are existing R packages and functions to perform inference for a linear combination of <span class="math inline">\(\beta\)</span>’s:
+<ul>
+<li>the <code>confint</code> function in base R can also handle linear combinations of parameters.</li>
+<li>the <code>linearHypothesis</code> function in the <code>car</code> package.</li>
+<li>the <code>glht(height.lm, linfct = "f.height - m.height = 0")</code> in the <code>multcomp</code> package produces both CI and t-test results.</li>
+</ul></li>
+</ul>
+</section>
+<section id="a-linear-test-a-reduced-model" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> A Linear Test &lt;–&gt; A Reduced Model</h1>
+<section id="example-heights-full-model" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="example-heights-full-model"><span class="header-section-number">5.1</span> Example: Heights: Full Model</h2>
+<ul>
+<li><p>To find reduced model under <span class="math inline">\(H_0: \beta_f = \beta_m\)</span>, we will re-parameterize the full model.</p></li>
+<li><p>The full model is <span class="math display">\[c.height = \beta_0 + \beta_f \cdot f.height + \beta_m \cdot m.height + \epsilon\]</span> This can be rewritten (re-parameterized) as: <span class="math display">\[\begin{align*}
+c.height &amp; = \beta_0 + \beta_f \cdot f.height + \beta_m \cdot m.height + \epsilon \\
+&amp; = \beta_0 + \beta_f \cdot f.height + \beta_f \cdot m.height + (\beta_m - \beta_f) \cdot m.height + \epsilon \\
+&amp; = \beta_0 + \beta_f (f.height + m.height) + \beta_d \cdot m.height + \epsilon
+\end{align*}\]</span> where <span class="math inline">\(\beta_d = \beta_m - \beta_f\)</span>.</p></li>
+</ul>
+</section>
+<section id="example-heights-reparameterized-full-model" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="example-heights-reparameterized-full-model"><span class="header-section-number">5.2</span> Example: Heights: Reparameterized Full Model</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>height.lm.reparam<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> <span class="fu">I</span>(f.height <span class="sc">+</span> m.height) <span class="sc">+</span> m.height, <span class="at">data=</span>height.data)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">summary</span>(height.lm.reparam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = c.height ~ I(f.height + m.height) + m.height, data = height.data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.0987 -2.8324 -0.0332  2.2544  7.1131 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)             16.2580    14.1585   1.148   0.2567  
+I(f.height + m.height)   0.2949     0.1508   1.955   0.0565 .
+m.height                 0.1680     0.3009   0.558   0.5793  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.568 on 47 degrees of freedom
+Multiple R-squared:  0.2128,    Adjusted R-squared:  0.1793 
+F-statistic: 6.352 on 2 and 47 DF,  p-value: 0.003615</code></pre>
+</div>
+</div>
+</section>
+<section id="example-heights-reduced-model" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="example-heights-reduced-model"><span class="header-section-number">5.3</span> Example: Heights: Reduced Model</h2>
+<ul>
+<li><p>The re-parameterized <strong><em>full</em></strong> model is: <span class="math display">\[\begin{align*}
+c.height &amp; = \beta_0 + \beta_f (f.height + m.height) + \beta_d \cdot m.height + \epsilon
+\end{align*}\]</span> where <span class="math inline">\(\beta_d = \beta_m - \beta_f\)</span>.</p></li>
+<li><p>Under <span class="math inline">\(H_0: \beta_f = \beta_m\)</span>, we have <span class="math inline">\(\beta_d = 0\)</span>. Thus, the <strong><em>reduced</em></strong> model is: <span class="math display">\[c.height = \beta_0 + \beta_f (f.height + m.height) + \epsilon\]</span></p></li>
+</ul>
+</section>
+<section id="example-heights-reduced-model-in-r" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="example-heights-reduced-model-in-r"><span class="header-section-number">5.4</span> Example: Heights: Reduced Model in R</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>height.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>height.lm.reduced<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> <span class="fu">I</span>(f.height <span class="sc">+</span> m.height), <span class="at">data=</span>height.data)</span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">summary</span>(height.lm.reduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = c.height ~ I(f.height + m.height), data = height.data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.3015 -2.8019  0.0952  2.3054  7.1330 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             18.6541    13.3951   1.393 0.170158    
+I(f.height + m.height)   0.3571     0.1007   3.546 0.000885 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.542 on 48 degrees of freedom
+Multiple R-squared:  0.2076,    Adjusted R-squared:  0.1911 
+F-statistic: 12.57 on 1 and 48 DF,  p-value: 0.000885</code></pre>
+</div>
+</div>
+</section>
+<section id="example-heights-reduced-model-in-r-1" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="example-heights-reduced-model-in-r-1"><span class="header-section-number">5.5</span> Example: Heights: Reduced Model in R</h2>
+<ul>
+<li>We can also compare the two models using ANOVA</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>height.lm.full<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data=</span>height.data)</span>
+<span id="cb25-2"><a href="#cb25-2"></a>height.lm.reduced<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> <span class="fu">I</span>(f.height <span class="sc">+</span> m.height), <span class="at">data=</span>height.data)</span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="fu">anova</span>(height.lm.reduced, height.lm.full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: c.height ~ I(f.height + m.height)
+Model 2: c.height ~ f.height + m.height
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     48 602.35                           
+2     47 598.39  1    3.9677 0.3116 0.5793</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="anova-table-for-mlr" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> ANOVA Table for MLR</h1>
+<section id="anova-table-for-mlr-1" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="anova-table-for-mlr-1"><span class="header-section-number">6.1</span> ANOVA Table for MLR</h2>
+<ul>
+<li>The ANOVA table for MLR is similar to that for SLR, with the following differences:
+<ul>
+<li>The d.f. for regression is <span class="math inline">\(p\)</span>, the number of predictor variables.</li>
+<li>The d.f. for error is <span class="math inline">\(n-(p+1)\)</span>, where <span class="math inline">\(n\)</span> is the number of observations.</li>
+<li>The total d.f. is still <span class="math inline">\(n-1\)</span>.</li>
+</ul></li>
+<li>The F-statistic is given by: <span class="math display">\[F = \frac{MSR}{MSE} = \frac{SSR/p}{SSE/(n-(p+1))}\]</span></li>
+</ul>
+</section>
+<section id="the-full-model" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-full-model"><span class="header-section-number">6.2</span> The Full Model</h2>
+<ul>
+<li><p>The <strong><em>full</em></strong> model is: <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \epsilon_i\]</span></p></li>
+<li><p>The alternative hypothesis for the overall F-test in MLR is: <span class="math display">\[H_a: \text{at least one } \beta_j \neq 0, j=1, 2, \ldots, p\]</span></p></li>
+<li><p>We denote the sum of squared errors (SSE) for the full model as <span class="math inline">\(SSE\)</span>.</p></li>
+</ul>
+</section>
+<section id="the-reduced-model" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-reduced-model"><span class="header-section-number">6.3</span> The Reduced Model</h2>
+<ul>
+<li>The null hypothesis for the overall F-test in MLR is: <span class="math display">\[H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0\]</span></li>
+<li>The <strong><em>reduced</em></strong> model under the null hypothesis is: <span class="math display">\[y_i = \beta_0 + \epsilon_i\]</span></li>
+<li>The sum of squares errors (SSE) for the reduced model is denoted as <span class="math inline">\(\sum_{i=1}^n (y_i -\bar y)^2\)</span>, which is the <span class="math inline">\(SST\)</span>.</li>
+</ul>
+</section>
+<section id="derive-the-f-statistic-for-mlr" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="derive-the-f-statistic-for-mlr"><span class="header-section-number">6.4</span> Derive the F-statistic for MLR</h2>
+<ul>
+<li><p>Similar to SLR, we define <span class="math inline">\(SSR=SST-SSE\)</span>.</p></li>
+<li><p>The F-statistic tests the following hypotheses: <span class="math display">\[H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0\]</span> vs <span class="math display">\[H_a: \text{at least one } \beta_j \neq 0, j=1, 2, \ldots, p\]</span></p></li>
+</ul>
+</section>
+<section id="derive-the-f-statistic-for-mlr-1" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="derive-the-f-statistic-for-mlr-1"><span class="header-section-number">6.5</span> Derive the F-statistic for MLR</h2>
+<ul>
+<li><p>Under the strong version of the model assumptions, we have: <span class="math display">\[\frac{SSR/p}{\sigma^2} \overset{H_0:}\sim \chi^2_{p}\]</span> and <span class="math display">\[\frac{SSE/\sigma^2}{n-(p+1)} \sim \chi^2_{n-(p+1)}\]</span></p></li>
+<li><p>Since <span class="math inline">\(SSR\)</span> and <span class="math inline">\(SSE\)</span> are independent, we have <span class="math display">\[F = \frac{(SSR/p)/\sigma^2}{(SSE/(n-(p+1)))/\sigma^2} \sim F_{p, n-(p+1)}\]</span></p></li>
+</ul>
+</section>
+<section id="example-heights-anova-table" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="example-heights-anova-table"><span class="header-section-number">6.6</span> Example: Heights: ANOVA Table</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>height.lm.reduced<span class="ot">=</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>height.data)</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">anova</span>(height.lm, height.lm.reduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: c.height ~ f.height + m.height
+Model 2: c.height ~ 1
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
+1     47 598.39                                
+2     49 760.14 -2   -161.75 6.3524 0.003615 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

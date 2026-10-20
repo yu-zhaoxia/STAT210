@@ -7,6 +7,258 @@
     "text": "Simple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nSep 24\n1 — Introduction\nPDF\n\n\nSep 29\n2 — Inference\nPDF\n\n\nOct 1\n3 — Inference\nPDF\n\n\nOct 6\n4 — ANOVA and Diagnostics\nPDF\n\n\nOct 8\n5 — Diagnostics\nPDF\n\n\nOct 13\n6 — Lack of Fit Test and Data Transformation\nPDF\n\n\n\n\n\nMultiple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nOct 15\n7 — Introduction\nPDF\n\n\nOct 20\n8 — Inference\nPDF\n\n\nOct 22\n9 — Sums of Squares, ANOVA, F-tests\nPDF\n\n\nOct 27\n10 — Extra Sums of Squares, Partial F Tests\nPDF\n\n\nOct 29\n11 — Multicollinearity\nPDF\n\n\n\nNov 3: Midterm\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nNov 5\n12 — Categorical Variables\nPDF\n\n\nNov 10\n13 — Interactions\nPDF\n\n\nNov 12\n14 — Model Selection\nPDF\n\n\nNov 17\n15 — Model Selection\nPDF\n\n\nNov 19\n16 — Outliers\nPDF\n\n\nNov 24\n17 — Influential Points\nPDF\n\n\n\n\n\nAdditional Topics\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nDec 1\n18 — Weighted Least Squares\nPDF\n\n\nDec 3\n[19 — TBA]\n[PDF]"
   },
   {
+    "objectID": "lectures/09-lecture.html",
+    "href": "lectures/09-lecture.html",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "",
+    "text": "Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLecture 07: Multiple Linear Regression (MLR): least squares estimate.\nLecture 08: MLR inference (CI, t-test, linear functions, ANOVA).\nThis lecture: Sums of squares, more on F-tests and ANOVA."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#lectures-01-09",
+    "href": "lectures/09-lecture.html#lectures-01-09",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "",
+    "text": "Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLecture 07: Multiple Linear Regression (MLR): least squares estimate.\nLecture 08: MLR inference (CI, t-test, linear functions, ANOVA).\nThis lecture: Sums of squares, more on F-tests and ANOVA."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#f-test-for-the-overall-significance-of-mlr",
+    "href": "lectures/09-lecture.html#f-test-for-the-overall-significance-of-mlr",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "2.1 F-test for the Overall Significance of MLR",
+    "text": "2.1 F-test for the Overall Significance of MLR\n\nThis test examines whether at least one predictor variable has a non-zero regression coefficient in the MLR model.\nThe null and alternative hypotheses are: \\[\\begin{align*}\nH_0: & \\beta_1 = \\beta_2 = \\cdots = \\beta_p = 0 \\\\\nH_a: & \\text{at least one } \\beta_j \\neq 0, j=1, 2, \\ldots, p\n\\end{align*}\\]\nThe F-statistic compares the fit of the full model (with all predictor variables) to the reduced model (with only the intercept)."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#the-full-model",
+    "href": "lectures/09-lecture.html#the-full-model",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "2.2 The Full Model",
+    "text": "2.2 The Full Model\n\nThe full model is: \\[y_i = \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip} + \\epsilon_i\\]\nWe denote the sum of squared errors (SSE) for the full model as \\(SSE\\): \\[SSE=\\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#the-reduced-model",
+    "href": "lectures/09-lecture.html#the-reduced-model",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "2.3 The Reduced Model",
+    "text": "2.3 The Reduced Model\n\nThe null hypothesis for the overall F-test in MLR is: \\[H_0: \\beta_1 = \\beta_2 = \\cdots = \\beta_p = 0\\]\nThe reduced model under the null hypothesis is: \\[y_i = \\beta_0 + \\epsilon_i\\]\nThe sum of squares errors for the reduced model is denoted as \\(\\sum_{i=1}^n (y_i -\\bar y)^2\\), which is the \\(SST\\)."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#the-difference-in-fit-between-full-and-reduced-models",
+    "href": "lectures/09-lecture.html#the-difference-in-fit-between-full-and-reduced-models",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "2.4 The Difference in Fit between Full and Reduced Models",
+    "text": "2.4 The Difference in Fit between Full and Reduced Models\n\nWe will decompose the total variability in the response variable \\(y\\) into two components \\[\\begin{align*}\nSST & = \\sum_{i=1}^n (y_i - \\bar{y})^2 \\\\\n& =  \\underbrace{\\sum_{i=1}^n (y_i - \\hat{y}_i)^2}_{SSE} + \\underbrace{\\sum_{i=1}^n (\\hat{y}_i - \\bar{y})^2}_{SSR}\n\\end{align*}\\]\nHere,\n\n\\(SST\\) is the total sum of squares, calculated from the reduced model;\n\\(SSE\\) is the error sum of squares, calculated from full model;\n\\(SSR\\) is the regression sum of squares. Note \\(SSR=SST - SSE\\)."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#the-f-statistic-for-mlr",
+    "href": "lectures/09-lecture.html#the-f-statistic-for-mlr",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "2.5 The F-statistic for MLR",
+    "text": "2.5 The F-statistic for MLR\n\nThe F-statistic tests the following hypotheses: \\[\\begin{align*}\nH_0: & \\beta_1 = \\beta_2 = \\cdots = \\beta_p = 0 \\\\\nH_a: & \\text{at least one } \\beta_j \\neq 0, j=1, 2, \\ldots, p\n\\end{align*}\\]\nThe F-statistic is given by: \\[F = \\frac{MSR}{MSE} = \\frac{SSR/p}{SSE/(n-(p+1))}\\] where\n\n\\(MSR\\) is the mean square for regression,\n\\(MSE\\) is the mean square for error,\n\\(p\\) is the number of predictor variables,\n\\(n\\) is the number of observations."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#the-distribution-of-the-f-statistic",
+    "href": "lectures/09-lecture.html#the-distribution-of-the-f-statistic",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "2.6 The Distribution of the F-statistic",
+    "text": "2.6 The Distribution of the F-statistic\n\nUnder \\(H_0\\), \\(SSR/\\sigma^2 \\sim \\chi_{p}^2\\).\n\\(SSE/\\sigma^2\\sim \\chi_{n-p-1}\\).\n\\(SS\\) and \\(SSE\\) are independent.\nTherefore, \\(F=\\frac{MSR}{MSE} \\overset{H_0}\\sim F_{p, n-p-1}\\)."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#motivating-example-cdi",
+    "href": "lectures/09-lecture.html#motivating-example-cdi",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "3.1 Motivating Example: CDI",
+    "text": "3.1 Motivating Example: CDI\n\nThe dataset CDI gives various characteristics of 440 of the most populous counties in the USA.\nWe’ll try to predict y = unemployment percent from:\n\n\\(x_1\\) = percent of those over 25 with a BS degree;\n\\(x_2\\) = per capital income;\n\\(x_3\\) = percent of population over 65.\n\nThe full model is \\[y_i = \\beta_0 + \\beta_1 x_{i1} + \\beta_2 x_{i2} + \\beta_3 x_{i3} + \\epsilon_i\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#cdi-example",
+    "href": "lectures/09-lecture.html#cdi-example",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "3.2 CDI Example",
+    "text": "3.2 CDI Example\n\n\nCode\ncdi &lt;- read.csv(\"../data/CDI.csv\")\nsummary(lm(result&lt;-lm(unemployment~bachelor + capita_income + X65plus, data=cdi)))\n\n\n\nCall:\nlm(formula = result &lt;- lm(unemployment ~ bachelor + capita_income + \n    X65plus, data = cdi))\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-4.0438 -1.1638 -0.2989  0.6977 12.8957 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    9.214e+00  5.275e-01  17.469   &lt;2e-16 ***\nbachelor      -1.802e-01  1.955e-02  -9.219   &lt;2e-16 ***\ncapita_income  5.040e-05  3.468e-05   1.453    0.147    \nX65plus        2.021e-02  2.694e-02   0.750    0.453    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.964 on 436 degrees of freedom\nMultiple R-squared:  0.2991,    Adjusted R-squared:  0.2943 \nF-statistic: 62.03 on 3 and 436 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#cdi-example-1",
+    "href": "lectures/09-lecture.html#cdi-example-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "3.3 CDI Example",
+    "text": "3.3 CDI Example\n\n\\(x_1\\) (BSDegree) is significant predictor of unemployment.\n\\(x_2\\) (Income) is not significant when \\(x_1\\) and \\(x_3\\) are in the model.\n\\(x_3\\) (Percentage of population over 65) is not significant when \\(x_1\\) and \\(x_2\\) are in the model.\nWe do not know whether both \\(x_2\\) and \\(x_3\\) should be excluded after including \\(x_1\\) in the model."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#cdi-example-2",
+    "href": "lectures/09-lecture.html#cdi-example-2",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "3.4 CDI Example",
+    "text": "3.4 CDI Example\n\nIn this situation, it is not interesting to conduct the overall F-test because\nWe can still use F tests.\n\n\\(H_0: \\beta_2=\\beta_3=0\\).\n\\(H_1:\\) at least one of them is not zero.\n\nThe reduced model (corresponding to \\(H_0\\)) is \\[y_i = \\beta_0 + \\beta_1 x_{i1} + \\epsilon\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#cdi-example-3",
+    "href": "lectures/09-lecture.html#cdi-example-3",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "3.5 CDI Example",
+    "text": "3.5 CDI Example\n\n\nCode\nlm.full&lt;-lm(result&lt;-lm(unemployment~bachelor + capita_income + X65plus, data=cdi))\nlm.reduced&lt;-lm(unemployment~bachelor, data=cdi)\nanova(lm.reduced, lm.full)\n\n\nAnalysis of Variance Table\n\nModel 1: unemployment ~ bachelor\nModel 2: unemployment ~ bachelor + capita_income + X65plus\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1    438 1697.5                           \n2    436 1681.8  2     15.71 2.0365 0.1317"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#cdi-example-4",
+    "href": "lectures/09-lecture.html#cdi-example-4",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "3.6 CDI Example",
+    "text": "3.6 CDI Example\n\nThe F-statistic is \\[F=\\frac{(1697.5- 1681.8)/(438 - 436)}{1681.8/436}=2.0365\\]\nThe result suggest \\(x_2\\) and \\(x_3\\) are not needed in the model."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#extra-sums-of-squares-1",
+    "href": "lectures/09-lecture.html#extra-sums-of-squares-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.1 Extra Sums of Squares",
+    "text": "4.1 Extra Sums of Squares\n\nIn multiple regression, we are often interested in how much one set of variables increases SSR (sum of squares for regression), given another set of variables already is in the model. The increment in SSR by adding a set of predictors (set 2) to an existing set of predictors (set 1) is \\[SSR(\\text{set 2} | \\text{set 1}) = SSR(\\text{set 1 and set 2}) - SSR(\\text{set 1})\\] or equivalently, \\[SSR(\\text{set 2} | \\text{set 1}) = SSE(\\text{set 1}) - SSE(\\text{set 1 and set 2})\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#extra-sums-of-squares-cdi-example",
+    "href": "lectures/09-lecture.html#extra-sums-of-squares-cdi-example",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.2 Extra Sums of Squares: CDI Example",
+    "text": "4.2 Extra Sums of Squares: CDI Example\n\n\nCode\nanova(lm.reduced)\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nbachelor    1  702.05  702.05  181.15 &lt; 2.2e-16 ***\nResiduals 438 1697.47    3.88                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\nanova(lm.full)\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    \nbachelor        1  702.05  702.05 182.0089 &lt; 2e-16 ***\ncapita_income   1   13.54   13.54   3.5099 0.06167 .  \nX65plus         1    2.17    2.17   0.5631 0.45343    \nResiduals     436 1681.76    3.86                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#extra-sums-of-squares-cdi-example-1",
+    "href": "lectures/09-lecture.html#extra-sums-of-squares-cdi-example-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.3 Extra Sums of Squares: CDI Example",
+    "text": "4.3 Extra Sums of Squares: CDI Example\n\n\nCode\nanova(lm.reduced, lm.full)\n\n\nAnalysis of Variance Table\n\nModel 1: unemployment ~ bachelor\nModel 2: unemployment ~ bachelor + capita_income + X65plus\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1    438 1697.5                           \n2    436 1681.8  2     15.71 2.0365 0.1317\n\n\n\nIn the CDI example, the extra sum of squares due to adding \\(x_2\\) and \\(x_3\\) to a model that already contains \\(x_1\\) is \\[SSR(x_2, x_3 | x_1) = SSE(x_1) - SSE(x_1, x_2, x_3) = 1697.5 - 1681.8 = 15.7\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#partial-f-test-using-extra-sums-of-squares",
+    "href": "lectures/09-lecture.html#partial-f-test-using-extra-sums-of-squares",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.4 Partial F-test Using Extra Sums of Squares",
+    "text": "4.4 Partial F-test Using Extra Sums of Squares\n\nThe partial F-test for testing \\(H_0: \\beta_2 = \\beta_3 = 0\\) vs. \\(H_a:\\) at least one of them is not zero can be conducted using extra sums of squares: \\[F = \\frac{SSR(x_2, x_3 | x_1)/2}{MSE(\\text{full model})} = \\frac{15.7/2}{1681.8/436} = 2.0365\\]\nThis is the same F-statistic as obtained before."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#decomposition-of-ssr",
+    "href": "lectures/09-lecture.html#decomposition-of-ssr",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.5 Decomposition of SSR",
+    "text": "4.5 Decomposition of SSR\n\nRecall from SLR, we have \\[SST=SSR + SSE\\] where \\[SSR = \\beta_1^2 \\sum_{i=1}^n (x_i - \\bar{x})^2\\]\nIn MLR with \\(x_1\\) and \\(x_2\\), \\[SST=SSR(\\beta_1, \\beta_2) + SSE(\\beta_1, \\beta_2)\\] and \\[SST=SSR(\\beta_1) + SSR(\\beta_2|\\beta_1) + SSE(\\beta_1, \\beta_2),\\] or equivalently \\[SST=SSR(\\beta_2) + SSR(\\beta_1|\\beta_2) + SSE(\\beta_1, \\beta_2)\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#decomposition-of-ssr-1",
+    "href": "lectures/09-lecture.html#decomposition-of-ssr-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.6 Decomposition of SSR",
+    "text": "4.6 Decomposition of SSR\n\nThe order of predictors is aribitrary. For example, in a model with three predictors \\(x_1, x_2, x_3\\), we have \\[\\begin{align*}\nSST&=SSR(x_1) + SSR(x_2|x_1) + SSR(x_3|x_1, x_2) + SSE(x_1, x_2, x_3)\\\\\n&=SSR(x_2) + SSR(x_1|x_2) + SSR(x_3|x_1, x_2) + SSE(x_1, x_2, x_3)\\\\\n&=SSR(x_3) + SSR(x_1|x_3) + SSR(x_2|x_1, x_3) + SSE(x_1, x_2, x_3)\\\\\n\\cdots & \\cdots\n\\end{align*}\\]"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#example-cdi",
+    "href": "lectures/09-lecture.html#example-cdi",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.7 Example CDI",
+    "text": "4.7 Example CDI\n\n\nCode\nmodel12 &lt;- lm(result&lt;-lm(unemployment~bachelor + capita_income, data=cdi))\nmodel21 &lt;- lm(result&lt;-lm(unemployment~capita_income + bachelor, data=cdi))"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#example-cdi-model-12",
+    "href": "lectures/09-lecture.html#example-cdi-model-12",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.8 Example CDI: Model 12",
+    "text": "4.8 Example CDI: Model 12\n\n\nCode\nanova(lm(result&lt;-lm(unemployment~bachelor, data=cdi)))\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nbachelor    1  702.05  702.05  181.15 &lt; 2.2e-16 ***\nResiduals 438 1697.47    3.88                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\nanova(model12)\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    \nbachelor        1  702.05  702.05 182.1910 &lt; 2e-16 ***\ncapita_income   1   13.54   13.54   3.5134 0.06154 .  \nResiduals     437 1683.93    3.85                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#example-cdi-model-12-1",
+    "href": "lectures/09-lecture.html#example-cdi-model-12-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.9 Example CDI: Model 12",
+    "text": "4.9 Example CDI: Model 12\n\n\\(SSR(\\beta_1)=702.05\\)\n\\(SSR(\\beta_2|\\beta_1)=13.54\\)\n\\(SSE(\\beta_1, \\beta_2)=1683.93\\)"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#example-cdi-model-21",
+    "href": "lectures/09-lecture.html#example-cdi-model-21",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.10 Example CDI: Model 21",
+    "text": "4.10 Example CDI: Model 21\n\n\nCode\nanova(model21)\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \ncapita_income   1  249.02  249.02  64.622 8.567e-15 ***\nbachelor        1  466.58  466.58 121.082 &lt; 2.2e-16 ***\nResiduals     437 1683.93    3.85                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#example-cdi-model-21-1",
+    "href": "lectures/09-lecture.html#example-cdi-model-21-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.11 Example CDI: Model 21",
+    "text": "4.11 Example CDI: Model 21\n\n\\(SSR(\\beta_2)=249.02\\)\n\\(SSR(\\beta_1|\\beta_2)=466.58\\)\n\\(SSE(\\beta_1, \\beta_2)=1683.93\\)"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#example-cdi-model-12-vs-model-21",
+    "href": "lectures/09-lecture.html#example-cdi-model-12-vs-model-21",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "4.12 Example CDI: Model 12 vs Model 21",
+    "text": "4.12 Example CDI: Model 12 vs Model 21\n\nNote that \\(SSR(\\beta_1, \\beta_2) = SSR(\\beta_1) + SSR(\\beta_2|\\beta_1) = SSR(\\beta_2) + SSR(\\beta_1|\\beta_2)\\)\nThe order of predictors entered in R depends on what hypothesis you are carrying out. We usually arrange the model so that the last coefficient are the ones to be tested."
+  },
+  {
+    "objectID": "lectures/09-lecture.html#model-12-vs-model-12",
+    "href": "lectures/09-lecture.html#model-12-vs-model-12",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.1 Model 12 vs Model 12",
+    "text": "5.1 Model 12 vs Model 12\n\n\nCode\nsummary(model12)\n\n\n\nCall:\nlm(formula = result &lt;- lm(unemployment ~ bachelor + capita_income, \n    data = cdi))\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-4.0534 -1.1657 -0.3001  0.6941 12.8136 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    9.430e+00  4.420e-01  21.334   &lt;2e-16 ***\nbachelor      -1.874e-01  1.703e-02 -11.004   &lt;2e-16 ***\ncapita_income  6.020e-05  3.212e-05   1.874   0.0615 .  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.963 on 437 degrees of freedom\nMultiple R-squared:  0.2982,    Adjusted R-squared:  0.295 \nF-statistic: 92.85 on 2 and 437 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#model-12-vs-model-12-1",
+    "href": "lectures/09-lecture.html#model-12-vs-model-12-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.2 Model 12 vs Model 12",
+    "text": "5.2 Model 12 vs Model 12\n\n\nCode\nsummary(model21)\n\n\n\nCall:\nlm(formula = result &lt;- lm(unemployment ~ capita_income + bachelor, \n    data = cdi))\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-4.0534 -1.1657 -0.3001  0.6941 12.8136 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    9.430e+00  4.420e-01  21.334   &lt;2e-16 ***\ncapita_income  6.020e-05  3.212e-05   1.874   0.0615 .  \nbachelor      -1.874e-01  1.703e-02 -11.004   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.963 on 437 degrees of freedom\nMultiple R-squared:  0.2982,    Adjusted R-squared:  0.295 \nF-statistic: 92.85 on 2 and 437 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#model-12-vs-model-12-2",
+    "href": "lectures/09-lecture.html#model-12-vs-model-12-2",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.3 Model 12 vs Model 12",
+    "text": "5.3 Model 12 vs Model 12\n\n\nCode\nanova(model12)\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    \nbachelor        1  702.05  702.05 182.1910 &lt; 2e-16 ***\ncapita_income   1   13.54   13.54   3.5134 0.06154 .  \nResiduals     437 1683.93    3.85                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nCode\nanova(model21)\n\n\nAnalysis of Variance Table\n\nResponse: unemployment\n               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \ncapita_income   1  249.02  249.02  64.622 8.567e-15 ***\nbachelor        1  466.58  466.58 121.082 &lt; 2.2e-16 ***\nResiduals     437 1683.93    3.85                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#anova-partial-f-test-vs-t-test",
+    "href": "lectures/09-lecture.html#anova-partial-f-test-vs-t-test",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.4 ANOVA (Partial F test) vs t-test",
+    "text": "5.4 ANOVA (Partial F test) vs t-test\n\n\nCode\nmodel1 &lt;- lm(result&lt;-lm(unemployment~bachelor, data=cdi))\nmodel2 &lt;- lm(result&lt;-lm(unemployment~capita_income , data=cdi))"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#partial-f-test-model-12-vs-model-1",
+    "href": "lectures/09-lecture.html#partial-f-test-model-12-vs-model-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.5 Partial F test: Model 12 vs Model 1",
+    "text": "5.5 Partial F test: Model 12 vs Model 1\n\n\nCode\nanova(model1, model12)\n\n\nAnalysis of Variance Table\n\nModel 1: unemployment ~ bachelor\nModel 2: unemployment ~ bachelor + capita_income\n  Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  \n1    438 1697.5                              \n2    437 1683.9  1    13.539 3.5134 0.06154 .\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#partial-f-test-model-21-vs-model-1",
+    "href": "lectures/09-lecture.html#partial-f-test-model-21-vs-model-1",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.6 Partial F test: Model 21 vs Model 1",
+    "text": "5.6 Partial F test: Model 21 vs Model 1\n\n\nCode\nanova(model1, model21)\n\n\nAnalysis of Variance Table\n\nModel 1: unemployment ~ bachelor\nModel 2: unemployment ~ capita_income + bachelor\n  Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  \n1    438 1697.5                              \n2    437 1683.9  1    13.539 3.5134 0.06154 .\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#partial-f-test-model-21-vs-model-2",
+    "href": "lectures/09-lecture.html#partial-f-test-model-21-vs-model-2",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.7 Partial F test: Model 21 vs Model 2",
+    "text": "5.7 Partial F test: Model 21 vs Model 2\n\n\nCode\nanova(model2, model21)\n\n\nAnalysis of Variance Table\n\nModel 1: unemployment ~ capita_income\nModel 2: unemployment ~ capita_income + bachelor\n  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    \n1    438 2150.5                                  \n2    437 1683.9  1    466.58 121.08 &lt; 2.2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#model-12-vs-model-2",
+    "href": "lectures/09-lecture.html#model-12-vs-model-2",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.8 Model 12 vs Model 2",
+    "text": "5.8 Model 12 vs Model 2\n\n\nCode\nanova(model2, model12)\n\n\nAnalysis of Variance Table\n\nModel 1: unemployment ~ capita_income\nModel 2: unemployment ~ bachelor + capita_income\n  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    \n1    438 2150.5                                  \n2    437 1683.9  1    466.58 121.08 &lt; 2.2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#t-test",
+    "href": "lectures/09-lecture.html#t-test",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.9 t-test",
+    "text": "5.9 t-test\n\n\nCode\nsummary(lm(result&lt;-lm(unemployment~bachelor + capita_income, data=cdi)))\n\n\n\nCall:\nlm(formula = result &lt;- lm(unemployment ~ bachelor + capita_income, \n    data = cdi))\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-4.0534 -1.1657 -0.3001  0.6941 12.8136 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    9.430e+00  4.420e-01  21.334   &lt;2e-16 ***\nbachelor      -1.874e-01  1.703e-02 -11.004   &lt;2e-16 ***\ncapita_income  6.020e-05  3.212e-05   1.874   0.0615 .  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.963 on 437 degrees of freedom\nMultiple R-squared:  0.2982,    Adjusted R-squared:  0.295 \nF-statistic: 92.85 on 2 and 437 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "lectures/09-lecture.html#conclusion",
+    "href": "lectures/09-lecture.html#conclusion",
+    "title": "Lec 09: Multiple Linear Regression - SS",
+    "section": "5.10 Conclusion",
+    "text": "5.10 Conclusion\n\nThe partial F-test and the t-test give the same conclusion regarding the significance of individual predictors in the MLR model.\nThe predictor to be test should be the last one(s) entered in the model for the partial F-test.\nBoth tests are based on the same extra sums of squares and assesses the same null hypothesis - after adjusting for other predictors in the model, is the predictor still significant."
+  },
+  {
     "objectID": "lectures/07-lecture.html",
     "href": "lectures/07-lecture.html",
     "title": "Lec 07: Multiple Linear Regression - Introduction",
@@ -1559,5 +1811,264 @@
     "title": "Lec 06: Lack of Fit Test and Data Transformation",
     "section": "5.2 Conclusion",
     "text": "5.2 Conclusion"
+  },
+  {
+    "objectID": "lectures/08-lecture.html",
+    "href": "lectures/08-lecture.html",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLecture 07: Multiple Linear Regression (MLR): least squares estimate.\nThis lecture: MLR inference (CI, t-test, linear functions, ANOVA).\nHeads up: next lecture (Lecture 09): Sums of squares, more on F-tests and ANOVA.\n\n\n\n\n\nMLR: In a multiple linear regression (MLR) model, we have one response variable \\(y\\) and multiple predictor variables \\(X_1, X_2, \\ldots, X_p\\). \\[y= \\beta_0 + \\beta_1 x_1 + \\cdots, \\beta_p x_p + \\epsilon\\]\nFor individual \\(i\\), \\(i=1, \\ldots, n\\), \\[y_i= \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip} + \\epsilon_i\\]\n\n\n\n\n\n\\(y_i\\) is the response variable for individual \\(i\\).\n\\(x_{ij}\\) is the value of predictor variable \\(j\\) for individual \\(i\\).\n\\(\\epsilon_i\\)’s are errors:\n\nThe assumptions on \\(\\epsilon_i\\)’s are the same as those in SLR.\nweaker version: \\(\\epsilon_i\\)’s are independent with mean 0 and constant variance \\(\\sigma^2\\).\nStrong version: \\(\\epsilon_i\\)’s are i.i.d. \\(N(0, \\sigma^2)\\).\n\nThe parameters to be estimated are \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) and \\(\\sigma^2\\).\n\n\n\n\n\nIn matrix form, we have \\[\\begin{bmatrix}y_1 \\\\ y_2 \\\\ \\vdots \\\\ y_n\\end{bmatrix} = \\begin{bmatrix}1 & x_{11} & x_{12} & \\cdots & x_{1p} \\\\ 1 & x_{21} & x_{22} & \\cdots & x_{2p} \\\\ \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_{n1} & x_{n2} & \\cdots & x_{np}\\end{bmatrix} \\begin{bmatrix}\\beta_0 \\\\ \\beta_1 \\\\ \\beta_2 \\\\ \\vdots \\\\ \\beta_p\\end{bmatrix} + \\begin{bmatrix}\\epsilon_1 \\\\ \\epsilon_2 \\\\ \\vdots \\\\ \\epsilon_n\\end{bmatrix}\\]\nMore compactly, \\[\\mathbf{y} = \\mathbf{X} \\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\]\nAssumptions: weaker version: \\(E(\\boldsymbol{\\epsilon}) = \\mathbf{0}\\) and \\(Var(\\boldsymbol{\\epsilon}) = \\sigma^2 \\mathbf{I}_n\\); strong version: \\(\\boldsymbol{\\epsilon} \\sim N(\\mathbf{0}, \\sigma^2 \\mathbf{I}_n)\\).\n\n\n\n\n\nFor general \\(p\\), the normal equations can be written as: \\[\\mathbf{X}^T \\mathbf{X} \\boldsymbol{\\beta} = \\mathbf{X}^T \\mathbf{y}\\]\n\n\\[\\hat{\\boldsymbol{\\beta}} =(\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T \\mathbf{y}\\]\n\n\n\n\nThe fitted values can be computed as: \\[\\hat{\\mathbf{y}}\n=\\mathbf{X} \\hat{\\boldsymbol{\\beta}} =\\textcolor{red} {\\mathbf{X} (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T} \\mathbf{y}=\\textcolor{red}{\\mathbf H} \\mathbf y\\]\nThe hat matrix \\(\\mathbf{H} = \\mathbf{X} (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T\\) is a projection matrix, i.e.,\n\n\\(\\mathbf{H} = \\mathbf{H}^T\\) (symmetric) and\n\\(\\mathbf{H}^2 = \\mathbf{H}\\) (idempotent).\n\nThe residuals can be computed as: \\[\\hat{\\boldsymbol{\\epsilon}}\n=\\mathbf{y} - \\hat{\\mathbf{y}} = \\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}}= (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}\\]\n\\(\\mathbf{I}_n - \\mathbf{H}\\) is also a projection matrix.\n\n\n\n\n\nThe sum of squared errors (SSE) can be computed as: \\[\\begin{align*}\nSSE & = \\sum_{i=1}^n (y_i -\\hat y_i)^2 = \\hat{\\boldsymbol{\\epsilon}}^T \\hat{\\boldsymbol{\\epsilon}} = (\\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}})^T (\\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}})\\\\\n&=[(\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}]^T (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}\\\\\n&=\\mathbf{y}^T (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y} \\\\\n\\end{align*}\\]\nThe mean squared error (MSE) is given by: \\[MSE = \\frac{SSE}{n-(p+1)}\\] where \\(n-(p+1)\\) is the degrees of freedom (d.f.) for error.\nAn unbiased estimator of \\(\\sigma^2\\) is given by \\(s^2=\\hat{\\sigma}^2 = MSE\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#review-lecture-01-06",
+    "href": "lectures/08-lecture.html#review-lecture-01-06",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLecture 07: Multiple Linear Regression (MLR): least squares estimate.\nThis lecture: MLR inference (CI, t-test, linear functions, ANOVA).\nHeads up: next lecture (Lecture 09): Sums of squares, more on F-tests and ANOVA."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#lecture-07",
+    "href": "lectures/08-lecture.html#lecture-07",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "MLR: In a multiple linear regression (MLR) model, we have one response variable \\(y\\) and multiple predictor variables \\(X_1, X_2, \\ldots, X_p\\). \\[y= \\beta_0 + \\beta_1 x_1 + \\cdots, \\beta_p x_p + \\epsilon\\]\nFor individual \\(i\\), \\(i=1, \\ldots, n\\), \\[y_i= \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip} + \\epsilon_i\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#mlr-notations-and-assumptions",
+    "href": "lectures/08-lecture.html#mlr-notations-and-assumptions",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "\\(y_i\\) is the response variable for individual \\(i\\).\n\\(x_{ij}\\) is the value of predictor variable \\(j\\) for individual \\(i\\).\n\\(\\epsilon_i\\)’s are errors:\n\nThe assumptions on \\(\\epsilon_i\\)’s are the same as those in SLR.\nweaker version: \\(\\epsilon_i\\)’s are independent with mean 0 and constant variance \\(\\sigma^2\\).\nStrong version: \\(\\epsilon_i\\)’s are i.i.d. \\(N(0, \\sigma^2)\\).\n\nThe parameters to be estimated are \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) and \\(\\sigma^2\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#matrix-form",
+    "href": "lectures/08-lecture.html#matrix-form",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "In matrix form, we have \\[\\begin{bmatrix}y_1 \\\\ y_2 \\\\ \\vdots \\\\ y_n\\end{bmatrix} = \\begin{bmatrix}1 & x_{11} & x_{12} & \\cdots & x_{1p} \\\\ 1 & x_{21} & x_{22} & \\cdots & x_{2p} \\\\ \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & x_{n1} & x_{n2} & \\cdots & x_{np}\\end{bmatrix} \\begin{bmatrix}\\beta_0 \\\\ \\beta_1 \\\\ \\beta_2 \\\\ \\vdots \\\\ \\beta_p\\end{bmatrix} + \\begin{bmatrix}\\epsilon_1 \\\\ \\epsilon_2 \\\\ \\vdots \\\\ \\epsilon_n\\end{bmatrix}\\]\nMore compactly, \\[\\mathbf{y} = \\mathbf{X} \\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\]\nAssumptions: weaker version: \\(E(\\boldsymbol{\\epsilon}) = \\mathbf{0}\\) and \\(Var(\\boldsymbol{\\epsilon}) = \\sigma^2 \\mathbf{I}_n\\); strong version: \\(\\boldsymbol{\\epsilon} \\sim N(\\mathbf{0}, \\sigma^2 \\mathbf{I}_n)\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#normal-equations-matrix-form",
+    "href": "lectures/08-lecture.html#normal-equations-matrix-form",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "For general \\(p\\), the normal equations can be written as: \\[\\mathbf{X}^T \\mathbf{X} \\boldsymbol{\\beta} = \\mathbf{X}^T \\mathbf{y}\\]\n\n\\[\\hat{\\boldsymbol{\\beta}} =(\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T \\mathbf{y}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#fitted-values-and-residules",
+    "href": "lectures/08-lecture.html#fitted-values-and-residules",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "The fitted values can be computed as: \\[\\hat{\\mathbf{y}}\n=\\mathbf{X} \\hat{\\boldsymbol{\\beta}} =\\textcolor{red} {\\mathbf{X} (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T} \\mathbf{y}=\\textcolor{red}{\\mathbf H} \\mathbf y\\]\nThe hat matrix \\(\\mathbf{H} = \\mathbf{X} (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T\\) is a projection matrix, i.e.,\n\n\\(\\mathbf{H} = \\mathbf{H}^T\\) (symmetric) and\n\\(\\mathbf{H}^2 = \\mathbf{H}\\) (idempotent).\n\nThe residuals can be computed as: \\[\\hat{\\boldsymbol{\\epsilon}}\n=\\mathbf{y} - \\hat{\\mathbf{y}} = \\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}}= (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}\\]\n\\(\\mathbf{I}_n - \\mathbf{H}\\) is also a projection matrix."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#sse-and-mse",
+    "href": "lectures/08-lecture.html#sse-and-mse",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "",
+    "text": "The sum of squared errors (SSE) can be computed as: \\[\\begin{align*}\nSSE & = \\sum_{i=1}^n (y_i -\\hat y_i)^2 = \\hat{\\boldsymbol{\\epsilon}}^T \\hat{\\boldsymbol{\\epsilon}} = (\\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}})^T (\\mathbf{y} - \\mathbf{X}\\hat{\\boldsymbol{\\beta}})\\\\\n&=[(\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}]^T (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y}\\\\\n&=\\mathbf{y}^T (\\mathbf{I}_n - \\mathbf{H}) \\mathbf{y} \\\\\n\\end{align*}\\]\nThe mean squared error (MSE) is given by: \\[MSE = \\frac{SSE}{n-(p+1)}\\] where \\(n-(p+1)\\) is the degrees of freedom (d.f.) for error.\nAn unbiased estimator of \\(\\sigma^2\\) is given by \\(s^2=\\hat{\\sigma}^2 = MSE\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#distribution-of-hatbeta_j",
+    "href": "lectures/08-lecture.html#distribution-of-hatbeta_j",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.1 Distribution of \\(\\hat{\\beta}_j\\)",
+    "text": "2.1 Distribution of \\(\\hat{\\beta}_j\\)\n\nUnder the strong version of the model assumptions, i.e., \\(\\boldsymbol{\\epsilon}\\sim N(\\mathbf{0}, \\sigma^2 \\mathbf{I}_n)\\), or equivalently, \\(\\epsilon_i\\)’s are i.i.d. \\(N(0, \\sigma^2)\\), we have:\n\n\\[\\hat{\\boldsymbol{\\beta}} \\sim N(\\boldsymbol{\\beta}, \\sigma^2 (\\mathbf{X}^T \\mathbf{X})^{-1})\\]\n\nThis is because a linear function of a multivariate normal random vector is still a multivariate normal random vector.\nThe variance-covariance matrix of \\(\\hat{\\boldsymbol{\\beta}}\\) is given by: \\[Var(\\hat{\\boldsymbol{\\beta}}) = \\sigma^2 (\\mathbf{X}^T \\mathbf{X})^{-1}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta",
+    "href": "lectures/08-lecture.html#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.2 The Estimated Variance-Covariance Matrix of \\(\\hat{\\boldsymbol{\\beta}}\\)",
+    "text": "2.2 The Estimated Variance-Covariance Matrix of \\(\\hat{\\boldsymbol{\\beta}}\\)\n\nAn estimator of the variance-covariance matrix of \\(\\hat{\\boldsymbol{\\beta}}\\) is given by: \\[\\widehat{Var}(\\hat{\\boldsymbol{\\beta}}) = s^2 (\\mathbf{X}^T \\mathbf{X})^{-1}\\] where \\(s^2 = MSE\\).\nFor example, in the height data set, the fitted Model is \\[\\hat{c.height} = 16.26 + 0.29 \\cdot f.height + 0.46 \\cdot m.height\\]\nThe estimated variance-covariance matrix of \\(\\hat{\\boldsymbol{\\beta}}\\) can be obtained using the vcov function in R.\n\n\n\nCode\nheight.data &lt;- read.csv(\"../data/height_data.csv\")\nheight.lm= lm(c.height ~ f.height + m.height, data=height.data)\nvcov(height.lm)\n\n\n            (Intercept)    f.height    m.height\n(Intercept) 200.4619078 -0.88888954 -2.18030362\nf.height     -0.8888895  0.02274562 -0.01083111\nm.height     -2.1803036 -0.01083111  0.04612353"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1",
+    "href": "lectures/08-lecture.html#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.3 The Estimated Variance-Covariance Matrix of \\(\\hat{\\boldsymbol{\\beta}}\\)",
+    "text": "2.3 The Estimated Variance-Covariance Matrix of \\(\\hat{\\boldsymbol{\\beta}}\\)\n\nLet’s verify the calculation of the estimated variance-covariance matrix of \\(\\hat{\\boldsymbol{\\beta}}\\) using the formula.\n\n\n\nCode\nX &lt;- model.matrix(height.lm)\nXtX_inv &lt;- solve(t(X) %*% X)\ns2 &lt;- summary(height.lm)$sigma^2\nvcov_manual &lt;- s2 * XtX_inv\nvcov_manual\n\n\n            (Intercept)    f.height    m.height\n(Intercept) 200.4619078 -0.88888954 -2.18030362\nf.height     -0.8888895  0.02274562 -0.01083111\nm.height     -2.1803036 -0.01083111  0.04612353"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2",
+    "href": "lectures/08-lecture.html#the-estimated-variance-covariance-matrix-of-hatboldsymbolbeta-2",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.4 The Estimated Variance-Covariance Matrix of \\(\\hat{\\boldsymbol{\\beta}}\\)",
+    "text": "2.4 The Estimated Variance-Covariance Matrix of \\(\\hat{\\boldsymbol{\\beta}}\\)\n\nBased on the var-cov matrix, we can extract the estimated variances and covariances of the regression parameters. For example,\n\nthe estimated variances are on the diagonal of the matrix.\nthe estimated variance of a linear combination of regression parameters can be computed using the var-cov matrix."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#t-test-for-beta_j",
+    "href": "lectures/08-lecture.html#t-test-for-beta_j",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.5 t-test For \\(\\beta_j\\)",
+    "text": "2.5 t-test For \\(\\beta_j\\)\n\nThe LSE \\(\\hat{\\beta}_j\\) follows a normal distribution: \\[\\hat{\\beta}_j \\sim N(\\beta_j, \\sigma^2 [(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj})\\] where \\([(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}\\) is the \\(j\\)-th diagonal element of the matrix \\((\\mathbf{X}^T \\mathbf{X})^{-1}\\).\nAn estimator of the variance of \\(\\hat{\\beta}_j\\) is given by: \\[\\widehat{Var}(\\hat{\\beta}_j) = s^2 [(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}\\] where \\(s^2 = MSE\\).\nThe standard error (SE) of \\(\\hat{\\beta}_j\\) is given by: \\[SE(\\hat{\\beta}_j) = s \\sqrt{ [(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#derive-t-test-for-beta_j",
+    "href": "lectures/08-lecture.html#derive-t-test-for-beta_j",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.6 Derive t-test For \\(\\beta_j\\)",
+    "text": "2.6 Derive t-test For \\(\\beta_j\\)\n\nIt can be shown that \\(\\hat\\beta_j\\) and \\(s^2\\) are independent, and \\[\\frac{(n-(p+1))s^2}{\\sigma^2} = \\frac{SSE}{\\sigma^2} \\sim \\chi^2_{n-(p+1)}\\]\nTherefore, we have \\[\\frac{\\hat{\\beta}_j - \\beta_j}{SE(\\hat{\\beta}_j)} = \\frac{\\hat{\\beta}_j - \\beta_j}{\\sqrt{\\sigma^2 [(\\mathbf{X}^T \\mathbf{X})^{-1}]_{jj}}} \\bigg/ \\sqrt{\\frac{(n-(p+1))s^2}{\\sigma^2 (n-(p+1))}} \\sim t_{n-(p+1)}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#t-test-for-beta_j-1",
+    "href": "lectures/08-lecture.html#t-test-for-beta_j-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.7 t-test For \\(\\beta_j\\)",
+    "text": "2.7 t-test For \\(\\beta_j\\)\n\nTo test the significance of each predictor variable, we can use the t-test: \\[t = \\frac{\\hat{\\beta}_j - \\beta_{j0}}{SE(\\hat{\\beta}_j)}\\] where \\(\\beta_{j0}\\) is the hypothesized value of \\(\\beta_j\\) under the null hypothesis.\nUnder the null hypothesis \\(H_0: \\beta_j = \\beta_{j0}\\), the test statistic follows a t-distribution with \\(n-(p+1)\\) degrees of freedom: \\[t \\sim t_{n-(p+1)}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-t-statistic-for-beta_f",
+    "href": "lectures/08-lecture.html#example-t-statistic-for-beta_f",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.8 Example: t-statistic for \\(\\beta_f\\)",
+    "text": "2.8 Example: t-statistic for \\(\\beta_f\\)\n\nIn the height data set, to test \\(H_0: \\beta_f = 0\\) vs. \\(H_a: \\beta_f \\neq 0\\), we have\n\n\n\nCode\nbeta_f_hat &lt;- coef(height.lm)[\"f.height\"]\nse_beta_f &lt;- summary(height.lm)$coefficients[\"f.height\", \"Std. Error\"]\nbeta_f_0 &lt;- 0\nt_stat &lt;- (beta_f_hat - beta_f_0) / se_beta_f\nt_stat\n\n\nf.height \n1.955048 \n\n\nCode\n#two-sided p-value\np_value &lt;- 2 * pt(-abs(t_stat), df = height.lm$df.residual)\np_value\n\n\n  f.height \n0.05653888"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-t-statistic-for-beta_f-1",
+    "href": "lectures/08-lecture.html#example-t-statistic-for-beta_f-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.9 Example: t-statistic for \\(\\beta_f\\)",
+    "text": "2.9 Example: t-statistic for \\(\\beta_f\\)\n\nCompare the result to the summary output:\n\n\n\nCode\nsummary(height.lm)\n\n\n\nCall:\nlm(formula = c.height ~ f.height + m.height, data = height.data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-6.0987 -2.8324 -0.0332  2.2544  7.1131 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)  \n(Intercept)  16.2580    14.1585   1.148   0.2567  \nf.height      0.2949     0.1508   1.955   0.0565 .\nm.height      0.4628     0.2148   2.155   0.0363 *\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.568 on 47 degrees of freedom\nMultiple R-squared:  0.2128,    Adjusted R-squared:  0.1793 \nF-statistic: 6.352 on 2 and 47 DF,  p-value: 0.003615"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-ci-for-beta_f",
+    "href": "lectures/08-lecture.html#example-ci-for-beta_f",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "2.10 Example: CI for \\(\\beta_f\\)",
+    "text": "2.10 Example: CI for \\(\\beta_f\\)\n\nA \\((1-\\alpha)100\\%\\) confidence interval for \\(\\beta_j\\) is given by: \\[\\hat{\\beta}_j \\pm t_{\\alpha/2, n-(p+1)} \\cdot SE(\\hat{\\beta}_j)\\] where \\(t_{\\alpha/2, n-(p+1)}\\) is the \\((1-\\alpha/2)\\) quantile of the t-distribution with \\(n-(p+1)\\) degrees of freedom.\n\n\n\nCode\nalpha &lt;- 0.05\nt_alpha_2 &lt;- qt(1 - alpha / 2, df = height.lm$df.residual)\nci_lower &lt;- beta_f_hat - t_alpha_2 * se_beta_f\nci_upper &lt;- beta_f_hat + t_alpha_2 * se_beta_f\nci &lt;- c(ci_lower, ci_upper)\nci\n\n\n    f.height     f.height \n-0.008550141  0.598257182 \n\n\nCode\n# compare to confint function\nconfint(height.lm, \"f.height\", level = 1 - alpha)\n\n\n                2.5 %    97.5 %\nf.height -0.008550141 0.5982572"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#inference-of-a-linear-combination-of-betas",
+    "href": "lectures/08-lecture.html#inference-of-a-linear-combination-of-betas",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.1 Inference of a linear combination of \\(\\beta\\)’s",
+    "text": "3.1 Inference of a linear combination of \\(\\beta\\)’s\n\nThe mean response at given predictor values is a linear combination of \\(\\beta\\)’s. We have seen that in SLR.\nIn the height example, one interesting question is whether the effect of father’s height is the same as that of mother’s height on child’s height, i.e., testing \\(H_0: \\beta_f = \\beta_m\\) vs. \\(H_a: \\beta_f \\neq \\beta_m\\).\nThis is equivalent to testing \\(H_0: \\beta_f - \\beta_m = 0\\) vs. \\(H_a: \\beta_f - \\beta_m \\neq 0\\).\nAn obvious estimate of \\(\\beta_f - \\beta_m\\) is \\(\\hat{\\beta}_f - \\hat{\\beta}_m\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#variance-of-a-linear-combination-of-betas",
+    "href": "lectures/08-lecture.html#variance-of-a-linear-combination-of-betas",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.2 Variance of A Linear Combination of \\(\\beta\\)’s",
+    "text": "3.2 Variance of A Linear Combination of \\(\\beta\\)’s\n\nIt can be ``standardized’’ to form a t-test statistic if we can compute the standard error of \\(\\hat{\\beta}_f - \\hat{\\beta}_m\\).\nThe variance of \\(\\hat{\\beta}_f - \\hat{\\beta}_m\\) can be computed using the var-cov matrix of \\(\\hat{\\boldsymbol{\\beta}}\\). Specifically, \\[\\widehat{Var}(\\hat{\\beta}_f - \\hat{\\beta}_m) = \\widehat{Var}(\\hat{\\beta}_f) + \\widehat{Var}(\\hat{\\beta}_m) - 2 \\widehat{Cov}(\\hat{\\beta}_f, \\hat{\\beta}_m)\\]\n\n\n\nCode\nvcov(height.lm)\n\n\n            (Intercept)    f.height    m.height\n(Intercept) 200.4619078 -0.88888954 -2.18030362\nf.height     -0.8888895  0.02274562 -0.01083111\nm.height     -2.1803036 -0.01083111  0.04612353"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-se-for-beta_f---beta_m",
+    "href": "lectures/08-lecture.html#example-se-for-beta_f---beta_m",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.3 Example: SE for \\(\\beta_f - \\beta_m\\)",
+    "text": "3.3 Example: SE for \\(\\beta_f - \\beta_m\\)\n\nThus, the estimated variance of \\(\\hat{\\beta}_f - \\hat{\\beta}_m\\) is given by:\n\n\\[\\widehat{Var}(\\hat{\\beta}_f - \\hat{\\beta}_m) = 0.02274562 + 0.04612353 - 2*(-0.01083111)=0.09053137\\]\n\nThe standard error (SE) of \\(\\hat{\\beta}_f - \\hat{\\beta}_m\\) is given by: \\[SE(\\hat{\\beta}_f - \\hat{\\beta}_m) = \\sqrt{Var(\\hat{\\beta}_f - \\hat{\\beta}_m)}=\\sqrt{0.09053137}=0.3008843\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-t-test-for-beta_f---beta_m",
+    "href": "lectures/08-lecture.html#example-t-test-for-beta_f---beta_m",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.4 Example: t-test for \\(\\beta_f - \\beta_m\\)",
+    "text": "3.4 Example: t-test for \\(\\beta_f - \\beta_m\\)\n\nThe t-test statistic is given by: \\[t = \\frac{(\\hat{\\beta}_f - \\hat{\\beta}_m) - 0}{SE(\\hat{\\beta}_f - \\hat{\\beta}_m)}=\\frac{0.2949-0.4628}{0.3008843}=-0.5580218\\]\nThe p-value can be found using the t-distribution with \\(n-(p+1)=n-3\\) degrees of freedom."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-ci-for-beta_f---beta_m",
+    "href": "lectures/08-lecture.html#example-ci-for-beta_f---beta_m",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.5 Example: CI for \\(\\beta_f - \\beta_m\\)",
+    "text": "3.5 Example: CI for \\(\\beta_f - \\beta_m\\)\n\nA \\((1-\\alpha)100\\%\\) confidence interval for \\(\\beta_f - \\beta_m\\) is given by: \\[\\hat{\\beta}_f - \\hat{\\beta}_m \\pm t_{\\alpha/2, n-(p+1)} \\cdot SE(\\hat{\\beta}_f - \\hat{\\beta}_m)\\] where \\(t_{\\alpha/2, n-(p+1)}\\) is the \\((1-\\alpha/2)\\) quantile of the t-distribution with \\(n-(p+1)\\) degrees of freedom.\n\n\\[CI: (0.2949 \\pm 2.011741 \\cdot 0.3008843) = (-0.31, 1.07)\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#t-test-for-a-linear-combination-of-betas",
+    "href": "lectures/08-lecture.html#t-test-for-a-linear-combination-of-betas",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.6 t-test for a linear combination of \\(\\beta\\)’s",
+    "text": "3.6 t-test for a linear combination of \\(\\beta\\)’s\n\nLet \\(L =c_0 \\beta_0+ c_1 \\beta_1 + c_2 \\beta_2 + \\cdots + c_p \\beta_p\\) be a linear combination of regression parameters.\nAn estimator of \\(L\\) is given by: \\[\\hat{L} = c_0\\beta_0 + c_1 \\hat{\\beta}_1 + c_2 \\hat{\\beta}_2 + \\cdots + c_p \\hat{\\beta}_p\\]\nThe variance of \\(\\hat{L}\\) can be computed using the var-cov matrix of \\(\\hat{\\boldsymbol{\\beta}}\\): \\[\\widehat{Var}(\\hat{L}) = \\mathbf{c}^T \\widehat{Var}(\\hat{\\boldsymbol{\\beta}}) \\mathbf{c} = s^2 \\mathbf{c}^T (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{c}\\] where \\(\\mathbf{c} = [c_0, c_1, c_2, \\ldots, c_p]^T\\).\nThe standard error (SE) of \\(\\hat{L}\\) is given by: \\[SE(\\hat{L}) = s \\sqrt{\\mathbf{c}^T (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{c}}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#t-test-for-a-linear-combination-of-betas-1",
+    "href": "lectures/08-lecture.html#t-test-for-a-linear-combination-of-betas-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.7 t-test for a linear combination of \\(\\beta\\)’s",
+    "text": "3.7 t-test for a linear combination of \\(\\beta\\)’s\n\nTo test \\(H_0: L = l_0\\) vs. \\(H_a: L \\neq l_0\\), we can use the t-test: \\[t = \\frac{\\hat{L} - l_0}{SE(\\hat{L})}\\] where \\(l_0\\) is the hypothesized value of \\(L\\) under the null hypothesis.\nUnder the null hypothesis \\(H_0: L = l_0\\), the test statistic follows a t-distribution with \\(n-(p+1)\\) degrees of freedom: \\[t \\sim t_{n-(p+1)}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-t-test-for-beta_f---beta_m-1",
+    "href": "lectures/08-lecture.html#example-t-test-for-beta_f---beta_m-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "3.8 Example: t-test for \\(\\beta_f - \\beta_m\\)",
+    "text": "3.8 Example: t-test for \\(\\beta_f - \\beta_m\\)\n\nIn the height data set, to test \\(H_0: \\beta_f - \\beta_m = 0\\) vs. \\(H_a: \\beta_f - \\beta_m \\neq 0\\), we have\n\n\n\nCode\nbeta_f_hat &lt;- coef(height.lm)[\"f.height\"]\nbeta_m_hat &lt;- coef(height.lm)[\"m.height\"]\nse_beta_f &lt;- summary(height.lm)$coefficients[\"f.height\", \"Std. Error\"]\nse_beta_m &lt;- summary(height.lm)$coefficients[\"m.height\", \"Std. Error\"]\ncov_beta_fm &lt;- vcov(height.lm)[\"f.height\", \"m.height\"]\nbeta_diff_hat &lt;- beta_f_hat - beta_m_hat\nse_beta_diff &lt;- sqrt(se_beta_f^2 + se_beta_m^2 - 2 * cov_beta_fm)\nbeta_diff_0 &lt;- 0\nt_stat &lt;- (beta_diff_hat - beta_diff_0) / se_beta_diff\nt_stat\n\n\n  f.height \n-0.5582448 \n\n\nCode\n#two-sided p-value\np_value &lt;- 2 * pt(-abs(t_stat), df = height.lm$df.residual)\np_value\n\n\nf.height \n0.579327"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-heights-full-model",
+    "href": "lectures/08-lecture.html#example-heights-full-model",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "5.1 Example: Heights: Full Model",
+    "text": "5.1 Example: Heights: Full Model\n\nTo find reduced model under \\(H_0: \\beta_f = \\beta_m\\), we will re-parameterize the full model.\nThe full model is \\[c.height = \\beta_0 + \\beta_f \\cdot f.height + \\beta_m \\cdot m.height + \\epsilon\\] This can be rewritten (re-parameterized) as: \\[\\begin{align*}\nc.height & = \\beta_0 + \\beta_f \\cdot f.height + \\beta_m \\cdot m.height + \\epsilon \\\\\n& = \\beta_0 + \\beta_f \\cdot f.height + \\beta_f \\cdot m.height + (\\beta_m - \\beta_f) \\cdot m.height + \\epsilon \\\\\n& = \\beta_0 + \\beta_f (f.height + m.height) + \\beta_d \\cdot m.height + \\epsilon\n\\end{align*}\\] where \\(\\beta_d = \\beta_m - \\beta_f\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-heights-reparameterized-full-model",
+    "href": "lectures/08-lecture.html#example-heights-reparameterized-full-model",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "5.2 Example: Heights: Reparameterized Full Model",
+    "text": "5.2 Example: Heights: Reparameterized Full Model\n\n\nCode\nheight.lm.reparam= lm(c.height ~ I(f.height + m.height) + m.height, data=height.data)\nsummary(height.lm.reparam)\n\n\n\nCall:\nlm(formula = c.height ~ I(f.height + m.height) + m.height, data = height.data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-6.0987 -2.8324 -0.0332  2.2544  7.1131 \n\nCoefficients:\n                       Estimate Std. Error t value Pr(&gt;|t|)  \n(Intercept)             16.2580    14.1585   1.148   0.2567  \nI(f.height + m.height)   0.2949     0.1508   1.955   0.0565 .\nm.height                 0.1680     0.3009   0.558   0.5793  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.568 on 47 degrees of freedom\nMultiple R-squared:  0.2128,    Adjusted R-squared:  0.1793 \nF-statistic: 6.352 on 2 and 47 DF,  p-value: 0.003615"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-heights-reduced-model",
+    "href": "lectures/08-lecture.html#example-heights-reduced-model",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "5.3 Example: Heights: Reduced Model",
+    "text": "5.3 Example: Heights: Reduced Model\n\nThe re-parameterized full model is: \\[\\begin{align*}\nc.height & = \\beta_0 + \\beta_f (f.height + m.height) + \\beta_d \\cdot m.height + \\epsilon\n\\end{align*}\\] where \\(\\beta_d = \\beta_m - \\beta_f\\).\nUnder \\(H_0: \\beta_f = \\beta_m\\), we have \\(\\beta_d = 0\\). Thus, the reduced model is: \\[c.height = \\beta_0 + \\beta_f (f.height + m.height) + \\epsilon\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-heights-reduced-model-in-r",
+    "href": "lectures/08-lecture.html#example-heights-reduced-model-in-r",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "5.4 Example: Heights: Reduced Model in R",
+    "text": "5.4 Example: Heights: Reduced Model in R\n\n\nCode\nheight.data &lt;- read.csv(\"../data/height_data.csv\")\nheight.lm.reduced= lm(c.height ~ I(f.height + m.height), data=height.data)\nsummary(height.lm.reduced)\n\n\n\nCall:\nlm(formula = c.height ~ I(f.height + m.height), data = height.data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-6.3015 -2.8019  0.0952  2.3054  7.1330 \n\nCoefficients:\n                       Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)             18.6541    13.3951   1.393 0.170158    \nI(f.height + m.height)   0.3571     0.1007   3.546 0.000885 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.542 on 48 degrees of freedom\nMultiple R-squared:  0.2076,    Adjusted R-squared:  0.1911 \nF-statistic: 12.57 on 1 and 48 DF,  p-value: 0.000885"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-heights-reduced-model-in-r-1",
+    "href": "lectures/08-lecture.html#example-heights-reduced-model-in-r-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "5.5 Example: Heights: Reduced Model in R",
+    "text": "5.5 Example: Heights: Reduced Model in R\n\nWe can also compare the two models using ANOVA\n\n\n\nCode\nheight.lm.full= lm(c.height ~ f.height + m.height, data=height.data)\nheight.lm.reduced= lm(c.height ~ I(f.height + m.height), data=height.data)\nanova(height.lm.reduced, height.lm.full)\n\n\nAnalysis of Variance Table\n\nModel 1: c.height ~ I(f.height + m.height)\nModel 2: c.height ~ f.height + m.height\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1     48 602.35                           \n2     47 598.39  1    3.9677 0.3116 0.5793"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#anova-table-for-mlr-1",
+    "href": "lectures/08-lecture.html#anova-table-for-mlr-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "6.1 ANOVA Table for MLR",
+    "text": "6.1 ANOVA Table for MLR\n\nThe ANOVA table for MLR is similar to that for SLR, with the following differences:\n\nThe d.f. for regression is \\(p\\), the number of predictor variables.\nThe d.f. for error is \\(n-(p+1)\\), where \\(n\\) is the number of observations.\nThe total d.f. is still \\(n-1\\).\n\nThe F-statistic is given by: \\[F = \\frac{MSR}{MSE} = \\frac{SSR/p}{SSE/(n-(p+1))}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#the-full-model",
+    "href": "lectures/08-lecture.html#the-full-model",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "6.2 The Full Model",
+    "text": "6.2 The Full Model\n\nThe full model is: \\[y_i = \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip} + \\epsilon_i\\]\nThe alternative hypothesis for the overall F-test in MLR is: \\[H_a: \\text{at least one } \\beta_j \\neq 0, j=1, 2, \\ldots, p\\]\nWe denote the sum of squared errors (SSE) for the full model as \\(SSE\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#the-reduced-model",
+    "href": "lectures/08-lecture.html#the-reduced-model",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "6.3 The Reduced Model",
+    "text": "6.3 The Reduced Model\n\nThe null hypothesis for the overall F-test in MLR is: \\[H_0: \\beta_1 = \\beta_2 = \\cdots = \\beta_p = 0\\]\nThe reduced model under the null hypothesis is: \\[y_i = \\beta_0 + \\epsilon_i\\]\nThe sum of squares errors (SSE) for the reduced model is denoted as \\(\\sum_{i=1}^n (y_i -\\bar y)^2\\), which is the \\(SST\\)."
+  },
+  {
+    "objectID": "lectures/08-lecture.html#derive-the-f-statistic-for-mlr",
+    "href": "lectures/08-lecture.html#derive-the-f-statistic-for-mlr",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "6.4 Derive the F-statistic for MLR",
+    "text": "6.4 Derive the F-statistic for MLR\n\nSimilar to SLR, we define \\(SSR=SST-SSE\\).\nThe F-statistic tests the following hypotheses: \\[H_0: \\beta_1 = \\beta_2 = \\cdots = \\beta_p = 0\\] vs \\[H_a: \\text{at least one } \\beta_j \\neq 0, j=1, 2, \\ldots, p\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#derive-the-f-statistic-for-mlr-1",
+    "href": "lectures/08-lecture.html#derive-the-f-statistic-for-mlr-1",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "6.5 Derive the F-statistic for MLR",
+    "text": "6.5 Derive the F-statistic for MLR\n\nUnder the strong version of the model assumptions, we have: \\[\\frac{SSR/p}{\\sigma^2} \\overset{H_0:}\\sim \\chi^2_{p}\\] and \\[\\frac{SSE/\\sigma^2}{n-(p+1)} \\sim \\chi^2_{n-(p+1)}\\]\nSince \\(SSR\\) and \\(SSE\\) are independent, we have \\[F = \\frac{(SSR/p)/\\sigma^2}{(SSE/(n-(p+1)))/\\sigma^2} \\sim F_{p, n-(p+1)}\\]"
+  },
+  {
+    "objectID": "lectures/08-lecture.html#example-heights-anova-table",
+    "href": "lectures/08-lecture.html#example-heights-anova-table",
+    "title": "Lec 08: Multiple Linear Regression - Inference",
+    "section": "6.6 Example: Heights: ANOVA Table",
+    "text": "6.6 Example: Heights: ANOVA Table\n\n\nCode\nheight.lm.reduced= lm(c.height ~ 1, data=height.data)\nanova(height.lm, height.lm.reduced)\n\n\nAnalysis of Variance Table\n\nModel 1: c.height ~ f.height + m.height\nModel 2: c.height ~ 1\n  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   \n1     47 598.39                                \n2     49 760.14 -2   -161.75 6.3524 0.003615 **\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   }
 ]

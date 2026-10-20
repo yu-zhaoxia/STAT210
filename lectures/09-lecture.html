@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 09: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 09: Multiple Linear Regression - SS – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,70 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">1</span> Review</a>
+  <ul class="collapse">
+  <li><a href="#lectures-01-09" id="toc-lectures-01-09" class="nav-link" data-scroll-target="#lectures-01-09"><span class="header-section-number">1.1</span> Lectures 01-09</a></li>
+  </ul></li>
+  <li><a href="#overall-f-test" id="toc-overall-f-test" class="nav-link" data-scroll-target="#overall-f-test"><span class="header-section-number">2</span> Overall F-test</a>
+  <ul class="collapse">
+  <li><a href="#f-test-for-the-overall-significance-of-mlr" id="toc-f-test-for-the-overall-significance-of-mlr" class="nav-link" data-scroll-target="#f-test-for-the-overall-significance-of-mlr"><span class="header-section-number">2.1</span> F-test for the Overall Significance of MLR</a></li>
+  <li><a href="#the-full-model" id="toc-the-full-model" class="nav-link" data-scroll-target="#the-full-model"><span class="header-section-number">2.2</span> The Full Model</a></li>
+  <li><a href="#the-reduced-model" id="toc-the-reduced-model" class="nav-link" data-scroll-target="#the-reduced-model"><span class="header-section-number">2.3</span> The Reduced Model</a></li>
+  <li><a href="#the-difference-in-fit-between-full-and-reduced-models" id="toc-the-difference-in-fit-between-full-and-reduced-models" class="nav-link" data-scroll-target="#the-difference-in-fit-between-full-and-reduced-models"><span class="header-section-number">2.4</span> The Difference in Fit between Full and Reduced Models</a></li>
+  <li><a href="#the-f-statistic-for-mlr" id="toc-the-f-statistic-for-mlr" class="nav-link" data-scroll-target="#the-f-statistic-for-mlr"><span class="header-section-number">2.5</span> The F-statistic for MLR</a></li>
+  <li><a href="#the-distribution-of-the-f-statistic" id="toc-the-distribution-of-the-f-statistic" class="nav-link" data-scroll-target="#the-distribution-of-the-f-statistic"><span class="header-section-number">2.6</span> The Distribution of the F-statistic</a></li>
+  </ul></li>
+  <li><a href="#partial-f-tests" id="toc-partial-f-tests" class="nav-link" data-scroll-target="#partial-f-tests"><span class="header-section-number">3</span> Partial F-tests</a>
+  <ul class="collapse">
+  <li><a href="#motivating-example-cdi" id="toc-motivating-example-cdi" class="nav-link" data-scroll-target="#motivating-example-cdi"><span class="header-section-number">3.1</span> Motivating Example: CDI</a></li>
+  <li><a href="#cdi-example" id="toc-cdi-example" class="nav-link" data-scroll-target="#cdi-example"><span class="header-section-number">3.2</span> CDI Example</a></li>
+  <li><a href="#cdi-example-1" id="toc-cdi-example-1" class="nav-link" data-scroll-target="#cdi-example-1"><span class="header-section-number">3.3</span> CDI Example</a></li>
+  <li><a href="#cdi-example-2" id="toc-cdi-example-2" class="nav-link" data-scroll-target="#cdi-example-2"><span class="header-section-number">3.4</span> CDI Example</a></li>
+  <li><a href="#cdi-example-3" id="toc-cdi-example-3" class="nav-link" data-scroll-target="#cdi-example-3"><span class="header-section-number">3.5</span> CDI Example</a></li>
+  <li><a href="#cdi-example-4" id="toc-cdi-example-4" class="nav-link" data-scroll-target="#cdi-example-4"><span class="header-section-number">3.6</span> CDI Example</a></li>
+  </ul></li>
+  <li><a href="#extra-sums-of-squares" id="toc-extra-sums-of-squares" class="nav-link" data-scroll-target="#extra-sums-of-squares"><span class="header-section-number">4</span> Extra Sums of Squares</a>
+  <ul class="collapse">
+  <li><a href="#extra-sums-of-squares-1" id="toc-extra-sums-of-squares-1" class="nav-link" data-scroll-target="#extra-sums-of-squares-1"><span class="header-section-number">4.1</span> Extra Sums of Squares</a></li>
+  <li><a href="#extra-sums-of-squares-cdi-example" id="toc-extra-sums-of-squares-cdi-example" class="nav-link" data-scroll-target="#extra-sums-of-squares-cdi-example"><span class="header-section-number">4.2</span> Extra Sums of Squares: CDI Example</a></li>
+  <li><a href="#extra-sums-of-squares-cdi-example-1" id="toc-extra-sums-of-squares-cdi-example-1" class="nav-link" data-scroll-target="#extra-sums-of-squares-cdi-example-1"><span class="header-section-number">4.3</span> Extra Sums of Squares: CDI Example</a></li>
+  <li><a href="#partial-f-test-using-extra-sums-of-squares" id="toc-partial-f-test-using-extra-sums-of-squares" class="nav-link" data-scroll-target="#partial-f-test-using-extra-sums-of-squares"><span class="header-section-number">4.4</span> Partial F-test Using Extra Sums of Squares</a></li>
+  <li><a href="#decomposition-of-ssr" id="toc-decomposition-of-ssr" class="nav-link" data-scroll-target="#decomposition-of-ssr"><span class="header-section-number">4.5</span> Decomposition of SSR</a></li>
+  <li><a href="#decomposition-of-ssr-1" id="toc-decomposition-of-ssr-1" class="nav-link" data-scroll-target="#decomposition-of-ssr-1"><span class="header-section-number">4.6</span> Decomposition of SSR</a></li>
+  <li><a href="#example-cdi" id="toc-example-cdi" class="nav-link" data-scroll-target="#example-cdi"><span class="header-section-number">4.7</span> Example CDI</a></li>
+  <li><a href="#example-cdi-model-12" id="toc-example-cdi-model-12" class="nav-link" data-scroll-target="#example-cdi-model-12"><span class="header-section-number">4.8</span> Example CDI: Model 12</a></li>
+  <li><a href="#example-cdi-model-12-1" id="toc-example-cdi-model-12-1" class="nav-link" data-scroll-target="#example-cdi-model-12-1"><span class="header-section-number">4.9</span> Example CDI: Model 12</a></li>
+  <li><a href="#example-cdi-model-21" id="toc-example-cdi-model-21" class="nav-link" data-scroll-target="#example-cdi-model-21"><span class="header-section-number">4.10</span> Example CDI: Model 21</a></li>
+  <li><a href="#example-cdi-model-21-1" id="toc-example-cdi-model-21-1" class="nav-link" data-scroll-target="#example-cdi-model-21-1"><span class="header-section-number">4.11</span> Example CDI: Model 21</a></li>
+  <li><a href="#example-cdi-model-12-vs-model-21" id="toc-example-cdi-model-12-vs-model-21" class="nav-link" data-scroll-target="#example-cdi-model-12-vs-model-21"><span class="header-section-number">4.12</span> Example CDI: Model 12 vs Model 21</a></li>
+  </ul></li>
+  <li><a href="#anova-vs-t-test" id="toc-anova-vs-t-test" class="nav-link" data-scroll-target="#anova-vs-t-test"><span class="header-section-number">5</span> ANOVA vs t-test</a>
+  <ul class="collapse">
+  <li><a href="#model-12-vs-model-12" id="toc-model-12-vs-model-12" class="nav-link" data-scroll-target="#model-12-vs-model-12"><span class="header-section-number">5.1</span> Model 12 vs Model 12</a></li>
+  <li><a href="#model-12-vs-model-12-1" id="toc-model-12-vs-model-12-1" class="nav-link" data-scroll-target="#model-12-vs-model-12-1"><span class="header-section-number">5.2</span> Model 12 vs Model 12</a></li>
+  <li><a href="#model-12-vs-model-12-2" id="toc-model-12-vs-model-12-2" class="nav-link" data-scroll-target="#model-12-vs-model-12-2"><span class="header-section-number">5.3</span> Model 12 vs Model 12</a></li>
+  <li><a href="#anova-partial-f-test-vs-t-test" id="toc-anova-partial-f-test-vs-t-test" class="nav-link" data-scroll-target="#anova-partial-f-test-vs-t-test"><span class="header-section-number">5.4</span> ANOVA (Partial F test) vs t-test</a></li>
+  <li><a href="#partial-f-test-model-12-vs-model-1" id="toc-partial-f-test-model-12-vs-model-1" class="nav-link" data-scroll-target="#partial-f-test-model-12-vs-model-1"><span class="header-section-number">5.5</span> Partial F test: Model 12 vs Model 1</a></li>
+  <li><a href="#partial-f-test-model-21-vs-model-1" id="toc-partial-f-test-model-21-vs-model-1" class="nav-link" data-scroll-target="#partial-f-test-model-21-vs-model-1"><span class="header-section-number">5.6</span> Partial F test: Model 21 vs Model 1</a></li>
+  <li><a href="#partial-f-test-model-21-vs-model-2" id="toc-partial-f-test-model-21-vs-model-2" class="nav-link" data-scroll-target="#partial-f-test-model-21-vs-model-2"><span class="header-section-number">5.7</span> Partial F test: Model 21 vs Model 2</a></li>
+  <li><a href="#model-12-vs-model-2" id="toc-model-12-vs-model-2" class="nav-link" data-scroll-target="#model-12-vs-model-2"><span class="header-section-number">5.8</span> Model 12 vs Model 2</a></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><span class="header-section-number">5.9</span> t-test</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.10</span> Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 09:</h1>
+<h1 class="title">Lec 09: Multiple Linear Regression - SS</h1>
 </div>
 
 
@@ -139,8 +257,592 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review</h1>
+<section id="lectures-01-09" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="lectures-01-09"><span class="header-section-number">1.1</span> Lectures 01-09</h2>
+<ul>
+<li>Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.</li>
+<li>Lecture 07: Multiple Linear Regression (MLR): least squares estimate.</li>
+<li>Lecture 08: MLR inference (CI, t-test, linear functions, ANOVA).</li>
+<li>This lecture: Sums of squares, more on F-tests and ANOVA.</li>
+</ul>
+</section>
+</section>
+<section id="overall-f-test" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Overall F-test</h1>
+<section id="f-test-for-the-overall-significance-of-mlr" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="f-test-for-the-overall-significance-of-mlr"><span class="header-section-number">2.1</span> F-test for the Overall Significance of MLR</h2>
+<ul>
+<li>This test examines whether at least one predictor variable has a non-zero regression coefficient in the MLR model.</li>
+<li>The null and alternative hypotheses are: <span class="math display">\[\begin{align*}
+H_0: &amp; \beta_1 = \beta_2 = \cdots = \beta_p = 0 \\
+H_a: &amp; \text{at least one } \beta_j \neq 0, j=1, 2, \ldots, p
+\end{align*}\]</span></li>
+<li>The F-statistic compares the fit of the full model (with all predictor variables) to the reduced model (with only the intercept).</li>
+</ul>
+</section>
+<section id="the-full-model" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-full-model"><span class="header-section-number">2.2</span> The Full Model</h2>
+<ul>
+<li><p>The <strong><em>full</em></strong> model is: <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \epsilon_i\]</span></p></li>
+<li><p>We denote the sum of squared errors (SSE) for the full model as <span class="math inline">\(SSE\)</span>: <span class="math display">\[SSE=\sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p></li>
+</ul>
+</section>
+<section id="the-reduced-model" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="the-reduced-model"><span class="header-section-number">2.3</span> The Reduced Model</h2>
+<ul>
+<li>The null hypothesis for the overall F-test in MLR is: <span class="math display">\[H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0\]</span></li>
+<li>The <strong><em>reduced</em></strong> model under the null hypothesis is: <span class="math display">\[y_i = \beta_0 + \epsilon_i\]</span></li>
+<li>The sum of squares errors for the reduced model is denoted as <span class="math inline">\(\sum_{i=1}^n (y_i -\bar y)^2\)</span>, which is the <span class="math inline">\(SST\)</span>.</li>
+</ul>
+</section>
+<section id="the-difference-in-fit-between-full-and-reduced-models" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="the-difference-in-fit-between-full-and-reduced-models"><span class="header-section-number">2.4</span> The Difference in Fit between Full and Reduced Models</h2>
+<ul>
+<li><p>We will decompose the total variability in the response variable <span class="math inline">\(y\)</span> into two components <span class="math display">\[\begin{align*}
+SST &amp; = \sum_{i=1}^n (y_i - \bar{y})^2 \\
+&amp; =  \underbrace{\sum_{i=1}^n (y_i - \hat{y}_i)^2}_{SSE} + \underbrace{\sum_{i=1}^n (\hat{y}_i - \bar{y})^2}_{SSR}
+\end{align*}\]</span></p></li>
+<li><p>Here,</p>
+<ul>
+<li><span class="math inline">\(SST\)</span> is the total sum of squares, calculated from the reduced model;</li>
+<li><span class="math inline">\(SSE\)</span> is the error sum of squares, calculated from full model;</li>
+<li><span class="math inline">\(SSR\)</span> is the regression sum of squares. Note <span class="math inline">\(SSR=SST - SSE\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-f-statistic-for-mlr" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="the-f-statistic-for-mlr"><span class="header-section-number">2.5</span> The F-statistic for MLR</h2>
+<ul>
+<li>The F-statistic tests the following hypotheses: <span class="math display">\[\begin{align*}
+H_0: &amp; \beta_1 = \beta_2 = \cdots = \beta_p = 0 \\
+H_a: &amp; \text{at least one } \beta_j \neq 0, j=1, 2, \ldots, p
+\end{align*}\]</span></li>
+<li>The F-statistic is given by: <span class="math display">\[F = \frac{MSR}{MSE} = \frac{SSR/p}{SSE/(n-(p+1))}\]</span> where
+<ul>
+<li><span class="math inline">\(MSR\)</span> is the mean square for regression,</li>
+<li><span class="math inline">\(MSE\)</span> is the mean square for error,</li>
+<li><span class="math inline">\(p\)</span> is the number of predictor variables,</li>
+<li><span class="math inline">\(n\)</span> is the number of observations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-distribution-of-the-f-statistic" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="the-distribution-of-the-f-statistic"><span class="header-section-number">2.6</span> The Distribution of the F-statistic</h2>
+<ul>
+<li>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(SSR/\sigma^2 \sim \chi_{p}^2\)</span>.</li>
+<li><span class="math inline">\(SSE/\sigma^2\sim \chi_{n-p-1}\)</span>.</li>
+<li><span class="math inline">\(SS\)</span> and <span class="math inline">\(SSE\)</span> are independent.</li>
+<li>Therefore, <span class="math inline">\(F=\frac{MSR}{MSE} \overset{H_0}\sim F_{p, n-p-1}\)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="partial-f-tests" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Partial F-tests</h1>
+<section id="motivating-example-cdi" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="motivating-example-cdi"><span class="header-section-number">3.1</span> Motivating Example: CDI</h2>
+<ul>
+<li>The dataset <strong><em>CDI</em></strong> gives various characteristics of 440 of the most populous counties in the USA.</li>
+<li>We’ll try to predict y = unemployment percent from:
+<ul>
+<li><span class="math inline">\(x_1\)</span> = percent of those over 25 with a BS degree;</li>
+<li><span class="math inline">\(x_2\)</span> = per capital income;</li>
+<li><span class="math inline">\(x_3\)</span> = percent of population over 65.</li>
+</ul></li>
+<li>The full model is <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \beta_3 x_{i3} + \epsilon_i\]</span></li>
+</ul>
+</section>
+<section id="cdi-example" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="cdi-example"><span class="header-section-number">3.2</span> CDI Example</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>cdi <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/CDI.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">summary</span>(<span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor <span class="sc">+</span> capita_income <span class="sc">+</span> X65plus, <span class="at">data=</span>cdi)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = result &lt;- lm(unemployment ~ bachelor + capita_income + 
+    X65plus, data = cdi))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0438 -1.1638 -0.2989  0.6977 12.8957 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    9.214e+00  5.275e-01  17.469   &lt;2e-16 ***
+bachelor      -1.802e-01  1.955e-02  -9.219   &lt;2e-16 ***
+capita_income  5.040e-05  3.468e-05   1.453    0.147    
+X65plus        2.021e-02  2.694e-02   0.750    0.453    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.964 on 436 degrees of freedom
+Multiple R-squared:  0.2991,    Adjusted R-squared:  0.2943 
+F-statistic: 62.03 on 3 and 436 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="cdi-example-1" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="cdi-example-1"><span class="header-section-number">3.3</span> CDI Example</h2>
+<ul>
+<li><span class="math inline">\(x_1\)</span> (BSDegree) is significant predictor of unemployment.</li>
+<li><span class="math inline">\(x_2\)</span> (Income) is not significant when <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_3\)</span> are in the model.</li>
+<li><span class="math inline">\(x_3\)</span> (Percentage of population over 65) is not significant when <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are in the model.</li>
+<li>We do not know whether both <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span> should be excluded after including <span class="math inline">\(x_1\)</span> in the model.</li>
+</ul>
+</section>
+<section id="cdi-example-2" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="cdi-example-2"><span class="header-section-number">3.4</span> CDI Example</h2>
+<ul>
+<li><p>In this situation, it is not interesting to conduct the overall F-test because</p></li>
+<li><p>We can still use F tests.</p>
+<ul>
+<li><span class="math inline">\(H_0: \beta_2=\beta_3=0\)</span>.</li>
+<li><span class="math inline">\(H_1:\)</span> at least one of them is not zero.</li>
+</ul></li>
+<li><p>The reduced model (corresponding to <span class="math inline">\(H_0\)</span>) is <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \epsilon\]</span></p></li>
+</ul>
+</section>
+<section id="cdi-example-3" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="cdi-example-3"><span class="header-section-number">3.5</span> CDI Example</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>lm.full<span class="ot">&lt;-</span><span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor <span class="sc">+</span> capita_income <span class="sc">+</span> X65plus, <span class="at">data=</span>cdi))</span>
+<span id="cb3-2"><a href="#cb3-2"></a>lm.reduced<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor, <span class="at">data=</span>cdi)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">anova</span>(lm.reduced, lm.full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ bachelor
+Model 2: unemployment ~ bachelor + capita_income + X65plus
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    438 1697.5                           
+2    436 1681.8  2     15.71 2.0365 0.1317</code></pre>
+</div>
+</div>
+</section>
+<section id="cdi-example-4" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="cdi-example-4"><span class="header-section-number">3.6</span> CDI Example</h2>
+<ul>
+<li>The F-statistic is <span class="math display">\[F=\frac{(1697.5- 1681.8)/(438 - 436)}{1681.8/436}=2.0365\]</span></li>
+<li>The result suggest <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span> are not needed in the model.</li>
+</ul>
+</section>
+</section>
+<section id="extra-sums-of-squares" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Extra Sums of Squares</h1>
+<section id="extra-sums-of-squares-1" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="extra-sums-of-squares-1"><span class="header-section-number">4.1</span> Extra Sums of Squares</h2>
+<ul>
+<li>In multiple regression, we are often interested in how much one set of variables increases SSR (sum of squares for regression), given another set of variables already is in the model. The increment in SSR by adding a set of predictors (set 2) to an existing set of predictors (set 1) is <span class="math display">\[SSR(\text{set 2} | \text{set 1}) = SSR(\text{set 1 and set 2}) - SSR(\text{set 1})\]</span> or equivalently, <span class="math display">\[SSR(\text{set 2} | \text{set 1}) = SSE(\text{set 1}) - SSE(\text{set 1 and set 2})\]</span></li>
+</ul>
+</section>
+<section id="extra-sums-of-squares-cdi-example" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="extra-sums-of-squares-cdi-example"><span class="header-section-number">4.2</span> Extra Sums of Squares: CDI Example</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">anova</span>(lm.reduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+bachelor    1  702.05  702.05  181.15 &lt; 2.2e-16 ***
+Residuals 438 1697.47    3.88                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">anova</span>(lm.full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    
+bachelor        1  702.05  702.05 182.0089 &lt; 2e-16 ***
+capita_income   1   13.54   13.54   3.5099 0.06167 .  
+X65plus         1    2.17    2.17   0.5631 0.45343    
+Residuals     436 1681.76    3.86                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="extra-sums-of-squares-cdi-example-1" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="extra-sums-of-squares-cdi-example-1"><span class="header-section-number">4.3</span> Extra Sums of Squares: CDI Example</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">anova</span>(lm.reduced, lm.full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ bachelor
+Model 2: unemployment ~ bachelor + capita_income + X65plus
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    438 1697.5                           
+2    436 1681.8  2     15.71 2.0365 0.1317</code></pre>
+</div>
+</div>
+<ul>
+<li>In the CDI example, the extra sum of squares due to adding <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span> to a model that already contains <span class="math inline">\(x_1\)</span> is <span class="math display">\[SSR(x_2, x_3 | x_1) = SSE(x_1) - SSE(x_1, x_2, x_3) = 1697.5 - 1681.8 = 15.7\]</span></li>
+</ul>
+</section>
+<section id="partial-f-test-using-extra-sums-of-squares" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="partial-f-test-using-extra-sums-of-squares"><span class="header-section-number">4.4</span> Partial F-test Using Extra Sums of Squares</h2>
+<ul>
+<li>The partial F-test for testing <span class="math inline">\(H_0: \beta_2 = \beta_3 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_a:\)</span> at least one of them is not zero can be conducted using extra sums of squares: <span class="math display">\[F = \frac{SSR(x_2, x_3 | x_1)/2}{MSE(\text{full model})} = \frac{15.7/2}{1681.8/436} = 2.0365\]</span></li>
+<li>This is the same F-statistic as obtained before.</li>
+</ul>
+</section>
+<section id="decomposition-of-ssr" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="decomposition-of-ssr"><span class="header-section-number">4.5</span> Decomposition of SSR</h2>
+<ul>
+<li>Recall from SLR, we have <span class="math display">\[SST=SSR + SSE\]</span> where <span class="math display">\[SSR = \beta_1^2 \sum_{i=1}^n (x_i - \bar{x})^2\]</span></li>
+<li>In MLR with <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, <span class="math display">\[SST=SSR(\beta_1, \beta_2) + SSE(\beta_1, \beta_2)\]</span> and <span class="math display">\[SST=SSR(\beta_1) + SSR(\beta_2|\beta_1) + SSE(\beta_1, \beta_2),\]</span> or equivalently <span class="math display">\[SST=SSR(\beta_2) + SSR(\beta_1|\beta_2) + SSE(\beta_1, \beta_2)\]</span></li>
+</ul>
+</section>
+<section id="decomposition-of-ssr-1" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="decomposition-of-ssr-1"><span class="header-section-number">4.6</span> Decomposition of SSR</h2>
+<ul>
+<li>The order of predictors is aribitrary. For example, in a model with three predictors <span class="math inline">\(x_1, x_2, x_3\)</span>, we have <span class="math display">\[\begin{align*}
+SST&amp;=SSR(x_1) + SSR(x_2|x_1) + SSR(x_3|x_1, x_2) + SSE(x_1, x_2, x_3)\\
+&amp;=SSR(x_2) + SSR(x_1|x_2) + SSR(x_3|x_1, x_2) + SSE(x_1, x_2, x_3)\\
+&amp;=SSR(x_3) + SSR(x_1|x_3) + SSR(x_2|x_1, x_3) + SSE(x_1, x_2, x_3)\\
+\cdots &amp; \cdots
+\end{align*}\]</span></li>
+</ul>
+</section>
+<section id="example-cdi" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="example-cdi"><span class="header-section-number">4.7</span> Example CDI</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>model12 <span class="ot">&lt;-</span> <span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor <span class="sc">+</span> capita_income, <span class="at">data=</span>cdi))</span>
+<span id="cb11-2"><a href="#cb11-2"></a>model21 <span class="ot">&lt;-</span> <span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>capita_income <span class="sc">+</span> bachelor, <span class="at">data=</span>cdi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-cdi-model-12" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="example-cdi-model-12"><span class="header-section-number">4.8</span> Example CDI: Model 12</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor, <span class="at">data=</span>cdi)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+bachelor    1  702.05  702.05  181.15 &lt; 2.2e-16 ***
+Residuals 438 1697.47    3.88                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">anova</span>(model12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    
+bachelor        1  702.05  702.05 182.1910 &lt; 2e-16 ***
+capita_income   1   13.54   13.54   3.5134 0.06154 .  
+Residuals     437 1683.93    3.85                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="example-cdi-model-12-1" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="example-cdi-model-12-1"><span class="header-section-number">4.9</span> Example CDI: Model 12</h2>
+<ul>
+<li><span class="math inline">\(SSR(\beta_1)=702.05\)</span></li>
+<li><span class="math inline">\(SSR(\beta_2|\beta_1)=13.54\)</span></li>
+<li><span class="math inline">\(SSE(\beta_1, \beta_2)=1683.93\)</span></li>
+</ul>
+</section>
+<section id="example-cdi-model-21" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="example-cdi-model-21"><span class="header-section-number">4.10</span> Example CDI: Model 21</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">anova</span>(model21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+capita_income   1  249.02  249.02  64.622 8.567e-15 ***
+bachelor        1  466.58  466.58 121.082 &lt; 2.2e-16 ***
+Residuals     437 1683.93    3.85                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="example-cdi-model-21-1" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="example-cdi-model-21-1"><span class="header-section-number">4.11</span> Example CDI: Model 21</h2>
+<ul>
+<li><span class="math inline">\(SSR(\beta_2)=249.02\)</span></li>
+<li><span class="math inline">\(SSR(\beta_1|\beta_2)=466.58\)</span></li>
+<li><span class="math inline">\(SSE(\beta_1, \beta_2)=1683.93\)</span></li>
+</ul>
+</section>
+<section id="example-cdi-model-12-vs-model-21" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="example-cdi-model-12-vs-model-21"><span class="header-section-number">4.12</span> Example CDI: Model 12 vs Model 21</h2>
+<ul>
+<li><p>Note that <span class="math inline">\(SSR(\beta_1, \beta_2) = SSR(\beta_1) + SSR(\beta_2|\beta_1) = SSR(\beta_2) + SSR(\beta_1|\beta_2)\)</span></p></li>
+<li><p>The order of predictors entered in R depends on what hypothesis you are carrying out. We usually arrange the model so that the last coefficient are the ones to be tested.</p></li>
+</ul>
+</section>
+</section>
+<section id="anova-vs-t-test" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> ANOVA vs t-test</h1>
+<section id="model-12-vs-model-12" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="model-12-vs-model-12"><span class="header-section-number">5.1</span> Model 12 vs Model 12</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">summary</span>(model12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = result &lt;- lm(unemployment ~ bachelor + capita_income, 
+    data = cdi))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0534 -1.1657 -0.3001  0.6941 12.8136 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    9.430e+00  4.420e-01  21.334   &lt;2e-16 ***
+bachelor      -1.874e-01  1.703e-02 -11.004   &lt;2e-16 ***
+capita_income  6.020e-05  3.212e-05   1.874   0.0615 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.963 on 437 degrees of freedom
+Multiple R-squared:  0.2982,    Adjusted R-squared:  0.295 
+F-statistic: 92.85 on 2 and 437 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="model-12-vs-model-12-1" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="model-12-vs-model-12-1"><span class="header-section-number">5.2</span> Model 12 vs Model 12</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">summary</span>(model21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = result &lt;- lm(unemployment ~ capita_income + bachelor, 
+    data = cdi))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0534 -1.1657 -0.3001  0.6941 12.8136 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    9.430e+00  4.420e-01  21.334   &lt;2e-16 ***
+capita_income  6.020e-05  3.212e-05   1.874   0.0615 .  
+bachelor      -1.874e-01  1.703e-02 -11.004   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.963 on 437 degrees of freedom
+Multiple R-squared:  0.2982,    Adjusted R-squared:  0.295 
+F-statistic: 92.85 on 2 and 437 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="model-12-vs-model-12-2" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="model-12-vs-model-12-2"><span class="header-section-number">5.3</span> Model 12 vs Model 12</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">anova</span>(model12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    
+bachelor        1  702.05  702.05 182.1910 &lt; 2e-16 ***
+capita_income   1   13.54   13.54   3.5134 0.06154 .  
+Residuals     437 1683.93    3.85                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">anova</span>(model21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+capita_income   1  249.02  249.02  64.622 8.567e-15 ***
+bachelor        1  466.58  466.58 121.082 &lt; 2.2e-16 ***
+Residuals     437 1683.93    3.85                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="anova-partial-f-test-vs-t-test" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="anova-partial-f-test-vs-t-test"><span class="header-section-number">5.4</span> ANOVA (Partial F test) vs t-test</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor, <span class="at">data=</span>cdi))</span>
+<span id="cb26-2"><a href="#cb26-2"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>capita_income , <span class="at">data=</span>cdi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="partial-f-test-model-12-vs-model-1" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="partial-f-test-model-12-vs-model-1"><span class="header-section-number">5.5</span> Partial F test: Model 12 vs Model 1</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">anova</span>(model1, model12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ bachelor
+Model 2: unemployment ~ bachelor + capita_income
+  Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+1    438 1697.5                              
+2    437 1683.9  1    13.539 3.5134 0.06154 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="partial-f-test-model-21-vs-model-1" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="partial-f-test-model-21-vs-model-1"><span class="header-section-number">5.6</span> Partial F test: Model 21 vs Model 1</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">anova</span>(model1, model21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ bachelor
+Model 2: unemployment ~ capita_income + bachelor
+  Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+1    438 1697.5                              
+2    437 1683.9  1    13.539 3.5134 0.06154 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="partial-f-test-model-21-vs-model-2" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="partial-f-test-model-21-vs-model-2"><span class="header-section-number">5.7</span> Partial F test: Model 21 vs Model 2</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">anova</span>(model2, model21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ capita_income
+Model 2: unemployment ~ capita_income + bachelor
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    438 2150.5                                  
+2    437 1683.9  1    466.58 121.08 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="model-12-vs-model-2" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="model-12-vs-model-2"><span class="header-section-number">5.8</span> Model 12 vs Model 2</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">anova</span>(model2, model12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ capita_income
+Model 2: unemployment ~ bachelor + capita_income
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    438 2150.5                                  
+2    437 1683.9  1    466.58 121.08 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="t-test" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="t-test"><span class="header-section-number">5.9</span> t-test</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(result<span class="ot">&lt;-</span><span class="fu">lm</span>(unemployment<span class="sc">~</span>bachelor <span class="sc">+</span> capita_income, <span class="at">data=</span>cdi)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = result &lt;- lm(unemployment ~ bachelor + capita_income, 
+    data = cdi))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0534 -1.1657 -0.3001  0.6941 12.8136 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    9.430e+00  4.420e-01  21.334   &lt;2e-16 ***
+bachelor      -1.874e-01  1.703e-02 -11.004   &lt;2e-16 ***
+capita_income  6.020e-05  3.212e-05   1.874   0.0615 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.963 on 437 degrees of freedom
+Multiple R-squared:  0.2982,    Adjusted R-squared:  0.295 
+F-statistic: 92.85 on 2 and 437 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.10</span> Conclusion</h2>
+<ul>
+<li><p>The partial F-test and the t-test give the same conclusion regarding the significance of individual predictors in the MLR model.</p></li>
+<li><p>The predictor to be test should be the last one(s) entered in the model for the partial F-test.</p></li>
+<li><p>Both tests are based on the same extra sums of squares and assesses the same null hypothesis - after adjusting for other predictors in the model, is the predictor still significant.</p></li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
