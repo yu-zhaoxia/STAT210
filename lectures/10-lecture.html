@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,8 +177,61 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">1</span> Review</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-09" id="toc-review-lecture-01-09" class="nav-link" data-scroll-target="#review-lecture-01-09"><span class="header-section-number">1.1</span> Review: Lecture 01-09</a></li>
+  </ul></li>
+  <li><a href="#partial-f-tests-general" id="toc-partial-f-tests-general" class="nav-link" data-scroll-target="#partial-f-tests-general"><span class="header-section-number">2</span> Partial F-tests (General)</a>
+  <ul class="collapse">
+  <li><a href="#full-vs-reduced-models-nested" id="toc-full-vs-reduced-models-nested" class="nav-link" data-scroll-target="#full-vs-reduced-models-nested"><span class="header-section-number">2.1</span> Full vs Reduced models (nested)</a></li>
+  <li><a href="#test-statistic-sse-form" id="toc-test-statistic-sse-form" class="nav-link" data-scroll-target="#test-statistic-sse-form"><span class="header-section-number">2.2</span> Test statistic (SSE form)</a></li>
+  <li><a href="#equivalent-form-ssr" id="toc-equivalent-form-ssr" class="nav-link" data-scroll-target="#equivalent-form-ssr"><span class="header-section-number">2.3</span> Equivalent form (SSR)</a></li>
+  </ul></li>
+  <li><a href="#motivating-example-cdi" id="toc-motivating-example-cdi" class="nav-link" data-scroll-target="#motivating-example-cdi"><span class="header-section-number">3</span> Motivating Example: CDI</a>
+  <ul class="collapse">
+  <li><a href="#model-and-data" id="toc-model-and-data" class="nav-link" data-scroll-target="#model-and-data"><span class="header-section-number">3.1</span> Model and data</a></li>
+  <li><a href="#partial-f-test-income-and-x65plus-given-bachelor" id="toc-partial-f-test-income-and-x65plus-given-bachelor" class="nav-link" data-scroll-target="#partial-f-test-income-and-x65plus-given-bachelor"><span class="header-section-number">3.2</span> Partial F-test: income and X65plus given bachelor</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">3.3</span> Interpretation</a></li>
+  </ul></li>
+  <li><a href="#extra-sums-of-squares" id="toc-extra-sums-of-squares" class="nav-link" data-scroll-target="#extra-sums-of-squares"><span class="header-section-number">4</span> Extra Sums of Squares</a>
+  <ul class="collapse">
+  <li><a href="#definition-subset-given-others" id="toc-definition-subset-given-others" class="nav-link" data-scroll-target="#definition-subset-given-others"><span class="header-section-number">4.1</span> Definition (subset given others)</a></li>
+  <li><a href="#cdi-compute-components" id="toc-cdi-compute-components" class="nav-link" data-scroll-target="#cdi-compute-components"><span class="header-section-number">4.2</span> CDI: compute components</a></li>
+  </ul></li>
+  <li><a href="#decomposition-and-order-type-i-ss" id="toc-decomposition-and-order-type-i-ss" class="nav-link" data-scroll-target="#decomposition-and-order-type-i-ss"><span class="header-section-number">5</span> Decomposition and Order (Type I SS)</a>
+  <ul class="collapse">
+  <li><a href="#two-predictors-x_1x_2" id="toc-two-predictors-x_1x_2" class="nav-link" data-scroll-target="#two-predictors-x_1x_2"><span class="header-section-number">5.1</span> Two predictors (<span class="math inline">\(x_1,x_2\)</span>)</a></li>
+  <li><a href="#cdi-two-order-comparison" id="toc-cdi-two-order-comparison" class="nav-link" data-scroll-target="#cdi-two-order-comparison"><span class="header-section-number">5.2</span> CDI: two-order comparison</a></li>
+  <li><a href="#takeaway" id="toc-takeaway" class="nav-link" data-scroll-target="#takeaway"><span class="header-section-number">5.3</span> Takeaway</a></li>
+  </ul></li>
+  <li><a href="#anova-vs-aov-in-r" id="toc-anova-vs-aov-in-r" class="nav-link" data-scroll-target="#anova-vs-aov-in-r"><span class="header-section-number">6</span> anova vs aov in R</a>
+  <ul class="collapse">
+  <li><a href="#nested-model-comparison-with-anova" id="toc-nested-model-comparison-with-anova" class="nav-link" data-scroll-target="#nested-model-comparison-with-anova"><span class="header-section-number">6.1</span> Nested model comparison with <code>anova()</code></a></li>
+  <li><a href="#one-model-anova-tables-aov-vs-anovalm" id="toc-one-model-anova-tables-aov-vs-anovalm" class="nav-link" data-scroll-target="#one-model-anova-tables-aov-vs-anovalm"><span class="header-section-number">6.2</span> One-model ANOVA tables (<code>aov()</code> vs <code>anova(lm())</code>)</a></li>
+  <li><a href="#order-matters-for-type-i-ss" id="toc-order-matters-for-type-i-ss" class="nav-link" data-scroll-target="#order-matters-for-type-i-ss"><span class="header-section-number">6.3</span> Order matters for Type I SS</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="header-section-number">6.4</span> Notes</a></li>
+  </ul></li>
+  <li><a href="#summary-of-tests" id="toc-summary-of-tests" class="nav-link" data-scroll-target="#summary-of-tests"><span class="header-section-number">7</span> Summary of Tests</a>
+  <ul class="collapse">
+  <li><a href="#overall-f-test-in-mlr" id="toc-overall-f-test-in-mlr" class="nav-link" data-scroll-target="#overall-f-test-in-mlr"><span class="header-section-number">7.1</span> Overall F-test in MLR</a></li>
+  <li><a href="#single-coefficient" id="toc-single-coefficient" class="nav-link" data-scroll-target="#single-coefficient"><span class="header-section-number">7.2</span> Single coefficient</a></li>
+  <li><a href="#partial-f-subset-size-k" id="toc-partial-f-subset-size-k" class="nav-link" data-scroll-target="#partial-f-subset-size-k"><span class="header-section-number">7.3</span> Partial F (subset size <span class="math inline">\(k\)</span>)</a></li>
+  </ul></li>
+  <li><a href="#partial-r2" id="toc-partial-r2" class="nav-link" data-scroll-target="#partial-r2"><span class="header-section-number">8</span> Partial <span class="math inline">\(R^2\)</span></a>
+  <ul class="collapse">
+  <li><a href="#definition-subset-given-others-1" id="toc-definition-subset-given-others-1" class="nav-link" data-scroll-target="#definition-subset-given-others-1"><span class="header-section-number">8.1</span> Definition (subset given others)</a></li>
+  <li><a href="#example-mtcars-hp-given-wt" id="toc-example-mtcars-hp-given-wt" class="nav-link" data-scroll-target="#example-mtcars-hp-given-wt"><span class="header-section-number">8.2</span> Example: mtcars — hp given wt</a></li>
+  <li><a href="#example-mtcars-wt-given-hp" id="toc-example-mtcars-wt-given-hp" class="nav-link" data-scroll-target="#example-mtcars-wt-given-hp"><span class="header-section-number">8.3</span> Example: mtcars — wt given hp</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">8.4</span> Takeaways</a></li>
+  </ul></li>
+  <li><a href="#midterm-logistics" id="toc-midterm-logistics" class="nav-link" data-scroll-target="#midterm-logistics"><span class="header-section-number">9</span> Midterm Logistics</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -139,8 +255,433 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review</h1>
+<section id="review-lecture-01-09" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-09"><span class="header-section-number">1.1</span> Review: Lecture 01-09</h2>
+<ul>
+<li>Lectures 01-06: SLR — least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack-of-fit test.</li>
+<li>Lecture 07: MLR — least squares estimate.</li>
+<li>Lecture 08: MLR — inference (CI, t-test, linear functions, ANOVA).</li>
+<li>Lecture 09: sums of squares, more on F-tests and ANOVA.</li>
+<li>Lecture 10: partial (extra) sums of squares, partial F-tests, <code>anova()</code> model comparisons vs <code>aov()</code>, partial <span class="math inline">\(R^2\)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="partial-f-tests-general" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Partial F-tests (General)</h1>
+<section id="full-vs-reduced-models-nested" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="full-vs-reduced-models-nested"><span class="header-section-number">2.1</span> Full vs Reduced models (nested)</h2>
+<p>We test whether a subset of <span class="math inline">\(k\)</span> coefficients are zero given the remaining predictors are in the model: <span class="math display">\[
+H_0:\ \beta_{j_1}=\cdots=\beta_{j_k}=0, \qquad
+H_a:\ \text{at least one of }\beta_{j_m}\neq 0.
+\]</span></p>
+</section>
+<section id="test-statistic-sse-form" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="test-statistic-sse-form"><span class="header-section-number">2.2</span> Test statistic (SSE form)</h2>
+<p>Let <span class="math inline">\(\text{SSE}_F\)</span> and <span class="math inline">\(\text{SSE}_R\)</span> be the error sums of squares for the full and reduced models, respectively; let <span class="math inline">\(k\)</span> be the number of tested coefficients, and <span class="math inline">\(df_F\)</span> the residual df of the full model. Then <span class="math display">\[
+F=\frac{(\text{SSE}_R-\text{SSE}_F)/k}{\text{SSE}_F/df_F}
+\ \ \overset{H_0}\sim\ F_{k,\,df_F}.
+\]</span></p>
+</section>
+<section id="equivalent-form-ssr" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="equivalent-form-ssr"><span class="header-section-number">2.3</span> Equivalent form (SSR)</h2>
+<p><span class="math display">\[
+F=\frac{(\text{SSR}_F-\text{SSR}_R)/k}{\text{SSE}_F/df_F}.
+\]</span></p>
+</section>
+</section>
+<section id="motivating-example-cdi" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Motivating Example: CDI</h1>
+<section id="model-and-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="model-and-data"><span class="header-section-number">3.1</span> Model and data</h2>
+<p>Goal: predict unemployment percent (<span class="math inline">\(y\)</span>) from <span class="math inline">\(x_1=\)</span> bachelor percent, <span class="math inline">\(x_2=\)</span> per capita income, <span class="math inline">\(x_3=\)</span> percent over 65.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>cdi <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/CDI.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>lm.full <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> bachelor <span class="sc">+</span> capita_income <span class="sc">+</span> X65plus, <span class="at">data =</span> cdi)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">summary</span>(lm.full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = unemployment ~ bachelor + capita_income + X65plus, 
+    data = cdi)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0438 -1.1638 -0.2989  0.6977 12.8957 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    9.214e+00  5.275e-01  17.469   &lt;2e-16 ***
+bachelor      -1.802e-01  1.955e-02  -9.219   &lt;2e-16 ***
+capita_income  5.040e-05  3.468e-05   1.453    0.147    
+X65plus        2.021e-02  2.694e-02   0.750    0.453    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.964 on 436 degrees of freedom
+Multiple R-squared:  0.2991,    Adjusted R-squared:  0.2943 
+F-statistic: 62.03 on 3 and 436 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="partial-f-test-income-and-x65plus-given-bachelor" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="partial-f-test-income-and-x65plus-given-bachelor"><span class="header-section-number">3.2</span> Partial F-test: income and X65plus given bachelor</h2>
+<p>Reduced model: <span class="math inline">\(y=\beta_0+\beta_1 x_1+\varepsilon\)</span>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>lm.reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> bachelor, <span class="at">data =</span> cdi)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">anova</span>(lm.reduced, lm.full)  <span class="co"># extra SS for (capita_income, X65plus) | bachelor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ bachelor
+Model 2: unemployment ~ bachelor + capita_income + X65plus
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    438 1697.5                           
+2    436 1681.8  2     15.71 2.0365 0.1317</code></pre>
+</div>
+</div>
+</section>
+<section id="interpretation" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">3.3</span> Interpretation</h2>
+<p>The F-statistic is <span class="math display">\[
+F=\frac{(\text{SSE}_R-\text{SSE}_F)/2}{\text{SSE}_F/df_F}.
+\]</span> A small <span class="math inline">\(p\)</span>-value indicates income and/or X65plus add explanatory power beyond bachelor.</p>
+</section>
+</section>
+<section id="extra-sums-of-squares" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Extra Sums of Squares</h1>
+<section id="definition-subset-given-others" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="definition-subset-given-others"><span class="header-section-number">4.1</span> Definition (subset given others)</h2>
+<p><span class="math display">\[
+\text{SSR}(\text{subset}\mid\text{others})
+= \text{SSR}(\text{all}) - \text{SSR}(\text{others})
+= \text{SSE}(\text{others}) - \text{SSE}(\text{all}).
+\]</span></p>
+</section>
+<section id="cdi-compute-components" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="cdi-compute-components"><span class="header-section-number">4.2</span> CDI: compute components</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">anova</span>(lm.reduced)            <span class="co"># reduced model table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+bachelor    1  702.05  702.05  181.15 &lt; 2.2e-16 ***
+Residuals 438 1697.47    3.88                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">anova</span>(lm.full)               <span class="co"># full model table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    
+bachelor        1  702.05  702.05 182.0089 &lt; 2e-16 ***
+capita_income   1   13.54   13.54   3.5099 0.06167 .  
+X65plus         1    2.17    2.17   0.5631 0.45343    
+Residuals     436 1681.76    3.86                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">anova</span>(lm.reduced, lm.full)   <span class="co"># extra SS and partial F</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ bachelor
+Model 2: unemployment ~ bachelor + capita_income + X65plus
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    438 1697.5                           
+2    436 1681.8  2     15.71 2.0365 0.1317</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="decomposition-and-order-type-i-ss" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Decomposition and Order (Type I SS)</h1>
+<section id="two-predictors-x_1x_2" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="two-predictors-x_1x_2"><span class="header-section-number">5.1</span> Two predictors (<span class="math inline">\(x_1,x_2\)</span>)</h2>
+<p>Decompose SST in two equivalent orders: <span class="math display">\[\begin{align*}
+\text{SST}
+&amp;= \text{SSR}(x_1) + \text{SSR}(x_2\mid x_1) + \text{SSE}(x_1,x_2) \\
+&amp;= \text{SSR}(x_2) + \text{SSR}(x_1\mid x_2) + \text{SSE}(x_1,x_2).
+\end{align*}\]</span> Sequential (Type I) SS depend on order; the total <span class="math inline">\(\text{SSR}(x_1,x_2)\)</span> does not.</p>
+</section>
+<section id="cdi-two-order-comparison" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="cdi-two-order-comparison"><span class="header-section-number">5.2</span> CDI: two-order comparison</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>model12 <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> bachelor <span class="sc">+</span> capita_income, <span class="at">data =</span> cdi)</span>
+<span id="cb11-2"><a href="#cb11-2"></a>model21 <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> capita_income <span class="sc">+</span> bachelor, <span class="at">data =</span> cdi)</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="fu">anova</span>(<span class="fu">lm</span>(unemployment <span class="sc">~</span> bachelor, <span class="at">data =</span> cdi)); <span class="fu">anova</span>(model12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+bachelor    1  702.05  702.05  181.15 &lt; 2.2e-16 ***
+Residuals 438 1697.47    3.88                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq  F value  Pr(&gt;F)    
+bachelor        1  702.05  702.05 182.1910 &lt; 2e-16 ***
+capita_income   1   13.54   13.54   3.5134 0.06154 .  
+Residuals     437 1683.93    3.85                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(unemployment <span class="sc">~</span> capita_income, <span class="at">data =</span> cdi)); <span class="fu">anova</span>(model21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+capita_income   1  249.02  249.02  50.718 4.404e-12 ***
+Residuals     438 2150.51    4.91                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: unemployment
+               Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+capita_income   1  249.02  249.02  64.622 8.567e-15 ***
+bachelor        1  466.58  466.58 121.082 &lt; 2.2e-16 ***
+Residuals     437 1683.93    3.85                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="takeaway" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="takeaway"><span class="header-section-number">5.3</span> Takeaway</h2>
+<p><span class="math inline">\(\text{SSR}(x_1)+\text{SSR}(x_2\mid x_1)
+= \text{SSR}(x_2)+\text{SSR}(x_1\mid x_2) = \text{SSR}(x_1,x_2)\)</span>. For a partial F-test, enter the predictors being tested last.</p>
+</section>
+</section>
+<section id="anova-vs-aov-in-r" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> anova vs aov in R</h1>
+<section id="nested-model-comparison-with-anova" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="nested-model-comparison-with-anova"><span class="header-section-number">6.1</span> Nested model comparison with <code>anova()</code></h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>fit_wt    <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb17-3"><a href="#cb17-3"></a>fit_wt_hp <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="fu">anova</span>(fit_wt, fit_wt_hp)   <span class="co"># extra SS for hp | wt (partial F)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: mpg ~ wt
+Model 2: mpg ~ wt + hp
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
+1     30 278.32                                
+2     29 195.05  1    83.274 12.381 0.001451 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="one-model-anova-tables-aov-vs-anovalm" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="one-model-anova-tables-aov-vs-anovalm"><span class="header-section-number">6.2</span> One-model ANOVA tables (<code>aov()</code> vs <code>anova(lm())</code>)</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">aov</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)            <span class="co"># Type I SS (sequential)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+   aov(formula = mpg ~ wt + hp, data = mtcars)
+
+Terms:
+                      wt       hp Residuals
+Sum of Squares  847.7252  83.2742  195.0478
+Deg. of Freedom        1        1        29
+
+Residual standard error: 2.593412
+Estimated effects may be unbalanced</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars))      <span class="co"># same sequential SS</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mpg
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+wt         1 847.73  847.73 126.041 4.488e-12 ***
+hp         1  83.27   83.27  12.381  0.001451 ** 
+Residuals 29 195.05    6.73                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="order-matters-for-type-i-ss" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="order-matters-for-type-i-ss"><span class="header-section-number">6.3</span> Order matters for Type I SS</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">aov</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+   aov(formula = mpg ~ hp + wt, data = mtcars)
+
+Terms:
+                      hp       wt Residuals
+Sum of Squares  678.3729 252.6266  195.0478
+Deg. of Freedom        1        1        29
+
+Residual standard error: 2.593412
+Estimated effects may be unbalanced</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mpg
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+hp         1 678.37  678.37 100.862 5.987e-11 ***
+wt         1 252.63  252.63  37.561 1.120e-06 ***
+Residuals 29 195.05    6.73                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="notes" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="notes"><span class="header-section-number">6.4</span> Notes</h2>
+<ul>
+<li><code>anova(fit)</code> with one model shows Type I (sequential) SS.</li>
+<li><code>anova(reduced, full)</code> gives the partial F for nested models.</li>
+<li><code>aov()</code> is tailored to classical ANOVA; extras include <code>Error()</code>, <code>TukeyHSD()</code>, <code>model.tables()</code>.</li>
+</ul>
+</section>
+</section>
+<section id="summary-of-tests" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Summary of Tests</h1>
+<section id="overall-f-test-in-mlr" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="overall-f-test-in-mlr"><span class="header-section-number">7.1</span> Overall F-test in MLR</h2>
+<p>Hypotheses: <span class="math display">\[\begin{align*}
+H_0:&amp;\ \beta_1=\cdots=\beta_p=0, \\
+H_a:&amp;\ \text{at least one }\beta_j\neq 0.
+\end{align*}\]</span> Statistic and null distribution: <span class="math display">\[
+F=\frac{\text{MSR}}{\text{MSE}}
+=\frac{\text{SSR}/p}{\text{SSE}/(n-p-1)}
+\ \ \overset{H_0}\sim\ F_{p,\,n-p-1}.
+\]</span></p>
+</section>
+<section id="single-coefficient" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="single-coefficient"><span class="header-section-number">7.2</span> Single coefficient</h2>
+<p><span class="math display">\[
+t=\frac{\hat{\beta}_j}{\text{SE}(\hat{\beta}_j)}\sim t_{n-p-1},
+\qquad
+F=t^2\sim F_{1,\,n-p-1}.
+\]</span></p>
+</section>
+<section id="partial-f-subset-size-k" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="partial-f-subset-size-k"><span class="header-section-number">7.3</span> Partial F (subset size <span class="math inline">\(k\)</span>)</h2>
+<p><span class="math display">\[
+F=\frac{(\text{SSE}_R-\text{SSE}_F)/k}{\text{SSE}_F/(n-p-1)}
+\ \ \overset{H_0}\sim\ F_{k,\,n-p-1}.
+\]</span></p>
+</section>
+</section>
+<section id="partial-r2" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Partial <span class="math inline">\(R^2\)</span></h1>
+<section id="definition-subset-given-others-1" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="definition-subset-given-others-1"><span class="header-section-number">8.1</span> Definition (subset given others)</h2>
+<p><span class="math display">\[
+R^2_{\text{partial}}
+=\frac{\text{SSE}_R-\text{SSE}_F}{\text{SSE}_R}
+=\frac{\text{SSR}(\text{subset}\mid\text{others})}{\text{SSE}(\text{reduced})}.
+\]</span></p>
+</section>
+<section id="example-mtcars-hp-given-wt" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="example-mtcars-hp-given-wt"><span class="header-section-number">8.2</span> Example: mtcars — hp given wt</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>SSE_wt    <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(fit_wt)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb27-2"><a href="#cb27-2"></a>SSE_wt_hp <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(fit_wt_hp)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb27-3"><a href="#cb27-3"></a>R2_hp_given_wt <span class="ot">&lt;-</span> (SSE_wt <span class="sc">-</span> SSE_wt_hp) <span class="sc">/</span> SSE_wt</span>
+<span id="cb27-4"><a href="#cb27-4"></a>R2_hp_given_wt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2992009</code></pre>
+</div>
+</div>
+</section>
+<section id="example-mtcars-wt-given-hp" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="example-mtcars-wt-given-hp"><span class="header-section-number">8.3</span> Example: mtcars — wt given hp</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>fit_hp <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb29-2"><a href="#cb29-2"></a>SSE_hp <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(fit_hp)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>R2_wt_given_hp <span class="ot">&lt;-</span> (SSE_hp <span class="sc">-</span> SSE_wt_hp) <span class="sc">/</span> SSE_hp</span>
+<span id="cb29-4"><a href="#cb29-4"></a>R2_wt_given_hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5643088</code></pre>
+</div>
+</div>
+</section>
+<section id="takeaways" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">8.4</span> Takeaways</h2>
+<ul>
+<li>Adding predictors cannot decrease overall <span class="math inline">\(R^2\)</span>.</li>
+<li>Larger partial <span class="math inline">\(R^2\)</span> corresponds to larger partial F (more evidence against <span class="math inline">\(H_0\)</span>).</li>
+<li>Use nested <code>anova()</code> for clear partial tests; Type I SS depend on order.</li>
+</ul>
+</section>
+</section>
+<section id="midterm-logistics" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Midterm Logistics</h1>
+<ul>
+<li>Format: in-class; closed book; two double-sided note sheets permitted.</li>
+<li>Coverage: through this lecture (SLR/MLR inference, ANOVA, overall &amp; partial F-tests).</li>
+<li>Tips: interpret coefficients carefully; justify model comparisons; recall <span class="math inline">\(F=t^2\)</span> when the tested subset size is 1.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,8 +177,66 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">1</span> Review</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-06" id="toc-review-lecture-01-06" class="nav-link" data-scroll-target="#review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</a></li>
+  <li><a href="#motivating-example-cdi" id="toc-motivating-example-cdi" class="nav-link" data-scroll-target="#motivating-example-cdi"><span class="header-section-number">1.2</span> Motivating Example: CDI</a></li>
+  </ul></li>
+  <li><a href="#linear-dependency-in-mlr" id="toc-linear-dependency-in-mlr" class="nav-link" data-scroll-target="#linear-dependency-in-mlr"><span class="header-section-number">2</span> Linear Dependency in MLR</a>
+  <ul class="collapse">
+  <li><a href="#cdi-example-scenario-1" id="toc-cdi-example-scenario-1" class="nav-link" data-scroll-target="#cdi-example-scenario-1"><span class="header-section-number">2.1</span> CDI Example: Scenario 1</a></li>
+  <li><a href="#cdi-example-scenario-1-1" id="toc-cdi-example-scenario-1-1" class="nav-link" data-scroll-target="#cdi-example-scenario-1-1"><span class="header-section-number">2.2</span> CDI Example: Scenario 1</a></li>
+  <li><a href="#linear-dependency-in-mlr-1" id="toc-linear-dependency-in-mlr-1" class="nav-link" data-scroll-target="#linear-dependency-in-mlr-1"><span class="header-section-number">2.3</span> Linear Dependency in MLR</a></li>
+  <li><a href="#the-design-matrix" id="toc-the-design-matrix" class="nav-link" data-scroll-target="#the-design-matrix"><span class="header-section-number">2.4</span> The Design Matrix</a></li>
+  <li><a href="#the-design-matrix-1" id="toc-the-design-matrix-1" class="nav-link" data-scroll-target="#the-design-matrix-1"><span class="header-section-number">2.5</span> The Design Matrix</a></li>
+  <li><a href="#the-first-consequence-of-multicollinearity" id="toc-the-first-consequence-of-multicollinearity" class="nav-link" data-scroll-target="#the-first-consequence-of-multicollinearity"><span class="header-section-number">2.6</span> The first consequence of multicollinearity</a></li>
+  </ul></li>
+  <li><a href="#perfectly-uncorrelated-orthogonal" id="toc-perfectly-uncorrelated-orthogonal" class="nav-link" data-scroll-target="#perfectly-uncorrelated-orthogonal"><span class="header-section-number">3</span> Perfectly Uncorrelated / Orthogonal</a>
+  <ul class="collapse">
+  <li><a href="#orthogonal-predictors" id="toc-orthogonal-predictors" class="nav-link" data-scroll-target="#orthogonal-predictors"><span class="header-section-number">3.1</span> Orthogonal Predictors</a></li>
+  <li><a href="#orthogonal-predictors-1" id="toc-orthogonal-predictors-1" class="nav-link" data-scroll-target="#orthogonal-predictors-1"><span class="header-section-number">3.2</span> Orthogonal Predictors</a></li>
+  <li><a href="#orthogonal-predictors-2" id="toc-orthogonal-predictors-2" class="nav-link" data-scroll-target="#orthogonal-predictors-2"><span class="header-section-number">3.3</span> Orthogonal Predictors</a></li>
+  <li><a href="#orthogonal-predictors-3" id="toc-orthogonal-predictors-3" class="nav-link" data-scroll-target="#orthogonal-predictors-3"><span class="header-section-number">3.4</span> Orthogonal Predictors</a></li>
+  <li><a href="#orthogonal-predictors-4" id="toc-orthogonal-predictors-4" class="nav-link" data-scroll-target="#orthogonal-predictors-4"><span class="header-section-number">3.5</span> Orthogonal Predictors</a></li>
+  <li><a href="#orthogonal-predictors-5" id="toc-orthogonal-predictors-5" class="nav-link" data-scroll-target="#orthogonal-predictors-5"><span class="header-section-number">3.6</span> Orthogonal Predictors</a></li>
+  </ul></li>
+  <li><a href="#cdi-example-scenario-2" id="toc-cdi-example-scenario-2" class="nav-link" data-scroll-target="#cdi-example-scenario-2"><span class="header-section-number">4</span> CDI Example: Scenario 2</a>
+  <ul class="collapse">
+  <li><a href="#motivating-example-cdi-1" id="toc-motivating-example-cdi-1" class="nav-link" data-scroll-target="#motivating-example-cdi-1"><span class="header-section-number">4.1</span> Motivating Example: CDI</a></li>
+  <li><a href="#motivating-example-cdi-2" id="toc-motivating-example-cdi-2" class="nav-link" data-scroll-target="#motivating-example-cdi-2"><span class="header-section-number">4.2</span> Motivating Example: CDI</a></li>
+  <li><a href="#motviating-example-cdi" id="toc-motviating-example-cdi" class="nav-link" data-scroll-target="#motviating-example-cdi"><span class="header-section-number">4.3</span> Motviating Example: CDI</a></li>
+  <li><a href="#motviating-example-cdi-1" id="toc-motviating-example-cdi-1" class="nav-link" data-scroll-target="#motviating-example-cdi-1"><span class="header-section-number">4.4</span> Motviating Example: CDI</a></li>
+  </ul></li>
+  <li><a href="#multicollinearity" id="toc-multicollinearity" class="nav-link" data-scroll-target="#multicollinearity"><span class="header-section-number">5</span> Multicollinearity</a>
+  <ul class="collapse">
+  <li><a href="#multicollinearity-1" id="toc-multicollinearity-1" class="nav-link" data-scroll-target="#multicollinearity-1"><span class="header-section-number">5.1</span> Multicollinearity</a></li>
+  <li><a href="#consequences-of-multicollinearity" id="toc-consequences-of-multicollinearity" class="nav-link" data-scroll-target="#consequences-of-multicollinearity"><span class="header-section-number">5.2</span> Consequences of Multicollinearity</a></li>
+  <li><a href="#consequences-of-multicollinearity-1" id="toc-consequences-of-multicollinearity-1" class="nav-link" data-scroll-target="#consequences-of-multicollinearity-1"><span class="header-section-number">5.3</span> Consequences of Multicollinearity</a></li>
+  <li><a href="#consequences-of-multicollinearity-2" id="toc-consequences-of-multicollinearity-2" class="nav-link" data-scroll-target="#consequences-of-multicollinearity-2"><span class="header-section-number">5.4</span> Consequences of Multicollinearity</a></li>
+  <li><a href="#how-to-deal-with-multicollinearity" id="toc-how-to-deal-with-multicollinearity" class="nav-link" data-scroll-target="#how-to-deal-with-multicollinearity"><span class="header-section-number">5.5</span> How to Deal with Multicollinearity?</a></li>
+  </ul></li>
+  <li><a href="#detection" id="toc-detection" class="nav-link" data-scroll-target="#detection"><span class="header-section-number">6</span> Detection</a>
+  <ul class="collapse">
+  <li><a href="#motivating-example-mtcars" id="toc-motivating-example-mtcars" class="nav-link" data-scroll-target="#motivating-example-mtcars"><span class="header-section-number">6.1</span> Motivating Example: mtcars</a></li>
+  <li><a href="#motivating-example-mtcars-1" id="toc-motivating-example-mtcars-1" class="nav-link" data-scroll-target="#motivating-example-mtcars-1"><span class="header-section-number">6.2</span> Motivating Example: mtcars</a></li>
+  <li><a href="#motivating-example-mtcars-2" id="toc-motivating-example-mtcars-2" class="nav-link" data-scroll-target="#motivating-example-mtcars-2"><span class="header-section-number">6.3</span> Motivating Example: mtcars</a></li>
+  </ul></li>
+  <li><a href="#vif" id="toc-vif" class="nav-link" data-scroll-target="#vif"><span class="header-section-number">7</span> VIF</a>
+  <ul class="collapse">
+  <li><a href="#definition-of-variance-inflation-factor-vif" id="toc-definition-of-variance-inflation-factor-vif" class="nav-link" data-scroll-target="#definition-of-variance-inflation-factor-vif"><span class="header-section-number">7.1</span> Definition of Variance Inflation Factor (VIF)</a></li>
+  <li><a href="#example-mtcars" id="toc-example-mtcars" class="nav-link" data-scroll-target="#example-mtcars"><span class="header-section-number">7.2</span> Example: mtcars</a></li>
+  <li><a href="#interpretation-of-vif" id="toc-interpretation-of-vif" class="nav-link" data-scroll-target="#interpretation-of-vif"><span class="header-section-number">7.3</span> Interpretation of VIF</a></li>
+  <li><a href="#what-to-do-about-multicollinearity" id="toc-what-to-do-about-multicollinearity" class="nav-link" data-scroll-target="#what-to-do-about-multicollinearity"><span class="header-section-number">7.4</span> What to do about Multicollinearity?</a></li>
+  <li><a href="#mtcars-example" id="toc-mtcars-example" class="nav-link" data-scroll-target="#mtcars-example"><span class="header-section-number">7.5</span> mtcars Example</a></li>
+  <li><a href="#mtcars-example-1" id="toc-mtcars-example-1" class="nav-link" data-scroll-target="#mtcars-example-1"><span class="header-section-number">7.6</span> mtcars Example</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -139,8 +260,605 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review</h1>
+<section id="review-lecture-01-06" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</h2>
+<ul>
+<li>Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.</li>
+<li>Lecture 07: Multiple Linear Regression (MLR): least squares estimate.</li>
+<li>Lecture 08: MLR inference (CI, t-test, linear functions, ANOVA).</li>
+<li>Lectures 9-10: Sums of squares, overall and partial F-tests, and ANOVA.</li>
+<li>Lecture 11: multicollinearity</li>
+</ul>
+</section>
+<section id="motivating-example-cdi" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="motivating-example-cdi"><span class="header-section-number">1.2</span> Motivating Example: CDI</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>cdi <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/CDI.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>cdi <span class="ot">&lt;-</span> cdi[cdi<span class="sc">$</span>region<span class="sc">==</span><span class="dv">1</span>,]</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#correlation heatmap</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>cdi<span class="sc">$</span>physicians_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>physicians <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>cdi<span class="sc">$</span>hospitals_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>hospitals <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>cdi<span class="sc">$</span>crimes_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>crimes <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>cdi<span class="sc">$</span>land_area_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>land_area <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>cdi_clean <span class="ot">&lt;-</span> cdi[, <span class="fu">c</span>(<span class="st">"land_area_std"</span>, <span class="st">"population"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="st">"X18.34"</span>, <span class="st">"X65plus"</span>, <span class="st">"physicians_std"</span>, <span class="st">"hospitals_std"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="st">"crimes_std"</span>, <span class="st">"high_school"</span>, <span class="st">"bachelor"</span>, <span class="st">"poverty"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">"unemployment"</span>, <span class="st">"capita_income"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="linear-dependency-in-mlr" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Linear Dependency in MLR</h1>
+<section id="cdi-example-scenario-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="cdi-example-scenario-1"><span class="header-section-number">2.1</span> CDI Example: Scenario 1</h2>
+<ul>
+<li>In the CDI example, high_school is the percent of county population 25 years or older who completed 12 or more years of school.</li>
+<li>I am interested a related variable: the percent of county population 25 years or older who completed less than 12 years of school.</li>
+<li>Let’s create this new variable and see how it is related to unemployment rate.</li>
+</ul>
+</section>
+<section id="cdi-example-scenario-1-1" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="cdi-example-scenario-1-1"><span class="header-section-number">2.2</span> CDI Example: Scenario 1</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>cdi_clean_new <span class="ot">&lt;-</span> cdi_clean</span>
+<span id="cb2-2"><a href="#cb2-2"></a>cdi_clean_new<span class="sc">$</span>no_high_school <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">-</span> cdi_clean<span class="sc">$</span>high_school</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">summary</span>(<span class="fu">lm</span>(unemployment <span class="sc">~</span> ., <span class="at">data=</span>cdi_clean_new))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = unemployment ~ ., data = cdi_clean_new)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.1924 -0.9682 -0.1311  0.6427  4.0858 
+
+Coefficients: (1 not defined because of singularities)
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    -2.529e+00  5.555e+00  -0.455  0.64999    
+land_area_std   2.093e-02  4.719e-02   0.443  0.65852    
+population     -4.821e-08  5.534e-07  -0.087  0.93076    
+X18.34          1.742e-01  7.373e-02   2.363  0.02027 *  
+X65plus         1.676e-01  7.476e-02   2.242  0.02739 *  
+physicians_std -2.428e-01  2.280e-01  -1.065  0.28966    
+hospitals_std  -3.151e-01  1.714e-01  -1.838  0.06936 .  
+crimes_std     -3.499e-03  6.556e-03  -0.534  0.59489    
+high_school     1.996e-02  5.017e-02   0.398  0.69164    
+bachelor       -1.435e-01  6.570e-02  -2.185  0.03146 *  
+poverty         3.179e-01  8.518e-02   3.732  0.00033 ***
+capita_income   1.833e-04  8.293e-05   2.210  0.02962 *  
+no_high_school         NA         NA      NA       NA    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.344 on 91 degrees of freedom
+Multiple R-squared:  0.4792,    Adjusted R-squared:  0.4162 
+F-statistic: 7.611 on 11 and 91 DF,  p-value: 3.759e-09</code></pre>
+</div>
+</div>
+</section>
+<section id="linear-dependency-in-mlr-1" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="linear-dependency-in-mlr-1"><span class="header-section-number">2.3</span> Linear Dependency in MLR</h2>
+<ul>
+<li>Let <span class="math inline">\(x_1, \cdots, x_{p+1}\)</span> denote the predictor variables. Linear dependency means that there exist constants <span class="math inline">\(a_1, \cdots, a_{p+1}\)</span>, not all zero, such that <span class="math display">\[a_1x_1 + a_2x_2 + \cdots + a_{p+1}x_{p+1} = 0.\]</span></li>
+<li>Recall that the LSE is given by <span class="math display">\[\hat{\beta} = (X^TX)^{-1}X^Ty\]</span></li>
+<li>When there is linear dependency among the predictor variables, the matrix <span class="math inline">\(X^TX\)</span> is singular and cannot be inverted. In this situation, LSE is not unique.</li>
+</ul>
+</section>
+<section id="the-design-matrix" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="the-design-matrix"><span class="header-section-number">2.4</span> The Design Matrix</h2>
+<ul>
+<li>To see this, we will look at a toy example with only two predictor variables that are linearly dependent and <span class="math inline">\(n\)</span>=5</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>X1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>X2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">4</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>X <span class="ot">=</span> <span class="fu">cbind</span>(<span class="dv">1</span>, X1, X2)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>XTX <span class="ot">=</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb4-6"><a href="#cb4-6"></a>XTX</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="fu">det</span>(XTX)</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">solve</span>(XTX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="the-design-matrix-1" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="the-design-matrix-1"><span class="header-section-number">2.5</span> The Design Matrix</h2>
+<pre><code>&gt; X1 = c(2,3,4,5,6)
+&gt; X2 = c(8,7,6,5,4)
+&gt; y = rnorm(5)
+&gt; X = cbind(1, X1, X2)
+&gt; XTX = t(X) %*% X
+&gt; XTX
+       X1  X2
+    5  20  30
+X1 20  90 110
+X2 30 110 190
+&gt; det(XTX)
+[1] -1.110223e-12
+&gt; solve(XTX)
+Error in solve.default(XTX) : 
+  system is computationally singular: reciprocal condition number = 5.60719e-19</code></pre>
+</section>
+<section id="the-first-consequence-of-multicollinearity" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="the-first-consequence-of-multicollinearity"><span class="header-section-number">2.6</span> The first consequence of multicollinearity</h2>
+<ul>
+<li>In the artificial examples, there is perfect multicollinearity
+<ul>
+<li>between high_school and no_no_high_school because no_high_school = 100 - high_school.</li>
+<li>between X1 and X2 because X2 = 10 - X1</li>
+</ul></li>
+<li>As a consequence, the LSE cannot be computed.</li>
+<li>When there is close to perfect multicollinearity, the matrix <span class="math inline">\(X^TX\)</span> is close to singular. It is numerically unstable to compute the LSEs.</li>
+</ul>
+</section>
+</section>
+<section id="perfectly-uncorrelated-orthogonal" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Perfectly Uncorrelated / Orthogonal</h1>
+<section id="orthogonal-predictors" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="orthogonal-predictors"><span class="header-section-number">3.1</span> Orthogonal Predictors</h2>
+<ul>
+<li>Consider the following design matrix with two predictor variables that are perfectly uncorrelated. The sample correlation is 0.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>X1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>X2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">6</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">8</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="fu">cor</span>(X1, X2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="orthogonal-predictors-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="orthogonal-predictors-1"><span class="header-section-number">3.2</span> Orthogonal Predictors</h2>
+<ul>
+<li>y on X1 only</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: y
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+X1         1 2.7806 2.78056  3.7138 0.1023
+Residuals  6 4.4923 0.74871               </code></pre>
+</div>
+</div>
+</section>
+<section id="orthogonal-predictors-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="orthogonal-predictors-2"><span class="header-section-number">3.3</span> Orthogonal Predictors</h2>
+<ul>
+<li>y on X2 only</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: y
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+X2         1 0.0087 0.00874  0.0072  0.935
+Residuals  6 7.2641 1.21068               </code></pre>
+</div>
+</div>
+</section>
+<section id="orthogonal-predictors-3" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="orthogonal-predictors-3"><span class="header-section-number">3.4</span> Orthogonal Predictors</h2>
+<ul>
+<li>y on X1 and X2. We noticed that <span class="math display">\[SS(\beta_2|\beta_1)=SS(\beta_2)\]</span></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: y
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+X1         1 2.7806 2.78056  3.1009 0.1386
+X2         1 0.0087 0.00874  0.0098 0.9252
+Residuals  5 4.4835 0.89670               </code></pre>
+</div>
+</div>
+</section>
+<section id="orthogonal-predictors-4" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="orthogonal-predictors-4"><span class="header-section-number">3.5</span> Orthogonal Predictors</h2>
+<ul>
+<li>y on X2 and X1. We noticed that <span class="math display">\[SS(\beta_1|\beta_2)=SS(\beta_1)\]</span></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X2 <span class="sc">+</span> X1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: y
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+X2         1 0.0087 0.00874  0.0098 0.9252
+X1         1 2.7806 2.78056  3.1009 0.1386
+Residuals  5 4.4835 0.89670               </code></pre>
+</div>
+</div>
+</section>
+<section id="orthogonal-predictors-5" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="orthogonal-predictors-5"><span class="header-section-number">3.6</span> Orthogonal Predictors</h2>
+<ul>
+<li>Estimated coefficients</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error   t value  Pr(&gt;|t|)
+(Intercept)  1.280454  0.9674130  1.323586 0.2338355
+X1          -1.179101  0.6118457 -1.927121 0.1022516</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X2))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate Std. Error     t value  Pr(&gt;|t|)
+(Intercept) -0.85187846  4.2968424 -0.19825686 0.8493909
+X2           0.06612399  0.7780357  0.08498838 0.9350355</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate Std. Error     t value  Pr(&gt;|t|)
+(Intercept)  0.91677249  3.8319080  0.23924700 0.8204117
+X1          -1.17910064  0.6695907 -1.76092738 0.1385577
+X2           0.06612399  0.6695907  0.09875285 0.9251714</code></pre>
+</div>
+</div>
+<ul>
+<li>Are the results expected? Questions?</li>
+</ul>
+</section>
+</section>
+<section id="cdi-example-scenario-2" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> CDI Example: Scenario 2</h1>
+<section id="motivating-example-cdi-1" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="motivating-example-cdi-1"><span class="header-section-number">4.1</span> Motivating Example: CDI</h2>
+<ul>
+<li>There are two variables measuring medical resources:
+<ul>
+<li>physicians_std: number of physicians per 1000 people</li>
+<li>hospitals_std: number of hospitals per 1000 people</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(unemployment <span class="sc">~</span> ., <span class="at">data =</span> cdi_clean))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Estimate   Std. Error     t value     Pr(&gt;|t|)
+(Intercept)    -2.529001e+00 5.554713e+00 -0.45528927 0.6499855910
+land_area_std   2.092692e-02 4.719485e-02  0.44341529 0.6585178252
+population     -4.821393e-08 5.533852e-07 -0.08712543 0.9307632387
+X18.34          1.742129e-01 7.373286e-02  2.36275821 0.0202693926
+X65plus         1.676083e-01 7.475521e-02  2.24209461 0.0273852189
+physicians_std -2.428088e-01 2.279720e-01 -1.06508180 0.2896567990
+hospitals_std  -3.150831e-01 1.714495e-01 -1.83775989 0.0693608469
+crimes_std     -3.498817e-03 6.556443e-03 -0.53364557 0.5948878779
+high_school     1.996147e-02 5.016747e-02  0.39789670 0.6916382398
+bachelor       -1.435489e-01 6.569947e-02 -2.18493293 0.0314626822
+poverty         3.179270e-01 8.517992e-02  3.73241776 0.0003299671
+capita_income   1.832641e-04 8.293057e-05  2.20984933 0.0296243877</code></pre>
+</div>
+</div>
+</section>
+<section id="motivating-example-cdi-2" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="motivating-example-cdi-2"><span class="header-section-number">4.2</span> Motivating Example: CDI</h2>
+<ul>
+<li>In lecture 10, we used a partial F-test to show that the medical resource variables are useful, although neither is significant after adjusting for all other variables.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>lm_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> ., <span class="at">data=</span> cdi_clean)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>lm_reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> . <span class="sc">-</span> physicians_std <span class="sc">-</span> hospitals_std, <span class="at">data=</span> cdi_clean)</span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">anova</span>(lm_reduced, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: unemployment ~ (land_area_std + population + X18.34 + X65plus + 
+    physicians_std + hospitals_std + crimes_std + high_school + 
+    bachelor + poverty + capita_income) - physicians_std - hospitals_std
+Model 2: unemployment ~ land_area_std + population + X18.34 + X65plus + 
+    physicians_std + hospitals_std + crimes_std + high_school + 
+    bachelor + poverty + capita_income
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
+1     93 185.97                                
+2     91 164.32  2    21.656 5.9965 0.003578 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="motviating-example-cdi" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="motviating-example-cdi"><span class="header-section-number">4.3</span> Motviating Example: CDI</h2>
+<ul>
+<li>Let’s look at the models with only one of the medical resource variables removed: keep hospitals_std but remove physicians_std</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>cdi_model_reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(unemployment <span class="sc">~</span> . <span class="sc">-</span> physicians_std, <span class="at">data=</span> cdi_clean)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">summary</span>(cdi_model_reduced)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Estimate   Std. Error    t value     Pr(&gt;|t|)
+(Intercept)   -9.731543e-01 5.363108e+00 -0.1814534 0.8564108625
+land_area_std  2.481018e-02 4.708817e-02  0.5268879 0.5995396198
+population    -1.926484e-07 5.369040e-07 -0.3588135 0.7205567614
+X18.34         1.514694e-01 7.062455e-02  2.1447133 0.0346108397
+X65plus        1.538462e-01 7.368382e-02  2.0879235 0.0395684520
+hospitals_std -4.325524e-01 1.313618e-01 -3.2928317 0.0014082893
+crimes_std    -2.376263e-03 6.475901e-03 -0.3669394 0.7145068381
+high_school    1.904582e-02 5.019673e-02  0.3794235 0.7052477908
+bachelor      -1.590264e-01 6.411902e-02 -2.4801745 0.0149508017
+poverty        3.075974e-01 8.468778e-02  3.6321344 0.0004622367
+capita_income  1.645492e-04 8.110686e-05  2.0287945 0.0453696151</code></pre>
+</div>
+</div>
+</section>
+<section id="motviating-example-cdi-1" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="motviating-example-cdi-1"><span class="header-section-number">4.4</span> Motviating Example: CDI</h2>
+<ul>
+<li>Now keep physicians_std but remove hospitals_std</li>
+<li>Medical resource variables are useful; because they are correlated, neither is significant when both are included.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(unemployment <span class="sc">~</span> . <span class="sc">-</span> hospitals_std, <span class="at">data=</span> cdi_clean))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Estimate   Std. Error    t value    Pr(&gt;|t|)
+(Intercept)    -2.751801e+00 5.624685e+00 -0.4892366 0.625838629
+land_area_std   2.162006e-02 4.779922e-02  0.4523098 0.652110510
+population      1.312893e-07 5.516898e-07  0.2379767 0.812428372
+X18.34          1.772617e-01 7.466053e-02  2.3742359 0.019663309
+X65plus         1.512536e-01 7.517650e-02  2.0119796 0.047146899
+physicians_std -5.123192e-01 1.767818e-01 -2.8980323 0.004693675
+crimes_std     -4.539103e-03 6.615819e-03 -0.6860985 0.494376477
+high_school     1.529577e-02 5.074641e-02  0.3014159 0.763777621
+bachelor       -1.157979e-01 6.476145e-02 -1.7880692 0.077057038
+poverty         2.791540e-01 8.358518e-02  3.3397546 0.001212356
+capita_income   1.753412e-04 8.388166e-05  2.0903398 0.039345649</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="multicollinearity" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Multicollinearity</h1>
+<section id="multicollinearity-1" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="multicollinearity-1"><span class="header-section-number">5.1</span> Multicollinearity</h2>
+<ul>
+<li><p>In practice, predictor variables are often neither perfectly correlated nor perfectly uncorrelated.</p></li>
+<li><p>In practice, predictor variables are often correlated, sometimes highly correlated. This is called multicollinearity.</p></li>
+</ul>
+</section>
+<section id="consequences-of-multicollinearity" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="consequences-of-multicollinearity"><span class="header-section-number">5.2</span> Consequences of Multicollinearity</h2>
+<ul>
+<li>Multicollineary does not affect the overall fit of the model or the prediction, as long as there is no extrapolation.</li>
+<li>The variance of the LSEs are inflated. Recall that <span class="math inline">\(Var(\hat{\beta}) = \sigma^2 (X^TX)^{-1}\)</span>. <span class="math inline">\((X^TX)^{-1}\)</span> can have large diagonal elements when it is close to singular (the columns of <span class="math inline">\(X\)</span> are nearly dependent).</li>
+</ul>
+</section>
+<section id="consequences-of-multicollinearity-1" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="consequences-of-multicollinearity-1"><span class="header-section-number">5.3</span> Consequences of Multicollinearity</h2>
+<ul>
+<li>When <span class="math inline">\(X_i\)</span> and <span class="math inline">\(X_j\)</span> are highly correlated
+<ul>
+<li>they provide similar information about the response variable.</li>
+<li>the contribution of <span class="math inline">\(x_i\)</span> given <span class="math inline">\(x_j\)</span> is already in the model is small.</li>
+</ul></li>
+<li>Similar issues when a predictor is highly correlated with a group of other predictors.</li>
+</ul>
+</section>
+<section id="consequences-of-multicollinearity-2" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="consequences-of-multicollinearity-2"><span class="header-section-number">5.4</span> Consequences of Multicollinearity</h2>
+<ul>
+<li>When there is multicollinearity, it is difficult to separate their individual effects on the response variable.</li>
+<li>In MLR, we interpret the coefficient of a predictor variable as the effect of that variable on the response when holding all other predictors constant. This is not practically possible when the predictors are highly correlated.</li>
+</ul>
+</section>
+<section id="how-to-deal-with-multicollinearity" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="how-to-deal-with-multicollinearity"><span class="header-section-number">5.5</span> How to Deal with Multicollinearity?</h2>
+<ul>
+<li>For prediction purpose, multicollinearity is not a big issue as long as there is no extrapolation.</li>
+<li>For inference purpose, multicollineary is an issue.</li>
+<li>How to detect it?
+<ul>
+<li>correlation matrix</li>
+<li>variance inflation factor (VIF)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="detection" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Detection</h1>
+<section id="motivating-example-mtcars" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="motivating-example-mtcars"><span class="header-section-number">6.1</span> Motivating Example: mtcars</h2>
+<ul>
+<li>cars dataset:
+<ul>
+<li>y: mpg (miles per gallon)</li>
+<li>x1: disp (displacement, cu.in.)</li>
+<li>x2: hp (horsepower)</li>
+<li>x3: wt (weight, 1000 lbs)</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">cor</span>(mtcars[,<span class="fu">c</span>(<span class="st">"hp"</span>, <span class="st">"wt"</span>, <span class="st">"disp"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            hp        wt      disp
+hp   1.0000000 0.6587479 0.7909486
+wt   0.6587479 1.0000000 0.8879799
+disp 0.7909486 0.8879799 1.0000000</code></pre>
+</div>
+</div>
+</section>
+<section id="motivating-example-mtcars-1" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="motivating-example-mtcars-1"><span class="header-section-number">6.2</span> Motivating Example: mtcars</h2>
+<ul>
+<li>Pairwise scatterplots also show that <code>disp</code> is highly correlated with <code>hp</code> and <code>wt</code>.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">pairs</span>(mtcars[,<span class="fu">c</span>(<span class="st">"hp"</span>, <span class="st">"wt"</span>, <span class="st">"disp"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11-lecture_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="motivating-example-mtcars-2" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="motivating-example-mtcars-2"><span class="header-section-number">6.3</span> Motivating Example: mtcars</h2>
+<ul>
+<li>Based on the correlation matrix, <code>disp</code> is highly correlated with <code>hp</code> and <code>wt</code>.</li>
+<li>We can qualify the correlation between <code>disp</code> and (hp, wt) using the multiple R-squared from regressing <code>disp</code> on <code>hp</code> and <code>wt</code>, which is the proportion of variation in <code>disp</code> explained by <code>hp</code> and <code>wt</code>.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>lm_disp <span class="ot">&lt;-</span> <span class="fu">lm</span>(disp <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data=</span>mtcars)</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">summary</span>(lm_disp)<span class="sc">$</span>r.squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8634722</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="vif" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> VIF</h1>
+<section id="definition-of-variance-inflation-factor-vif" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="definition-of-variance-inflation-factor-vif"><span class="header-section-number">7.1</span> Definition of Variance Inflation Factor (VIF)</h2>
+<ul>
+<li><p>The variance inflation factor (VIF) for a predictor variable <span class="math inline">\(X_j\)</span> is defined as <span class="math display">\[VIF_j = \frac{1}{1 - R_j^2},\]</span> where <span class="math inline">\(R_j^2\)</span> is the multiple R-squared from regressing <span class="math inline">\(X_j\)</span> on all other predictor variables.</p></li>
+<li><p>In the mtcars example, <span class="math inline">\(R_{disp}^2\)</span>=0.863, so <span class="math display">\[VIF_{disp} = \frac{1}{1-0.863} = 7.30.\]</span></p></li>
+<li><p>The <code>vif</code> function in the <code>car</code> package can compute VIFs for all predictor variables in a linear model.</p></li>
+</ul>
+</section>
+<section id="example-mtcars" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="example-mtcars"><span class="header-section-number">7.2</span> Example: mtcars</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">vif</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> disp <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data=</span>mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    disp       hp       wt 
+7.324517 2.736633 4.844618 </code></pre>
+</div>
+</div>
+</section>
+<section id="interpretation-of-vif" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="interpretation-of-vif"><span class="header-section-number">7.3</span> Interpretation of VIF</h2>
+<ul>
+<li>When there is no multicollinearity, <span class="math inline">\(R_j^2\)</span> is close to 0 and <span class="math inline">\(VIF_j\)</span> is close to 1.</li>
+<li>When there is multicollinearity, <span class="math inline">\(R_j^2\)</span> is close to 1 and <span class="math inline">\(VIF_j\)</span> is large.</li>
+<li>A common rule of thumb is that if <span class="math inline">\(VIF_j &gt; 5\)</span> or 10, then there is serious multicollinearity involving <span class="math inline">\(X_j\)</span>.</li>
+</ul>
+</section>
+<section id="what-to-do-about-multicollinearity" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="what-to-do-about-multicollinearity"><span class="header-section-number">7.4</span> What to do about Multicollinearity?</h2>
+<ul>
+<li>One intuitive method is to remove some of the correlated predictor variables from the model.</li>
+<li>Another method is to combine the correlated predictor variables into a single predictor variable, e.g., by taking their average.</li>
+<li>More advanced methods include principal component regression and ridge regression, which we will cover in future courses.</li>
+</ul>
+</section>
+<section id="mtcars-example" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="mtcars-example"><span class="header-section-number">7.5</span> mtcars Example</h2>
+<ul>
+<li>Does removing <code>disp</code> help with multicollinearity?</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">vif</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data=</span>mtcars))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      hp       wt 
+1.766625 1.766625 </code></pre>
+</div>
+</div>
+</section>
+<section id="mtcars-example-1" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="mtcars-example-1"><span class="header-section-number">7.6</span> mtcars Example</h2>
+<ul>
+<li>Also compare the two models to check whether removing <code>disp</code> hurts the model fit.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>lm_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> disp <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data=</span>mtcars)</span>
+<span id="cb39-2"><a href="#cb39-2"></a>lm_reduced <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data=</span>mtcars)</span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="fu">anova</span>(lm_reduced, lm_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: mpg ~ hp + wt
+Model 2: mpg ~ disp + hp + wt
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     29 195.05                           
+2     28 194.99  1   0.05708 0.0082 0.9285</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co">#alternative, we can use anova(lm(mpg ~ hp + wt + disp, data=mtcars))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>So removing disp does not hurt the model fit significantly, and it helps with multicollinearity.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
