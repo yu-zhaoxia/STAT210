@@ -437,8 +437,8 @@ Error in solve.default(XTX) :
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X1         1 0.0685 0.06853  0.0635 0.8094
-Residuals  6 6.4750 1.07917               </code></pre>
+X1         1 0.0119 0.01188  0.0082 0.9306
+Residuals  6 8.6516 1.44193               </code></pre>
 </div>
 </div>
 </section>
@@ -457,8 +457,8 @@ Residuals  6 6.4750 1.07917               </code></pre>
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X2         1 2.2365 2.23651  3.1156  0.128
-Residuals  6 4.3071 0.71784               </code></pre>
+X2         1 0.3918 0.39181  0.2842 0.6131
+Residuals  6 8.2717 1.37861               </code></pre>
 </div>
 </div>
 </section>
@@ -477,9 +477,9 @@ Residuals  6 4.3071 0.71784               </code></pre>
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X1         1 0.0685 0.06853  0.0808 0.7876
-X2         1 2.2365 2.23651  2.6383 0.1652
-Residuals  5 4.2385 0.84771               </code></pre>
+X1         1 0.0119 0.01188  0.0072 0.9357
+X2         1 0.3918 0.39181  0.2372 0.6468
+Residuals  5 8.2598 1.65195               </code></pre>
 </div>
 </div>
 </section>
@@ -498,9 +498,9 @@ Residuals  5 4.2385 0.84771               </code></pre>
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X2         1 2.2365 2.23651  2.6383 0.1652
-X1         1 0.0685 0.06853  0.0808 0.7876
-Residuals  5 4.2385 0.84771               </code></pre>
+X2         1 0.3918 0.39181  0.2372 0.6468
+X1         1 0.0119 0.01188  0.0072 0.9357
+Residuals  5 8.2598 1.65195               </code></pre>
 </div>
 </div>
 </section>
@@ -515,28 +515,28 @@ Residuals  5 4.2385 0.84771               </code></pre>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Estimate Std. Error   t value  Pr(&gt;|t|)
-(Intercept) 0.2597114  1.1614495 0.2236097 0.8304801
-X1          0.1851139  0.7345651 0.2520047 0.8094475</code></pre>
+<pre><code>               Estimate Std. Error     t value  Pr(&gt;|t|)
+(Intercept) -0.08325489  1.3425398 -0.06201298 0.9525667
+X1           0.07706922  0.8490967  0.09076613 0.9306327</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X2))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Estimate Std. Error   t value  Pr(&gt;|t|)
-(Intercept)  6.353492  3.3086421  1.920272 0.1032272
-X2          -1.057475  0.5991008 -1.765103 0.1279884</code></pre>
+<pre><code>              Estimate Std. Error    t value  Pr(&gt;|t|)
+(Intercept)  2.4667127  4.5851697  0.5379763 0.6099529
+X2          -0.4426116  0.8302435 -0.5331106 0.6131159</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>              Estimate Std. Error    t value  Pr(&gt;|t|)
-(Intercept)  6.0758216  3.7257448  1.6307670 0.1638682
-X1           0.1851139  0.6510397  0.2843358 0.7875525
-X2          -1.0574746  0.6510397 -1.6242860 0.1652426</code></pre>
+<pre><code>               Estimate Std. Error     t value  Pr(&gt;|t|)
+(Intercept)  2.35110890  5.2010340  0.45204644 0.6701706
+X1           0.07706922  0.9088329  0.08480021 0.9357110
+X2          -0.44261160  0.9088329 -0.48701098 0.6468490</code></pre>
 </div>
 </div>
 <ul>

@@ -183,11 +183,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#transformations-and-model-diagnostics-senic-data" id="toc-transformations-and-model-diagnostics-senic-data" class="nav-link active" data-scroll-target="#transformations-and-model-diagnostics-senic-data">1. Transformations and model diagnostics: SENIC data</a></li>
-  <li><a href="#lack-of-fit-r-required" id="toc-lack-of-fit-r-required" class="nav-link" data-scroll-target="#lack-of-fit-r-required">2. Lack of fit (R required)</a></li>
-  <li><a href="#interpreting-coefficients-in-when-both-x-and-y-are-log-transformed." id="toc-interpreting-coefficients-in-when-both-x-and-y-are-log-transformed." class="nav-link" data-scroll-target="#interpreting-coefficients-in-when-both-x-and-y-are-log-transformed.">3. Interpreting coefficients in when both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are log-transformed.</a></li>
-  <li><a href="#hat-matrix-as-a-projection" id="toc-hat-matrix-as-a-projection" class="nav-link" data-scroll-target="#hat-matrix-as-a-projection">4. Hat matrix as a projection</a></li>
-  <li><a href="#multiple-linear-regression-via-matrix-operations" id="toc-multiple-linear-regression-via-matrix-operations" class="nav-link" data-scroll-target="#multiple-linear-regression-via-matrix-operations">5 . Multiple Linear Regression via Matrix Operations</a></li>
+  <li><a href="#multiple-regression-partial-r²-senic." id="toc-multiple-regression-partial-r²-senic." class="nav-link active" data-scroll-target="#multiple-regression-partial-r²-senic.">1. Multiple Regression &amp; Partial R² (SENIC).</a></li>
+  <li><a href="#multicollinearity-via-simulation" id="toc-multicollinearity-via-simulation" class="nav-link" data-scroll-target="#multicollinearity-via-simulation">2. Multicollinearity via Simulation</a></li>
+  <li><a href="#interaction-and-visualization" id="toc-interaction-and-visualization" class="nav-link" data-scroll-target="#interaction-and-visualization">3. Interaction and Visualization</a></li>
   </ul>
 </nav>
     </div>
@@ -221,142 +219,156 @@ window.Quarto = {
 
 <p><strong>Data</strong>: Most data used in class or the assignments can be found <a href="https://github.com/yu-zhaoxia/STAT210/tree/056ac2d64ab1991d28ccf04bfd9e9020de1c0bcc/data">here</a>.</p>
 <p><strong>Instructions</strong>: Submit one document that answers every question in context with clear prose, includes the minimal R code used to obtain each result, and shows the relevant output/figures you discuss; for each sub-question, provide (i) a concise written answer interpreting the result in the problem setting, (ii) the code that produced it (readable and reproducible), and (iii) the key output (tables/statistics and, if applicable, plots with informative labels and brief captions)—note that code/output without a written answer will earn at most 50% credit. </p>
-<section id="transformations-and-model-diagnostics-senic-data" class="level2">
-<h2 class="anchored" data-anchor-id="transformations-and-model-diagnostics-senic-data">1. Transformations and model diagnostics: SENIC data</h2>
-<p>(<strong>R required</strong>) We model <strong>service score</strong> (response) using the <strong>number of registered nurses</strong> (predictor). The goal is to decide whether a <strong>log transformation of the response</strong> is needed.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>senic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/SENIC.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS) <span class="co"># mvrnorm</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)  <span class="co"># vif</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><strong>(a)</strong> Make a histogram and Normal Q–Q plot of the <strong>service score</strong> (the response). Does its distribution look approximately Normal? Why or why not?</p>
-<p><strong>(b)</strong> Apply a log transformation to the <strong>response</strong> using <code>log()</code>; then make a histogram and Normal Q–Q plot of <code>log(service score)</code>. Does the Normality look improved? Explain.</p>
-<p><strong>(c)</strong> Based on (a)–(b), is a <strong>log transform of the response</strong> a reasonable choice? Justify your answer briefly.</p>
-<p><strong>(d)</strong> Use the <strong>Box–Cox</strong> method to assess a suitable transformation for the <strong>response</strong> (use <code>MASS::boxcox()</code>). Report the <span class="math inline">\(\lambda\)</span> maximizing the profile and the 95% CI. State whether <span class="math inline">\(\lambda = 0\)</span> (log) is supported.</p>
-<p><strong>(e)</strong> Fit a simple linear regression with the <strong>log-transformed response</strong>: <span class="math display">\[
-\log(\text{service score}) \;=\; \beta_0+\beta_1\,(\text{nurses})+\varepsilon.\]</span></p>
-<p>Report the fitted slope and provide a one-sentence interpretation on the original scale (i.e., multiplicative change in the <strong>median</strong> service score per unit increase in nurses).</p>
-<p><strong>(f)</strong> For the model in (e), plot <strong>residuals vs.&nbsp;fitted</strong> and the <strong>Normal Q–Q plot</strong> of residuals. Comment on linearity, constant variance, and Normality.</p>
-<p><strong>(g)</strong> Refit the model using <code>log10()</code> instead of <code>log()</code> for the response. Compare results from <code>log()</code> vs <code>log10()</code>. Are inferences different? (Hint: they should be numerically rescaled but <strong>substantively equivalent</strong>; explain why.)</p>
-</section>
-<section id="lack-of-fit-r-required" class="level2">
-<h2 class="anchored" data-anchor-id="lack-of-fit-r-required">2. Lack of fit (R required)</h2>
-<p>We will examine whether a <strong>polynomial regression</strong> is needed in the SENIC data to model <code>risk</code> using the number of <code>beds</code>. (Both <code>risk</code> and <code>beds</code> are variables in the SENIC dataset.)</p>
-<p><strong>(a)</strong> Make a scatter plot of <code>risk</code> vs <code>beds</code>. Comment on whether the relationship appears <strong>linear</strong> (consider overall trend and spread).</p>
-<p><strong>(b)</strong> Fit the <strong>simple linear regression</strong> model with <code>risk</code> as the response and <code>beds</code> as the predictor. Assess whether the linear model is <strong>adequate</strong> by performing a lack-of-fit check:</p>
-<p><strong>(c)</strong> Fit <strong>polynomial regressions</strong> of degrees 2 and 3 (i.e., add <code>beds^2</code>, then <code>beds^3</code>). Use <code>anova()</code> to compare the <strong>nested models</strong><br>
-<code>linear</code> vs <code>quadratic</code> vs <code>cubic</code>, and comment on whether a polynomial term is warranted (report the F-tests and p-values). Conclude whether a polynomial regression is needed and, if so, which degree is sufficient.</p>
-</section>
-<section id="interpreting-coefficients-in-when-both-x-and-y-are-log-transformed." class="level2">
-<h2 class="anchored" data-anchor-id="interpreting-coefficients-in-when-both-x-and-y-are-log-transformed.">3. Interpreting coefficients in when both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are log-transformed.</h2>
-<p>In the battery life example, we first took log10 transformation on both response variable cycleLife and predictor variable DeltaQvar, then fit a simple linear regression model. The summary output is shown below.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>battery<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/battery.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(cycleLife) <span class="sc">~</span> <span class="fu">log10</span>(DeltaQvar), <span class="at">data =</span> battery)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = log10(cycleLife) ~ log10(DeltaQvar), data = battery)
-
-Residuals:
-      Min        1Q    Median        3Q       Max 
--0.107697 -0.056378  0.009384  0.056817  0.103507 
-
-Coefficients:
-                 Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)       1.44364    0.09990   14.45   &lt;2e-16 ***
-log10(DeltaQvar) -0.37281    0.02718  -13.72   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.06424 on 39 degrees of freedom
-Multiple R-squared:  0.8283,    Adjusted R-squared:  0.8239 
-F-statistic: 188.2 on 1 and 39 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<ol type="a">
-<li><p>Based on the summary output, write down the fitted regression equation in terms of <span class="math inline">\(\widehat{\log_{10}(\mathrm{cycleLife})}\)</span> and <span class="math inline">\(\log_{10}(\mathrm{DeltaQvar})\)</span>.</p></li>
-<li><p>Interpret <span class="math inline">\(\hat\beta_1\)</span> in the change in cycle life for a one-unit increase in <span class="math inline">\(\log_{10}(\mathrm{DeltaQvar})\)</span> (i.e., a tenfold increase in DeltaQvar).</p></li>
-<li><p>Interpret <span class="math inline">\(\hat\beta_1\)</span> in terms of percentage change in cycle life when DeltaQvar increases by 1%.</p></li>
-<li><p>For (b) and (c), find the corresponding confidence intervals. Hint: intervals should be first found on the log10 scale, then transformed back to the original scale.</p></li>
-</ol>
-</section>
-<section id="hat-matrix-as-a-projection" class="level2">
-<h2 class="anchored" data-anchor-id="hat-matrix-as-a-projection">4. Hat matrix as a projection</h2>
-<p>In this problem, you will prove that the hat matrix <span class="math inline">\(H\)</span> is a projection matrix by showting that it satsifies both (a) and (b). Recall <span class="math display">\[H \;=\; X\,(X^\top X)^{-1}X^\top .\]</span></p>
-<p><strong>(a)</strong> Show that <span class="math inline">\(H\)</span> is <strong>idempotent</strong>, i.e., <span class="math inline">\(H^2 = H\)</span>.</p>
-<p><strong>(b)</strong> Show that <span class="math inline">\(H\)</span> is <strong>symmetric</strong>, i.e., <span class="math inline">\(H^\top = H\)</span>.</p>
-<p><em>Note.</em> A <strong>projection matrix</strong> satisfies <span class="math inline">\(H^2=H\)</span>. When, in addition, <span class="math inline">\(H\)</span> is symmetric, it is the matrix of an <strong>orthogonal projection</strong> onto <span class="math inline">\(\operatorname{col}(X)\)</span>.</p>
-</section>
-<section id="multiple-linear-regression-via-matrix-operations" class="level2">
-<h2 class="anchored" data-anchor-id="multiple-linear-regression-via-matrix-operations">5 . Multiple Linear Regression via Matrix Operations</h2>
-<p>(R required) MLR: The purpose of this problem is to reproduce what <code>lm()</code> does using basic vector–matrix operations. After completing this problem, you should be able to understand the matrix form of MLR.</p>
-<ol type="a">
-<li>Load the height data from <code>../data/height_data.csv</code>. Create the response vector y and the design matrix X, as shown in the R code below. Then use <code>dim</code> and <code>head</code> functions to check the dimensions and the first five rows of X.</li>
-</ol>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>height.data<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(height.data<span class="sc">$</span>c.height)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Intercept =</span> <span class="dv">1</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">f.height  =</span> height.data<span class="sc">$</span>f.height,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">m.height  =</span> height.data<span class="sc">$</span>m.height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<ol start="2" type="a">
-<li>Use matrix operations to compute the least squares estimate of the regression parameters <span class="math inline">\(\hat\beta = (X^TX)^{-1}X^Ty\)</span>.</li>
-</ol>
+<section id="multiple-regression-partial-r²-senic." class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression-partial-r²-senic.">1. Multiple Regression &amp; Partial R² (SENIC).</h2>
+<p>We revisit hospital infection risk with a broader analysis. The data set is in the <code>data/SENIC.csv</code> from the class Google drive.</p>
+<p><strong>Data:</strong> <code>senic</code>.</p>
 <ul>
-<li>There several ways to compute <span class="math inline">\(X^TX\)</span> and <span class="math inline">\(X^Ty\)</span> in R: using <code>%*%</code> operator, using <code>t()</code> function to compute transpose, or using <code>crossprod()</code> function.</li>
-<li>There are also different ways to find the inverse of <span class="math inline">\(X^TX\)</span>. One way is to use the <code>solve()</code> function.</li>
-</ul>
-<ol start="3" type="a">
-<li><p>Compare your estimate in (b) with the one obtained from <code>lm()</code> function.</p></li>
-<li><p>Next, we would like to reproduce the fitted values and residuals. Recall that <span class="math display">\[\hat{y} = X\hat{\boldsymbol{\beta}},\]</span> and <span class="math display">\[e = y - \hat{y}.\]</span> Compute <span class="math inline">\(\hat y\)</span> and <span class="math inline">\(e\)</span> using matrix operations (results don’t need to be printed), and draw the residual plot (residuals vs fitted values).</p></li>
-<li><p>Use the residuals you obtained in (d) to compute <span class="math inline">\(SSE\)</span>, <span class="math inline">\(MSE\)</span>, and <span class="math inline">\(s\)</span>. Is the <span class="math inline">\(s\)</span> you obtained the same as the one from <code>summary(lm())</code>?</p></li>
-<li><p>Next, we would like to reproduce the inference of the regression coefficients. Recall that <span class="math display">\[V\hat ar(\hat{\boldsymbol{\beta}})=s^2(\mathbf{X}^T \mathbf{X})^{-1},\]</span> where <span class="math inline">\(s^2\)</span> is the estimated variance of the error term. Obtain the variance-covariance matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> using the formula above. Then compute the standard errors, t-statistics, and p-values for each regression coefficient. Are these values the same as those from <code>summary(lm())</code>?</p></li>
-<li><p>Finally, we would like to compute the F-statistic of the model. Recall that <span class="math display">\[F=\frac{MSR}{MSE}=\frac{(SSTO-SSE)/p}{SSE/(n-p-1)},\]</span> where <span class="math inline">\(p\)</span> is the number of predictors (excluding the intercept) and <span class="math inline">\(n\)</span> is the sample size. Here the <span class="math inline">\(SSTO\)</span> can be computed as <span class="math inline">\(SSTO = \sum_{i=1}^n (y_i - \bar{y})^2\)</span>. In R, there are several ways to do this:</p></li>
-</ol>
+<li><p>Response: <code>risk</code>is the hospital infection risk.</p></li>
+<li><p>Candidate predictors:</p>
 <ul>
-<li>Use the <code>sum()</code> function: <code>sum((y - mean(y))^2)</code>.</li>
-<li>Use the <code>var()</code> function to compute the variance of y, then multiply it by (n-1) to get <span class="math inline">\(SSTO\)</span>.</li>
-<li>Use the <code>crossprod()</code> function to compute the sum of squares directly: <code>as.numeric(crossprod(y - mean(y)))</code>.</li>
+<li><code>stay</code>: average length of stay at hospital,</li>
+<li><code>cultures</code>: average number of bacterial cultures per day at the hospital,</li>
+<li><code>age</code>: average age of patients at hospital,</li>
+<li><code>beds</code>: the number of beds in the hospital.</li>
+<li><code>xrays</code>: average number of X-rays per day at the hospital (used if <code>census</code> is missing).</li>
+<li><code>medschool</code>: whether the hospital is affiliated with a medical school (1=yes; 2=no).</li>
+</ul></li>
 </ul>
+<p><strong>(a)</strong> Fit the multiple regression model and use <code>anova()</code> to find the extra sum of squares<br>
+<span class="math inline">\(SSR(\beta_{\text{beds}} \mid \beta_{\text{stay}}, \beta_{\text{cultures}}, \beta_{\text{age}}, \beta_{\text{xrays}}, \beta_{\text{meschool}})\)</span>.</p>
+<p><strong>(b)</strong> Write a one-sentence interpretation of the value in (a) in the hospital context.</p>
+<p><strong>(c)</strong> Use <code>summary()</code> to obtain individual <em>t</em>-tests. Based on <em>t</em>-statistics, which predictors appear <strong>not significant</strong> at the 5% level?</p>
+<p><strong>(d)</strong> Using your answer in (c), carry out a <strong>joint F-test</strong> to determine whether the non-significant predictors can be dropped <strong>simultaneously</strong>. Show: hypotheses, R output, F statistic, p-value, and a conclusion in context. (Use either full-vs-reduced <code>anova()</code> <strong>or</strong> the extra-SS formula.)</p>
+<p><strong>(e)</strong> Fit the <strong>reduced model</strong> supported by (d). Write the fitted equation for <strong>risk</strong> and the remaining predictors.</p>
+<p><strong>(f)</strong> Compute the <strong>partial coefficient of determination</strong> <span class="math inline">\(R^2_{\text{partial}}\)</span>for the block {age, xray, beds, medschool} <strong>given</strong> {stay, cultures}. Interpret in context and briefly comment on whether its magnitude is surprising, given earlier results.</p>
+<p><strong>(g)</strong> The <code>medschool</code> variable is categorical. Did you specify it as a categorical by using the <code>factor</code> function? If not, refit the reduced model using <code>factor(medschool)</code>. Do the results change?</p>
+<p><strong>(h)</strong> Investigate potential multicollinearity in the full model using VIFs. Are there any concerns? If so, which predictors are involved?</p>
+</section>
+<section id="multicollinearity-via-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="multicollinearity-via-simulation">2. Multicollinearity via Simulation</h2>
+<p>We examine how predictor correlation inflates SEs and destabilizes coefficients via simulation. The simulation can be broken into three parts:</p>
+<p><strong>(1)</strong> Simulate data from the model <span class="math display">\[
+Y = 3 + 0.5X_1 + 0X_2 + \epsilon, \quad \epsilon \sim N(0,1),\]</span> where <span class="math inline">\((X_1, X_2)\)</span> are bivariate normal with means 0, variances 1, and correlation <span class="math inline">\(\rho\)</span>. Use <span class="math inline">\(n=100\)</span>.</p>
+<p><strong>(2)</strong> For each <span class="math inline">\(\rho \in \{0, 0.5, 0.7, 0.9, 0.95, 0.99\}\)</span>, simulate 1000 datasets and fit the model <span class="math inline">\(Y \sim X_1 + X_2\)</span>. Record the average estimated coefficients, their standard errors, and VIFs for <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</p>
+<p><strong>(3)</strong> Summarize your results in a table with rows for each <span class="math inline">\(\rho\)</span> and columns for average coefficients, SEs, and VIFs.</p>
+<p>Here is the R code to perform the simulation:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rhos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">0.95</span>, <span class="fl">0.99</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rho =</span> rhos,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">avg_beta1 =</span> <span class="cn">NA</span>, <span class="at">avg_beta2 =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">avg_se1 =</span> <span class="cn">NA</span>, <span class="at">avg_se2 =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">avg_vif1 =</span> <span class="cn">NA</span>, <span class="at">avg_vif2 =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(rhos)) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  rho <span class="ot">&lt;-</span> rhos[i]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  beta1_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  beta2_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  se1_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  se2_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  vif1_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  vif2_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">1000</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, rho, rho, <span class="dv">1</span>), <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">Sigma =</span> Sigma)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> X[,<span class="dv">1</span>]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> X[,<span class="dv">2</span>]</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    Y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> X1 <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> X2 <span class="sc">+</span> epsilon</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    coefs <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>coefficients</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    beta1_estimates[j] <span class="ot">&lt;-</span> coefs[<span class="st">"X1"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    beta2_estimates[j] <span class="ot">&lt;-</span> coefs[<span class="st">"X2"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    se1_estimates[j] <span class="ot">&lt;-</span> coefs[<span class="st">"X1"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    se2_estimates[j] <span class="ot">&lt;-</span> coefs[<span class="st">"X2"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(model)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    vif1_estimates[j] <span class="ot">&lt;-</span> vif_values[<span class="st">"X1"</span>]</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    vif2_estimates[j] <span class="ot">&lt;-</span> vif_values[<span class="st">"X2"</span>]</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>avg_beta1[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(beta1_estimates)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>avg_beta2[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(beta2_estimates)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>avg_se1[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(se1_estimates)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>avg_se2[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(se2_estimates)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>avg_vif1[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(vif1_estimates)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>avg_vif2[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(vif2_estimates)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Run the above code and print out results from the <code>results</code> data frame.</p>
+<p><strong>(a)</strong> Describe how SEs and VIFs change with <span class="math inline">\(\rho\)</span> and the practical implications.</p>
+<p><strong>(b)</strong> Examine several single simulated data sets with high multicollinearity (e.g., <span class="math inline">\(\rho = 0.95\)</span>). Fit the model and produce the summary output. Comment on coefficient estimates, SEs, <em>t</em>-values, and p-values in light of multicollinearity. You can run the following code a few times:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rho<span class="ot">=</span><span class="fl">0.95</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, rho, rho, <span class="dv">1</span>), <span class="at">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">Sigma =</span> Sigma)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> X[,<span class="dv">1</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> X[,<span class="dv">2</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> X1 <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> X2 <span class="sc">+</span> epsilon</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="interaction-and-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="interaction-and-visualization">3. Interaction and Visualization</h2>
+<p>We explore interaction effects using the <code>iris</code> dataset. The dataset is a built-in R dataset containing measurements of iris flowers from three species.</p>
+<ul>
+<li><p>Response variable: <code>Petal.Length</code>.</p></li>
+<li><p>Predictors: <code>Pepal.Width</code>, <code>Species</code> (categorical with 3 levels: setosa, versicolor, virginica).</p></li>
+</ul>
+<p><strong>(a)</strong> Examine the <code>iris</code> dataset structure. Explore the relationship between <code>Petal.Length</code> and <code>Petal.Width</code> across different <code>Species</code> using summary statistics and visualizations (e.g., boxplots, scatter plots). Provide a brief description of your findings.</p>
+<p><strong>(b)</strong> Conduct Analysis of variance by fitting a model with only <code>Species</code> as predictor. Report the ANOVA table and interpret the results in context. You can use either <code>aov()</code> or <code>lm()</code> followed by <code>anova()</code>.</p>
+<p><strong>(c)</strong> Fit the multiple regression model using <code>Petal.Width</code> and <code>Species</code> as predictors. Explain the coefficients. Note that this is an analysis of covariance (ANCOVA) model since <code>Species</code> is categorical and <code>Petal.Width</code> is continuous.</p>
+<p><strong>(d)</strong> Create a visualization (scatter plot with regression lines) to illustrate potential interaction effects between <code>Petal.Width</code> and <code>Species</code> on <code>Petal.Length</code>. Include informative labels and a brief caption.</p>
+<p><strong>(e)</strong> Fit a model with interactions between <code>Petal.Width</code> and <code>Species</code>. Describe how the relationship between <code>Petal.Width</code> and <code>Petal.Length</code> differ across species. Test whether the interaction terms are significant. State hypotheses, test statistic, the reference distribution, and provide conclusion in context.</p>
+<p>where <span class="math inline">\(p\)</span>is the number of predictors (excluding the intercept) and <span class="math inline">\(n\)</span>is the sample size. Here the <span class="math inline">\(SSTO\)</span>can be computed as <span class="math inline">\(SSTO = \sum_{i=1}^n (y_i - \bar{y})^2\)</span>. In R, there are several ways to do this: - Use the <code>sum()</code> function: <code>sum((y - mean(y))^2)</code>. - Use the <code>var()</code> function to compute the variance of y, then multiply it by (n-1) to get <span class="math inline">\(SSTO\)</span>. - Use the <code>crossprod()</code> function to compute the sum of squares directly: <code>as.numeric(crossprod(y - mean(y)))</code>.</p>
 <p>Compute the F-statistic using the formula above. Is the value the same as that from <code>summary(lm())</code>?</p>
 <ol start="8" type="a">
-<li><p>Lastly, we would like derive a t-test for <span class="math inline">\(H_0: \beta_f=\beta_m\)</span> (equivalently, <span class="math inline">\(\beta_f - \beta_m = 0\)</span>). In words, what does this hypothesis mean?</p></li>
-<li><p>Recall that for a linear combination of the regression parameters <span class="math inline">\(c^T \beta\)</span>, the variance is given by <span class="math display">\[Var(c^T \hat{\boldsymbol{\beta}}) = c^T Var(\hat{\boldsymbol{\beta}}) c.\]</span> Here, we have <span class="math inline">\(c = [0, 1, -1]^T\)</span> to test <span class="math inline">\(H_0: \beta_f - \beta_m = 0\)</span>. Compute the t-statistic and p-value for this test. Is the result the same as that from <code>linearHypothesis()</code> function in the <code>car</code> package?</p></li>
+<li><p>Lastly, we would like derive a t-test for <span class="math inline">\(H_0: \beta_f=\beta_m\)</span>(equivalently, <span class="math inline">\(\beta_f - \beta_m = 0\)</span>). In words, what does this hypothesis mean?</p></li>
+<li><p>Recall that for a linear combination of the regression parameters <span class="math inline">\(c^T \beta\)</span>, the variance is given by <span class="math display">\[Var(c^T \hat{\boldsymbol{\beta}}) = c^T Var(\hat{\boldsymbol{\beta}}) c.\]</span> Here, we have <span class="math inline">\(c = [0, 1, -1]^T\)</span>to test <span class="math inline">\(H_0: \beta_f - \beta_m = 0\)</span>. Compute the t-statistic and p-value for this test. Is the result the same as that from <code>linearHypothesis()</code> function in the <code>car</code> package?</p></li>
 </ol>
 <p>Here is part of the R code to get you started and you need complete the rest of the steps 5-7 and then make a conclusion in the context of the problem.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1. Import data and load necessary library </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>height.data<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#2. Define the contrast vector</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#3. Compute the variance of the linear combination. Here var_beta_hat is the variance-covariance matrix of beta_hat that you obtained in (e).</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>var_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> var_beta_hat <span class="sc">%*%</span> c</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#4. Compute the estimate of the linear combination</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>estimate_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> beta_hat</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#5. compute the standard error of the linear combination</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#6. Compute the t-statistic</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#7. Compute the p-value</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#8. Compare your results with linearHypothesis() function. Note, you need to convert your t-statistic to F-statistic, as the linearHypothesis() function reports F-statistic.</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data =</span> height.data)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(fit, <span class="st">"f.height - m.height = 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1. Import data and load necessary library </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>height.data<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#2. Define the contrast vector</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#3. Compute the variance of the linear combination. Here var_beta_hat is the variance-covariance matrix of beta_hat that you obtained in (e).</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>var_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> var_beta_hat <span class="sc">%*%</span> c</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#4. Compute the estimate of the linear combination</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>estimate_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> beta_hat</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#5. compute the standard error of the linear combination</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#6. Compute the t-statistic</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#7. Compute the p-value</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#8. Compare your results with linearHypothesis() function. Note, you need to convert your t-statistic to F-statistic, as the linearHypothesis() function reports F-statistic.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data =</span> height.data)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(fit, <span class="st">"f.height - m.height = 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <!--the normal equations, a linear combination of the regression parameters, and the variance of the predicted value.
