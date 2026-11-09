@@ -437,8 +437,8 @@ Error in solve.default(XTX) :
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X1         1  1.426  1.4261  0.5543 0.4847
-Residuals  6 15.435  2.5725               </code></pre>
+X1         1 0.0685 0.06853  0.0635 0.8094
+Residuals  6 6.4750 1.07917               </code></pre>
 </div>
 </div>
 </section>
@@ -457,8 +457,8 @@ Residuals  6 15.435  2.5725               </code></pre>
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X2         1  1.453   1.453  0.5658 0.4804
-Residuals  6 15.408   2.568               </code></pre>
+X2         1 2.2365 2.23651  3.1156  0.128
+Residuals  6 4.3071 0.71784               </code></pre>
 </div>
 </div>
 </section>
@@ -477,9 +477,9 @@ Residuals  6 15.408   2.568               </code></pre>
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X1         1  1.426  1.4261  0.5100 0.5071
-X2         1  1.453  1.4530  0.5196 0.5033
-Residuals  5 13.982  2.7964               </code></pre>
+X1         1 0.0685 0.06853  0.0808 0.7876
+X2         1 2.2365 2.23651  2.6383 0.1652
+Residuals  5 4.2385 0.84771               </code></pre>
 </div>
 </div>
 </section>
@@ -498,9 +498,9 @@ Residuals  5 13.982  2.7964               </code></pre>
 
 Response: y
           Df Sum Sq Mean Sq F value Pr(&gt;F)
-X2         1  1.453  1.4530  0.5196 0.5033
-X1         1  1.426  1.4261  0.5100 0.5071
-Residuals  5 13.982  2.7964               </code></pre>
+X2         1 2.2365 2.23651  2.6383 0.1652
+X1         1 0.0685 0.06853  0.0808 0.7876
+Residuals  5 4.2385 0.84771               </code></pre>
 </div>
 </div>
 </section>
@@ -515,18 +515,18 @@ Residuals  5 13.982  2.7964               </code></pre>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>              Estimate Std. Error    t value  Pr(&gt;|t|)
-(Intercept)  1.2491884   1.793223  0.6966163 0.5121138
-X1          -0.8444075   1.134134 -0.7445396 0.4846790</code></pre>
+<pre><code>             Estimate Std. Error   t value  Pr(&gt;|t|)
+(Intercept) 0.2597114  1.1614495 0.2236097 0.8304801
+X1          0.1851139  0.7345651 0.2520047 0.8094475</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X2))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>              Estimate Std. Error    t value  Pr(&gt;|t|)
-(Intercept) -4.7052834   6.257996 -0.7518834 0.4805651
-X2           0.8523383   1.133145  0.7521884 0.4803947</code></pre>
+<pre><code>             Estimate Std. Error   t value  Pr(&gt;|t|)
+(Intercept)  6.353492  3.3086421  1.920272 0.1032272
+X2          -1.057475  0.5991008 -1.765103 0.1279884</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -534,9 +534,9 @@ X2           0.8523383   1.133145  0.7521884 0.4803947</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Estimate Std. Error    t value  Pr(&gt;|t|)
-(Intercept) -3.4386721   6.766946 -0.5081572 0.6329616
-X1          -0.8444075   1.182462 -0.7141099 0.5071002
-X2           0.8523383   1.182462  0.7208169 0.5033052</code></pre>
+(Intercept)  6.0758216  3.7257448  1.6307670 0.1638682
+X1           0.1851139  0.6510397  0.2843358 0.7875525
+X2          -1.0574746  0.6510397 -1.6242860 0.1652426</code></pre>
 </div>
 </div>
 <ul>

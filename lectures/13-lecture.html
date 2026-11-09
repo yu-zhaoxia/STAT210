@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 13: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 13: Multiple Linear Regression - Interactions – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,81 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">1</span> Review</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-06" id="toc-review-lecture-01-06" class="nav-link" data-scroll-target="#review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</a></li>
+  <li><a href="#review-of-lecture-12" id="toc-review-of-lecture-12" class="nav-link" data-scroll-target="#review-of-lecture-12"><span class="header-section-number">1.2</span> Review of Lecture 12</a></li>
+  <li><a href="#review-of-lecture-12-1" id="toc-review-of-lecture-12-1" class="nav-link" data-scroll-target="#review-of-lecture-12-1"><span class="header-section-number">1.3</span> Review of Lecture 12</a></li>
+  </ul></li>
+  <li><a href="#additive-model" id="toc-additive-model" class="nav-link" data-scroll-target="#additive-model"><span class="header-section-number">2</span> Additive Model</a>
+  <ul class="collapse">
+  <li><a href="#additive-effects-model" id="toc-additive-effects-model" class="nav-link" data-scroll-target="#additive-effects-model"><span class="header-section-number">2.1</span> Additive Effects Model</a></li>
+  <li><a href="#mtcars-example-additive-model" id="toc-mtcars-example-additive-model" class="nav-link" data-scroll-target="#mtcars-example-additive-model"><span class="header-section-number">2.2</span> mtcars Example: Additive Model</a></li>
+  <li><a href="#the-fitted-additive-model" id="toc-the-fitted-additive-model" class="nav-link" data-scroll-target="#the-fitted-additive-model"><span class="header-section-number">2.3</span> The Fitted Additive Model:</a></li>
+  <li><a href="#interpret-the-fitted-additive-model" id="toc-interpret-the-fitted-additive-model" class="nav-link" data-scroll-target="#interpret-the-fitted-additive-model"><span class="header-section-number">2.4</span> Interpret the Fitted Additive Model</a></li>
+  <li><a href="#interpret-coefficients-of-an-additive-model" id="toc-interpret-coefficients-of-an-additive-model" class="nav-link" data-scroll-target="#interpret-coefficients-of-an-additive-model"><span class="header-section-number">2.5</span> Interpret Coefficients of An Additive Model</a></li>
+  <li><a href="#visualization-of-additive-model-fitted-values-vs-wt-and-vs" id="toc-visualization-of-additive-model-fitted-values-vs-wt-and-vs" class="nav-link" data-scroll-target="#visualization-of-additive-model-fitted-values-vs-wt-and-vs"><span class="header-section-number">2.6</span> Visualization of Additive Model: Fitted Values vs <code>wt</code> and <code>vs</code></a></li>
+  <li><a href="#additive-vs-interaction-effects-models" id="toc-additive-vs-interaction-effects-models" class="nav-link" data-scroll-target="#additive-vs-interaction-effects-models"><span class="header-section-number">2.7</span> Additive vs Interaction Effects Models</a></li>
+  </ul></li>
+  <li><a href="#interaction-effects-model" id="toc-interaction-effects-model" class="nav-link" data-scroll-target="#interaction-effects-model"><span class="header-section-number">3</span> Interaction Effects Model</a>
+  <ul class="collapse">
+  <li><a href="#interaction-effects-model-1" id="toc-interaction-effects-model-1" class="nav-link" data-scroll-target="#interaction-effects-model-1"><span class="header-section-number">3.1</span> Interaction Effects Model</a></li>
+  <li><a href="#mtcars-example-interaction-effects-model" id="toc-mtcars-example-interaction-effects-model" class="nav-link" data-scroll-target="#mtcars-example-interaction-effects-model"><span class="header-section-number">3.2</span> mtcars Example: Interaction Effects Model</a></li>
+  <li><a href="#the-slopes-differ-by-engine-type" id="toc-the-slopes-differ-by-engine-type" class="nav-link" data-scroll-target="#the-slopes-differ-by-engine-type"><span class="header-section-number">3.3</span> The Slopes Differ by Engine Type</a></li>
+  <li><a href="#test-for-interaction-effect" id="toc-test-for-interaction-effect" class="nav-link" data-scroll-target="#test-for-interaction-effect"><span class="header-section-number">3.4</span> Test for Interaction Effect</a></li>
+  <li><a href="#engine-specific-regression-lines" id="toc-engine-specific-regression-lines" class="nav-link" data-scroll-target="#engine-specific-regression-lines"><span class="header-section-number">3.5</span> Engine-Specific Regression Lines</a></li>
+  <li><a href="#visualization-of-two-models" id="toc-visualization-of-two-models" class="nav-link" data-scroll-target="#visualization-of-two-models"><span class="header-section-number">3.6</span> Visualization of Two Models</a></li>
+  <li><a href="#main-effects-and-interaction-effects" id="toc-main-effects-and-interaction-effects" class="nav-link" data-scroll-target="#main-effects-and-interaction-effects"><span class="header-section-number">3.7</span> Main Effects and Interaction Effects</a></li>
+  <li><a href="#mtcars" id="toc-mtcars" class="nav-link" data-scroll-target="#mtcars"><span class="header-section-number">3.8</span> <code>mtcars</code>:</a></li>
+  </ul></li>
+  <li><a href="#f-tests" id="toc-f-tests" class="nav-link" data-scroll-target="#f-tests"><span class="header-section-number">4</span> F-tests</a>
+  <ul class="collapse">
+  <li><a href="#anova-table-for-interaction-model" id="toc-anova-table-for-interaction-model" class="nav-link" data-scroll-target="#anova-table-for-interaction-model"><span class="header-section-number">4.1</span> ANOVA Table for Interaction Model</a></li>
+  <li><a href="#f-tests-for-mtcars-example" id="toc-f-tests-for-mtcars-example" class="nav-link" data-scroll-target="#f-tests-for-mtcars-example"><span class="header-section-number">4.2</span> F-tests for <code>mtcars</code> Example</a></li>
+  <li><a href="#f-tests-for-mtcars-example-1" id="toc-f-tests-for-mtcars-example-1" class="nav-link" data-scroll-target="#f-tests-for-mtcars-example-1"><span class="header-section-number">4.3</span> F-tests for <code>mtcars</code> Example</a></li>
+  <li><a href="#summary-of-f-tests-in-interaction-model" id="toc-summary-of-f-tests-in-interaction-model" class="nav-link" data-scroll-target="#summary-of-f-tests-in-interaction-model"><span class="header-section-number">4.4</span> Summary of F-tests in Interaction Model</a></li>
+  <li><a href="#which-model-as-the-full-model" id="toc-which-model-as-the-full-model" class="nav-link" data-scroll-target="#which-model-as-the-full-model"><span class="header-section-number">4.5</span> Which Model as the Full Model?</a></li>
+  </ul></li>
+  <li><a href="#more-on-interactions" id="toc-more-on-interactions" class="nav-link" data-scroll-target="#more-on-interactions"><span class="header-section-number">5</span> More On Interactions</a></li>
+  <li><a href="#more-than-two-levels" id="toc-more-than-two-levels" class="nav-link" data-scroll-target="#more-than-two-levels"><span class="header-section-number">6</span> More than Two Levels</a>
+  <ul class="collapse">
+  <li><a href="#a-categorical-variable-with-more-than-two-levels" id="toc-a-categorical-variable-with-more-than-two-levels" class="nav-link" data-scroll-target="#a-categorical-variable-with-more-than-two-levels"><span class="header-section-number">6.1</span> A Categorical Variable with More than Two Levels</a></li>
+  <li><a href="#visualization-of-interaction-between-continuous-and-categorical-variables" id="toc-visualization-of-interaction-between-continuous-and-categorical-variables" class="nav-link" data-scroll-target="#visualization-of-interaction-between-continuous-and-categorical-variables"><span class="header-section-number">6.2</span> Visualization of Interaction Between Continuous and Categorical Variables</a></li>
+  <li><a href="#interpretation-of-interaction-between-continuous-and-categorical-variables" id="toc-interpretation-of-interaction-between-continuous-and-categorical-variables" class="nav-link" data-scroll-target="#interpretation-of-interaction-between-continuous-and-categorical-variables"><span class="header-section-number">6.3</span> Interpretation of Interaction Between Continuous and Categorical Variables</a></li>
+  <li><a href="#interpret-coefficients-of-interaction-model" id="toc-interpret-coefficients-of-interaction-model" class="nav-link" data-scroll-target="#interpret-coefficients-of-interaction-model"><span class="header-section-number">6.4</span> Interpret Coefficients of Interaction Model</a></li>
+  <li><a href="#interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels" id="toc-interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels" class="nav-link" data-scroll-target="#interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels"><span class="header-section-number">6.5</span> Interaction between a Continuous and a Categorical Variable with more than 2 levels</a></li>
+  <li><a href="#test-interactions" id="toc-test-interactions" class="nav-link" data-scroll-target="#test-interactions"><span class="header-section-number">6.6</span> Test Interactions</a></li>
+  </ul></li>
+  <li><a href="#between-two-categorical-variables" id="toc-between-two-categorical-variables" class="nav-link" data-scroll-target="#between-two-categorical-variables"><span class="header-section-number">7</span> Between Two Categorical Variables</a>
+  <ul class="collapse">
+  <li><a href="#interaction-between-two-categorical-variables" id="toc-interaction-between-two-categorical-variables" class="nav-link" data-scroll-target="#interaction-between-two-categorical-variables"><span class="header-section-number">7.1</span> Interaction Between Two Categorical Variables</a></li>
+  <li><a href="#two-categorical-variables" id="toc-two-categorical-variables" class="nav-link" data-scroll-target="#two-categorical-variables"><span class="header-section-number">7.2</span> Two Categorical Variables</a></li>
+  <li><a href="#two-categorical-variables-1" id="toc-two-categorical-variables-1" class="nav-link" data-scroll-target="#two-categorical-variables-1"><span class="header-section-number">7.3</span> Two Categorical Variables</a></li>
+  <li><a href="#means-and-coefficients" id="toc-means-and-coefficients" class="nav-link" data-scroll-target="#means-and-coefficients"><span class="header-section-number">7.4</span> Means and Coefficients</a></li>
+  <li><a href="#two-categorical-variables-2" id="toc-two-categorical-variables-2" class="nav-link" data-scroll-target="#two-categorical-variables-2"><span class="header-section-number">7.5</span> Two Categorical Variables</a></li>
+  <li><a href="#two-categorical-variables-3" id="toc-two-categorical-variables-3" class="nav-link" data-scroll-target="#two-categorical-variables-3"><span class="header-section-number">7.6</span> Two Categorical Variables</a></li>
+  <li><a href="#visualization-bar-plots" id="toc-visualization-bar-plots" class="nav-link" data-scroll-target="#visualization-bar-plots"><span class="header-section-number">7.7</span> Visualization: Bar Plots</a></li>
+  <li><a href="#visualization-line-plots" id="toc-visualization-line-plots" class="nav-link" data-scroll-target="#visualization-line-plots"><span class="header-section-number">7.8</span> Visualization: Line Plots</a></li>
+  <li><a href="#visualization-heatmaps" id="toc-visualization-heatmaps" class="nav-link" data-scroll-target="#visualization-heatmaps"><span class="header-section-number">7.9</span> Visualization: heatmaps</a></li>
+  <li><a href="#test-interaction-between-two-categorical-variables" id="toc-test-interaction-between-two-categorical-variables" class="nav-link" data-scroll-target="#test-interaction-between-two-categorical-variables"><span class="header-section-number">7.10</span> Test Interaction Between Two Categorical Variables</a></li>
+  <li><a href="#test-interaction-between-two-categorical-variables-1" id="toc-test-interaction-between-two-categorical-variables-1" class="nav-link" data-scroll-target="#test-interaction-between-two-categorical-variables-1"><span class="header-section-number">7.11</span> Test Interaction Between Two Categorical Variables</a></li>
+  <li><a href="#two-way-anova" id="toc-two-way-anova" class="nav-link" data-scroll-target="#two-way-anova"><span class="header-section-number">7.12</span> Two-way ANOVA</a></li>
+  <li><a href="#two-way-anova-1" id="toc-two-way-anova-1" class="nav-link" data-scroll-target="#two-way-anova-1"><span class="header-section-number">7.13</span> Two-way ANOVA</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 13:</h1>
+<h1 class="title">Lec 13: Multiple Linear Regression - Interactions</h1>
 </div>
 
 
@@ -139,8 +268,642 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyr) <span class="co">#the pipe (%&gt;%) tool is extremely useful</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(patchwork) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review</h1>
+<section id="review-lecture-01-06" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</h2>
+<ul>
+<li>Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.</li>
+<li>Lectures 07-11: Multiple Linear Regression (MLR).</li>
+<li>Lecture 11: multicollinearity</li>
+<li>Lecture 12: categorical predictors</li>
+<li>This lecture focuses on interactions</li>
+</ul>
+</section>
+<section id="review-of-lecture-12" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="review-of-lecture-12"><span class="header-section-number">1.2</span> Review of Lecture 12</h2>
+<ul>
+<li>We showed how do categorical predictor variables work in linear regression models.</li>
+<li>We showed the mathematical representation of categorical predictor variables using dummy variables.</li>
+<li>The mathematical representation helps us understand how the regression model handles categorical predictors; it shows the inner workings of the model.</li>
+<li>In R or other software, the process is done automatically when fitting the model.</li>
+</ul>
+</section>
+<section id="review-of-lecture-12-1" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="review-of-lecture-12-1"><span class="header-section-number">1.3</span> Review of Lecture 12</h2>
+<ul>
+<li>The different ways to represent categorical predictors (reference category, no intercept, effect coding) lead to different interpretations of the coefficients, but they all model the same underlying relationships in the data.</li>
+<li>We shown two methods to change the default reference category in R: <code>relevel</code> function and <code>contrasts</code> function.</li>
+<li>For the GrowthPlants example, what is your favorite way to represent the categorical predictor variable ‘group’?</li>
+<li>Lastly, the overall effect of a categorical predictor variable can be tested using the ANOVA F-test.</li>
+</ul>
+</section>
+</section>
+<section id="additive-model" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Additive Model</h1>
+<section id="additive-effects-model" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="additive-effects-model"><span class="header-section-number">2.1</span> Additive Effects Model</h2>
+<ul>
+<li>Consider the following model <span class="math display">\[y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon\]</span></li>
+<li>This model assumes: <span class="math inline">\(E[y]=\beta_0 + \beta_1 x_1 + \beta_2 x_2\)</span>
+<ul>
+<li>holding <span class="math inline">\(x_2\)</span> constant, a one-unit <span class="math inline">\(\uparrow\)</span> in <span class="math inline">\(x_1\)</span> is associated with a <span class="math inline">\(\beta_1\)</span> change in the mean of <span class="math inline">\(y\)</span>.</li>
+<li>holding <span class="math inline">\(x_1\)</span> constant, a one-unit <span class="math inline">\(\uparrow\)</span> in <span class="math inline">\(x_2\)</span> is associated with a <span class="math inline">\(\beta_2\)</span> change in the mean of <span class="math inline">\(y\)</span>.</li>
+<li>the combine effect of a one-unit <span class="math inline">\(\uparrow\)</span> in both <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> is <span class="math inline">\(\beta_1 + \beta_2\)</span>.</li>
+</ul></li>
+<li>The effect of <span class="math inline">\(x_1\)</span> on <span class="math inline">\(y\)</span> does {OT} depend on the value of <span class="math inline">\(x_2\)</span>, and vice versa.<br>
+</li>
+<li>This is called an <strong><em>additive effects model</em></strong>.</li>
+</ul>
+</section>
+<section id="mtcars-example-additive-model" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="mtcars-example-additive-model"><span class="header-section-number">2.2</span> mtcars Example: Additive Model</h2>
+<ul>
+<li><p>For <code>mtcars</code>, ‘mpg’: the response variable, predictor 1: ‘wt’ (continuous), predictor 2: ‘vs’ (categorical).</p></li>
+<li><p>We have fit in Lecture 12 is the following model <span class="math display">\[E[\text{mpg} ] = \beta_0 + \beta_1 \cdot wt + \beta_2 \cdot vs\]</span></p></li>
+<li><p>The regression functions are</p>
+<ul>
+<li>For V-shaped engine (vs=0): <span class="math inline">\(E[\text{mpg} | \text{wt}=wt, {\color{red}\text{vs}=0}] = \beta_0 + \beta_1 \cdot wt\)</span></li>
+<li>For straight engine (vs=1): <span class="math inline">\(E[\text{mpg} | \text{wt}=wt, {\color{red}\text{vs}=1}] = (\beta_0 + {\color{red}\beta_2}) + \beta_1 \cdot wt\)</span></li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>lm_mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> vs, <span class="at">data=</span>mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="the-fitted-additive-model" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="the-fitted-additive-model"><span class="header-section-number">2.3</span> The Fitted Additive Model:</h2>
+<pre><code>summary(lm_mlr)$coefficients
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  33.0042     2.3554  14.012 1.92e-14 ***
+wt           -4.4428     0.6134  -7.243 5.63e-08 ***
+vs            3.1544     1.1907   2.649   0.0129 *  </code></pre>
+<p><span class="math display">\[\widehat{mpg}_{wt, vs}= 33 - 4.44 wt + 3.15 vs\]</span></p>
+</section>
+<section id="interpret-the-fitted-additive-model" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="interpret-the-fitted-additive-model"><span class="header-section-number">2.4</span> Interpret the Fitted Additive Model</h2>
+<ul>
+<li><p>33.00 the estimated mean mpg when wt=0 and vs=0 (V-shaped engin) because <span class="math inline">\(\widehat{mpg}_{wt=0, vs=0} = 33.00\)</span>. This is practically not interesting. Why?</p></li>
+<li><p>vs=0 (V-shaped): <span class="math display">\[\widehat{mpg}_{wt, vs}= 33 - {\color{blue}4.44} wt\]</span></p></li>
+<li><p>vs=1 (straight): <span class="math display">\[\widehat{mpg}_{wt, vs}= (33 + {\color{red}3.15}) - 4.44 wt = 36.15 - {\color{blue}4.44} wt\]</span></p></li>
+<li><p>The two fitted lines are because they have the same slope (-4.44).</p></li>
+</ul>
+</section>
+<section id="interpret-coefficients-of-an-additive-model" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="interpret-coefficients-of-an-additive-model"><span class="header-section-number">2.5</span> Interpret Coefficients of An Additive Model</h2>
+<ul>
+<li><p>The coefficient of vs: <span class="math display">\[\widehat{mpg}_{wt=wt, {\color{red}vs=1}} -\widehat{mpg}_{wt=wt, {\color{red}vs=0}}  =  3.15\]</span></p></li>
+<li><p>Interpretation: holding <code>wt</code> constant, the estimated mean mpg for straight engine (vs=1) is 3.15 higher than that for V-shaped engine (vs=0).</p></li>
+<li><p>The coefficient of wt: <span class="math display">\[\widehat{mpg}_{wt=wt+{\color{red}1}, vs=vs} -\widehat{mpg}_{wt=wt, vs=vs}  =  -4.44\]</span></p></li>
+<li><p>Interpretation: holding <code>vs</code> constant, a one-unit increase in wt is associated with a 4.44 decrease in the estimated mean mpg.</p></li>
+</ul>
+</section>
+<section id="visualization-of-additive-model-fitted-values-vs-wt-and-vs" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="visualization-of-additive-model-fitted-values-vs-wt-and-vs"><span class="header-section-number">2.6</span> Visualization of Additive Model: Fitted Values vs <code>wt</code> and <code>vs</code></h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="additive-vs-interaction-effects-models" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="additive-vs-interaction-effects-models"><span class="header-section-number">2.7</span> Additive vs Interaction Effects Models</h2>
+<ul>
+<li>In the additive model, we assume that the effect of <code>wt</code> on <code>mpg</code> is the same for both engine types (no interaction effect).
+<ul>
+<li>The two fitted lines are parallel.</li>
+<li>Do we have evidence to support this assumption?</li>
+</ul></li>
+<li>If we suspect that the effect of wt on mpg differs by engine type, we can include an interaction term between wt and vs in the model.</li>
+</ul>
+</section>
+</section>
+<section id="interaction-effects-model" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Interaction Effects Model</h1>
+<section id="interaction-effects-model-1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="interaction-effects-model-1"><span class="header-section-number">3.1</span> Interaction Effects Model</h2>
+<ul>
+<li><p>Consider the following model <span class="math display">\[y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 (x_1 \times x_2) + \epsilon\]</span></p></li>
+<li><p>This model assumes that <span class="math display">\[E[y]=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 (x_1 \times x_2)\]</span></p>
+<ul>
+<li><p>holding <span class="math inline">\(x_2\)</span> constant, a one-unit <span class="math inline">\(\uparrow\)</span> in <span class="math inline">\(x_1\)</span> is associated with a <span class="math inline">\((\beta_1 + \beta_3 x_2)\)</span> change in the mean of <span class="math inline">\(y\)</span>.</p></li>
+<li><p>holding <span class="math inline">\(x_1\)</span> constant, a one-unit <span class="math inline">\(\uparrow\)</span> in <span class="math inline">\(x_2\)</span> is associated with a <span class="math inline">\((\beta_2 + \beta_3 x_1)\)</span> change in the mean of <span class="math inline">\(y\)</span>.</p></li>
+<li><p>the combine effect of a one-unit <span class="math inline">\(\uparrow\)</span> in both <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> is <span class="math inline">\(\beta_1 + \beta_2 + \beta_3\)</span>.</p></li>
+</ul></li>
+<li><p>The effect of <span class="math inline">\(x_1\)</span> on <span class="math inline">\(y\)</span> depends on the value of <span class="math inline">\(x_2\)</span>, and vice versa.</p></li>
+<li><p>This is called an <strong><em>interaction effects model</em></strong>.</p></li>
+</ul>
+</section>
+<section id="mtcars-example-interaction-effects-model" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="mtcars-example-interaction-effects-model"><span class="header-section-number">3.2</span> mtcars Example: Interaction Effects Model</h2>
+<ul>
+<li>We can fit a MLR model with an interaction term between ‘wt’ and ‘vs’:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>lm_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">*</span> vs, <span class="at">data=</span>mtcars)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">summary</span>(lm_interaction)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept) 29.531444  2.6220822 11.262593 6.550372e-12
+wt          -3.501310  0.6915244 -5.063177 2.333383e-05
+vs          11.766696  3.7638472  3.126242 4.100885e-03
+wt:vs       -2.909707  1.2156850 -2.393471 2.363436e-02</code></pre>
+</div>
+</div>
+<ul>
+<li>The fitted model can be written as <span class="math display">\[\widehat{\text{mpg} } = 29.53  - 3.50 \cdot wt + 11.77 \cdot vs - 2.91  \cdot (wt \times vs)\]</span></li>
+</ul>
+</section>
+<section id="the-slopes-differ-by-engine-type" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="the-slopes-differ-by-engine-type"><span class="header-section-number">3.3</span> The Slopes Differ by Engine Type</h2>
+<ul>
+<li>For V-shaped engine (vs=0): <span class="math display">\[\widehat{\text{mpg} } = 29.53  - 3.50 \cdot wt\]</span></li>
+<li>For straight engine (vs=1): <span class="math display">\[\widehat{\text{mpg} } = (29.53 + 11.77) + (-3.50 - 2.91) \cdot wt = 41.30 - 6.41 \cdot wt\]</span></li>
+<li>The two slopes are not the same:
+<ul>
+<li>-3.50 (vs=0) vs</li>
+<li>-6.41 (vs=1) and</li>
+<li>the difference is -2.91 (=<span class="math inline">\(\hat\beta_3\)</span>).</li>
+</ul></li>
+</ul>
+</section>
+<section id="test-for-interaction-effect" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="test-for-interaction-effect"><span class="header-section-number">3.4</span> Test for Interaction Effect</h2>
+<ul>
+<li>Are the two slopes significantly different?
+<ul>
+<li><span class="math inline">\(H_0: \beta_3 = 0\)</span> (no interaction effect) vs</li>
+<li><span class="math inline">\(H_a: \beta_3 \ne 0\)</span> (interaction effect exists)</li>
+</ul></li>
+</ul>
+<pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
+wt:vs       -2.909707  1.2156850 -2.393471 2.363436e-02</code></pre>
+<ul>
+<li>The p-value for the interaction term ‘wt:vs’ is 0.0236, significant at level 0.05.</li>
+</ul>
+</section>
+<section id="engine-specific-regression-lines" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="engine-specific-regression-lines"><span class="header-section-number">3.5</span> Engine-Specific Regression Lines</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-of-two-models" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="visualization-of-two-models"><span class="header-section-number">3.6</span> Visualization of Two Models</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="main-effects-and-interaction-effects" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="main-effects-and-interaction-effects"><span class="header-section-number">3.7</span> Main Effects and Interaction Effects</h2>
+<ul>
+<li><p>Definitions:</p>
+<ul>
+<li><strong><em>Main Effect</em></strong>: The effect of a predictor variable on the response variable, averaged over the levels of other predictor variables.</li>
+<li><strong><em>Interaction Effect</em></strong>: The effect of one predictor variable on the response variable that depends on the level of another predictor variable.</li>
+</ul></li>
+<li><p>In the presence of interaction terms, the interpretation of main effects changes. Avoid interpreting main effects independently when interactions are present.</p></li>
+<li><p>It is generally recommended to include main effects when interaction terms are present in the model.</p></li>
+</ul>
+</section>
+<section id="mtcars" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="mtcars"><span class="header-section-number">3.8</span> <code>mtcars</code>:</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Interpretation (with interaction present)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>(Intercept)</strong></td>
+<td>Predicted MPG for a car with <code>wt = 0</code> and <code>vs = 0</code> (i.e., a hypothetical V-engine car of zero weight). It’s a baseline intercept, not meaningful by itself but necessary for interpretation of other terms.</td>
+</tr>
+<tr class="even">
+<td><strong>wt</strong></td>
+<td>Slope of MPG with respect to weight <strong>for V-shaped engines (vs = 0)</strong>. <br> MPG decreases by <strong>3.50</strong> for each additional 1000 lbs for V engines.</td>
+</tr>
+<tr class="odd">
+<td><strong>vs</strong></td>
+<td>Difference in <strong>intercept</strong> between straight and V engines <strong>when wt = 0</strong>. <br> At zero weight, straight engines are predicted to have <strong>11.77 higher MPG</strong> than V engines. (Interpret symbolically, since wt=0 is outside data range.)</td>
+</tr>
+<tr class="even">
+<td><strong>wt:vs</strong></td>
+<td>Difference in the <strong>slope of weight</strong> between straight and V engines. <br> For straight engines, the slope is <strong>2.91 lower (more negative)</strong> than for V engines. <br> So: slope = –3.50 – 2.91 = –6.41 for straight engines.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="f-tests" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> F-tests</h1>
+<section id="anova-table-for-interaction-model" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="anova-table-for-interaction-model"><span class="header-section-number">4.1</span> ANOVA Table for Interaction Model</h2>
+<p>The ANOVA table of the interaction model:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>lm_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">*</span> vs, <span class="at">data=</span>mtcars)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">anova</span>(lm_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mpg
+          Df Sum Sq Mean Sq  F value    Pr(&gt;F)    
+wt         1 847.73  847.73 127.5924 6.121e-12 ***
+vs         1  54.23   54.23   8.1619  0.007978 ** 
+wt:vs      1  38.06   38.06   5.7287  0.023634 *  
+Residuals 28 186.03    6.64                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="f-tests-for-mtcars-example" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="f-tests-for-mtcars-example"><span class="header-section-number">4.2</span> F-tests for <code>mtcars</code> Example</h2>
+<pre><code>Response: mpg
+          Df Sum Sq Mean Sq  F value    Pr(&gt;F)    
+wt         1 847.73  847.73 127.5924 6.121e-12 ***
+vs         1  54.23   54.23   8.1619  0.007978 ** 
+wt:vs      1  38.06   38.06   5.7287  0.023634 *  
+Residuals 28 186.03    6.64  </code></pre>
+<ul>
+<li>Which F-tests can be conducted based on the ANOVA table?</li>
+<li>Interaction effect: <span class="math inline">\(H_0: \beta_3=0\)</span> vs <span class="math inline">\(H_a: \beta_3 \ne 0\)</span>.</li>
+</ul>
+<p><span class="math display">\[F=\frac{38.06/1}{186.03/28}=\frac{38.06}{6.64}=5.7287\]</span></p>
+<p>Use the reference distribution (<span class="math inline">\(F_{1,28}\)</span>), the p-value is 0.0236. Note that the result is the same as that of the t-table.</p>
+</section>
+<section id="f-tests-for-mtcars-example-1" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="f-tests-for-mtcars-example-1"><span class="header-section-number">4.3</span> F-tests for <code>mtcars</code> Example</h2>
+<ul>
+<li>Which F-tests can be conducted based on the ANOVA table?</li>
+<li>The overall effect of <code>vs</code> when the other predictor (<code>wt</code>) is in the model: <span class="math inline">\(H_0: \beta_2=\beta_3=0\)</span> vs <span class="math inline">\(H_a:\)</span> at least one of them is not zero.</li>
+<li>The null hypothesis says that <code>vs</code> has no effect on <code>mpg</code>, neither directly nor through interaction with <code>wt</code>.</li>
+</ul>
+<p><span class="math display">\[F=\frac{(54.23+38.06)/2}{186.03/28}=\frac{46.145}{6.64}=6.949548\]</span></p>
+<p>Use the reference distribution (<span class="math inline">\(F_{2,28}\)</span>), the p-value is 0.0035.</p>
+</section>
+<section id="summary-of-f-tests-in-interaction-model" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="summary-of-f-tests-in-interaction-model"><span class="header-section-number">4.4</span> Summary of F-tests in Interaction Model</h2>
+<ul>
+<li>How about <span class="math inline">\(H_0: \beta_1=\beta_3=0\)</span>?
+<ul>
+<li><span class="math inline">\(H_0\)</span> says that <code>wt</code> has no effect on <code>mpg</code>, neither directly nor through interaction with <code>vs</code>.</li>
+<li>It is the overall effect of ‘wt’ when the other predictor (<code>vs</code>) is in the model.</li>
+<li>This cannot be tested based on the ANOVA table.</li>
+<li>We can switch the order and then construct an ANOVA table.</li>
+<li>We can also compare the full model (with interaction) with the reduced model with <code>vs</code> only in the model.</li>
+</ul></li>
+</ul>
+</section>
+<section id="which-model-as-the-full-model" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="which-model-as-the-full-model"><span class="header-section-number">4.5</span> Which Model as the Full Model?</h2>
+<ul>
+<li>Should we use the additive model or the interaction model as the full model when examining the overall effect of ‘wt’?</li>
+<li>It depends on the research question.</li>
+<li>If we are interested in the overall effect of ‘wt’ regardless of engine type, we can use the additive model as the full model.</li>
+<li>If we are interested in the effect of ‘wt’ within each engine type, we should use the interaction model as the full model.</li>
+<li>If it is common for the effect of ‘wt’ to differ by engine type, the interaction model is more appropriate as the full model. Consider a situation when the slopes are very different, have opposite signs. What can happen?</li>
+</ul>
+</section>
+</section>
+<section id="more-on-interactions" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> More On Interactions</h1>
+</section>
+<section id="more-than-two-levels" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> More than Two Levels</h1>
+<section id="a-categorical-variable-with-more-than-two-levels" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="a-categorical-variable-with-more-than-two-levels"><span class="header-section-number">6.1</span> A Categorical Variable with More than Two Levels</h2>
+<ul>
+<li>Consider the <code>mtcars</code> data with ‘cyl’ (number of cylinders) as a categorical predictor with 3 levels (4, 6, 8).</li>
+<li>Fit a MLR model with interaction between <code>wt</code> and <code>cyl</code>:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lm_cyl_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">*</span> <span class="fu">factor</span>(cyl), <span class="at">data=</span>mtcars)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">summary</span>(lm_cyl_interaction)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Estimate Std. Error    t value     Pr(&gt;|t|)
+(Intercept)      39.571196   3.193940 12.3894599 2.058359e-12
+wt               -5.647025   1.359498 -4.1537586 3.127578e-04
+factor(cyl)6    -11.162351   9.355346 -1.1931522 2.435843e-01
+factor(cyl)8    -15.703167   4.839464 -3.2448150 3.223216e-03
+wt:factor(cyl)6   2.866919   3.117330  0.9196716 3.661987e-01
+wt:factor(cyl)8   3.454587   1.627261  2.1229458 4.344037e-02</code></pre>
+</div>
+</div>
+<ul>
+<li>The fitted model can be written as <span class="math display">\[\widehat{mpg} = \beta_0 + \beta_1 \cdot wt + \beta_2 \cdot \text{cyl6} + \beta_3 \cdot \text{cyl8} + \beta_4 \cdot (wt \times \text{cyl6}) + \beta_5 \cdot (wt \times \text{cyl8})\]</span></li>
+</ul>
+</section>
+<section id="visualization-of-interaction-between-continuous-and-categorical-variables" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="visualization-of-interaction-between-continuous-and-categorical-variables"><span class="header-section-number">6.2</span> Visualization of Interaction Between Continuous and Categorical Variables</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation-of-interaction-between-continuous-and-categorical-variables" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="interpretation-of-interaction-between-continuous-and-categorical-variables"><span class="header-section-number">6.3</span> Interpretation of Interaction Between Continuous and Categorical Variables</h2>
+<ul>
+<li>The interaction terms indicate how the effect of <code>wt</code> on <code>mpg</code> changes depending on the number of cylinders.</li>
+<li>For example, the coefficient of <code>wt:cyl6</code> represents the difference in the effect of <code>wt</code> on <code>mpg</code> for 6-cylinder cars compared to 4-cylinder cars (the reference group).</li>
+<li>Similarly, the coefficient of <code>wt:cyl8</code> represents the difference in the effect of <code>wt</code> on <code>mpg</code> for 8-cylinder cars compared to 4-cylinder cars.</li>
+</ul>
+</section>
+<section id="interpret-coefficients-of-interaction-model" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="interpret-coefficients-of-interaction-model"><span class="header-section-number">6.4</span> Interpret Coefficients of Interaction Model</h2>
+<p>The three regression lines - For 4-cylinder cars (reference group): <span class="math inline">\(cyl6=0\)</span>, <span class="math inline">\(cyl8=0\)</span>: <span class="math display">\[\widehat{mpg} = 39.57 - 5.65 \cdot wt\]</span> - For 6-cylinder cars: <span class="math inline">\(cyl6=1\)</span>, <span class="math inline">\(cyl8=0\)</span>: <span class="math display">\[\widehat{mpg} = (39.57 - 4.26) + (-5.65 + 2.19) \cdot wt = 35.31 - 3.46 \cdot wt\]</span> - For 8-cylinder cars: <span class="math inline">\(cyl6=0\)</span>, <span class="math inline">\(cyl8=1\)</span>: <span class="math display">\[\widehat{mpg} = (39.57 - 7.31) + (-5.65 + 4.15) \cdot wt = 32.26 - 1.50 \cdot wt\]</span></p>
+</section>
+<section id="interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels"><span class="header-section-number">6.5</span> Interaction between a Continuous and a Categorical Variable with more than 2 levels</h2>
+<ul>
+<li><p>Consider a model with a categorical predictor <span class="math inline">\(C\)</span> with <span class="math inline">\(k\)</span> levels, and a continuous predictor <span class="math inline">\(x\)</span>.</p></li>
+<li><p>The interaction model can be written as <span class="math display">\[y = \beta_0 + \gamma x + \sum_{j=1}^{k-1} \beta_j C_j + \sum_{j=1}^{k-1} \delta_{j} (x \times C_j) + \epsilon\]</span> where <span class="math inline">\(C_j\)</span> are dummy variables for the categorical predictor with the first level as the reference group.</p></li>
+<li><p>The effect (slope) of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> for the reference group (level <span class="math inline">\(k\)</span> of <span class="math inline">\(C\)</span>) is <span class="math inline">\(\gamma\)</span>.</p></li>
+<li><p>The effect (slope) of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> for level <span class="math inline">\(j\)</span> of <span class="math inline">\(C\)</span> is <span class="math inline">\(\gamma + \delta_j\)</span> for <span class="math inline">\(j=1, \ldots, k-1\)</span>.</p></li>
+</ul>
+</section>
+<section id="test-interactions" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="test-interactions"><span class="header-section-number">6.6</span> Test Interactions</h2>
+<ul>
+<li>We can test whether the interaction effects are significant using an ANOVA table or by examining the p-values of the interaction terms in the regression output.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>lm_cyl_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">*</span> <span class="fu">factor</span>(cyl), <span class="at">data=</span>mtcars)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">anova</span>(lm_cyl_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mpg
+               Df Sum Sq Mean Sq  F value    Pr(&gt;F)    
+wt              1 847.73  847.73 141.3883 5.133e-12 ***
+factor(cyl)     2  95.26   47.63   7.9443   0.00203 ** 
+wt:factor(cyl)  2  27.17   13.58   2.2658   0.12386    
+Residuals      26 155.89    6.00                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(F=\frac{27.17/2}{155.89/26}=\frac{13.58}{6.00}=2.2658\)</span></p>
+<p>The reference distribution is <span class="math inline">\(F_{2, 26}\)</span> and the interaction is not significant at level 0.05.</p>
+</section>
+</section>
+<section id="between-two-categorical-variables" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Between Two Categorical Variables</h1>
+<section id="interaction-between-two-categorical-variables" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="interaction-between-two-categorical-variables"><span class="header-section-number">7.1</span> Interaction Between Two Categorical Variables</h2>
+<ul>
+<li>Example data: <code>warpbreaks</code> dataset in R: the number of breaks in yarn during weaving
+<ul>
+<li>breaks: numeric response</li>
+<li>wool: 2 levels (A, B)</li>
+<li>tension: 3 levels (L, M, H)</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">data</span>(<span class="st">"warpbreaks"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">str</span>(warpbreaks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   54 obs. of  3 variables:
+ $ breaks : num  26 30 54 25 70 52 51 26 67 18 ...
+ $ wool   : Factor w/ 2 levels "A","B": 1 1 1 1 1 1 1 1 1 1 ...
+ $ tension: Factor w/ 3 levels "L","M","H": 1 1 1 1 1 1 1 1 1 2 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="two-categorical-variables" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="two-categorical-variables"><span class="header-section-number">7.2</span> Two Categorical Variables</h2>
+<ul>
+<li>Does the following make sense? <span class="math display">\[\widehat{breaks} = \hat \beta_0 + \hat \beta_1 \cdot \text{wool} + \hat \beta_2 \cdot \text{tension} + \hat \beta_3 \cdot \text{wool}*\text{tension}\]</span></li>
+</ul>
+</section>
+<section id="two-categorical-variables-1" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="two-categorical-variables-1"><span class="header-section-number">7.3</span> Two Categorical Variables</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>lm_warpbreaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(breaks <span class="sc">~</span> wool <span class="sc">*</span> tension, <span class="at">data=</span>warpbreaks)</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">round</span>(<span class="fu">summary</span>(lm_warpbreaks)<span class="sc">$</span>coefficients,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)       44.56       3.65   12.22     0.00
+woolB            -16.33       5.16   -3.17     0.00
+tensionM         -20.56       5.16   -3.99     0.00
+tensionH         -20.00       5.16   -3.88     0.00
+woolB:tensionM    21.11       7.29    2.89     0.01
+woolB:tensionH    10.56       7.29    1.45     0.15</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\widehat{breaks} = \hat \beta_0 + \hat \beta_1 \cdot \text{woolB} + \hat \beta_2 \cdot \text{tensionM} + \hat \beta_3 \cdot \text{tensionH} + \beta_4 \cdot (\text{woolB} \times \text{tensionM}) + \beta_5 \cdot (\text{woolB} \times \text{tensionH})\]</span></p>
+</section>
+<section id="means-and-coefficients" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="means-and-coefficients"><span class="header-section-number">7.4</span> Means and Coefficients</h2>
+<ul>
+<li><p>How do we connect the means of each combination of wool and tension with the coefficients in the model?</p></li>
+<li><p><span class="math inline">\(\mu_{}{A,L} = E[breaks | wool=A, tension=L] = \beta_0\)</span></p></li>
+<li><p><span class="math inline">\(\mu_{}{A,M} = E[breaks | wool=A, tension=M] = \beta_0 + \beta_2\)</span></p></li>
+<li><p><span class="math inline">\(\mu_{}{A,H} = E[breaks | wool=A, tension=H] = \beta_0 + \beta_3\)</span></p></li>
+<li><p><span class="math inline">\(\mu_{}{B,L} = E[breaks | wool=B, tension=L] = \beta_0 + \beta_1\)</span></p></li>
+<li><p><span class="math inline">\(\mu_{}{B,M} = E[breaks | wool=B, tension=M] = \beta_0 + \beta_1 + \beta_2 + \beta_4\)</span></p></li>
+<li><p><span class="math inline">\(\mu_{}{B,H} = E[breaks | wool=B, tension=H] = \beta_0 + \beta_1 + \beta_3 + \beta_5\)</span></p></li>
+</ul>
+</section>
+<section id="two-categorical-variables-2" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="two-categorical-variables-2"><span class="header-section-number">7.5</span> Two Categorical Variables</h2>
+<pre><code>               Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)       44.56       3.65   12.22     0.00
+woolB            -16.33       5.16   -3.17     0.00
+tensionM         -20.56       5.16   -3.99     0.00
+tensionH         -20.00       5.16   -3.88     0.00
+woolB:tensionM    21.11       7.29    2.89     0.01
+woolB:tensionH    10.56       7.29    1.45     0.15</code></pre>
+<ul>
+<li>How to interpret the interaction terms?</li>
+</ul>
+</section>
+<section id="two-categorical-variables-3" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="two-categorical-variables-3"><span class="header-section-number">7.6</span> Two Categorical Variables</h2>
+<ul>
+<li>What are the fitted values for each combination of wool and tension?</li>
+</ul>
+<pre><code># Fitted values for each combination
+fitted_A_L = 44.56
+fitted_A_M = 44.56 - 20.56
+fitted_A_H = 44.56 - 20.00
+fitted_B_L = 44.56 - 16.33
+fitted_B_M = 44.56 - 16.33 - 20.56 + 21.11
+fitted_B_H = 44.56 - 16.33 - 20.00 + 10.56
+# an easier way to find the means in R
+aggregate(breaks ~ wool + tension, data = warpbreaks, FUN = mean)</code></pre>
+</section>
+<section id="visualization-bar-plots" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="visualization-bar-plots"><span class="header-section-number">7.7</span> Visualization: Bar Plots</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-line-plots" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="visualization-line-plots"><span class="header-section-number">7.8</span> Visualization: Line Plots</h2>
+<ul>
+<li>Interactions can also be examined by line plots of means</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-heatmaps" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="visualization-heatmaps"><span class="header-section-number">7.9</span> Visualization: heatmaps</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="13-lecture_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="test-interaction-between-two-categorical-variables" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="test-interaction-between-two-categorical-variables"><span class="header-section-number">7.10</span> Test Interaction Between Two Categorical Variables</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>lm_warpbreaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(breaks <span class="sc">~</span> wool <span class="sc">*</span> tension, <span class="at">data=</span>warpbreaks)</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">anova</span>(lm_warpbreaks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: breaks
+             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+wool          1  450.7  450.67  3.7653 0.0582130 .  
+tension       2 2034.3 1017.13  8.4980 0.0006926 ***
+wool:tension  2 1002.8  501.39  4.1891 0.0210442 *  
+Residuals    48 5745.1  119.69                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><span class="math display">\[F=\frac{501.39}{119.59}=4.1891 \overset{H_0} \sim F_{df1, df2}\]</span></p>
+</section>
+<section id="test-interaction-between-two-categorical-variables-1" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="test-interaction-between-two-categorical-variables-1"><span class="header-section-number">7.11</span> Test Interaction Between Two Categorical Variables</h2>
+<ul>
+<li>Consider two categorical variables with <span class="math inline">\(I\)</span> and <span class="math inline">\(J\)</span> levels, respectively.</li>
+<li>How many coefficients do we estimated in the interaction model?
+<ul>
+<li>1 from the intercept</li>
+<li><span class="math inline">\(I-1\)</span> from the dummy variables of factor 1</li>
+<li><span class="math inline">\(J-1\)</span> from the dummy variables of factor 2</li>
+<li><span class="math inline">\((I-1)*(J-1)\)</span> from interaction terms.</li>
+<li>Total: <span class="math inline">\(IJ\)</span> coefficients.</li>
+</ul></li>
+</ul>
+</section>
+<section id="two-way-anova" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="two-way-anova"><span class="header-section-number">7.12</span> Two-way ANOVA</h2>
+<ul>
+<li><p>This is also known as a two-way ANOVA with interaction. Consider a balanced case: <span class="math display">\[y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}\]</span> where <span class="math inline">\(i=1, \ldots, I\)</span>; <span class="math inline">\(j=1, \ldots, J\)</span>; <span class="math inline">\(k=1, \ldots, K\)</span>.</p></li>
+<li><p>Constraints are needed for identifiability:</p>
+<ul>
+<li><p><span class="math inline">\(\sum_{i=1}^I \alpha_i = 0\)</span>, <span class="math inline">\(I-1\)</span> unique parameters. E.g., <span class="math display">\[\alpha_1, \cdots, \alpha_{I-1}, \cancel{\alpha_I}\]</span></p></li>
+<li><p><span class="math inline">\(\sum_{j=1}^J \beta_j = 0\)</span>, <span class="math inline">\(J-1\)</span> unique parameters. E.g., <span class="math display">\[\beta_1, \cdots, \beta_{J-1}, \cancel{\beta_J}\]</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="two-way-anova-1" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="two-way-anova-1"><span class="header-section-number">7.13</span> Two-way ANOVA</h2>
+<ul>
+<li><p>Interaction terms</p>
+<ul>
+<li><span class="math inline">\(\sum_{i=1}^I (\alpha\beta)_{ij} = 0\)</span> for each <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\sum_{j=1}^J (\alpha\beta)_{ij} = 0\)</span> for each <span class="math inline">\(i\)</span></li>
+<li>Total <span class="math inline">\((I-1)(J-1)\)</span> unique parameters. E.g.,</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[\begin{pmatrix} \delta_{11} &amp; \delta_{12} &amp; \cdots &amp; \delta_{1,J-1} &amp; \cancel{\delta_{1J}} \\
+\delta_{21} &amp; \delta_{22} &amp; \cdots &amp; \delta_{2,J-1} &amp; \cancel{\delta_{2J}} \\
+\cdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \cdots \\
+\delta_{I-1,1} &amp; \delta_{I-1,2} &amp; \cdots &amp; \delta_{I-1,J-1} &amp; \cancel{\delta_{I-1,J}} \\
+\cancel{\delta_{I1}} &amp; \cancel{\delta_{I2}} &amp; \cdots &amp; \cancel{\delta_{I,J-1}} &amp; \cancel{\delta_{IJ}}
+\end{pmatrix}\]</span></p>
+<ul>
+<li>The total number of parameters is <span class="math inline">\(1 + (I-1) + (J-1) + (I-1)(J-1) = IJ\)</span>, consistent with the linear regression.</li>
+</ul>
+<p>&lt;!– # Exit the R markdown</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

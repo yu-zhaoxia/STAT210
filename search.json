@@ -4,7 +4,308 @@
     "href": "lectures/index.html",
     "title": "Lecture Notes",
     "section": "",
-    "text": "Simple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nSep 24\n1 — Introduction\nPDF\n\n\nSep 29\n2 — Inference\nPDF\n\n\nOct 1\n3 — Inference\nPDF\n\n\nOct 6\n4 — ANOVA and Diagnostics\nPDF\n\n\nOct 8\n5 — Diagnostics\nPDF\n\n\nOct 13\n6 — Lack of Fit Test and Data Transformation\nPDF\n\n\n\n\n\nMultiple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nOct 15\n7 — Introduction\nPDF\n\n\nOct 20\n8 — Inference\nPDF\n\n\nOct 22\n9 — Sums of Squares, ANOVA, F-tests\nPDF\n\n\nOct 27\n10 — Extra Sums of Squares, Partial F Tests\nPDF\n\n\nOct 29\n11 — Multicollinearity\nPDF\n\n\n\nNov 3: Midterm\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nNov 5\n12 — Categorical Variables\nPDF\n\n\nNov 10\n13 — Interactions\nPDF\n\n\nNov 12\n14 — Model Selection\nPDF\n\n\nNov 17\n15 — Model Selection\nPDF\n\n\nNov 19\n16 — Outliers\nPDF\n\n\nNov 24\n17 — Influential Points\nPDF\n\n\n\n\n\nAdditional Topics\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nDec 1\n18 — Weighted Least Squares\nPDF\n\n\nDec 3\n[19 — TBA]\n[PDF]"
+    "text": "Simple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nSep 24\n1 — Introduction\nPDF\n\n\nSep 29\n2 — Inference\nPDF\n\n\nOct 1\n3 — Inference\nPDF\n\n\nOct 6\n4 — ANOVA and Diagnostics\nPDF\n\n\nOct 8\n5 — Diagnostics\nPDF\n\n\nOct 13\n6 — Lack of Fit Test and Data Transformation\nPDF\n\n\n\n\n\nMultiple Linear Regression\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nOct 15\n7 — Introduction\nPDF\n\n\nOct 20\n8 — Inference\nPDF\n\n\nOct 22\n9 — Sums of Squares, ANOVA, F-tests\nPDF\n\n\nOct 27\n10 — Extra Sums of Squares, Partial F Tests\nPDF\n\n\nOct 29\n11 — Multicollinearity\nPDF\n\n\n\nNov 3: Midterm\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nNov 10\n12 — Categorical Variables\nPDF\n\n\nNov 12\n13 — Interactions\nPDF\n\n\nNov 17\n14 — Model Selection\nPDF\n\n\nNov 19\n15 — Model Selection\nPDF\n\n\nNov 24\n16 — Outliers\nPDF\n\n\nDec 1\n17 — Influential Points\nPDF\n\n\n\n\n\nAdditional Topics\n\n\n\nDate\nLecture\nPDF\n\n\n\n\nDec 3\n18 — Weighted Least Squares\nPDF"
+  },
+  {
+    "objectID": "lectures/13-lecture.html",
+    "href": "lectures/13-lecture.html",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "",
+    "text": "Code\nlibrary(tidyr) #the pipe (%&gt;%) tool is extremely useful\nlibrary(MASS)\nlibrary(ggplot2)\nlibrary(reshape2)\nlibrary(ggcorrplot)\nlibrary(car)\nlibrary(patchwork)"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#review-lecture-01-06",
+    "href": "lectures/13-lecture.html#review-lecture-01-06",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "1.1 Review: Lecture 01-06",
+    "text": "1.1 Review: Lecture 01-06\n\nLectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLectures 07-11: Multiple Linear Regression (MLR).\nLecture 11: multicollinearity\nLecture 12: categorical predictors\nThis lecture focuses on interactions"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#review-of-lecture-12",
+    "href": "lectures/13-lecture.html#review-of-lecture-12",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "1.2 Review of Lecture 12",
+    "text": "1.2 Review of Lecture 12\n\nWe showed how do categorical predictor variables work in linear regression models.\nWe showed the mathematical representation of categorical predictor variables using dummy variables.\nThe mathematical representation helps us understand how the regression model handles categorical predictors; it shows the inner workings of the model.\nIn R or other software, the process is done automatically when fitting the model."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#review-of-lecture-12-1",
+    "href": "lectures/13-lecture.html#review-of-lecture-12-1",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "1.3 Review of Lecture 12",
+    "text": "1.3 Review of Lecture 12\n\nThe different ways to represent categorical predictors (reference category, no intercept, effect coding) lead to different interpretations of the coefficients, but they all model the same underlying relationships in the data.\nWe shown two methods to change the default reference category in R: relevel function and contrasts function.\nFor the GrowthPlants example, what is your favorite way to represent the categorical predictor variable ‘group’?\nLastly, the overall effect of a categorical predictor variable can be tested using the ANOVA F-test."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#additive-effects-model",
+    "href": "lectures/13-lecture.html#additive-effects-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.1 Additive Effects Model",
+    "text": "2.1 Additive Effects Model\n\nConsider the following model \\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\epsilon\\]\nThis model assumes: \\(E[y]=\\beta_0 + \\beta_1 x_1 + \\beta_2 x_2\\)\n\nholding \\(x_2\\) constant, a one-unit \\(\\uparrow\\) in \\(x_1\\) is associated with a \\(\\beta_1\\) change in the mean of \\(y\\).\nholding \\(x_1\\) constant, a one-unit \\(\\uparrow\\) in \\(x_2\\) is associated with a \\(\\beta_2\\) change in the mean of \\(y\\).\nthe combine effect of a one-unit \\(\\uparrow\\) in both \\(x_1\\) and \\(x_2\\) is \\(\\beta_1 + \\beta_2\\).\n\nThe effect of \\(x_1\\) on \\(y\\) does {OT} depend on the value of \\(x_2\\), and vice versa.\n\nThis is called an additive effects model."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#mtcars-example-additive-model",
+    "href": "lectures/13-lecture.html#mtcars-example-additive-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.2 mtcars Example: Additive Model",
+    "text": "2.2 mtcars Example: Additive Model\n\nFor mtcars, ‘mpg’: the response variable, predictor 1: ‘wt’ (continuous), predictor 2: ‘vs’ (categorical).\nWe have fit in Lecture 12 is the following model \\[E[\\text{mpg} ] = \\beta_0 + \\beta_1 \\cdot wt + \\beta_2 \\cdot vs\\]\nThe regression functions are\n\nFor V-shaped engine (vs=0): \\(E[\\text{mpg} | \\text{wt}=wt, {\\color{red}\\text{vs}=0}] = \\beta_0 + \\beta_1 \\cdot wt\\)\nFor straight engine (vs=1): \\(E[\\text{mpg} | \\text{wt}=wt, {\\color{red}\\text{vs}=1}] = (\\beta_0 + {\\color{red}\\beta_2}) + \\beta_1 \\cdot wt\\)\n\n\n\n\nCode\nlm_mlr &lt;- lm(mpg ~ wt + vs, data=mtcars)"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#the-fitted-additive-model",
+    "href": "lectures/13-lecture.html#the-fitted-additive-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.3 The Fitted Additive Model:",
+    "text": "2.3 The Fitted Additive Model:\nsummary(lm_mlr)$coefficients\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  33.0042     2.3554  14.012 1.92e-14 ***\nwt           -4.4428     0.6134  -7.243 5.63e-08 ***\nvs            3.1544     1.1907   2.649   0.0129 *  \n\\[\\widehat{mpg}_{wt, vs}= 33 - 4.44 wt + 3.15 vs\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interpret-the-fitted-additive-model",
+    "href": "lectures/13-lecture.html#interpret-the-fitted-additive-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.4 Interpret the Fitted Additive Model",
+    "text": "2.4 Interpret the Fitted Additive Model\n\n33.00 the estimated mean mpg when wt=0 and vs=0 (V-shaped engin) because \\(\\widehat{mpg}_{wt=0, vs=0} = 33.00\\). This is practically not interesting. Why?\nvs=0 (V-shaped): \\[\\widehat{mpg}_{wt, vs}= 33 - {\\color{blue}4.44} wt\\]\nvs=1 (straight): \\[\\widehat{mpg}_{wt, vs}= (33 + {\\color{red}3.15}) - 4.44 wt = 36.15 - {\\color{blue}4.44} wt\\]\nThe two fitted lines are because they have the same slope (-4.44)."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interpret-coefficients-of-an-additive-model",
+    "href": "lectures/13-lecture.html#interpret-coefficients-of-an-additive-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.5 Interpret Coefficients of An Additive Model",
+    "text": "2.5 Interpret Coefficients of An Additive Model\n\nThe coefficient of vs: \\[\\widehat{mpg}_{wt=wt, {\\color{red}vs=1}} -\\widehat{mpg}_{wt=wt, {\\color{red}vs=0}}  =  3.15\\]\nInterpretation: holding wt constant, the estimated mean mpg for straight engine (vs=1) is 3.15 higher than that for V-shaped engine (vs=0).\nThe coefficient of wt: \\[\\widehat{mpg}_{wt=wt+{\\color{red}1}, vs=vs} -\\widehat{mpg}_{wt=wt, vs=vs}  =  -4.44\\]\nInterpretation: holding vs constant, a one-unit increase in wt is associated with a 4.44 decrease in the estimated mean mpg."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#visualization-of-additive-model-fitted-values-vs-wt-and-vs",
+    "href": "lectures/13-lecture.html#visualization-of-additive-model-fitted-values-vs-wt-and-vs",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.6 Visualization of Additive Model: Fitted Values vs wt and vs",
+    "text": "2.6 Visualization of Additive Model: Fitted Values vs wt and vs"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#additive-vs-interaction-effects-models",
+    "href": "lectures/13-lecture.html#additive-vs-interaction-effects-models",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "2.7 Additive vs Interaction Effects Models",
+    "text": "2.7 Additive vs Interaction Effects Models\n\nIn the additive model, we assume that the effect of wt on mpg is the same for both engine types (no interaction effect).\n\nThe two fitted lines are parallel.\nDo we have evidence to support this assumption?\n\nIf we suspect that the effect of wt on mpg differs by engine type, we can include an interaction term between wt and vs in the model."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interaction-effects-model-1",
+    "href": "lectures/13-lecture.html#interaction-effects-model-1",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.1 Interaction Effects Model",
+    "text": "3.1 Interaction Effects Model\n\nConsider the following model \\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 (x_1 \\times x_2) + \\epsilon\\]\nThis model assumes that \\[E[y]=\\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 (x_1 \\times x_2)\\]\n\nholding \\(x_2\\) constant, a one-unit \\(\\uparrow\\) in \\(x_1\\) is associated with a \\((\\beta_1 + \\beta_3 x_2)\\) change in the mean of \\(y\\).\nholding \\(x_1\\) constant, a one-unit \\(\\uparrow\\) in \\(x_2\\) is associated with a \\((\\beta_2 + \\beta_3 x_1)\\) change in the mean of \\(y\\).\nthe combine effect of a one-unit \\(\\uparrow\\) in both \\(x_1\\) and \\(x_2\\) is \\(\\beta_1 + \\beta_2 + \\beta_3\\).\n\nThe effect of \\(x_1\\) on \\(y\\) depends on the value of \\(x_2\\), and vice versa.\nThis is called an interaction effects model."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#mtcars-example-interaction-effects-model",
+    "href": "lectures/13-lecture.html#mtcars-example-interaction-effects-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.2 mtcars Example: Interaction Effects Model",
+    "text": "3.2 mtcars Example: Interaction Effects Model\n\nWe can fit a MLR model with an interaction term between ‘wt’ and ‘vs’:\n\n\n\nCode\nlm_interaction &lt;- lm(mpg ~ wt * vs, data=mtcars)\nsummary(lm_interaction)$coefficients\n\n\n             Estimate Std. Error   t value     Pr(&gt;|t|)\n(Intercept) 29.531444  2.6220822 11.262593 6.550372e-12\nwt          -3.501310  0.6915244 -5.063177 2.333383e-05\nvs          11.766696  3.7638472  3.126242 4.100885e-03\nwt:vs       -2.909707  1.2156850 -2.393471 2.363436e-02\n\n\n\nThe fitted model can be written as \\[\\widehat{\\text{mpg} } = 29.53  - 3.50 \\cdot wt + 11.77 \\cdot vs - 2.91  \\cdot (wt \\times vs)\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#the-slopes-differ-by-engine-type",
+    "href": "lectures/13-lecture.html#the-slopes-differ-by-engine-type",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.3 The Slopes Differ by Engine Type",
+    "text": "3.3 The Slopes Differ by Engine Type\n\nFor V-shaped engine (vs=0): \\[\\widehat{\\text{mpg} } = 29.53  - 3.50 \\cdot wt\\]\nFor straight engine (vs=1): \\[\\widehat{\\text{mpg} } = (29.53 + 11.77) + (-3.50 - 2.91) \\cdot wt = 41.30 - 6.41 \\cdot wt\\]\nThe two slopes are not the same:\n\n-3.50 (vs=0) vs\n-6.41 (vs=1) and\nthe difference is -2.91 (=\\(\\hat\\beta_3\\))."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#test-for-interaction-effect",
+    "href": "lectures/13-lecture.html#test-for-interaction-effect",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.4 Test for Interaction Effect",
+    "text": "3.4 Test for Interaction Effect\n\nAre the two slopes significantly different?\n\n\\(H_0: \\beta_3 = 0\\) (no interaction effect) vs\n\\(H_a: \\beta_3 \\ne 0\\) (interaction effect exists)\n\n\n             Estimate Std. Error   t value     Pr(&gt;|t|)\nwt:vs       -2.909707  1.2156850 -2.393471 2.363436e-02\n\nThe p-value for the interaction term ‘wt:vs’ is 0.0236, significant at level 0.05."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#engine-specific-regression-lines",
+    "href": "lectures/13-lecture.html#engine-specific-regression-lines",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.5 Engine-Specific Regression Lines",
+    "text": "3.5 Engine-Specific Regression Lines"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#visualization-of-two-models",
+    "href": "lectures/13-lecture.html#visualization-of-two-models",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.6 Visualization of Two Models",
+    "text": "3.6 Visualization of Two Models"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#main-effects-and-interaction-effects",
+    "href": "lectures/13-lecture.html#main-effects-and-interaction-effects",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.7 Main Effects and Interaction Effects",
+    "text": "3.7 Main Effects and Interaction Effects\n\nDefinitions:\n\nMain Effect: The effect of a predictor variable on the response variable, averaged over the levels of other predictor variables.\nInteraction Effect: The effect of one predictor variable on the response variable that depends on the level of another predictor variable.\n\nIn the presence of interaction terms, the interpretation of main effects changes. Avoid interpreting main effects independently when interactions are present.\nIt is generally recommended to include main effects when interaction terms are present in the model."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#mtcars",
+    "href": "lectures/13-lecture.html#mtcars",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "3.8 mtcars:",
+    "text": "3.8 mtcars:\n\n\n\n\n\n\n\nTerm\nInterpretation (with interaction present)\n\n\n\n\n(Intercept)\nPredicted MPG for a car with wt = 0 and vs = 0 (i.e., a hypothetical V-engine car of zero weight). It’s a baseline intercept, not meaningful by itself but necessary for interpretation of other terms.\n\n\nwt\nSlope of MPG with respect to weight for V-shaped engines (vs = 0).  MPG decreases by 3.50 for each additional 1000 lbs for V engines.\n\n\nvs\nDifference in intercept between straight and V engines when wt = 0.  At zero weight, straight engines are predicted to have 11.77 higher MPG than V engines. (Interpret symbolically, since wt=0 is outside data range.)\n\n\nwt:vs\nDifference in the slope of weight between straight and V engines.  For straight engines, the slope is 2.91 lower (more negative) than for V engines.  So: slope = –3.50 – 2.91 = –6.41 for straight engines."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#anova-table-for-interaction-model",
+    "href": "lectures/13-lecture.html#anova-table-for-interaction-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "4.1 ANOVA Table for Interaction Model",
+    "text": "4.1 ANOVA Table for Interaction Model\nThe ANOVA table of the interaction model:\n\n\nCode\nlm_interaction &lt;- lm(mpg ~ wt * vs, data=mtcars)\nanova(lm_interaction)\n\n\nAnalysis of Variance Table\n\nResponse: mpg\n          Df Sum Sq Mean Sq  F value    Pr(&gt;F)    \nwt         1 847.73  847.73 127.5924 6.121e-12 ***\nvs         1  54.23   54.23   8.1619  0.007978 ** \nwt:vs      1  38.06   38.06   5.7287  0.023634 *  \nResiduals 28 186.03    6.64                       \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#f-tests-for-mtcars-example",
+    "href": "lectures/13-lecture.html#f-tests-for-mtcars-example",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "4.2 F-tests for mtcars Example",
+    "text": "4.2 F-tests for mtcars Example\nResponse: mpg\n          Df Sum Sq Mean Sq  F value    Pr(&gt;F)    \nwt         1 847.73  847.73 127.5924 6.121e-12 ***\nvs         1  54.23   54.23   8.1619  0.007978 ** \nwt:vs      1  38.06   38.06   5.7287  0.023634 *  \nResiduals 28 186.03    6.64  \n\nWhich F-tests can be conducted based on the ANOVA table?\nInteraction effect: \\(H_0: \\beta_3=0\\) vs \\(H_a: \\beta_3 \\ne 0\\).\n\n\\[F=\\frac{38.06/1}{186.03/28}=\\frac{38.06}{6.64}=5.7287\\]\nUse the reference distribution (\\(F_{1,28}\\)), the p-value is 0.0236. Note that the result is the same as that of the t-table."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#f-tests-for-mtcars-example-1",
+    "href": "lectures/13-lecture.html#f-tests-for-mtcars-example-1",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "4.3 F-tests for mtcars Example",
+    "text": "4.3 F-tests for mtcars Example\n\nWhich F-tests can be conducted based on the ANOVA table?\nThe overall effect of vs when the other predictor (wt) is in the model: \\(H_0: \\beta_2=\\beta_3=0\\) vs \\(H_a:\\) at least one of them is not zero.\nThe null hypothesis says that vs has no effect on mpg, neither directly nor through interaction with wt.\n\n\\[F=\\frac{(54.23+38.06)/2}{186.03/28}=\\frac{46.145}{6.64}=6.949548\\]\nUse the reference distribution (\\(F_{2,28}\\)), the p-value is 0.0035."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#summary-of-f-tests-in-interaction-model",
+    "href": "lectures/13-lecture.html#summary-of-f-tests-in-interaction-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "4.4 Summary of F-tests in Interaction Model",
+    "text": "4.4 Summary of F-tests in Interaction Model\n\nHow about \\(H_0: \\beta_1=\\beta_3=0\\)?\n\n\\(H_0\\) says that wt has no effect on mpg, neither directly nor through interaction with vs.\nIt is the overall effect of ‘wt’ when the other predictor (vs) is in the model.\nThis cannot be tested based on the ANOVA table.\nWe can switch the order and then construct an ANOVA table.\nWe can also compare the full model (with interaction) with the reduced model with vs only in the model."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#which-model-as-the-full-model",
+    "href": "lectures/13-lecture.html#which-model-as-the-full-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "4.5 Which Model as the Full Model?",
+    "text": "4.5 Which Model as the Full Model?\n\nShould we use the additive model or the interaction model as the full model when examining the overall effect of ‘wt’?\nIt depends on the research question.\nIf we are interested in the overall effect of ‘wt’ regardless of engine type, we can use the additive model as the full model.\nIf we are interested in the effect of ‘wt’ within each engine type, we should use the interaction model as the full model.\nIf it is common for the effect of ‘wt’ to differ by engine type, the interaction model is more appropriate as the full model. Consider a situation when the slopes are very different, have opposite signs. What can happen?"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#a-categorical-variable-with-more-than-two-levels",
+    "href": "lectures/13-lecture.html#a-categorical-variable-with-more-than-two-levels",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "6.1 A Categorical Variable with More than Two Levels",
+    "text": "6.1 A Categorical Variable with More than Two Levels\n\nConsider the mtcars data with ‘cyl’ (number of cylinders) as a categorical predictor with 3 levels (4, 6, 8).\nFit a MLR model with interaction between wt and cyl:\n\n\n\nCode\nlm_cyl_interaction &lt;- lm(mpg ~ wt * factor(cyl), data=mtcars)\nsummary(lm_cyl_interaction)$coefficients\n\n\n                  Estimate Std. Error    t value     Pr(&gt;|t|)\n(Intercept)      39.571196   3.193940 12.3894599 2.058359e-12\nwt               -5.647025   1.359498 -4.1537586 3.127578e-04\nfactor(cyl)6    -11.162351   9.355346 -1.1931522 2.435843e-01\nfactor(cyl)8    -15.703167   4.839464 -3.2448150 3.223216e-03\nwt:factor(cyl)6   2.866919   3.117330  0.9196716 3.661987e-01\nwt:factor(cyl)8   3.454587   1.627261  2.1229458 4.344037e-02\n\n\n\nThe fitted model can be written as \\[\\widehat{mpg} = \\beta_0 + \\beta_1 \\cdot wt + \\beta_2 \\cdot \\text{cyl6} + \\beta_3 \\cdot \\text{cyl8} + \\beta_4 \\cdot (wt \\times \\text{cyl6}) + \\beta_5 \\cdot (wt \\times \\text{cyl8})\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#visualization-of-interaction-between-continuous-and-categorical-variables",
+    "href": "lectures/13-lecture.html#visualization-of-interaction-between-continuous-and-categorical-variables",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "6.2 Visualization of Interaction Between Continuous and Categorical Variables",
+    "text": "6.2 Visualization of Interaction Between Continuous and Categorical Variables"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interpretation-of-interaction-between-continuous-and-categorical-variables",
+    "href": "lectures/13-lecture.html#interpretation-of-interaction-between-continuous-and-categorical-variables",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "6.3 Interpretation of Interaction Between Continuous and Categorical Variables",
+    "text": "6.3 Interpretation of Interaction Between Continuous and Categorical Variables\n\nThe interaction terms indicate how the effect of wt on mpg changes depending on the number of cylinders.\nFor example, the coefficient of wt:cyl6 represents the difference in the effect of wt on mpg for 6-cylinder cars compared to 4-cylinder cars (the reference group).\nSimilarly, the coefficient of wt:cyl8 represents the difference in the effect of wt on mpg for 8-cylinder cars compared to 4-cylinder cars."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interpret-coefficients-of-interaction-model",
+    "href": "lectures/13-lecture.html#interpret-coefficients-of-interaction-model",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "6.4 Interpret Coefficients of Interaction Model",
+    "text": "6.4 Interpret Coefficients of Interaction Model\nThe three regression lines - For 4-cylinder cars (reference group): \\(cyl6=0\\), \\(cyl8=0\\): \\[\\widehat{mpg} = 39.57 - 5.65 \\cdot wt\\] - For 6-cylinder cars: \\(cyl6=1\\), \\(cyl8=0\\): \\[\\widehat{mpg} = (39.57 - 4.26) + (-5.65 + 2.19) \\cdot wt = 35.31 - 3.46 \\cdot wt\\] - For 8-cylinder cars: \\(cyl6=0\\), \\(cyl8=1\\): \\[\\widehat{mpg} = (39.57 - 7.31) + (-5.65 + 4.15) \\cdot wt = 32.26 - 1.50 \\cdot wt\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels",
+    "href": "lectures/13-lecture.html#interaction-between-a-continuous-and-a-categorical-variable-with-more-than-2-levels",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "6.5 Interaction between a Continuous and a Categorical Variable with more than 2 levels",
+    "text": "6.5 Interaction between a Continuous and a Categorical Variable with more than 2 levels\n\nConsider a model with a categorical predictor \\(C\\) with \\(k\\) levels, and a continuous predictor \\(x\\).\nThe interaction model can be written as \\[y = \\beta_0 + \\gamma x + \\sum_{j=1}^{k-1} \\beta_j C_j + \\sum_{j=1}^{k-1} \\delta_{j} (x \\times C_j) + \\epsilon\\] where \\(C_j\\) are dummy variables for the categorical predictor with the first level as the reference group.\nThe effect (slope) of \\(x\\) on \\(y\\) for the reference group (level \\(k\\) of \\(C\\)) is \\(\\gamma\\).\nThe effect (slope) of \\(x\\) on \\(y\\) for level \\(j\\) of \\(C\\) is \\(\\gamma + \\delta_j\\) for \\(j=1, \\ldots, k-1\\)."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#test-interactions",
+    "href": "lectures/13-lecture.html#test-interactions",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "6.6 Test Interactions",
+    "text": "6.6 Test Interactions\n\nWe can test whether the interaction effects are significant using an ANOVA table or by examining the p-values of the interaction terms in the regression output.\n\n\n\nCode\nlm_cyl_interaction &lt;- lm(mpg ~ wt * factor(cyl), data=mtcars)\nanova(lm_cyl_interaction)\n\n\nAnalysis of Variance Table\n\nResponse: mpg\n               Df Sum Sq Mean Sq  F value    Pr(&gt;F)    \nwt              1 847.73  847.73 141.3883 5.133e-12 ***\nfactor(cyl)     2  95.26   47.63   7.9443   0.00203 ** \nwt:factor(cyl)  2  27.17   13.58   2.2658   0.12386    \nResiduals      26 155.89    6.00                       \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\\(F=\\frac{27.17/2}{155.89/26}=\\frac{13.58}{6.00}=2.2658\\)\nThe reference distribution is \\(F_{2, 26}\\) and the interaction is not significant at level 0.05."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#interaction-between-two-categorical-variables",
+    "href": "lectures/13-lecture.html#interaction-between-two-categorical-variables",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.1 Interaction Between Two Categorical Variables",
+    "text": "7.1 Interaction Between Two Categorical Variables\n\nExample data: warpbreaks dataset in R: the number of breaks in yarn during weaving\n\nbreaks: numeric response\nwool: 2 levels (A, B)\ntension: 3 levels (L, M, H)\n\n\n\n\nCode\ndata(\"warpbreaks\")\nstr(warpbreaks)\n\n\n'data.frame':   54 obs. of  3 variables:\n $ breaks : num  26 30 54 25 70 52 51 26 67 18 ...\n $ wool   : Factor w/ 2 levels \"A\",\"B\": 1 1 1 1 1 1 1 1 1 1 ...\n $ tension: Factor w/ 3 levels \"L\",\"M\",\"H\": 1 1 1 1 1 1 1 1 1 2 ..."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#two-categorical-variables",
+    "href": "lectures/13-lecture.html#two-categorical-variables",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.2 Two Categorical Variables",
+    "text": "7.2 Two Categorical Variables\n\nDoes the following make sense? \\[\\widehat{breaks} = \\hat \\beta_0 + \\hat \\beta_1 \\cdot \\text{wool} + \\hat \\beta_2 \\cdot \\text{tension} + \\hat \\beta_3 \\cdot \\text{wool}*\\text{tension}\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#two-categorical-variables-1",
+    "href": "lectures/13-lecture.html#two-categorical-variables-1",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.3 Two Categorical Variables",
+    "text": "7.3 Two Categorical Variables\n\n\nCode\nlm_warpbreaks &lt;- lm(breaks ~ wool * tension, data=warpbreaks)\nround(summary(lm_warpbreaks)$coefficients,2)\n\n\n               Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)       44.56       3.65   12.22     0.00\nwoolB            -16.33       5.16   -3.17     0.00\ntensionM         -20.56       5.16   -3.99     0.00\ntensionH         -20.00       5.16   -3.88     0.00\nwoolB:tensionM    21.11       7.29    2.89     0.01\nwoolB:tensionH    10.56       7.29    1.45     0.15\n\n\n\\[\\widehat{breaks} = \\hat \\beta_0 + \\hat \\beta_1 \\cdot \\text{woolB} + \\hat \\beta_2 \\cdot \\text{tensionM} + \\hat \\beta_3 \\cdot \\text{tensionH} + \\beta_4 \\cdot (\\text{woolB} \\times \\text{tensionM}) + \\beta_5 \\cdot (\\text{woolB} \\times \\text{tensionH})\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#means-and-coefficients",
+    "href": "lectures/13-lecture.html#means-and-coefficients",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.4 Means and Coefficients",
+    "text": "7.4 Means and Coefficients\n\nHow do we connect the means of each combination of wool and tension with the coefficients in the model?\n\\(\\mu_{}{A,L} = E[breaks | wool=A, tension=L] = \\beta_0\\)\n\\(\\mu_{}{A,M} = E[breaks | wool=A, tension=M] = \\beta_0 + \\beta_2\\)\n\\(\\mu_{}{A,H} = E[breaks | wool=A, tension=H] = \\beta_0 + \\beta_3\\)\n\\(\\mu_{}{B,L} = E[breaks | wool=B, tension=L] = \\beta_0 + \\beta_1\\)\n\\(\\mu_{}{B,M} = E[breaks | wool=B, tension=M] = \\beta_0 + \\beta_1 + \\beta_2 + \\beta_4\\)\n\\(\\mu_{}{B,H} = E[breaks | wool=B, tension=H] = \\beta_0 + \\beta_1 + \\beta_3 + \\beta_5\\)"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#two-categorical-variables-2",
+    "href": "lectures/13-lecture.html#two-categorical-variables-2",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.5 Two Categorical Variables",
+    "text": "7.5 Two Categorical Variables\n               Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)       44.56       3.65   12.22     0.00\nwoolB            -16.33       5.16   -3.17     0.00\ntensionM         -20.56       5.16   -3.99     0.00\ntensionH         -20.00       5.16   -3.88     0.00\nwoolB:tensionM    21.11       7.29    2.89     0.01\nwoolB:tensionH    10.56       7.29    1.45     0.15\n\nHow to interpret the interaction terms?"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#two-categorical-variables-3",
+    "href": "lectures/13-lecture.html#two-categorical-variables-3",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.6 Two Categorical Variables",
+    "text": "7.6 Two Categorical Variables\n\nWhat are the fitted values for each combination of wool and tension?\n\n# Fitted values for each combination\nfitted_A_L = 44.56\nfitted_A_M = 44.56 - 20.56\nfitted_A_H = 44.56 - 20.00\nfitted_B_L = 44.56 - 16.33\nfitted_B_M = 44.56 - 16.33 - 20.56 + 21.11\nfitted_B_H = 44.56 - 16.33 - 20.00 + 10.56\n# an easier way to find the means in R\naggregate(breaks ~ wool + tension, data = warpbreaks, FUN = mean)"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#visualization-bar-plots",
+    "href": "lectures/13-lecture.html#visualization-bar-plots",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.7 Visualization: Bar Plots",
+    "text": "7.7 Visualization: Bar Plots"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#visualization-line-plots",
+    "href": "lectures/13-lecture.html#visualization-line-plots",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.8 Visualization: Line Plots",
+    "text": "7.8 Visualization: Line Plots\n\nInteractions can also be examined by line plots of means"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#visualization-heatmaps",
+    "href": "lectures/13-lecture.html#visualization-heatmaps",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.9 Visualization: heatmaps",
+    "text": "7.9 Visualization: heatmaps"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#test-interaction-between-two-categorical-variables",
+    "href": "lectures/13-lecture.html#test-interaction-between-two-categorical-variables",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.10 Test Interaction Between Two Categorical Variables",
+    "text": "7.10 Test Interaction Between Two Categorical Variables\n\n\nCode\nlm_warpbreaks &lt;- lm(breaks ~ wool * tension, data=warpbreaks)\nanova(lm_warpbreaks)\n\n\nAnalysis of Variance Table\n\nResponse: breaks\n             Df Sum Sq Mean Sq F value    Pr(&gt;F)    \nwool          1  450.7  450.67  3.7653 0.0582130 .  \ntension       2 2034.3 1017.13  8.4980 0.0006926 ***\nwool:tension  2 1002.8  501.39  4.1891 0.0210442 *  \nResiduals    48 5745.1  119.69                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\\[F=\\frac{501.39}{119.59}=4.1891 \\overset{H_0} \\sim F_{df1, df2}\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#test-interaction-between-two-categorical-variables-1",
+    "href": "lectures/13-lecture.html#test-interaction-between-two-categorical-variables-1",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.11 Test Interaction Between Two Categorical Variables",
+    "text": "7.11 Test Interaction Between Two Categorical Variables\n\nConsider two categorical variables with \\(I\\) and \\(J\\) levels, respectively.\nHow many coefficients do we estimated in the interaction model?\n\n1 from the intercept\n\\(I-1\\) from the dummy variables of factor 1\n\\(J-1\\) from the dummy variables of factor 2\n\\((I-1)*(J-1)\\) from interaction terms.\nTotal: \\(IJ\\) coefficients."
+  },
+  {
+    "objectID": "lectures/13-lecture.html#two-way-anova",
+    "href": "lectures/13-lecture.html#two-way-anova",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.12 Two-way ANOVA",
+    "text": "7.12 Two-way ANOVA\n\nThis is also known as a two-way ANOVA with interaction. Consider a balanced case: \\[y_{ijk} = \\mu + \\alpha_i + \\beta_j + (\\alpha\\beta)_{ij} + \\epsilon_{ijk}\\] where \\(i=1, \\ldots, I\\); \\(j=1, \\ldots, J\\); \\(k=1, \\ldots, K\\).\nConstraints are needed for identifiability:\n\n\\(\\sum_{i=1}^I \\alpha_i = 0\\), \\(I-1\\) unique parameters. E.g., \\[\\alpha_1, \\cdots, \\alpha_{I-1}, \\cancel{\\alpha_I}\\]\n\\(\\sum_{j=1}^J \\beta_j = 0\\), \\(J-1\\) unique parameters. E.g., \\[\\beta_1, \\cdots, \\beta_{J-1}, \\cancel{\\beta_J}\\]"
+  },
+  {
+    "objectID": "lectures/13-lecture.html#two-way-anova-1",
+    "href": "lectures/13-lecture.html#two-way-anova-1",
+    "title": "Lec 13: Multiple Linear Regression - Interactions",
+    "section": "7.13 Two-way ANOVA",
+    "text": "7.13 Two-way ANOVA\n\nInteraction terms\n\n\\(\\sum_{i=1}^I (\\alpha\\beta)_{ij} = 0\\) for each \\(j\\)\n\\(\\sum_{j=1}^J (\\alpha\\beta)_{ij} = 0\\) for each \\(i\\)\nTotal \\((I-1)(J-1)\\) unique parameters. E.g.,\n\n\n\\[\\begin{pmatrix} \\delta_{11} & \\delta_{12} & \\cdots & \\delta_{1,J-1} & \\cancel{\\delta_{1J}} \\\\\n\\delta_{21} & \\delta_{22} & \\cdots & \\delta_{2,J-1} & \\cancel{\\delta_{2J}} \\\\\n\\cdots & \\cdots & \\cdots & \\cdots & \\cdots \\\\\n\\delta_{I-1,1} & \\delta_{I-1,2} & \\cdots & \\delta_{I-1,J-1} & \\cancel{\\delta_{I-1,J}} \\\\\n\\cancel{\\delta_{I1}} & \\cancel{\\delta_{I2}} & \\cdots & \\cancel{\\delta_{I,J-1}} & \\cancel{\\delta_{IJ}}\n\\end{pmatrix}\\]\n\nThe total number of parameters is \\(1 + (I-1) + (J-1) + (I-1)(J-1) = IJ\\), consistent with the linear regression.\n\n&lt;!– # Exit the R markdown"
   },
   {
     "objectID": "lectures/11-lecture.html",
@@ -81,35 +382,35 @@
     "href": "lectures/11-lecture.html#orthogonal-predictors-1",
     "title": "Lec 11:",
     "section": "3.2 Orthogonal Predictors",
-    "text": "3.2 Orthogonal Predictors\n\ny on X1 only\n\n\n\nCode\nanova(lm(y ~ X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX1         1  1.426  1.4261  0.5543 0.4847\nResiduals  6 15.435  2.5725"
+    "text": "3.2 Orthogonal Predictors\n\ny on X1 only\n\n\n\nCode\nanova(lm(y ~ X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX1         1 0.0685 0.06853  0.0635 0.8094\nResiduals  6 6.4750 1.07917"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-2",
     "href": "lectures/11-lecture.html#orthogonal-predictors-2",
     "title": "Lec 11:",
     "section": "3.3 Orthogonal Predictors",
-    "text": "3.3 Orthogonal Predictors\n\ny on X2 only\n\n\n\nCode\nanova(lm(y ~ X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1  1.453   1.453  0.5658 0.4804\nResiduals  6 15.408   2.568"
+    "text": "3.3 Orthogonal Predictors\n\ny on X2 only\n\n\n\nCode\nanova(lm(y ~ X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 2.2365 2.23651  3.1156  0.128\nResiduals  6 4.3071 0.71784"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-3",
     "href": "lectures/11-lecture.html#orthogonal-predictors-3",
     "title": "Lec 11:",
     "section": "3.4 Orthogonal Predictors",
-    "text": "3.4 Orthogonal Predictors\n\ny on X1 and X2. We noticed that \\[SS(\\beta_2|\\beta_1)=SS(\\beta_2)\\]\n\n\n\nCode\nanova(lm(y ~ X1 + X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX1         1  1.426  1.4261  0.5100 0.5071\nX2         1  1.453  1.4530  0.5196 0.5033\nResiduals  5 13.982  2.7964"
+    "text": "3.4 Orthogonal Predictors\n\ny on X1 and X2. We noticed that \\[SS(\\beta_2|\\beta_1)=SS(\\beta_2)\\]\n\n\n\nCode\nanova(lm(y ~ X1 + X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX1         1 0.0685 0.06853  0.0808 0.7876\nX2         1 2.2365 2.23651  2.6383 0.1652\nResiduals  5 4.2385 0.84771"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-4",
     "href": "lectures/11-lecture.html#orthogonal-predictors-4",
     "title": "Lec 11:",
     "section": "3.5 Orthogonal Predictors",
-    "text": "3.5 Orthogonal Predictors\n\ny on X2 and X1. We noticed that \\[SS(\\beta_1|\\beta_2)=SS(\\beta_1)\\]\n\n\n\nCode\nanova(lm(y ~ X2 + X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1  1.453  1.4530  0.5196 0.5033\nX1         1  1.426  1.4261  0.5100 0.5071\nResiduals  5 13.982  2.7964"
+    "text": "3.5 Orthogonal Predictors\n\ny on X2 and X1. We noticed that \\[SS(\\beta_1|\\beta_2)=SS(\\beta_1)\\]\n\n\n\nCode\nanova(lm(y ~ X2 + X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 2.2365 2.23651  2.6383 0.1652\nX1         1 0.0685 0.06853  0.0808 0.7876\nResiduals  5 4.2385 0.84771"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-5",
     "href": "lectures/11-lecture.html#orthogonal-predictors-5",
     "title": "Lec 11:",
     "section": "3.6 Orthogonal Predictors",
-    "text": "3.6 Orthogonal Predictors\n\nEstimated coefficients\n\n\n\nCode\nsummary(lm(y ~ X1))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept)  1.2491884   1.793223  0.6966163 0.5121138\nX1          -0.8444075   1.134134 -0.7445396 0.4846790\n\n\nCode\nsummary(lm(y ~ X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept) -4.7052834   6.257996 -0.7518834 0.4805651\nX2           0.8523383   1.133145  0.7521884 0.4803947\n\n\nCode\nsummary(lm(y ~ X1 + X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept) -3.4386721   6.766946 -0.5081572 0.6329616\nX1          -0.8444075   1.182462 -0.7141099 0.5071002\nX2           0.8523383   1.182462  0.7208169 0.5033052\n\n\n\nAre the results expected? Questions?"
+    "text": "3.6 Orthogonal Predictors\n\nEstimated coefficients\n\n\n\nCode\nsummary(lm(y ~ X1))$coefficients\n\n\n             Estimate Std. Error   t value  Pr(&gt;|t|)\n(Intercept) 0.2597114  1.1614495 0.2236097 0.8304801\nX1          0.1851139  0.7345651 0.2520047 0.8094475\n\n\nCode\nsummary(lm(y ~ X2))$coefficients\n\n\n             Estimate Std. Error   t value  Pr(&gt;|t|)\n(Intercept)  6.353492  3.3086421  1.920272 0.1032272\nX2          -1.057475  0.5991008 -1.765103 0.1279884\n\n\nCode\nsummary(lm(y ~ X1 + X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept)  6.0758216  3.7257448  1.6307670 0.1638682\nX1           0.1851139  0.6510397  0.2843358 0.7875525\nX2          -1.0574746  0.6510397 -1.6242860 0.1652426\n\n\n\nAre the results expected? Questions?"
   },
   {
     "objectID": "lectures/11-lecture.html#motivating-example-cdi-1",
@@ -2511,5 +2812,285 @@
     "title": "Lec 10:",
     "section": "8.4 Takeaways",
     "text": "8.4 Takeaways\n\nAdding predictors cannot decrease overall \\(R^2\\).\nLarger partial \\(R^2\\) corresponds to larger partial F (more evidence against \\(H_0\\)).\nUse nested anova() for clear partial tests; Type I SS depend on order."
+  },
+  {
+    "objectID": "lectures/12-lecture.html",
+    "href": "lectures/12-lecture.html",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "",
+    "text": "Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLectures 07-11: Multiple Linear Regression (MLR).\nLecture 11: multicollinearity\nThis lecture focuses on categorical predictor variables."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#review-lecture-01-06",
+    "href": "lectures/12-lecture.html#review-lecture-01-06",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "",
+    "text": "Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLectures 07-11: Multiple Linear Regression (MLR).\nLecture 11: multicollinearity\nThis lecture focuses on categorical predictor variables."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#continuous-vs-categorical-predictor-variables",
+    "href": "lectures/12-lecture.html#continuous-vs-categorical-predictor-variables",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "2.1 Continuous vs Categorical Predictor Variables",
+    "text": "2.1 Continuous vs Categorical Predictor Variables\n\nSo, in both SLR and MLR, we have focused on continuous predictor variables (also called quantitative predictor variables).\n\nE.g., in mtcars, the variable ‘wt’ (weight) is a continuous predictor variable.\nE.g., in ‘cdi’ (northeast region), the variable ‘hospitals_std’ is a continuous predictor variable.\n\nHowever, in practice, we often have categorical predictor variables as well.\n\nE.g., in mtcars, the variable ‘vs’ (engine type) is a categorical predictor variable.\nE.g., in ‘cdi’ (northeast region), the variable ‘state’ is a categorical predictor variable."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#definition-of-categorical-predictor-variables",
+    "href": "lectures/12-lecture.html#definition-of-categorical-predictor-variables",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "2.2 Definition of Categorical Predictor Variables",
+    "text": "2.2 Definition of Categorical Predictor Variables\n\nCategorical predictor variables (also called qualitative predictor variables or factors) take on a limited number of values, representing different groups or categories.\nE.g., in mtcars,\n\nthe variable ‘vs’ indicates whether the engine is V-shaped (0) or straight (1);\nthe variable ‘am’ indicates whether the transmission is automatic (0) or manual (1)."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#categorical-predictor-variables-with-more-than-two-categories",
+    "href": "lectures/12-lecture.html#categorical-predictor-variables-with-more-than-two-categories",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "2.3 Categorical Predictor Variables with More than Two Categories",
+    "text": "2.3 Categorical Predictor Variables with More than Two Categories\n\nE.g., in ‘cdi’ (northeast region), the state variable has the following categories:\n\nCT: Connecticut\nDE: Delaware\nMA: Massachusetts\nME: Maine\nNH: New Hampshire\nNJ: New Jersey\nNY: New York\nPA: Pennsylvania\nRI: Rhode Island\nVT: Vermont"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.1 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.1 Convert Categorical Predictor Variables to Numerical Values\n\nWe will present mathematical representation of categorical predictor variables.\n\nThis is automatically done in R and other software.\nWe present it to better understand the inner workings of the regression model with categorical predictors.\n\nIn SLR or MLR, the design matrix \\(X\\) contains numerical values.\nIndicator variables will be created for a categorical predictor variable to represent the different categories numerically.\nExample, PlantGrowth dataset:\n\ngroup: a categorical predictor variable with three categories: ctrl, trt1, trt2."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-1",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.2 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.2 Convert Categorical Predictor Variables to Numerical Values\n\nThe group variable is a categorical variable with three categories: ctrl, trt1, trt2.\nWe can create three indicator variables to represent the three categories:\n\n\\(X_{ctrl}\\): 1 if group=ctrl, 0 otherwise\n\\(X_{trt1}\\): 1 if group=trt1, 0 otherwise\n\\(X_{trt2}\\): 1 if group=trt2, 0 otherwise\n\nThe design matrix \\(X\\) will then include these three indicator variables along with the intercept term."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-2",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-2",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.3 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.3 Convert Categorical Predictor Variables to Numerical Values\n\nPlantGrowth\n\n\n\nCode\nhead(PlantGrowth)\n\n\n  weight group\n1   4.17  ctrl\n2   5.58  ctrl\n3   5.18  ctrl\n4   6.11  ctrl\n5   4.50  ctrl\n6   4.61  ctrl\n\n\nCode\nsummary(PlantGrowth)\n\n\n     weight       group   \n Min.   :3.590   ctrl:10  \n 1st Qu.:4.550   trt1:10  \n Median :5.155   trt2:10  \n Mean   :5.073            \n 3rd Qu.:5.530            \n Max.   :6.310"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-3",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-3",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.4 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.4 Convert Categorical Predictor Variables to Numerical Values\n\nCreate indicator variables in R:\n\n\n\nCode\n# creating three indicator variables\nctrl &lt;- ifelse(PlantGrowth$group==\"ctrl\", 1, 0)\ntrt1 &lt;- ifelse(PlantGrowth$group==\"trt1\", 1, 0)\ntrt2 &lt;- ifelse(PlantGrowth$group==\"trt2\", 1, 0)\ndesign_matrix &lt;- data.frame(Intercept=1, ctrl=ctrl, trt1=trt1, trt2=trt2)\nhead(design_matrix)\n\n\n  Intercept ctrl trt1 trt2\n1         1    1    0    0\n2         1    1    0    0\n3         1    1    0    0\n4         1    1    0    0\n5         1    1    0    0\n6         1    1    0    0\n\n\nCode\nsummary(design_matrix)\n\n\n   Intercept      ctrl             trt1             trt2       \n Min.   :1   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  \n 1st Qu.:1   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  \n Median :1   Median :0.0000   Median :0.0000   Median :0.0000  \n Mean   :1   Mean   :0.3333   Mean   :0.3333   Mean   :0.3333  \n 3rd Qu.:1   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  \n Max.   :1   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-4",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-4",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.5 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.5 Convert Categorical Predictor Variables to Numerical Values\n\nIn this example, we have three indicator variables for the three categories.\nTo compute the LSEs, we would need to invert the matrix \\(X^TX\\), where \\(X\\) is the design matrix including these three indicator variables.\n\n\n\nCode\nX &lt;- as.matrix(design_matrix)\nXTX &lt;- t(X) %*% X\nXTX\n\n\n          Intercept ctrl trt1 trt2\nIntercept        30   10   10   10\nctrl             10   10    0    0\ntrt1             10    0   10    0\ntrt2             10    0    0   10"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-5",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-5",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.6 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.6 Convert Categorical Predictor Variables to Numerical Values\n\nThe matrix \\(X^TX\\) is singular and cannot be inverted.\nThis is because there is linear dependency in the design matrix:\n\n\n\nCode\nctrl + trt1 + trt2\n\n\n [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1\n\n\n\nThe sum of last three columns equals the first column.\nTo avoid this issue, we need to use only two indicator variables for the three categories."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-6",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-6",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.7 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.7 Convert Categorical Predictor Variables to Numerical Values\n\nWe can use only two indicator variables for the three categories:\n\n\\(X_{ctrl}\\): 1 if group=ctrl, 0 otherwise\n\\(X_{trt1}\\): 1 if group=trt1, 0 otherwise\n\nThe third category (trt2) is represented by both \\(X_{ctrl}\\)=0 and \\(X_{trt1}\\)=0.\nThe design matrix \\(X\\) will then include these two indicator variables along with the intercept term."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-7",
+    "href": "lectures/12-lecture.html#convert-categorical-predictor-variables-to-numerical-values-7",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.8 Convert Categorical Predictor Variables to Numerical Values",
+    "text": "3.8 Convert Categorical Predictor Variables to Numerical Values\n\nThe design matrix \\(X\\) now includes only two indicator variables for the three categories.\n\n\n\nCode\ndesign_matrix &lt;- data.frame(Intercept=1, ctrl=ctrl, trt1=trt1)\nX &lt;- as.matrix(design_matrix)\nXTX &lt;- t(X) %*% X\nbeta_hat &lt;- solve(XTX) %*% t(X) %*% as.matrix(PlantGrowth$weight)\nt(beta_hat)\n\n\n     Intercept   ctrl   trt1\n[1,]     5.526 -0.494 -0.865"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#dummy-variables",
+    "href": "lectures/12-lecture.html#dummy-variables",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.9 Dummy Variables",
+    "text": "3.9 Dummy Variables\n\nThe two indicator variables created above are called dummy variables.\nIn general, for a categorical predictor variable with \\(k\\) categories, we need to create \\(k-1\\) dummy variables to represent the categories in the design matrix.\nThe category that is not represented by a dummy variable is called the reference category."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#compare-with-rs-lm-function",
+    "href": "lectures/12-lecture.html#compare-with-rs-lm-function",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "3.10 Compare with R’s lm function",
+    "text": "3.10 Compare with R’s lm function\n\n\nCode\nlm_fit &lt;- lm(weight ~ group, data=PlantGrowth)\nsummary(lm_fit)$coefficients[,1]\n\n\n(Intercept)   grouptrt1   grouptrt2 \n      5.032      -0.371       0.494 \n\n\n\nDo they give the same results?\nNo. Why?"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-default-reference-category-in-r",
+    "href": "lectures/12-lecture.html#the-default-reference-category-in-r",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "4.1 The Default Reference Category in R",
+    "text": "4.1 The Default Reference Category in R\n\nBy default, R uses the first category (in alphabetical order) as the reference category.\nIn the PlantGrowth dataset, the categories are ‘ctrl’, ‘trt1’, and ‘trt2’. The reference category is ‘ctrl’.\nThe dummy variables created by R’s lm function are:\n\n\\(X_{trt1}\\): 1 if group=trt1, 0 otherwise\n\\(X_{trt2}\\): 1 if group=trt2, 0 otherwise\nThe design matrix \\(X\\) used by R’s lm function includes these two dummy variables along with the intercept term."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-default-reference-category-in-r-1",
+    "href": "lectures/12-lecture.html#the-default-reference-category-in-r-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "4.2 The Default Reference Category in R",
+    "text": "4.2 The Default Reference Category in R\n\n\nCode\ndesign_matrix &lt;- data.frame(Intercept=1, trt1=trt1, trt2=trt2)\nX &lt;- as.matrix(design_matrix)\nXTX &lt;- t(X) %*% X\nbeta_hat &lt;- solve(XTX) %*% t(X) %*% as.matrix(PlantGrowth$weight)\nt(beta_hat)\n\n\n     Intercept   trt1  trt2\n[1,]     5.032 -0.371 0.494"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#change-the-reference-category",
+    "href": "lectures/12-lecture.html#change-the-reference-category",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "4.3 Change the Reference Category",
+    "text": "4.3 Change the Reference Category\n\nWe can change the reference category by releveling the factor variable using the relevel function in R.\nFor example, if we have a good reason to use trt1 as the reference category, we can do the following:\n\n\n\nCode\nPlantGrowth$group_relevel &lt;- relevel(PlantGrowth$group, ref=\"trt1\")\nlm_fit_relevel &lt;- lm(weight ~ group_relevel, data=PlantGrowth)\nsummary(lm_fit_relevel)$coefficients[,1]\n\n\n      (Intercept) group_relevelctrl group_releveltrt2 \n            4.661             0.371             0.865"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#interpretation-of-coefficients-with-categorical-predictors",
+    "href": "lectures/12-lecture.html#interpretation-of-coefficients-with-categorical-predictors",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "4.4 Interpretation of Coefficients with Categorical Predictors",
+    "text": "4.4 Interpretation of Coefficients with Categorical Predictors\n\nThe interpretation of the coefficients in the presence of categorical predictor variables depends on the reference category.\nFor example, in the PlantGrowth dataset with ‘ctrl’ as the reference category:\n\nThe intercept represents the mean weight for the ‘ctrl’ group.\nThe coefficient for ‘trt1’ represents the difference in mean weight between the ‘trt1’ group and the ‘ctrl’ group.\nThe coefficient for ‘trt2’ represents the difference in mean weight between the ‘trt2’ group and the ‘ctrl’ group."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#interpretation-of-coefficients-with-categorical-predictors-1",
+    "href": "lectures/12-lecture.html#interpretation-of-coefficients-with-categorical-predictors-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "4.5 Interpretation of Coefficients with Categorical Predictors",
+    "text": "4.5 Interpretation of Coefficients with Categorical Predictors\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   5.0320     0.1971  25.527   &lt;2e-16 ***\ngrouptrt1    -0.3710     0.2788  -1.331   0.1944    \ngrouptrt2     0.4940     0.2788   1.772   0.0877 . \n\nHere, 5.03 is the sample mean of the ‘ctrl’ group; -0.37 is difference in sample means between ‘trt1’ and ‘ctrl’; 0.49 is difference between ‘trt2’ and ‘ctrl’.\nHow about the p-values?\n\nThe p-value for ‘trt1’ tests the null hypothesis that the mean weight of ‘trt1’ is equal to that of ‘ctrl’."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#interpretation-of-coefficients-with-categorical-predictors-2",
+    "href": "lectures/12-lecture.html#interpretation-of-coefficients-with-categorical-predictors-2",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "4.6 Interpretation of Coefficients with Categorical Predictors",
+    "text": "4.6 Interpretation of Coefficients with Categorical Predictors\n                  Estimate Std. Error   t value     Pr(&gt;|t|)\n(Intercept)          4.661  0.1971284 23.644492 1.405827e-19\ngroup_relevelctrl    0.371  0.2787816  1.330791 1.943879e-01\ngroup_releveltrt2    0.865  0.2787816  3.102787 4.459236e-03\n\nThe intercept 4.66 is the sample mean of the ‘trt1’ group; 0.37 is difference in sample means between ‘ctrl’ and ‘trt1’; 0.87 is difference between ‘trt2’ and ‘trt1’.\nHow about the p-values?\n\nThe p-value for ‘ctrl’ tests the null hypothesis that the mean weight of ‘ctrl’ is equal to that of ‘trt1’."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#no-intercept-model",
+    "href": "lectures/12-lecture.html#no-intercept-model",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.1 No Intercept Model",
+    "text": "5.1 No Intercept Model\n\nWe can include all categories in the model and remove the intercept term.\nExample, PlantGrowth dataset without intercept:\n\n\n\nCode\ndesign_matrix_no_intercept &lt;- data.frame(ctrl=ctrl, trt1=trt1, trt2=trt2)\nhead(design_matrix_no_intercept)\n\n\n  ctrl trt1 trt2\n1    1    0    0\n2    1    0    0\n3    1    0    0\n4    1    0    0\n5    1    0    0\n6    1    0    0\n\n\nCode\nX_no_intercept &lt;- as.matrix(design_matrix_no_intercept)\nXTX_no_intercept &lt;- t(X_no_intercept) %*% X_no_intercept\nbeta_hat_no_intercept &lt;- solve(XTX_no_intercept) %*% t(X_no_intercept) %*% as.matrix(PlantGrowth$weight)\nbeta_hat_no_intercept\n\n\n      [,1]\nctrl 5.032\ntrt1 4.661\ntrt2 5.526"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#no-intercept-model-1",
+    "href": "lectures/12-lecture.html#no-intercept-model-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.2 No Intercept Model",
+    "text": "5.2 No Intercept Model\n\nIn R, we can fit the model without intercept using the lm function:\n\n\n\nCode\nlm_fit_no_intercept &lt;- lm(weight ~ group + 0, data=PlantGrowth)\n# or lm_fit_no_intercept &lt;- lm(weight ~ group - 1, data=PlantGrowth)\nsummary(lm_fit_no_intercept)$coefficients\n\n\n          Estimate Std. Error  t value     Pr(&gt;|t|)\ngroupctrl    5.032  0.1971284 25.52651 1.936575e-20\ngrouptrt1    4.661  0.1971284 23.64449 1.405827e-19\ngrouptrt2    5.526  0.1971284 28.03250 1.688656e-21"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#effect-coding",
+    "href": "lectures/12-lecture.html#effect-coding",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.3 Effect Coding",
+    "text": "5.3 Effect Coding\n\nIn effect coding, we create \\(k\\) indicator variables for a categorical predictor variable with \\(k\\) categories.\nThe indicator variables are coded as follows:\n\nFor category 1: \\(X_1\\)=1, \\(X_2\\)=0, …, \\(X_k\\)=0\nFor category 2: \\(X_1\\)=0, \\(X_2\\)=1, …, \\(X_k\\)=0\n…\nFor category k-1: \\(X_1\\)=0, \\(X_2\\)=0, …, \\(X_{k-1}\\)=1\nFor category k: \\(X_1\\)=-1, \\(X_2\\)=-1, …, \\(X_{k-1}\\)=-1"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#effect-coding-1",
+    "href": "lectures/12-lecture.html#effect-coding-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.4 Effect Coding",
+    "text": "5.4 Effect Coding\n\nThe design matrix \\(X\\) will then include these \\(k\\) indicator variables along with the intercept term.\nExample, PlantGrowth dataset with effect coding:\n\n\n\nCode\nctrl_ec &lt;- ifelse(PlantGrowth$group==\"ctrl\", 1, ifelse(PlantGrowth$group==\"trt1\", 0, -1))\ntrt1_ec &lt;- ifelse(PlantGrowth$group==\"trt1\", 1, ifelse(PlantGrowth$group==\"ctrl\", 0, -1))\ndesign_matrix_ec &lt;- data.frame(Intercept=1, ctrl_ec=ctrl_ec, trt1_ec=trt1_ec)\nX_ec &lt;- as.matrix(design_matrix_ec)\nXTX_ec &lt;- t(X_ec) %*% X_ec\nbeta_hat_ec &lt;- solve(XTX_ec) %*% t(X_ec) %*% as.matrix(PlantGrowth$weight)\nt(beta_hat_ec)\n\n\n     Intercept ctrl_ec trt1_ec\n[1,]     5.073  -0.041  -0.412"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#effect-coding-2",
+    "href": "lectures/12-lecture.html#effect-coding-2",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.5 Effect Coding",
+    "text": "5.5 Effect Coding\nt(beta_hat_ec)\n     Intercept ctrl_ec trt1_ec\n[1,]     5.073  -0.041  -0.412```\n\nHow to interpret the coefficients here?\n\n5.07 is the overall mean weight across all groups.\n-0.04 is the deviation of the ‘ctrl’ group mean from the overall mean.\n-0.41 is the deviation of the ‘trt1’ group mean from the overall mean.\nThe deviation of the ‘trt2’ group mean from the overall mean can be calculated as -(-0.04 + -0.41) = 0.45."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#effect-coding-3",
+    "href": "lectures/12-lecture.html#effect-coding-3",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.6 Effect Coding",
+    "text": "5.6 Effect Coding\n\nLet’s verify the calculations:\n\n\n\nCode\nmean_ctrl &lt;- mean(PlantGrowth$weight[PlantGrowth$group==\"ctrl\"])\nmean_trt1 &lt;- mean(PlantGrowth$weight[PlantGrowth$group==\"trt1\"])\nmean_trt2 &lt;- mean(PlantGrowth$weight[PlantGrowth$group==\"trt2\"])\noverall_mean &lt;- mean(PlantGrowth$weight)\ndeviation_ctrl &lt;- mean_ctrl - overall_mean\ndeviation_trt1 &lt;- mean_trt1 - overall_mean\ndeviation_trt2 &lt;- mean_trt2 - overall_mean\ndeviation_ctrl\n\n\n[1] -0.041\n\n\nCode\ndeviation_trt1\n\n\n[1] -0.412\n\n\nCode\ndeviation_trt2\n\n\n[1] 0.453"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#effect-coding-4",
+    "href": "lectures/12-lecture.html#effect-coding-4",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.7 Effect Coding",
+    "text": "5.7 Effect Coding\n\nIn R, we can use the contr.sum function to specify effect coding for a factor variable.\n\n\n\nCode\nPlantGrowth$group_ec &lt;- factor(PlantGrowth$group, \n                               levels=c(\"ctrl\", \"trt1\", \"trt2\"),\n                               labels=c(\"ctrl\", \"trt1\", \"trt2\"))\ncontrasts(PlantGrowth$group_ec) &lt;- contr.sum(3)\nlm_fit_ec &lt;- lm(weight ~ group_ec, data=PlantGrowth)\nsummary(lm_fit_ec)$coefficients\n\n\n            Estimate Std. Error    t value     Pr(&gt;|t|)\n(Intercept)    5.073  0.1138121 44.5734621 8.020008e-27\ngroup_ec1     -0.041  0.1609546 -0.2547302 8.008617e-01\ngroup_ec2     -0.412  0.1609546 -2.5597274 1.639014e-02\n\n\n\nThe coefficients represent the deviation of each category’s mean from the overall mean."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-contrasts-function",
+    "href": "lectures/12-lecture.html#the-contrasts-function",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.8 The contrasts Function",
+    "text": "5.8 The contrasts Function\n\nThe contrasts function in R allows us to specify how categorical predictor variables are coded in the design matrix.\nBy default, R uses treatment contrasts (reference category coding).\nWe can use contr.sum for effect coding or contr.treatment to specify a different reference category.\nThe `contr.treatment’ option allows us to specify which category to use as the reference category.\n\n\n\nCode\ncontrasts(PlantGrowth$group) &lt;- contr.treatment(3, base=2) # use 'trt1' as reference\nlm_fit_contr &lt;- lm(weight ~ group, data=PlantGrowth)\nsummary(lm_fit_contr)$coefficients\n\n\n            Estimate Std. Error   t value     Pr(&gt;|t|)\n(Intercept)    4.661  0.1971284 23.644492 1.405827e-19\ngroup1         0.371  0.2787816  1.330791 1.943879e-01\ngroup3         0.865  0.2787816  3.102787 4.459236e-03\n\n\n\nThe coefficients now represent the differences in means between each category and the ‘trt1’ group."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-contrasts-function-1",
+    "href": "lectures/12-lecture.html#the-contrasts-function-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "5.9 The contrasts Function",
+    "text": "5.9 The contrasts Function\n\nIt is good habit to always check the contrasts used for categorical predictor variables in your model.\nAfter fitting the model, you can check the contrasts used by:\n\n\n\nCode\ncontrasts(PlantGrowth$group)\n\n\n     1 3\nctrl 1 0\ntrt1 0 0\ntrt2 0 1\n\n\n\nIt is also a good habit to set to the default contrasts after fitting the model to avoid confusion in future analyses.\n\n\n\nCode\ncontrasts(PlantGrowth$group) &lt;- contr.treatment(3)"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-overall-effect-of-a-categorical-predictor-variable",
+    "href": "lectures/12-lecture.html#the-overall-effect-of-a-categorical-predictor-variable",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "6.1 The Overall Effect of a Categorical Predictor Variable",
+    "text": "6.1 The Overall Effect of a Categorical Predictor Variable\n\nWe might be interested in knowing whether there is an overall effect of a categorical predictor variable on the response variable.\nFor example, in the PlantGrowth dataset, we might want to test whether there is any difference in mean weight among the three groups (ctrl, trt1, trt2).\n\n\\(H_0\\): \\(\\mu_{ctrl}\\) = \\(\\mu_{trt1}\\) = \\(\\mu_{trt2}\\)\n\\(H_a\\): At least one group mean is different from another one\n\nWhich test should we use?"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-overall-effect-of-a-categorical-predictor-variable-1",
+    "href": "lectures/12-lecture.html#the-overall-effect-of-a-categorical-predictor-variable-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "6.2 The Overall Effect of a Categorical Predictor Variable",
+    "text": "6.2 The Overall Effect of a Categorical Predictor Variable\n\nWe can use the ANOVA F-test to test the overall effect of a categorical predictor variable.\nWe can find the result from anova of the summary of the lm fit.\n\n\n\nCode\nanova(lm_fit)\n\n\nAnalysis of Variance Table\n\nResponse: weight\n          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  \ngroup      2  3.7663  1.8832  4.8461 0.01591 *\nResiduals 27 10.4921  0.3886                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#the-overall-effect-of-a-categorical-predictor-variable-2",
+    "href": "lectures/12-lecture.html#the-overall-effect-of-a-categorical-predictor-variable-2",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "6.3 The Overall Effect of a Categorical Predictor Variable",
+    "text": "6.3 The Overall Effect of a Categorical Predictor Variable\n\n\nCode\nsummary(lm_fit)\n\n\n\nCall:\nlm(formula = weight ~ group, data = PlantGrowth)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.0710 -0.4180 -0.0060  0.2627  1.3690 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   5.0320     0.1971  25.527   &lt;2e-16 ***\ngrouptrt1    -0.3710     0.2788  -1.331   0.1944    \ngrouptrt2     0.4940     0.2788   1.772   0.0877 .  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.6234 on 27 degrees of freedom\nMultiple R-squared:  0.2641,    Adjusted R-squared:  0.2096 \nF-statistic: 4.846 on 2 and 27 DF,  p-value: 0.01591"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#categorical-predictor-variables-in-mlr",
+    "href": "lectures/12-lecture.html#categorical-predictor-variables-in-mlr",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "7.1 Categorical Predictor Variables in MLR",
+    "text": "7.1 Categorical Predictor Variables in MLR\n\nFor a categorical predictor with more than two categories, the model is already a multiple linear regression model because it includes multiple dummy variables.\nA MLR can include both continuous and categorical predictor variables.\n\nE.g., in mtcars, we can fit a MLR model with ‘mpg’ as the response variable, ‘wt’ (continuous) and ‘vs’ (categorical) as predictor variables.\n\n\n\n\nCode\nlm_mlr &lt;- lm(mpg ~ wt + vs, data=mtcars)"
+  },
+  {
+    "objectID": "lectures/12-lecture.html#categorical-and-continuous-predictor-variables-in-mlr",
+    "href": "lectures/12-lecture.html#categorical-and-continuous-predictor-variables-in-mlr",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "7.2 Categorical and Continuous Predictor Variables in MLR",
+    "text": "7.2 Categorical and Continuous Predictor Variables in MLR\nsummary(lm_mlr)$coefficients\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  33.0042     2.3554  14.012 1.92e-14 ***\nwt           -4.4428     0.6134  -7.243 5.63e-08 ***\nvs            3.1544     1.1907   2.649   0.0129 *  \n\nHow to interpret the coefficients here?\n\n33.00 the estimated mean mpg when wt=0 and vs=0 (V-shaped engine).\n-4.44 represents the change in mean mpg for a one-unit increase in wt, holding vs constant (within the same engine type).\n3.15 represents the difference in mean mpg between straight engine (vs=1) and V-shaped engine (vs=0), holding wt constant."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#interactions-between-categorical-and-continuous-predictors",
+    "href": "lectures/12-lecture.html#interactions-between-categorical-and-continuous-predictors",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "7.3 Interactions between Categorical and Continuous Predictors",
+    "text": "7.3 Interactions between Categorical and Continuous Predictors\n\nWhat assumptions did we make about the meaningfulness of these interpretations?\n\nWe assume that the effect of wt on mpg is the same for both engine types (no interaction effect).\n\nIf we suspect that the effect of wt on mpg differs by engine type, we can include an interaction term between wt and vs in the model.\nIt is always helpful to visualize the data to check for potential interaction effects."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#visual-inspection-of-interaction-effects",
+    "href": "lectures/12-lecture.html#visual-inspection-of-interaction-effects",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "7.4 Visual Inspection of Interaction Effects",
+    "text": "7.4 Visual Inspection of Interaction Effects\n\n\nCode\nggplot(mtcars, aes(x=wt, y=mpg, color=factor(vs))) +\n  geom_point() +\n  geom_smooth(method=\"lm\", se=FALSE) +\n  labs(color=\"Engine Type (vs)\", x=\"Weight (1000 lbs)\", y=\"Miles per Gallon (mpg)\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\nThis will be in next lecture."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#conclusion-1",
+    "href": "lectures/12-lecture.html#conclusion-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "8.1 Conclusion",
+    "text": "8.1 Conclusion\n\nWe showed how do categorical predictor variables work in linear regression models.\nWe showed the mathematical representation of categorical predictor variables using dummy variables.\nThe mathematical representation helps us understand how the regression model handles categorical predictors; it shows the inner workings of the model.\nIn R or other software, the process is done automatically when fitting the model."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#conclusion-2",
+    "href": "lectures/12-lecture.html#conclusion-2",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "8.2 Conclusion",
+    "text": "8.2 Conclusion\n\nThe different ways to represent categorical predictors (reference category, no intercept, effect coding) lead to different interpretations of the coefficients, but they all model the same underlying relationships in the data.\nWe shown two methods to change the default reference category in R: relevel function and contrasts function.\nFor the GrowthPlants example, what is your favorite way to represent the categorical predictor variable ‘group’?\nLastly, the overall effect of a categorical predictor variable can be tested using the ANOVA F-test."
+  },
+  {
+    "objectID": "lectures/12-lecture.html#categorical-predictor-variables-with-more-than-two-categories-1",
+    "href": "lectures/12-lecture.html#categorical-predictor-variables-with-more-than-two-categories-1",
+    "title": "Lec 12: Multiple Linear Regression - Categorical Variables",
+    "section": "8.3 Categorical Predictor Variables with More than Two Categories",
+    "text": "8.3 Categorical Predictor Variables with More than Two Categories\n\n\nCode\ncdi &lt;- read.csv(\"../data/CDI.csv\")\ncdi &lt;- cdi[cdi$region==1,]\n#correlation heatmap\ncdi$physicians_std &lt;- cdi$physicians / cdi$population * 1000\ncdi$hospitals_std &lt;- cdi$hospitals / cdi$population * 1000\ncdi$crimes_std &lt;- cdi$crimes / cdi$population * 1000\ncdi$land_area_std &lt;- cdi$land_area / cdi$population * 1000\nsummary(lm(unemployment ~ state, data=cdi))\n\n\n\nCall:\nlm(formula = unemployment ~ state, data = cdi)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-2.5778 -1.0716 -0.0655  0.8273  4.2500 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   6.8500     0.5650  12.124  &lt; 2e-16 ***\nstateDE       0.0500     1.2633   0.040 0.968515    \nstateMA       2.5955     0.7425   3.495 0.000727 ***\nstateME       0.5700     0.9110   0.626 0.533061    \nstateNH       0.4250     0.9786   0.434 0.665078    \nstateNJ      -0.1722     0.6790  -0.254 0.800342    \nstateNY      -0.1000     0.6598  -0.152 0.879855    \nstatePA       0.1155     0.6382   0.181 0.856753    \nstateRI       1.2500     1.0819   1.155 0.250885    \nstateVT      -2.4500     1.6950  -1.445 0.151691    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.598 on 93 degrees of freedom\nMultiple R-squared:  0.2472,    Adjusted R-squared:  0.1744 \nF-statistic: 3.394 on 9 and 93 DF,  p-value: 0.001214"
   }
 ]

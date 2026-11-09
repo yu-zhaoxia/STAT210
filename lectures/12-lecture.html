@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 12: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 12: Multiple Linear Regression - Categorical Variables – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,83 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review" id="toc-review" class="nav-link active" data-scroll-target="#review"><span class="header-section-number">1</span> Review</a>
+  <ul class="collapse">
+  <li><a href="#review-lecture-01-06" id="toc-review-lecture-01-06" class="nav-link" data-scroll-target="#review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</a></li>
+  </ul></li>
+  <li><a href="#categorical-predictors" id="toc-categorical-predictors" class="nav-link" data-scroll-target="#categorical-predictors"><span class="header-section-number">2</span> Categorical Predictors</a>
+  <ul class="collapse">
+  <li><a href="#continuous-vs-categorical-predictor-variables" id="toc-continuous-vs-categorical-predictor-variables" class="nav-link" data-scroll-target="#continuous-vs-categorical-predictor-variables"><span class="header-section-number">2.1</span> Continuous vs Categorical Predictor Variables</a></li>
+  <li><a href="#definition-of-categorical-predictor-variables" id="toc-definition-of-categorical-predictor-variables" class="nav-link" data-scroll-target="#definition-of-categorical-predictor-variables"><span class="header-section-number">2.2</span> Definition of Categorical Predictor Variables</a></li>
+  <li><a href="#categorical-predictor-variables-with-more-than-two-categories" id="toc-categorical-predictor-variables-with-more-than-two-categories" class="nav-link" data-scroll-target="#categorical-predictor-variables-with-more-than-two-categories"><span class="header-section-number">2.3</span> Categorical Predictor Variables with More than Two Categories</a></li>
+  </ul></li>
+  <li><a href="#mathematical-representation" id="toc-mathematical-representation" class="nav-link" data-scroll-target="#mathematical-representation"><span class="header-section-number">3</span> Mathematical Representation</a>
+  <ul class="collapse">
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values" id="toc-convert-categorical-predictor-variables-to-numerical-values" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values"><span class="header-section-number">3.1</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-1" id="toc-convert-categorical-predictor-variables-to-numerical-values-1" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-1"><span class="header-section-number">3.2</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-2" id="toc-convert-categorical-predictor-variables-to-numerical-values-2" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-2"><span class="header-section-number">3.3</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-3" id="toc-convert-categorical-predictor-variables-to-numerical-values-3" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-3"><span class="header-section-number">3.4</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-4" id="toc-convert-categorical-predictor-variables-to-numerical-values-4" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-4"><span class="header-section-number">3.5</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-5" id="toc-convert-categorical-predictor-variables-to-numerical-values-5" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-5"><span class="header-section-number">3.6</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-6" id="toc-convert-categorical-predictor-variables-to-numerical-values-6" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-6"><span class="header-section-number">3.7</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#convert-categorical-predictor-variables-to-numerical-values-7" id="toc-convert-categorical-predictor-variables-to-numerical-values-7" class="nav-link" data-scroll-target="#convert-categorical-predictor-variables-to-numerical-values-7"><span class="header-section-number">3.8</span> Convert Categorical Predictor Variables to Numerical Values</a></li>
+  <li><a href="#dummy-variables" id="toc-dummy-variables" class="nav-link" data-scroll-target="#dummy-variables"><span class="header-section-number">3.9</span> Dummy Variables</a></li>
+  <li><a href="#compare-with-rs-lm-function" id="toc-compare-with-rs-lm-function" class="nav-link" data-scroll-target="#compare-with-rs-lm-function"><span class="header-section-number">3.10</span> Compare with R’s lm function</a></li>
+  </ul></li>
+  <li><a href="#reference-category" id="toc-reference-category" class="nav-link" data-scroll-target="#reference-category"><span class="header-section-number">4</span> Reference Category</a>
+  <ul class="collapse">
+  <li><a href="#the-default-reference-category-in-r" id="toc-the-default-reference-category-in-r" class="nav-link" data-scroll-target="#the-default-reference-category-in-r"><span class="header-section-number">4.1</span> The Default Reference Category in R</a></li>
+  <li><a href="#the-default-reference-category-in-r-1" id="toc-the-default-reference-category-in-r-1" class="nav-link" data-scroll-target="#the-default-reference-category-in-r-1"><span class="header-section-number">4.2</span> The Default Reference Category in R</a></li>
+  <li><a href="#change-the-reference-category" id="toc-change-the-reference-category" class="nav-link" data-scroll-target="#change-the-reference-category"><span class="header-section-number">4.3</span> Change the Reference Category</a></li>
+  <li><a href="#interpretation-of-coefficients-with-categorical-predictors" id="toc-interpretation-of-coefficients-with-categorical-predictors" class="nav-link" data-scroll-target="#interpretation-of-coefficients-with-categorical-predictors"><span class="header-section-number">4.4</span> Interpretation of Coefficients with Categorical Predictors</a></li>
+  <li><a href="#interpretation-of-coefficients-with-categorical-predictors-1" id="toc-interpretation-of-coefficients-with-categorical-predictors-1" class="nav-link" data-scroll-target="#interpretation-of-coefficients-with-categorical-predictors-1"><span class="header-section-number">4.5</span> Interpretation of Coefficients with Categorical Predictors</a></li>
+  <li><a href="#interpretation-of-coefficients-with-categorical-predictors-2" id="toc-interpretation-of-coefficients-with-categorical-predictors-2" class="nav-link" data-scroll-target="#interpretation-of-coefficients-with-categorical-predictors-2"><span class="header-section-number">4.6</span> Interpretation of Coefficients with Categorical Predictors</a></li>
+  </ul></li>
+  <li><a href="#alternatives-to-reference-category" id="toc-alternatives-to-reference-category" class="nav-link" data-scroll-target="#alternatives-to-reference-category"><span class="header-section-number">5</span> Alternatives to Reference Category</a>
+  <ul class="collapse">
+  <li><a href="#no-intercept-model" id="toc-no-intercept-model" class="nav-link" data-scroll-target="#no-intercept-model"><span class="header-section-number">5.1</span> No Intercept Model</a></li>
+  <li><a href="#no-intercept-model-1" id="toc-no-intercept-model-1" class="nav-link" data-scroll-target="#no-intercept-model-1"><span class="header-section-number">5.2</span> No Intercept Model</a></li>
+  <li><a href="#effect-coding" id="toc-effect-coding" class="nav-link" data-scroll-target="#effect-coding"><span class="header-section-number">5.3</span> Effect Coding</a></li>
+  <li><a href="#effect-coding-1" id="toc-effect-coding-1" class="nav-link" data-scroll-target="#effect-coding-1"><span class="header-section-number">5.4</span> Effect Coding</a></li>
+  <li><a href="#effect-coding-2" id="toc-effect-coding-2" class="nav-link" data-scroll-target="#effect-coding-2"><span class="header-section-number">5.5</span> Effect Coding</a></li>
+  <li><a href="#effect-coding-3" id="toc-effect-coding-3" class="nav-link" data-scroll-target="#effect-coding-3"><span class="header-section-number">5.6</span> Effect Coding</a></li>
+  <li><a href="#effect-coding-4" id="toc-effect-coding-4" class="nav-link" data-scroll-target="#effect-coding-4"><span class="header-section-number">5.7</span> Effect Coding</a></li>
+  <li><a href="#the-contrasts-function" id="toc-the-contrasts-function" class="nav-link" data-scroll-target="#the-contrasts-function"><span class="header-section-number">5.8</span> The contrasts Function</a></li>
+  <li><a href="#the-contrasts-function-1" id="toc-the-contrasts-function-1" class="nav-link" data-scroll-target="#the-contrasts-function-1"><span class="header-section-number">5.9</span> The contrasts Function</a></li>
+  </ul></li>
+  <li><a href="#overall-effect" id="toc-overall-effect" class="nav-link" data-scroll-target="#overall-effect"><span class="header-section-number">6</span> Overall Effect</a>
+  <ul class="collapse">
+  <li><a href="#the-overall-effect-of-a-categorical-predictor-variable" id="toc-the-overall-effect-of-a-categorical-predictor-variable" class="nav-link" data-scroll-target="#the-overall-effect-of-a-categorical-predictor-variable"><span class="header-section-number">6.1</span> The Overall Effect of a Categorical Predictor Variable</a></li>
+  <li><a href="#the-overall-effect-of-a-categorical-predictor-variable-1" id="toc-the-overall-effect-of-a-categorical-predictor-variable-1" class="nav-link" data-scroll-target="#the-overall-effect-of-a-categorical-predictor-variable-1"><span class="header-section-number">6.2</span> The Overall Effect of a Categorical Predictor Variable</a></li>
+  <li><a href="#the-overall-effect-of-a-categorical-predictor-variable-2" id="toc-the-overall-effect-of-a-categorical-predictor-variable-2" class="nav-link" data-scroll-target="#the-overall-effect-of-a-categorical-predictor-variable-2"><span class="header-section-number">6.3</span> The Overall Effect of a Categorical Predictor Variable</a></li>
+  </ul></li>
+  <li><a href="#categorical-variables-in-mlr" id="toc-categorical-variables-in-mlr" class="nav-link" data-scroll-target="#categorical-variables-in-mlr"><span class="header-section-number">7</span> Categorical Variables in MLR</a>
+  <ul class="collapse">
+  <li><a href="#categorical-predictor-variables-in-mlr" id="toc-categorical-predictor-variables-in-mlr" class="nav-link" data-scroll-target="#categorical-predictor-variables-in-mlr"><span class="header-section-number">7.1</span> Categorical Predictor Variables in MLR</a></li>
+  <li><a href="#categorical-and-continuous-predictor-variables-in-mlr" id="toc-categorical-and-continuous-predictor-variables-in-mlr" class="nav-link" data-scroll-target="#categorical-and-continuous-predictor-variables-in-mlr"><span class="header-section-number">7.2</span> Categorical and Continuous Predictor Variables in MLR</a></li>
+  <li><a href="#interactions-between-categorical-and-continuous-predictors" id="toc-interactions-between-categorical-and-continuous-predictors" class="nav-link" data-scroll-target="#interactions-between-categorical-and-continuous-predictors"><span class="header-section-number">7.3</span> Interactions between Categorical and Continuous Predictors</a></li>
+  <li><a href="#visual-inspection-of-interaction-effects" id="toc-visual-inspection-of-interaction-effects" class="nav-link" data-scroll-target="#visual-inspection-of-interaction-effects"><span class="header-section-number">7.4</span> Visual Inspection of Interaction Effects</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">8.1</span> Conclusion</a></li>
+  <li><a href="#conclusion-2" id="toc-conclusion-2" class="nav-link" data-scroll-target="#conclusion-2"><span class="header-section-number">8.2</span> Conclusion</a></li>
+  <li><a href="#categorical-predictor-variables-with-more-than-two-categories-1" id="toc-categorical-predictor-variables-with-more-than-two-categories-1" class="nav-link" data-scroll-target="#categorical-predictor-variables-with-more-than-two-categories-1"><span class="header-section-number">8.3</span> Categorical Predictor Variables with More than Two Categories</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 12:</h1>
+<h1 class="title">Lec 12: Multiple Linear Regression - Categorical Variables</h1>
 </div>
 
 
@@ -139,8 +270,802 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="review" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review</h1>
+<section id="review-lecture-01-06" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="review-lecture-01-06"><span class="header-section-number">1.1</span> Review: Lecture 01-06</h2>
+<ul>
+<li>Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.</li>
+<li>Lectures 07-11: Multiple Linear Regression (MLR).</li>
+<li>Lecture 11: multicollinearity</li>
+<li>This lecture focuses on categorical predictor variables.</li>
+</ul>
+</section>
+</section>
+<section id="categorical-predictors" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Categorical Predictors</h1>
+<section id="continuous-vs-categorical-predictor-variables" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="continuous-vs-categorical-predictor-variables"><span class="header-section-number">2.1</span> Continuous vs Categorical Predictor Variables</h2>
+<ul>
+<li>So, in both SLR and MLR, we have focused on continuous predictor variables (also called quantitative predictor variables).
+<ul>
+<li>E.g., in <code>mtcars</code>, the variable ‘wt’ (weight) is a continuous predictor variable.</li>
+<li>E.g., in ‘cdi’ (northeast region), the variable ‘hospitals_std’ is a continuous predictor variable.</li>
+</ul></li>
+<li>However, in practice, we often have categorical predictor variables as well.
+<ul>
+<li>E.g., in <code>mtcars</code>, the variable ‘vs’ (engine type) is a categorical predictor variable.</li>
+<li>E.g., in ‘cdi’ (northeast region), the variable ‘state’ is a categorical predictor variable.</li>
+</ul></li>
+</ul>
+</section>
+<section id="definition-of-categorical-predictor-variables" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="definition-of-categorical-predictor-variables"><span class="header-section-number">2.2</span> Definition of Categorical Predictor Variables</h2>
+<ul>
+<li>Categorical predictor variables (also called qualitative predictor variables or factors) take on a limited number of values, representing different groups or categories.</li>
+<li>E.g., in <code>mtcars</code>,
+<ul>
+<li>the variable ‘vs’ indicates whether the engine is V-shaped (0) or straight (1);</li>
+<li>the variable ‘am’ indicates whether the transmission is automatic (0) or manual (1).</li>
+</ul></li>
+</ul>
+</section>
+<section id="categorical-predictor-variables-with-more-than-two-categories" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="categorical-predictor-variables-with-more-than-two-categories"><span class="header-section-number">2.3</span> Categorical Predictor Variables with More than Two Categories</h2>
+<ul>
+<li>E.g., in ‘cdi’ (northeast region), the state variable has the following categories:
+<ul>
+<li>CT: Connecticut</li>
+<li>DE: Delaware</li>
+<li>MA: Massachusetts</li>
+<li>ME: Maine</li>
+<li>NH: New Hampshire</li>
+<li>NJ: New Jersey</li>
+<li>NY: New York</li>
+<li>PA: Pennsylvania</li>
+<li>RI: Rhode Island</li>
+<li>VT: Vermont</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="mathematical-representation" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Mathematical Representation</h1>
+<section id="convert-categorical-predictor-variables-to-numerical-values" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values"><span class="header-section-number">3.1</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>We will present mathematical representation of categorical predictor variables.
+<ul>
+<li>This is automatically done in R and other software.</li>
+<li>We present it to better understand the inner workings of the regression model with categorical predictors.</li>
+</ul></li>
+<li>In SLR or MLR, the design matrix <span class="math inline">\(X\)</span> contains numerical values.</li>
+<li>Indicator variables will be created for a categorical predictor variable to represent the different categories numerically.</li>
+<li>Example, PlantGrowth dataset:
+<ul>
+<li>group: a categorical predictor variable with three categories: ctrl, trt1, trt2.</li>
+</ul></li>
+</ul>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-1"><span class="header-section-number">3.2</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>The group variable is a categorical variable with three categories: ctrl, trt1, trt2.</li>
+<li>We can create three indicator variables to represent the three categories:
+<ul>
+<li><span class="math inline">\(X_{ctrl}\)</span>: 1 if group=ctrl, 0 otherwise</li>
+<li><span class="math inline">\(X_{trt1}\)</span>: 1 if group=trt1, 0 otherwise</li>
+<li><span class="math inline">\(X_{trt2}\)</span>: 1 if group=trt2, 0 otherwise</li>
+</ul></li>
+<li>The design matrix <span class="math inline">\(X\)</span> will then include these three indicator variables along with the intercept term.</li>
+</ul>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-2" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-2"><span class="header-section-number">3.3</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>PlantGrowth</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">head</span>(PlantGrowth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  weight group
+1   4.17  ctrl
+2   5.58  ctrl
+3   5.18  ctrl
+4   6.11  ctrl
+5   4.50  ctrl
+6   4.61  ctrl</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">summary</span>(PlantGrowth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     weight       group   
+ Min.   :3.590   ctrl:10  
+ 1st Qu.:4.550   trt1:10  
+ Median :5.155   trt2:10  
+ Mean   :5.073            
+ 3rd Qu.:5.530            
+ Max.   :6.310            </code></pre>
+</div>
+</div>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-3" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-3"><span class="header-section-number">3.4</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>Create indicator variables in R:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># creating three indicator variables</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"ctrl"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>trt1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"trt1"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>trt2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"trt2"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>design_matrix <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Intercept=</span><span class="dv">1</span>, <span class="at">ctrl=</span>ctrl, <span class="at">trt1=</span>trt1, <span class="at">trt2=</span>trt2)</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="fu">head</span>(design_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Intercept ctrl trt1 trt2
+1         1    1    0    0
+2         1    1    0    0
+3         1    1    0    0
+4         1    1    0    0
+5         1    1    0    0
+6         1    1    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">summary</span>(design_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Intercept      ctrl             trt1             trt2       
+ Min.   :1   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:1   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+ Median :1   Median :0.0000   Median :0.0000   Median :0.0000  
+ Mean   :1   Mean   :0.3333   Mean   :0.3333   Mean   :0.3333  
+ 3rd Qu.:1   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+ Max.   :1   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  </code></pre>
+</div>
+</div>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-4" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-4"><span class="header-section-number">3.5</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>In this example, we have three indicator variables for the three categories.</li>
+<li>To compute the LSEs, we would need to invert the matrix <span class="math inline">\(X^TX\)</span>, where <span class="math inline">\(X\)</span> is the design matrix including these three indicator variables.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(design_matrix)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>XTX <span class="ot">&lt;-</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb9-3"><a href="#cb9-3"></a>XTX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Intercept ctrl trt1 trt2
+Intercept        30   10   10   10
+ctrl             10   10    0    0
+trt1             10    0   10    0
+trt2             10    0    0   10</code></pre>
+</div>
+</div>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-5" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-5"><span class="header-section-number">3.6</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>The matrix <span class="math inline">\(X^TX\)</span> is singular and cannot be inverted.</li>
+<li>This is because there is linear dependency in the design matrix:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ctrl <span class="sc">+</span> trt1 <span class="sc">+</span> trt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
+</div>
+</div>
+<ul>
+<li>The sum of last three columns equals the first column.</li>
+<li>To avoid this issue, we need to use only two indicator variables for the three categories.</li>
+</ul>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-6" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-6"><span class="header-section-number">3.7</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>We can use only two indicator variables for the three categories:
+<ul>
+<li><span class="math inline">\(X_{ctrl}\)</span>: 1 if group=ctrl, 0 otherwise</li>
+<li><span class="math inline">\(X_{trt1}\)</span>: 1 if group=trt1, 0 otherwise</li>
+</ul></li>
+<li>The third category (trt2) is represented by both <span class="math inline">\(X_{ctrl}\)</span>=0 and <span class="math inline">\(X_{trt1}\)</span>=0.</li>
+<li>The design matrix <span class="math inline">\(X\)</span> will then include these two indicator variables along with the intercept term.</li>
+</ul>
+</section>
+<section id="convert-categorical-predictor-variables-to-numerical-values-7" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="convert-categorical-predictor-variables-to-numerical-values-7"><span class="header-section-number">3.8</span> Convert Categorical Predictor Variables to Numerical Values</h2>
+<ul>
+<li>The design matrix <span class="math inline">\(X\)</span> now includes only two indicator variables for the three categories.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>design_matrix <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Intercept=</span><span class="dv">1</span>, <span class="at">ctrl=</span>ctrl, <span class="at">trt1=</span>trt1)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(design_matrix)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>XTX <span class="ot">&lt;-</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb13-4"><a href="#cb13-4"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(XTX) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> <span class="fu">as.matrix</span>(PlantGrowth<span class="sc">$</span>weight)</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="fu">t</span>(beta_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Intercept   ctrl   trt1
+[1,]     5.526 -0.494 -0.865</code></pre>
+</div>
+</div>
+</section>
+<section id="dummy-variables" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="dummy-variables"><span class="header-section-number">3.9</span> Dummy Variables</h2>
+<ul>
+<li>The two indicator variables created above are called dummy variables.</li>
+<li>In general, for a categorical predictor variable with <span class="math inline">\(k\)</span> categories, we need to create <span class="math inline">\(k-1\)</span> dummy variables to represent the categories in the design matrix.</li>
+<li>The category that is not represented by a dummy variable is called the reference category.</li>
+</ul>
+</section>
+<section id="compare-with-rs-lm-function" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="compare-with-rs-lm-function"><span class="header-section-number">3.10</span> Compare with R’s lm function</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>lm_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> group, <span class="at">data=</span>PlantGrowth)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">summary</span>(lm_fit)<span class="sc">$</span>coefficients[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)   grouptrt1   grouptrt2 
+      5.032      -0.371       0.494 </code></pre>
+</div>
+</div>
+<ul>
+<li>Do they give the same results?</li>
+<li>No.&nbsp;Why?</li>
+</ul>
+</section>
+</section>
+<section id="reference-category" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Reference Category</h1>
+<section id="the-default-reference-category-in-r" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-default-reference-category-in-r"><span class="header-section-number">4.1</span> The Default Reference Category in R</h2>
+<ul>
+<li>By default, R uses the first category (in alphabetical order) as the reference category.</li>
+<li>In the PlantGrowth dataset, the categories are ‘ctrl’, ‘trt1’, and ‘trt2’. The reference category is ‘ctrl’.</li>
+<li>The dummy variables created by R’s <code>lm</code> function are:
+<ul>
+<li><span class="math inline">\(X_{trt1}\)</span>: 1 if group=trt1, 0 otherwise</li>
+<li><span class="math inline">\(X_{trt2}\)</span>: 1 if group=trt2, 0 otherwise</li>
+<li>The design matrix <span class="math inline">\(X\)</span> used by R’s <code>lm</code> function includes these two dummy variables along with the intercept term.</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-default-reference-category-in-r-1" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="the-default-reference-category-in-r-1"><span class="header-section-number">4.2</span> The Default Reference Category in R</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>design_matrix <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Intercept=</span><span class="dv">1</span>, <span class="at">trt1=</span>trt1, <span class="at">trt2=</span>trt2)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(design_matrix)</span>
+<span id="cb17-3"><a href="#cb17-3"></a>XTX <span class="ot">&lt;-</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb17-4"><a href="#cb17-4"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(XTX) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> <span class="fu">as.matrix</span>(PlantGrowth<span class="sc">$</span>weight)</span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">t</span>(beta_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Intercept   trt1  trt2
+[1,]     5.032 -0.371 0.494</code></pre>
+</div>
+</div>
+</section>
+<section id="change-the-reference-category" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="change-the-reference-category"><span class="header-section-number">4.3</span> Change the Reference Category</h2>
+<ul>
+<li>We can change the reference category by releveling the factor variable using the <code>relevel</code> function in R.</li>
+<li>For example, if we have a good reason to use trt1 as the reference category, we can do the following:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>PlantGrowth<span class="sc">$</span>group_relevel <span class="ot">&lt;-</span> <span class="fu">relevel</span>(PlantGrowth<span class="sc">$</span>group, <span class="at">ref=</span><span class="st">"trt1"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>lm_fit_relevel <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> group_relevel, <span class="at">data=</span>PlantGrowth)</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">summary</span>(lm_fit_relevel)<span class="sc">$</span>coefficients[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept) group_relevelctrl group_releveltrt2 
+            4.661             0.371             0.865 </code></pre>
+</div>
+</div>
+</section>
+<section id="interpretation-of-coefficients-with-categorical-predictors" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="interpretation-of-coefficients-with-categorical-predictors"><span class="header-section-number">4.4</span> Interpretation of Coefficients with Categorical Predictors</h2>
+<ul>
+<li><p>The interpretation of the coefficients in the presence of categorical predictor variables depends on the reference category.</p></li>
+<li><p>For example, in the PlantGrowth dataset with ‘ctrl’ as the reference category:</p>
+<ul>
+<li>The intercept represents the mean weight for the ‘ctrl’ group.</li>
+<li>The coefficient for ‘trt1’ represents the difference in mean weight between the ‘trt1’ group and the ‘ctrl’ group.</li>
+<li>The coefficient for ‘trt2’ represents the difference in mean weight between the ‘trt2’ group and the ‘ctrl’ group.</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpretation-of-coefficients-with-categorical-predictors-1" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="interpretation-of-coefficients-with-categorical-predictors-1"><span class="header-section-number">4.5</span> Interpretation of Coefficients with Categorical Predictors</h2>
+<pre><code>Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   5.0320     0.1971  25.527   &lt;2e-16 ***
+grouptrt1    -0.3710     0.2788  -1.331   0.1944    
+grouptrt2     0.4940     0.2788   1.772   0.0877 . </code></pre>
+<ul>
+<li>Here, 5.03 is the sample mean of the ‘ctrl’ group; -0.37 is difference in sample means between ‘trt1’ and ‘ctrl’; 0.49 is difference between ‘trt2’ and ‘ctrl’.</li>
+<li>How about the p-values?
+<ul>
+<li>The p-value for ‘trt1’ tests the null hypothesis that the mean weight of ‘trt1’ is equal to that of ‘ctrl’.</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpretation-of-coefficients-with-categorical-predictors-2" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="interpretation-of-coefficients-with-categorical-predictors-2"><span class="header-section-number">4.6</span> Interpretation of Coefficients with Categorical Predictors</h2>
+<pre><code>                  Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)          4.661  0.1971284 23.644492 1.405827e-19
+group_relevelctrl    0.371  0.2787816  1.330791 1.943879e-01
+group_releveltrt2    0.865  0.2787816  3.102787 4.459236e-03</code></pre>
+<ul>
+<li>The intercept 4.66 is the sample mean of the ‘trt1’ group; 0.37 is difference in sample means between ‘ctrl’ and ‘trt1’; 0.87 is difference between ‘trt2’ and ‘trt1’.</li>
+<li>How about the p-values?
+<ul>
+<li>The p-value for ‘ctrl’ tests the null hypothesis that the mean weight of ‘ctrl’ is equal to that of ‘trt1’.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="alternatives-to-reference-category" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Alternatives to Reference Category</h1>
+<ul>
+<li>Instead of choosing a reference category, we can also
+<ul>
+<li>include all categories in the model and remove the intercept term, or</li>
+<li>use effect coding (also called deviation coding) to represent categorical predictor variables.</li>
+</ul></li>
+</ul>
+<section id="no-intercept-model" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="no-intercept-model"><span class="header-section-number">5.1</span> No Intercept Model</h2>
+<ul>
+<li>We can include all categories in the model and remove the intercept term.</li>
+<li>Example, PlantGrowth dataset without intercept:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>design_matrix_no_intercept <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ctrl=</span>ctrl, <span class="at">trt1=</span>trt1, <span class="at">trt2=</span>trt2)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">head</span>(design_matrix_no_intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ctrl trt1 trt2
+1    1    0    0
+2    1    0    0
+3    1    0    0
+4    1    0    0
+5    1    0    0
+6    1    0    0</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>X_no_intercept <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(design_matrix_no_intercept)</span>
+<span id="cb25-2"><a href="#cb25-2"></a>XTX_no_intercept <span class="ot">&lt;-</span> <span class="fu">t</span>(X_no_intercept) <span class="sc">%*%</span> X_no_intercept</span>
+<span id="cb25-3"><a href="#cb25-3"></a>beta_hat_no_intercept <span class="ot">&lt;-</span> <span class="fu">solve</span>(XTX_no_intercept) <span class="sc">%*%</span> <span class="fu">t</span>(X_no_intercept) <span class="sc">%*%</span> <span class="fu">as.matrix</span>(PlantGrowth<span class="sc">$</span>weight)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>beta_hat_no_intercept</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1]
+ctrl 5.032
+trt1 4.661
+trt2 5.526</code></pre>
+</div>
+</div>
+</section>
+<section id="no-intercept-model-1" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="no-intercept-model-1"><span class="header-section-number">5.2</span> No Intercept Model</h2>
+<ul>
+<li>In R, we can fit the model without intercept using the <code>lm</code> function:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>lm_fit_no_intercept <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> group <span class="sc">+</span> <span class="dv">0</span>, <span class="at">data=</span>PlantGrowth)</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co"># or lm_fit_no_intercept &lt;- lm(weight ~ group - 1, data=PlantGrowth)</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">summary</span>(lm_fit_no_intercept)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Estimate Std. Error  t value     Pr(&gt;|t|)
+groupctrl    5.032  0.1971284 25.52651 1.936575e-20
+grouptrt1    4.661  0.1971284 23.64449 1.405827e-19
+grouptrt2    5.526  0.1971284 28.03250 1.688656e-21</code></pre>
+</div>
+</div>
+</section>
+<section id="effect-coding" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="effect-coding"><span class="header-section-number">5.3</span> Effect Coding</h2>
+<ul>
+<li>In effect coding, we create <span class="math inline">\(k\)</span> indicator variables for a categorical predictor variable with <span class="math inline">\(k\)</span> categories.</li>
+<li>The indicator variables are coded as follows:
+<ul>
+<li>For category 1: <span class="math inline">\(X_1\)</span>=1, <span class="math inline">\(X_2\)</span>=0, …, <span class="math inline">\(X_k\)</span>=0</li>
+<li>For category 2: <span class="math inline">\(X_1\)</span>=0, <span class="math inline">\(X_2\)</span>=1, …, <span class="math inline">\(X_k\)</span>=0</li>
+<li>…</li>
+<li>For category k-1: <span class="math inline">\(X_1\)</span>=0, <span class="math inline">\(X_2\)</span>=0, …, <span class="math inline">\(X_{k-1}\)</span>=1</li>
+<li>For category k: <span class="math inline">\(X_1\)</span>=-1, <span class="math inline">\(X_2\)</span>=-1, …, <span class="math inline">\(X_{k-1}\)</span>=-1</li>
+</ul></li>
+</ul>
+</section>
+<section id="effect-coding-1" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="effect-coding-1"><span class="header-section-number">5.4</span> Effect Coding</h2>
+<ul>
+<li>The design matrix <span class="math inline">\(X\)</span> will then include these <span class="math inline">\(k\)</span> indicator variables along with the intercept term.</li>
+<li>Example, PlantGrowth dataset with effect coding:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>ctrl_ec <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"ctrl"</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"trt1"</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb29-2"><a href="#cb29-2"></a>trt1_ec <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"trt1"</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"ctrl"</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb29-3"><a href="#cb29-3"></a>design_matrix_ec <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Intercept=</span><span class="dv">1</span>, <span class="at">ctrl_ec=</span>ctrl_ec, <span class="at">trt1_ec=</span>trt1_ec)</span>
+<span id="cb29-4"><a href="#cb29-4"></a>X_ec <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(design_matrix_ec)</span>
+<span id="cb29-5"><a href="#cb29-5"></a>XTX_ec <span class="ot">&lt;-</span> <span class="fu">t</span>(X_ec) <span class="sc">%*%</span> X_ec</span>
+<span id="cb29-6"><a href="#cb29-6"></a>beta_hat_ec <span class="ot">&lt;-</span> <span class="fu">solve</span>(XTX_ec) <span class="sc">%*%</span> <span class="fu">t</span>(X_ec) <span class="sc">%*%</span> <span class="fu">as.matrix</span>(PlantGrowth<span class="sc">$</span>weight)</span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="fu">t</span>(beta_hat_ec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Intercept ctrl_ec trt1_ec
+[1,]     5.073  -0.041  -0.412</code></pre>
+</div>
+</div>
+</section>
+<section id="effect-coding-2" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="effect-coding-2"><span class="header-section-number">5.5</span> Effect Coding</h2>
+<pre><code>t(beta_hat_ec)
+     Intercept ctrl_ec trt1_ec
+[1,]     5.073  -0.041  -0.412```</code></pre>
+<ul>
+<li>How to interpret the coefficients here?
+<ul>
+<li>5.07 is the overall mean weight across all groups.</li>
+<li>-0.04 is the deviation of the ‘ctrl’ group mean from the overall mean.</li>
+<li>-0.41 is the deviation of the ‘trt1’ group mean from the overall mean.</li>
+<li>The deviation of the ‘trt2’ group mean from the overall mean can be calculated as -(-0.04 + -0.41) = 0.45.</li>
+</ul></li>
+</ul>
+</section>
+<section id="effect-coding-3" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="effect-coding-3"><span class="header-section-number">5.6</span> Effect Coding</h2>
+<ul>
+<li>Let’s verify the calculations:</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>mean_ctrl <span class="ot">&lt;-</span> <span class="fu">mean</span>(PlantGrowth<span class="sc">$</span>weight[PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"ctrl"</span>])</span>
+<span id="cb32-2"><a href="#cb32-2"></a>mean_trt1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(PlantGrowth<span class="sc">$</span>weight[PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"trt1"</span>])</span>
+<span id="cb32-3"><a href="#cb32-3"></a>mean_trt2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(PlantGrowth<span class="sc">$</span>weight[PlantGrowth<span class="sc">$</span>group<span class="sc">==</span><span class="st">"trt2"</span>])</span>
+<span id="cb32-4"><a href="#cb32-4"></a>overall_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(PlantGrowth<span class="sc">$</span>weight)</span>
+<span id="cb32-5"><a href="#cb32-5"></a>deviation_ctrl <span class="ot">&lt;-</span> mean_ctrl <span class="sc">-</span> overall_mean</span>
+<span id="cb32-6"><a href="#cb32-6"></a>deviation_trt1 <span class="ot">&lt;-</span> mean_trt1 <span class="sc">-</span> overall_mean</span>
+<span id="cb32-7"><a href="#cb32-7"></a>deviation_trt2 <span class="ot">&lt;-</span> mean_trt2 <span class="sc">-</span> overall_mean</span>
+<span id="cb32-8"><a href="#cb32-8"></a>deviation_ctrl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.041</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>deviation_trt1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.412</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>deviation_trt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.453</code></pre>
+</div>
+</div>
+</section>
+<section id="effect-coding-4" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="effect-coding-4"><span class="header-section-number">5.7</span> Effect Coding</h2>
+<ul>
+<li>In R, we can use the <code>contr.sum</code> function to specify effect coding for a factor variable.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>PlantGrowth<span class="sc">$</span>group_ec <span class="ot">&lt;-</span> <span class="fu">factor</span>(PlantGrowth<span class="sc">$</span>group, </span>
+<span id="cb38-2"><a href="#cb38-2"></a>                               <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"ctrl"</span>, <span class="st">"trt1"</span>, <span class="st">"trt2"</span>),</span>
+<span id="cb38-3"><a href="#cb38-3"></a>                               <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"ctrl"</span>, <span class="st">"trt1"</span>, <span class="st">"trt2"</span>))</span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="fu">contrasts</span>(PlantGrowth<span class="sc">$</span>group_ec) <span class="ot">&lt;-</span> <span class="fu">contr.sum</span>(<span class="dv">3</span>)</span>
+<span id="cb38-5"><a href="#cb38-5"></a>lm_fit_ec <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> group_ec, <span class="at">data=</span>PlantGrowth)</span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="fu">summary</span>(lm_fit_ec)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error    t value     Pr(&gt;|t|)
+(Intercept)    5.073  0.1138121 44.5734621 8.020008e-27
+group_ec1     -0.041  0.1609546 -0.2547302 8.008617e-01
+group_ec2     -0.412  0.1609546 -2.5597274 1.639014e-02</code></pre>
+</div>
+</div>
+<ul>
+<li>The coefficients represent the deviation of each category’s mean from the overall mean.</li>
+</ul>
+</section>
+<section id="the-contrasts-function" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="the-contrasts-function"><span class="header-section-number">5.8</span> The contrasts Function</h2>
+<ul>
+<li>The <code>contrasts</code> function in R allows us to specify how categorical predictor variables are coded in the design matrix.</li>
+<li>By default, R uses treatment contrasts (reference category coding).</li>
+<li>We can use <code>contr.sum</code> for effect coding or <code>contr.treatment</code> to specify a different reference category.</li>
+<li>The `contr.treatment’ option allows us to specify which category to use as the reference category.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">contrasts</span>(PlantGrowth<span class="sc">$</span>group) <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="dv">3</span>, <span class="at">base=</span><span class="dv">2</span>) <span class="co"># use 'trt1' as reference</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>lm_fit_contr <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> group, <span class="at">data=</span>PlantGrowth)</span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="fu">summary</span>(lm_fit_contr)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)    4.661  0.1971284 23.644492 1.405827e-19
+group1         0.371  0.2787816  1.330791 1.943879e-01
+group3         0.865  0.2787816  3.102787 4.459236e-03</code></pre>
+</div>
+</div>
+<ul>
+<li>The coefficients now represent the differences in means between each category and the ‘trt1’ group.</li>
+</ul>
+</section>
+<section id="the-contrasts-function-1" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="the-contrasts-function-1"><span class="header-section-number">5.9</span> The contrasts Function</h2>
+<ul>
+<li><p>It is good habit to always check the contrasts used for categorical predictor variables in your model.</p></li>
+<li><p>After fitting the model, you can check the contrasts used by:</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">contrasts</span>(PlantGrowth<span class="sc">$</span>group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     1 3
+ctrl 1 0
+trt1 0 0
+trt2 0 1</code></pre>
+</div>
+</div>
+<ul>
+<li>It is also a good habit to set to the default contrasts after fitting the model to avoid confusion in future analyses.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">contrasts</span>(PlantGrowth<span class="sc">$</span>group) <span class="ot">&lt;-</span> <span class="fu">contr.treatment</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="overall-effect" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Overall Effect</h1>
+<section id="the-overall-effect-of-a-categorical-predictor-variable" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-overall-effect-of-a-categorical-predictor-variable"><span class="header-section-number">6.1</span> The Overall Effect of a Categorical Predictor Variable</h2>
+<ul>
+<li>We might be interested in knowing whether there is an overall effect of a categorical predictor variable on the response variable.</li>
+<li>For example, in the PlantGrowth dataset, we might want to test whether there is any difference in mean weight among the three groups (ctrl, trt1, trt2).
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_{ctrl}\)</span> = <span class="math inline">\(\mu_{trt1}\)</span> = <span class="math inline">\(\mu_{trt2}\)</span></li>
+<li><span class="math inline">\(H_a\)</span>: At least one group mean is different from another one</li>
+</ul></li>
+<li>Which test should we use?</li>
+</ul>
+</section>
+<section id="the-overall-effect-of-a-categorical-predictor-variable-1" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-overall-effect-of-a-categorical-predictor-variable-1"><span class="header-section-number">6.2</span> The Overall Effect of a Categorical Predictor Variable</h2>
+<ul>
+<li>We can use the ANOVA F-test to test the overall effect of a categorical predictor variable.</li>
+<li>We can find the result from anova of the summary of the lm fit.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">anova</span>(lm_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: weight
+          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  
+group      2  3.7663  1.8832  4.8461 0.01591 *
+Residuals 27 10.4921  0.3886                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="the-overall-effect-of-a-categorical-predictor-variable-2" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-overall-effect-of-a-categorical-predictor-variable-2"><span class="header-section-number">6.3</span> The Overall Effect of a Categorical Predictor Variable</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">summary</span>(lm_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = weight ~ group, data = PlantGrowth)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.0710 -0.4180 -0.0060  0.2627  1.3690 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   5.0320     0.1971  25.527   &lt;2e-16 ***
+grouptrt1    -0.3710     0.2788  -1.331   0.1944    
+grouptrt2     0.4940     0.2788   1.772   0.0877 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6234 on 27 degrees of freedom
+Multiple R-squared:  0.2641,    Adjusted R-squared:  0.2096 
+F-statistic: 4.846 on 2 and 27 DF,  p-value: 0.01591</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="categorical-variables-in-mlr" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Categorical Variables in MLR</h1>
+<section id="categorical-predictor-variables-in-mlr" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="categorical-predictor-variables-in-mlr"><span class="header-section-number">7.1</span> Categorical Predictor Variables in MLR</h2>
+<ul>
+<li><p>For a categorical predictor with more than two categories, the model is already a multiple linear regression model because it includes multiple dummy variables.</p></li>
+<li><p>A MLR can include both continuous and categorical predictor variables.</p>
+<ul>
+<li>E.g., in <code>mtcars</code>, we can fit a MLR model with ‘mpg’ as the response variable, ‘wt’ (continuous) and ‘vs’ (categorical) as predictor variables.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>lm_mlr <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> vs, <span class="at">data=</span>mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="categorical-and-continuous-predictor-variables-in-mlr" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="categorical-and-continuous-predictor-variables-in-mlr"><span class="header-section-number">7.2</span> Categorical and Continuous Predictor Variables in MLR</h2>
+<pre><code>summary(lm_mlr)$coefficients
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  33.0042     2.3554  14.012 1.92e-14 ***
+wt           -4.4428     0.6134  -7.243 5.63e-08 ***
+vs            3.1544     1.1907   2.649   0.0129 *  </code></pre>
+<ul>
+<li>How to interpret the coefficients here?
+<ul>
+<li>33.00 the estimated mean mpg when wt=0 and vs=0 (V-shaped engine).</li>
+<li>-4.44 represents the change in mean mpg for a one-unit increase in wt, holding vs constant (within the same engine type).</li>
+<li>3.15 represents the difference in mean mpg between straight engine (vs=1) and V-shaped engine (vs=0), holding wt constant.</li>
+</ul></li>
+</ul>
+</section>
+<section id="interactions-between-categorical-and-continuous-predictors" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="interactions-between-categorical-and-continuous-predictors"><span class="header-section-number">7.3</span> Interactions between Categorical and Continuous Predictors</h2>
+<ul>
+<li><p>What assumptions did we make about the meaningfulness of these interpretations?</p>
+<ul>
+<li>We assume that the effect of wt on mpg is the <strong><em>same</em></strong> for both engine types (no interaction effect).</li>
+</ul></li>
+<li><p>If we suspect that the effect of wt on mpg differs by engine type, we can include an interaction term between wt and vs in the model.</p></li>
+<li><p>It is always helpful to visualize the data to check for potential interaction effects.</p></li>
+</ul>
+</section>
+<section id="visual-inspection-of-interaction-effects" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="visual-inspection-of-interaction-effects"><span class="header-section-number">7.4</span> Visual Inspection of Interaction Effects</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>wt, <span class="at">y=</span>mpg, <span class="at">color=</span><span class="fu">factor</span>(vs))) <span class="sc">+</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">labs</span>(<span class="at">color=</span><span class="st">"Engine Type (vs)"</span>, <span class="at">x=</span><span class="st">"Weight (1000 lbs)"</span>, <span class="at">y=</span><span class="st">"Miles per Gallon (mpg)"</span>) <span class="sc">+</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="12-lecture_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>This will be in next lecture.</li>
+</ul>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Conclusion</h1>
+<section id="conclusion-1" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">8.1</span> Conclusion</h2>
+<ul>
+<li>We showed how do categorical predictor variables work in linear regression models.</li>
+<li>We showed the mathematical representation of categorical predictor variables using dummy variables.</li>
+<li>The mathematical representation helps us understand how the regression model handles categorical predictors; it shows the inner workings of the model.</li>
+<li>In R or other software, the process is done automatically when fitting the model.</li>
+</ul>
+</section>
+<section id="conclusion-2" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="conclusion-2"><span class="header-section-number">8.2</span> Conclusion</h2>
+<ul>
+<li>The different ways to represent categorical predictors (reference category, no intercept, effect coding) lead to different interpretations of the coefficients, but they all model the same underlying relationships in the data.</li>
+<li>We shown two methods to change the default reference category in R: <code>relevel</code> function and <code>contrasts</code> function.</li>
+<li>For the GrowthPlants example, what is your favorite way to represent the categorical predictor variable ‘group’?</li>
+<li>Lastly, the overall effect of a categorical predictor variable can be tested using the ANOVA F-test.</li>
+</ul>
+</section>
+<section id="categorical-predictor-variables-with-more-than-two-categories-1" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="categorical-predictor-variables-with-more-than-two-categories-1"><span class="header-section-number">8.3</span> Categorical Predictor Variables with More than Two Categories</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>cdi <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/CDI.csv"</span>)</span>
+<span id="cb52-2"><a href="#cb52-2"></a>cdi <span class="ot">&lt;-</span> cdi[cdi<span class="sc">$</span>region<span class="sc">==</span><span class="dv">1</span>,]</span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="co">#correlation heatmap</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a>cdi<span class="sc">$</span>physicians_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>physicians <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>cdi<span class="sc">$</span>hospitals_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>hospitals <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a>cdi<span class="sc">$</span>crimes_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>crimes <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a>cdi<span class="sc">$</span>land_area_std <span class="ot">&lt;-</span> cdi<span class="sc">$</span>land_area <span class="sc">/</span> cdi<span class="sc">$</span>population <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a><span class="fu">summary</span>(<span class="fu">lm</span>(unemployment <span class="sc">~</span> state, <span class="at">data=</span>cdi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = unemployment ~ state, data = cdi)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.5778 -1.0716 -0.0655  0.8273  4.2500 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   6.8500     0.5650  12.124  &lt; 2e-16 ***
+stateDE       0.0500     1.2633   0.040 0.968515    
+stateMA       2.5955     0.7425   3.495 0.000727 ***
+stateME       0.5700     0.9110   0.626 0.533061    
+stateNH       0.4250     0.9786   0.434 0.665078    
+stateNJ      -0.1722     0.6790  -0.254 0.800342    
+stateNY      -0.1000     0.6598  -0.152 0.879855    
+statePA       0.1155     0.6382   0.181 0.856753    
+stateRI       1.2500     1.0819   1.155 0.250885    
+stateVT      -2.4500     1.6950  -1.445 0.151691    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.598 on 93 degrees of freedom
+Multiple R-squared:  0.2472,    Adjusted R-squared:  0.1744 
+F-statistic: 3.394 on 9 and 93 DF,  p-value: 0.001214</code></pre>
+</div>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
