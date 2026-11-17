@@ -339,42 +339,6 @@ Y = 3 + 0.5X_1 + 0X_2 + \epsilon, \quad \epsilon \sim N(0,1),\]</span> where <sp
 <p><strong>(c)</strong> Fit the multiple regression model using <code>Petal.Width</code> and <code>Species</code> as predictors. Explain the coefficients. Note that this is an analysis of covariance (ANCOVA) model since <code>Species</code> is categorical and <code>Petal.Width</code> is continuous.</p>
 <p><strong>(d)</strong> Create a visualization (scatter plot with regression lines) to illustrate potential interaction effects between <code>Petal.Width</code> and <code>Species</code> on <code>Petal.Length</code>. Include informative labels and a brief caption.</p>
 <p><strong>(e)</strong> Fit a model with interactions between <code>Petal.Width</code> and <code>Species</code>. Describe how the relationship between <code>Petal.Width</code> and <code>Petal.Length</code> differ across species. Test whether the interaction terms are significant. State hypotheses, test statistic, the reference distribution, and provide conclusion in context.</p>
-<p>where <span class="math inline">\(p\)</span>is the number of predictors (excluding the intercept) and <span class="math inline">\(n\)</span>is the sample size. Here the <span class="math inline">\(SSTO\)</span>can be computed as <span class="math inline">\(SSTO = \sum_{i=1}^n (y_i - \bar{y})^2\)</span>. In R, there are several ways to do this: - Use the <code>sum()</code> function: <code>sum((y - mean(y))^2)</code>. - Use the <code>var()</code> function to compute the variance of y, then multiply it by (n-1) to get <span class="math inline">\(SSTO\)</span>. - Use the <code>crossprod()</code> function to compute the sum of squares directly: <code>as.numeric(crossprod(y - mean(y)))</code>.</p>
-<p>Compute the F-statistic using the formula above. Is the value the same as that from <code>summary(lm())</code>?</p>
-<ol start="8" type="a">
-<li><p>Lastly, we would like derive a t-test for <span class="math inline">\(H_0: \beta_f=\beta_m\)</span>(equivalently, <span class="math inline">\(\beta_f - \beta_m = 0\)</span>). In words, what does this hypothesis mean?</p></li>
-<li><p>Recall that for a linear combination of the regression parameters <span class="math inline">\(c^T \beta\)</span>, the variance is given by <span class="math display">\[Var(c^T \hat{\boldsymbol{\beta}}) = c^T Var(\hat{\boldsymbol{\beta}}) c.\]</span> Here, we have <span class="math inline">\(c = [0, 1, -1]^T\)</span>to test <span class="math inline">\(H_0: \beta_f - \beta_m = 0\)</span>. Compute the t-statistic and p-value for this test. Is the result the same as that from <code>linearHypothesis()</code> function in the <code>car</code> package?</p></li>
-</ol>
-<p>Here is part of the R code to get you started and you need complete the rest of the steps 5-7 and then make a conclusion in the context of the problem.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1. Import data and load necessary library </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>height.data<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"../data/height_data.csv"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#2. Define the contrast vector</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#3. Compute the variance of the linear combination. Here var_beta_hat is the variance-covariance matrix of beta_hat that you obtained in (e).</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>var_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> var_beta_hat <span class="sc">%*%</span> c</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#4. Compute the estimate of the linear combination</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>estimate_c_beta <span class="ot">&lt;-</span> <span class="fu">t</span>(c) <span class="sc">%*%</span> beta_hat</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#5. compute the standard error of the linear combination</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#6. Compute the t-statistic</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#7. Compute the p-value</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#8. Compare your results with linearHypothesis() function. Note, you need to convert your t-statistic to F-statistic, as the linearHypothesis() function reports F-statistic.</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(c.height <span class="sc">~</span> f.height <span class="sc">+</span> m.height, <span class="at">data =</span> height.data)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(fit, <span class="st">"f.height - m.height = 0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<!--the normal equations, a linear combination of the regression parameters, and the variance of the predicted value.
-
-linear contrasts, or use variance covariance matrix of the estimated parameters to find the variance of a linear combination of the parameters.
--->
 
 
 </section>
