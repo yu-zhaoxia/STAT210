@@ -3028,35 +3028,35 @@
     "href": "lectures/11-lecture.html#orthogonal-predictors-1",
     "title": "Lec 11:",
     "section": "3.2 Orthogonal Predictors",
-    "text": "3.2 Orthogonal Predictors\n\ny on X1 only\n\n\n\nCode\nanova(lm(y ~ X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX1         1 0.2053 0.20534   0.251 0.6342\nResiduals  6 4.9087 0.81812"
+    "text": "3.2 Orthogonal Predictors\n\ny on X1 only\n\n\n\nCode\nanova(lm(y ~ X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nX1         1 6.2868  6.2868  17.485 0.005804 **\nResiduals  6 2.1574  0.3596                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-2",
     "href": "lectures/11-lecture.html#orthogonal-predictors-2",
     "title": "Lec 11:",
     "section": "3.3 Orthogonal Predictors",
-    "text": "3.3 Orthogonal Predictors\n\ny on X2 only\n\n\n\nCode\nanova(lm(y ~ X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 0.3844 0.38445  0.4877 0.5111\nResiduals  6 4.7296 0.78826"
+    "text": "3.3 Orthogonal Predictors\n\ny on X2 only\n\n\n\nCode\nanova(lm(y ~ X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 0.6911 0.69108  0.5348 0.4921\nResiduals  6 7.7531 1.29218"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-3",
     "href": "lectures/11-lecture.html#orthogonal-predictors-3",
     "title": "Lec 11:",
     "section": "3.4 Orthogonal Predictors",
-    "text": "3.4 Orthogonal Predictors\n\ny on X1 and X2. We noticed that \\[SS(\\beta_2|\\beta_1)=SS(\\beta_2)\\]\n\n\n\nCode\nanova(lm(y ~ X1 + X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX1         1 0.2053 0.20534  0.2269 0.6539\nX2         1 0.3844 0.38445  0.4249 0.5433\nResiduals  5 4.5242 0.90485"
+    "text": "3.4 Orthogonal Predictors\n\ny on X1 and X2. We noticed that \\[SS(\\beta_2|\\beta_1)=SS(\\beta_2)\\]\n\n\n\nCode\nanova(lm(y ~ X1 + X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nX1         1 6.2868  6.2868 21.4379 0.005683 **\nX2         1 0.6911  0.6911  2.3566 0.185346   \nResiduals  5 1.4663  0.2933                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-4",
     "href": "lectures/11-lecture.html#orthogonal-predictors-4",
     "title": "Lec 11:",
     "section": "3.5 Orthogonal Predictors",
-    "text": "3.5 Orthogonal Predictors\n\ny on X2 and X1. We noticed that \\[SS(\\beta_1|\\beta_2)=SS(\\beta_1)\\]\n\n\n\nCode\nanova(lm(y ~ X2 + X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 0.3844 0.38445  0.4249 0.5433\nX1         1 0.2053 0.20534  0.2269 0.6539\nResiduals  5 4.5242 0.90485"
+    "text": "3.5 Orthogonal Predictors\n\ny on X2 and X1. We noticed that \\[SS(\\beta_1|\\beta_2)=SS(\\beta_1)\\]\n\n\n\nCode\nanova(lm(y ~ X2 + X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nX2         1 0.6911  0.6911  2.3566 0.185346   \nX1         1 6.2868  6.2868 21.4379 0.005683 **\nResiduals  5 1.4663  0.2933                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-5",
     "href": "lectures/11-lecture.html#orthogonal-predictors-5",
     "title": "Lec 11:",
     "section": "3.6 Orthogonal Predictors",
-    "text": "3.6 Orthogonal Predictors\n\nEstimated coefficients\n\n\n\nCode\nsummary(lm(y ~ X1))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept) -0.8075026  1.0112592 -0.7985119 0.4550098\nX1           0.3204216  0.6395765  0.5009902 0.6342231\n\n\nCode\nsummary(lm(y ~ X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept)  2.0845200  3.4671364  0.6012224 0.5696935\nX2          -0.4384346  0.6277996 -0.6983671 0.5110936\n\n\nCode\nsummary(lm(y ~ X1 + X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept)  1.6038876  3.8492740  0.4166728 0.6942014\nX1           0.3204216  0.6726253  0.4763746 0.6538968\nX2          -0.4384346  0.6726253 -0.6518259 0.5432838\n\n\n\nAre the results expected? Questions?"
+    "text": "3.6 Orthogonal Predictors\n\nEstimated coefficients\n\n\n\nCode\nsummary(lm(y ~ X1))$coefficients\n\n\n             Estimate Std. Error   t value    Pr(&gt;|t|)\n(Intercept) -3.284941  0.6704100 -4.899898 0.002711168\nX1           1.772961  0.4240045  4.181466 0.005804022\n\n\nCode\nsummary(lm(y ~ X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept) -3.8585513   4.439108 -0.8692176 0.4181374\nX2           0.5878276   0.803796  0.7313144 0.4921483\n\n\nCode\nsummary(lm(y ~ X1 + X2))$coefficients\n\n\n              Estimate Std. Error   t value    Pr(&gt;|t|)\n(Intercept) -6.5179924  2.1913587 -2.974407 0.030999127\nX1           1.7729608  0.3829198  4.630110 0.005683214\nX2           0.5878276  0.3829198  1.535119 0.185346208\n\n\n\nAre the results expected? Questions?"
   },
   {
     "objectID": "lectures/11-lecture.html#motivating-example-cdi-1",
