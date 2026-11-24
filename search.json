@@ -3028,35 +3028,35 @@
     "href": "lectures/11-lecture.html#orthogonal-predictors-1",
     "title": "Lec 11:",
     "section": "3.2 Orthogonal Predictors",
-    "text": "3.2 Orthogonal Predictors\n\ny on X1 only\n\n\n\nCode\nanova(lm(y ~ X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nX1         1 6.2868  6.2868  17.485 0.005804 **\nResiduals  6 2.1574  0.3596                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "3.2 Orthogonal Predictors\n\ny on X1 only\n\n\n\nCode\nanova(lm(y ~ X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value  Pr(&gt;F)  \nX1         1 3.2092  3.2092  7.2075 0.03631 *\nResiduals  6 2.6715  0.4453                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-2",
     "href": "lectures/11-lecture.html#orthogonal-predictors-2",
     "title": "Lec 11:",
     "section": "3.3 Orthogonal Predictors",
-    "text": "3.3 Orthogonal Predictors\n\ny on X2 only\n\n\n\nCode\nanova(lm(y ~ X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 0.6911 0.69108  0.5348 0.4921\nResiduals  6 7.7531 1.29218"
+    "text": "3.3 Orthogonal Predictors\n\ny on X2 only\n\n\n\nCode\nanova(lm(y ~ X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)\nX2         1 0.0085 0.00853  0.0087 0.9287\nResiduals  6 5.8722 0.97869"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-3",
     "href": "lectures/11-lecture.html#orthogonal-predictors-3",
     "title": "Lec 11:",
     "section": "3.4 Orthogonal Predictors",
-    "text": "3.4 Orthogonal Predictors\n\ny on X1 and X2. We noticed that \\[SS(\\beta_2|\\beta_1)=SS(\\beta_2)\\]\n\n\n\nCode\nanova(lm(y ~ X1 + X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nX1         1 6.2868  6.2868 21.4379 0.005683 **\nX2         1 0.6911  0.6911  2.3566 0.185346   \nResiduals  5 1.4663  0.2933                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "3.4 Orthogonal Predictors\n\ny on X1 and X2. We noticed that \\[SS(\\beta_2|\\beta_1)=SS(\\beta_2)\\]\n\n\n\nCode\nanova(lm(y ~ X1 + X2))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)  \nX1         1 3.2092  3.2092  6.0255 0.0576 .\nX2         1 0.0085  0.0085  0.0160 0.9042  \nResiduals  5 2.6630  0.5326                 \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-4",
     "href": "lectures/11-lecture.html#orthogonal-predictors-4",
     "title": "Lec 11:",
     "section": "3.5 Orthogonal Predictors",
-    "text": "3.5 Orthogonal Predictors\n\ny on X2 and X1. We noticed that \\[SS(\\beta_1|\\beta_2)=SS(\\beta_1)\\]\n\n\n\nCode\nanova(lm(y ~ X2 + X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nX2         1 0.6911  0.6911  2.3566 0.185346   \nX1         1 6.2868  6.2868 21.4379 0.005683 **\nResiduals  5 1.4663  0.2933                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "3.5 Orthogonal Predictors\n\ny on X2 and X1. We noticed that \\[SS(\\beta_1|\\beta_2)=SS(\\beta_1)\\]\n\n\n\nCode\nanova(lm(y ~ X2 + X1))\n\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value Pr(&gt;F)  \nX2         1 0.0085  0.0085  0.0160 0.9042  \nX1         1 3.2092  3.2092  6.0255 0.0576 .\nResiduals  5 2.6630  0.5326                 \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "lectures/11-lecture.html#orthogonal-predictors-5",
     "href": "lectures/11-lecture.html#orthogonal-predictors-5",
     "title": "Lec 11:",
     "section": "3.6 Orthogonal Predictors",
-    "text": "3.6 Orthogonal Predictors\n\nEstimated coefficients\n\n\n\nCode\nsummary(lm(y ~ X1))$coefficients\n\n\n             Estimate Std. Error   t value    Pr(&gt;|t|)\n(Intercept) -3.284941  0.6704100 -4.899898 0.002711168\nX1           1.772961  0.4240045  4.181466 0.005804022\n\n\nCode\nsummary(lm(y ~ X2))$coefficients\n\n\n              Estimate Std. Error    t value  Pr(&gt;|t|)\n(Intercept) -3.8585513   4.439108 -0.8692176 0.4181374\nX2           0.5878276   0.803796  0.7313144 0.4921483\n\n\nCode\nsummary(lm(y ~ X1 + X2))$coefficients\n\n\n              Estimate Std. Error   t value    Pr(&gt;|t|)\n(Intercept) -6.5179924  2.1913587 -2.974407 0.030999127\nX1           1.7729608  0.3829198  4.630110 0.005683214\nX2           0.5878276  0.3829198  1.535119 0.185346208\n\n\n\nAre the results expected? Questions?"
+    "text": "3.6 Orthogonal Predictors\n\nEstimated coefficients\n\n\n\nCode\nsummary(lm(y ~ X1))$coefficients\n\n\n             Estimate Std. Error   t value   Pr(&gt;|t|)\n(Intercept) -2.293440  0.7460342 -3.074176 0.02182507\nX1           1.266722  0.4718335  2.684680 0.03630902\n\n\nCode\nsummary(lm(y ~ X2))$coefficients\n\n\n               Estimate Std. Error      t value  Pr(&gt;|t|)\n(Intercept) -0.03419994  3.8632991 -0.008852521 0.9932238\nX2          -0.06530134  0.6995333 -0.093349861 0.9286647\n\n\nCode\nsummary(lm(y ~ X1 + X2))$coefficients\n\n\n               Estimate Std. Error    t value   Pr(&gt;|t|)\n(Intercept) -1.93428287   2.953185 -0.6549819 0.54140988\nX1           1.26672196   0.516042  2.4546877 0.05760344\nX2          -0.06530134   0.516042 -0.1265427 0.90423361\n\n\n\nAre the results expected? Questions?"
   },
   {
     "objectID": "lectures/11-lecture.html#motivating-example-cdi-1",
@@ -3484,5 +3484,264 @@
     "title": "Lec 13: Multiple Linear Regression - Interactions",
     "section": "7.13 Two-way ANOVA",
     "text": "7.13 Two-way ANOVA\n\nInteraction terms\n\n\\(\\sum_{i=1}^I (\\alpha\\beta)_{ij} = 0\\) for each \\(j\\)\n\\(\\sum_{j=1}^J (\\alpha\\beta)_{ij} = 0\\) for each \\(i\\)\nTotal \\((I-1)(J-1)\\) unique parameters. E.g.,\n\n\n\\[\\begin{pmatrix} \\delta_{11} & \\delta_{12} & \\cdots & \\delta_{1,J-1} & \\cancel{\\delta_{1J}} \\\\\n\\delta_{21} & \\delta_{22} & \\cdots & \\delta_{2,J-1} & \\cancel{\\delta_{2J}} \\\\\n\\cdots & \\cdots & \\cdots & \\cdots & \\cdots \\\\\n\\delta_{I-1,1} & \\delta_{I-1,2} & \\cdots & \\delta_{I-1,J-1} & \\cancel{\\delta_{I-1,J}} \\\\\n\\cancel{\\delta_{I1}} & \\cancel{\\delta_{I2}} & \\cdots & \\cancel{\\delta_{I,J-1}} & \\cancel{\\delta_{IJ}}\n\\end{pmatrix}\\]\n\nThe total number of parameters is \\(1 + (I-1) + (J-1) + (I-1)(J-1) = IJ\\), consistent with the linear regression.\n\n&lt;!– # Exit the R markdown"
+  },
+  {
+    "objectID": "lectures/16-lecture.html",
+    "href": "lectures/16-lecture.html",
+    "title": "Lec 16: Outliers",
+    "section": "",
+    "text": "Code\nlibrary(tidyr) #the pipe (%&gt;%) tool is extremely useful\nlibrary(MASS)\nlibrary(ggplot2)\nlibrary(reshape2)\nlibrary(ggcorrplot)\nlibrary(car)\nlibrary(patchwork)"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#review-lecture-01-06",
+    "href": "lectures/16-lecture.html#review-lecture-01-06",
+    "title": "Lec 16: Outliers",
+    "section": "0.1 Review: Lecture 01-06",
+    "text": "0.1 Review: Lecture 01-06\n\nLectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.\nLectures 07-11: Multiple Linear Regression (MLR).\nLecture 11: multicollinearity\nLecture 12: categorical predictors\nLecture 13: Interactions\nLectures 14-15: Model Selection\nLecture 16: Outliers"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#outline",
+    "href": "lectures/16-lecture.html#outline",
+    "title": "Lec 16: Outliers",
+    "section": "1.1 Outline",
+    "text": "1.1 Outline\n\nExtreme observations\nOutliers in predictors\n\nLeverage and the hat matrix \\(H\\)\nDetecting leverage points\n\nOutliers in response\n\nresiduals\nstandardized residuals\nstudentized residuals"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#extreme-observations",
+    "href": "lectures/16-lecture.html#extreme-observations",
+    "title": "Lec 16: Outliers",
+    "section": "2.1 Extreme Observations",
+    "text": "2.1 Extreme Observations\n\nAn observation with an extreme value for one or more variables is called an extreme observation.\nExtreme observations can be of two types:\n\nOutliers in the response variable \\(Y\\)\nOutliers in the predictor variables \\(X\\)"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-simulation",
+    "href": "lectures/16-lecture.html#example-simulation",
+    "title": "Lec 16: Outliers",
+    "section": "2.2 Example: Simulation",
+    "text": "2.2 Example: Simulation\n\n\nCode\nset.seed(123)\nn &lt;- 7\np &lt;- 2\nX1 &lt;- rnorm(n)\nX2 &lt;- rnorm(n)\nY &lt;- 3 + 2 * X1 - 1 * X2 + rnorm(n)\ndata &lt;- data.frame(Y, X1, X2)\n# Add an extreme observation in both predictors and Y\ndata &lt;- rbind(data, data.frame(Y = 20, X1 = 5, X2 = 5))\n# Add an extreme observation in Y only\ndata &lt;- rbind(data, data.frame(Y = 25, X1 = 0, X2 = 0))\n# Add an extrem observation in X1 only\ndata &lt;- rbind(data, data.frame(Y = 3, X1 = 6, X2 = 0))\n#draw scatter plots such that the outliers are in red color\nplot(data$X1, data$Y, main=\"Y vs X1\", pch=19, xlab=\"X1\", ylab=\"Y\",  \n     col=c(rep(1,n), rep(2,3)), ylim=c(min(data$Y)-5, max(data$Y)+10))\ntext(data[-c(1:n),]$X1, data[-c(1:n),]$Y, labels=(n+1):10, pos=3)"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-of-extreme-observations",
+    "href": "lectures/16-lecture.html#example-of-extreme-observations",
+    "title": "Lec 16: Outliers",
+    "section": "2.3 Example of Extreme Observations",
+    "text": "2.3 Example of Extreme Observations\n\n8: outliers in both \\(X_1\\) and \\(Y\\).\n9: outlier in \\(Y\\) but no \\(X_1\\).\n10: outlier in \\(X_1\\) but not \\(Y\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-of-extreme-observations-1",
+    "href": "lectures/16-lecture.html#example-of-extreme-observations-1",
+    "title": "Lec 16: Outliers",
+    "section": "2.4 Example of Extreme Observations",
+    "text": "2.4 Example of Extreme Observations\n\n8: outlier in both \\(X_2\\) and \\(Y\\).\n9: outlier in \\(Y\\) but no \\(X_2\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-of-extreme-observations-2",
+    "href": "lectures/16-lecture.html#example-of-extreme-observations-2",
+    "title": "Lec 16: Outliers",
+    "section": "2.5 Example of Extreme Observations",
+    "text": "2.5 Example of Extreme Observations\n\n8 and 10: outliers in the predictor space.\n9: not an outlier in the predictor space."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#residuals-and-extreme-observations",
+    "href": "lectures/16-lecture.html#residuals-and-extreme-observations",
+    "title": "Lec 16: Outliers",
+    "section": "2.6 Residuals and Extreme Observations",
+    "text": "2.6 Residuals and Extreme Observations\n\nWe have discussed how to use residuals to detect outliers in the response variable \\(Y\\). \\[e_i = y_i - \\hat y_i\\]\nHowever, extreme observations in the predictor variables \\(X\\) may not have large residuals.\nVisualization might not be able to detect extreme observations when there are multiple predictors."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#residuals-and-extreme-observations-1",
+    "href": "lectures/16-lecture.html#residuals-and-extreme-observations-1",
+    "title": "Lec 16: Outliers",
+    "section": "2.7 Residuals and Extreme Observations",
+    "text": "2.7 Residuals and Extreme Observations"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#residuals-and-extreme-observations-2",
+    "href": "lectures/16-lecture.html#residuals-and-extreme-observations-2",
+    "title": "Lec 16: Outliers",
+    "section": "2.8 Residuals and Extreme Observations",
+    "text": "2.8 Residuals and Extreme Observations"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#leverage-1",
+    "href": "lectures/16-lecture.html#leverage-1",
+    "title": "Lec 16: Outliers",
+    "section": "3.1 Leverage",
+    "text": "3.1 Leverage\n\nTo detect extreme observations in the predictor variables \\(X\\), we can use the concept of leverage.\nThe leverage of an observation measures how far away the values of the predictor variables are from their means.\nThe leverage values are the diagonal elements of the hat matrix \\(H\\): \\[H = X(X^TX)^{-1}X^T\\]"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#the-hat-matrix",
+    "href": "lectures/16-lecture.html#the-hat-matrix",
+    "title": "Lec 16: Outliers",
+    "section": "3.2 The Hat Matrix",
+    "text": "3.2 The Hat Matrix\n\nRecall that \\(\\hat y = Hy\\), where \\(H\\) is the hat matrix. So\n\n\\[\\hat y= Hy = \\begin{pmatrix}\nh_{11} & h_{12} & \\cdots & h_{1n} \\\\\nh_{21} & h_{22} & \\cdots & h_{2n} \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\n\\color{red}{h_{i1}} & \\color{red}{h_{i2}} & \\color{red}{\\cdots} & \\color{red}{h_{in}} \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\nh_{n1} & h_{n2} & \\cdots & h_{nn}\n\\end{pmatrix}\n\\begin{pmatrix} y_1 \\\\ y_2 \\\\ \\vdots \\\\ y_n \\end{pmatrix}\n=\n\\begin{pmatrix}\nh_{11}y_1 + h_{12}y_2 + \\cdots + h_{1n}y_n \\\\\nh_{21}y_1 + h_{22}y_2 + \\cdots + h_{2n}y_n \\\\\n\\vdots \\\\[6pt]\n\\color{red}{h_{i1}y_1 + h_{i2}y_2 + \\cdots + h_{in}y_n} \\\\[6pt]\n\\vdots \\\\\nh_{n1}y_1 + h_{n2}y_2 + \\cdots + h_{nn}y_n\n\\end{pmatrix}\n\\]"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#the-hat-matrixand-leverage",
+    "href": "lectures/16-lecture.html#the-hat-matrixand-leverage",
+    "title": "Lec 16: Outliers",
+    "section": "3.3 The Hat Matrixand Leverage",
+    "text": "3.3 The Hat Matrixand Leverage\n\nso the \\(i\\)th fitted value \\(\\hat y_i\\) can be expressed as: \\[\\hat y_i\n=\\sum_{j=1}^n h_{ij} y_j=h_{ii} y_i + \\sum_{j \\neq i} h_{ij} y_j\\]\nTherefore, the \\(i\\)th leverage value \\(h_{ii}\\) measures the influence of the \\(i\\)th observation on its own fitted value \\(\\hat y_i\\).\nThis shows that the fitted value \\(\\hat y_i\\) is a weighted average of all the observed values \\(y_j\\), with the weight for \\(y_i\\) being \\(h_{ii}\\) (leverage).\nA larger leverage value \\(h_{ii}\\) means that the observation \\(i\\) has more influence on its own fitted value \\(\\hat y_i\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#properties-of-leverage-values",
+    "href": "lectures/16-lecture.html#properties-of-leverage-values",
+    "title": "Lec 16: Outliers",
+    "section": "3.4 Properties of Leverage Values",
+    "text": "3.4 Properties of Leverage Values\n\nThe leverage values \\(h_{ii}\\) have the following properties:\n\n\\(0 \\leq h_{ii} \\leq 1\\) for all \\(i = 1, 2, \\ldots, n\\).\nThe sum of the leverage values is equal to the number of regression coefficients in the model (including the intercept): \\[\\sum_{i=1}^n h_{ii} = \\tilde p\\] where \\(\\tilde p\\) is the number of regression coefficients.\nThe average leverage value is \\(\\frac{\\tilde p}{n}\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#the-hat-matrix-in-slr",
+    "href": "lectures/16-lecture.html#the-hat-matrix-in-slr",
+    "title": "Lec 16: Outliers",
+    "section": "3.5 The Hat Matrix in SLR",
+    "text": "3.5 The Hat Matrix in SLR\n\nIn simple linear regression (\\(\\tilde p=2\\)), leverage is about the distance of an observation from the center of \\(X\\).\nConsider the example with the predictor \\(X_1\\). The hat matrix is given by:\n\n\\[ H = X(X^TX)^{-1}X^T\n= \\frac{1}{n}\\begin{bmatrix}\n1 & x_{11} \\\\\n1 & x_{21} \\\\\n\\vdots & \\vdots \\\\\n1 & x_{n1}\n\\end{bmatrix}\n\\begin{bmatrix}\nn & \\sum_{i=1}^n x_{i1} \\\\\n\\sum_{i=1}^n x_{i1} & \\sum_{i=1}^n x_{i1}^2\n\\end{bmatrix}^{-1}\n\\begin{bmatrix}\n1 & 1 & \\cdots & 1 \\\\\nx_{11} & x_{21} & \\cdots & x_{n1}\n\\end{bmatrix}\n.\\] - After some math (matrix multiplication): \\[H = \\frac{1}{\\sum_{i=1}^n (x_{i1} - \\bar{x}_1)^2}\\,\n\\begin{bmatrix}\n1 & x_{11} - \\bar{x}_1 \\\\\n1 & x_{21} - \\bar{x}_1 \\\\\n\\vdots & \\vdots \\\\\n1 & x_{n1} - \\bar{x}_1\n\\end{bmatrix}\n\\begin{bmatrix}\n1 & 1 & \\cdots & 1 \\\\\nx_{11} - \\bar{x}_1 & x_{21} - \\bar{x}_1 & \\cdots & x_{n1} - \\bar{x}_1\n\\end{bmatrix}.\\] }"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#the-hat-matrix-in-slr-1",
+    "href": "lectures/16-lecture.html#the-hat-matrix-in-slr-1",
+    "title": "Lec 16: Outliers",
+    "section": "3.6 The Hat Matrix in SLR",
+    "text": "3.6 The Hat Matrix in SLR\n\nReorganizing the hat matrix in SLR, we have: \\[H = \\begin{bmatrix}\n\\frac{1}{n} + \\frac{(x_{11} - \\bar{x}_1)^2}{\\sum_{i=1}^n (x_{i1} - \\bar{x}_1)^2}\n& \\cdots &\n\\frac{1}{n} + \\frac{(x_{11} - \\bar{x}_1)(x_{n1} - \\bar{x}_1)}{\\sum_{i=1}^n (x_{i1} - \\bar{x}_1)^2}\n\\\\[10pt]\n\\vdots & \\ddots & \\vdots\n\\\\[10pt]\n\\frac{1}{n} + \\frac{(x_{n1} - \\bar{x}_1)(x_{11} - \\bar{x}_1)}{\\sum_{i=1}^n (x_{i1} - \\bar{x}_1)^2}\n& \\cdots &\n\\frac{1}{n} + \\frac{(x_{n1} - \\bar{x}_1)^2}{\\sum_{i=1}^n (x_{i1} - \\bar{x}_1)^2}\n\\end{bmatrix}.\\]"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#leverage-in-slr",
+    "href": "lectures/16-lecture.html#leverage-in-slr",
+    "title": "Lec 16: Outliers",
+    "section": "3.7 Leverage in SLR",
+    "text": "3.7 Leverage in SLR\n\nThe diagonal elements of the hat matrix \\(H\\) are called the leverage values:\n\n\\[h_{ii}\n= \\frac{1}{n}\n+ \\frac{(x_{i1} - \\bar{x}_1)^2}{\\sum_{j=1}^n (x_{j1} - \\bar{x}_1)^2}.\\]\n\n\\(h_{ii}\\) measures the distance of the \\(i\\)th observation from the center of \\(X_1\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#leverage-in-slr-1",
+    "href": "lectures/16-lecture.html#leverage-in-slr-1",
+    "title": "Lec 16: Outliers",
+    "section": "3.8 Leverage in SLR",
+    "text": "3.8 Leverage in SLR\n\nleverage vs distance from the center of \\(X_1\\).\n\n\n\nCode\n# Example data\nmodel &lt;- lm(Y ~ X1, data=data)\nleverage_values &lt;- hatvalues(model)\n# Plot leverage values vs distance from center of X1\ncenter_X1 &lt;- mean(data$X1)\nscaled_distance_sq &lt;- (data$X1 - center_X1)^2 / sum((data$X1 - center_X1)^2) \nplot(scaled_distance_sq, leverage_values, main=\"Leverage vs Distance from Center of X\", \n     xlab=\"Scaled Dist^2 from Center of Xs\", ylab=\"Leverage\", pch=19, col=c(rep(1,n), rep(2,3)))\nabline(a=1/10, b=1)"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#leverage-in-slr-2",
+    "href": "lectures/16-lecture.html#leverage-in-slr-2",
+    "title": "Lec 16: Outliers",
+    "section": "3.9 Leverage in SLR",
+    "text": "3.9 Leverage in SLR\n\nleverage vs (scaled and squared) distance from the center of \\(X1\\)"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#leverage-in-mlr",
+    "href": "lectures/16-lecture.html#leverage-in-mlr",
+    "title": "Lec 16: Outliers",
+    "section": "3.10 Leverage in MLR",
+    "text": "3.10 Leverage in MLR\n\nConsider the model lm(Y ~ X1 + X2).\nIn multiple linear regression, leverage is about the statistical (Mahalonobis) distance of an observation from the center of the \\(X\\)-space: \\[h_{ii}= \\frac{1}{n} + \\frac{(X_i - \\bar{X})^T S_X^{-1} (X_i - \\bar{X})}{n-1},\\] where \\(\\bar{X}\\) is the vector of mean predictor values, and \\(S_X\\) is the sample covariance matrix of the predictors."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#leverage-in-mlr-1",
+    "href": "lectures/16-lecture.html#leverage-in-mlr-1",
+    "title": "Lec 16: Outliers",
+    "section": "3.11 Leverage in MLR",
+    "text": "3.11 Leverage in MLR"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#detecting-outliers-in-predictors",
+    "href": "lectures/16-lecture.html#detecting-outliers-in-predictors",
+    "title": "Lec 16: Outliers",
+    "section": "4.1 Detecting outliers in predictors",
+    "text": "4.1 Detecting outliers in predictors\n\nHow large is large? Let \\(\\tilde p\\) be the number of regression coefficients.\nRecall that \\(\\sum_{i=1}^n h_{ii} = \\tilde p\\), so the average leverage is \\(\\frac{\\tilde p}{n}\\).\nA common rule of thumb is that an observation is considered to have high leverage if its leverage value \\(h_{ii}\\) is greater than \\(2\\frac{\\tilde p}{n}\\) or \\(3\\frac{\\tilde p}{n}\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#detecting-outliers-example",
+    "href": "lectures/16-lecture.html#detecting-outliers-example",
+    "title": "Lec 16: Outliers",
+    "section": "4.2 Detecting outliers: Example",
+    "text": "4.2 Detecting outliers: Example\n\nConsider lm(Y~X1).\nIn this example, the average leverage is \\(\\frac{2}{10} = 0.2\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#detecting-outliers-example-1",
+    "href": "lectures/16-lecture.html#detecting-outliers-example-1",
+    "title": "Lec 16: Outliers",
+    "section": "4.3 Detecting outliers: Example",
+    "text": "4.3 Detecting outliers: Example\n\nConsider lm(Y~X1 + X2).\nIn this example, \\(\\tilde p=3\\) and the average leverage is \\(\\frac{3}{10} = 0.3\\)."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#outliers-in-response-residuals",
+    "href": "lectures/16-lecture.html#outliers-in-response-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.1 Outliers in Response: Residuals",
+    "text": "5.1 Outliers in Response: Residuals\n\nResiduals are not very useful in detecting extreme observations in the predictor variables \\(X\\).\nThey are valuable in detecting outliers in the response variable \\(Y\\).\nRecall that \\(e=y - \\hat y = (I-H)y\\). Thus, the var-covariance matrix of the residuals is: \\[\\text{Var}(e) = (I - H)\\text{Var}(y)(I - H)^T\n=\\sigma^2 (I - H).\\]\nAnd the variance of the \\(i\\)th residual is: \\[\\text{Var}(e_i) = \\sigma^2 (1 - h_{ii}).\\]\nIn practice, we replace \\(\\sigma^2\\) by \\(MSE\\) to estimate the variance of the residuals."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#standardized-residuals",
+    "href": "lectures/16-lecture.html#standardized-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.2 Standardized Residuals",
+    "text": "5.2 Standardized Residuals\n\nThe standardized residuals are defined as: \\[r_i = \\frac{e_i}{\\hat \\sigma \\sqrt{1 - h_{ii}}},\\] where \\(\\hat \\sigma = \\sqrt{MSE}\\) and \\(h_{ii}\\) is the leverage of the \\(i\\)th observation.\nThe standardized residuals have constant variance.\nThus, we can use the standardized residuals to detect outliers in the response variable \\(Y\\) by choosing a threshold, e.g., 2 or 2.5 in absolute value."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#deleted-residuals",
+    "href": "lectures/16-lecture.html#deleted-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.3 Deleted Residuals",
+    "text": "5.3 Deleted Residuals\n\nOne issue with standardized residuals is that the estimate of \\(\\sigma\\) includes the \\(i\\)th observation itself.\nThe deleted residuals (or externally studentized residuals) address this issue by deleting the \\(i\\)th observation when estimating \\(\\sigma\\).\nLet \\(e_{(i)}\\) be the residual for the \\(i\\)th observation obtained by fitting the model without the \\(i\\)th observation. It is defined as \\[e_{(i)} = y_i - \\hat y_{(i)},\\] where \\(\\hat y_{(i)}\\) is the fitted value when observation \\(i\\) is deleted."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#deleted-residuals-1",
+    "href": "lectures/16-lecture.html#deleted-residuals-1",
+    "title": "Lec 16: Outliers",
+    "section": "5.4 Deleted Residuals",
+    "text": "5.4 Deleted Residuals\n\nOne does not need to refit models to obtain the deleted residuals. It can be shown that: \\[e_{(i)} = \\frac{e_i}{1 - h_{ii}}.\\]\nRecall that \\(h_{ii}\\) is between 0 and 1.\nThe larger the leverage \\(h_{ii}\\) (close to 1), the larger the deleted residual \\(e_{(i)}\\) compared to the ordinary residual \\(e_i\\).\nThe standard error of the deleted residual is: \\[\\text{SE}(e_{(i)}) = \\hat \\sigma_{(i)} \\sqrt{1 - h_{ii}},\\] where \\(\\hat \\sigma_{(i)}\\) is the estimate of \\(\\sigma\\) obtained by deleting the \\(i\\)th observation."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#studentized-residuals",
+    "href": "lectures/16-lecture.html#studentized-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.5 Studentized Residuals",
+    "text": "5.5 Studentized Residuals\n\nWe then define the studentized residuals based on the deleted residuals and its standard error:\n\n\\[t_i = \\frac{e_{(i)}}{\\text{SE}(e_{(i)})} = \\frac{e_i / (1 - h_{ii})}{\\hat \\sigma_{(i)} \\sqrt{1 - h_{ii}}} = \\frac{e_i}{\\hat \\sigma_{(i)} \\sqrt{1 - h_{ii}}}.\\]\nwhere \\(\\hat \\sigma_{(i)}=\\sqrt{MSE_{(i)}}\\) is the estimate of \\(\\sigma\\) obtained by deleting the \\(i\\)th observation.\n\nIt can be shown that \\(t_i \\sim t_{df?}\\). What is df here when there are \\(\\tilde p\\) regression coefficients?"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#studentized-residuals-t-distribution",
+    "href": "lectures/16-lecture.html#studentized-residuals-t-distribution",
+    "title": "Lec 16: Outliers",
+    "section": "5.6 Studentized Residuals: t-distribution",
+    "text": "5.6 Studentized Residuals: t-distribution\n\nThe df depends on the degrees of freedom used to estimate \\(\\sigma^2\\).\nWhen the \\(i\\)th observation is deleted, the degrees of freedom becomes \\((n-1)-\\tilde p = n-\\tilde p-1\\).\nThus, the studentized residuals follow a \\(t\\) distribution with \\(n-\\tilde p-1\\) degrees of freedom: \\[t_i \\sim t_{n-\\tilde p-1}.\\]\nNote , \\(MSE_{(i)}\\) can also be computed from \\(MSE\\) without refitting the model. It can be shown that: \\[MSE_{(i)} = \\frac{(n-\\tilde p)MSE - e_i^2/(1-h_{ii})}{n-\\tilde p-1}.\\]"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#studentized-residuals-cutoff",
+    "href": "lectures/16-lecture.html#studentized-residuals-cutoff",
+    "title": "Lec 16: Outliers",
+    "section": "5.7 Studentized Residuals: Cutoff",
+    "text": "5.7 Studentized Residuals: Cutoff\n\nIf we want to test whether an observation is an outlier in \\(Y\\) at significance level \\(\\alpha\\), we can use the following cutoff:\n\\[|t_i| &gt; t_{1- \\alpha/2, n-\\tilde p-1}.\\]\nIn practice, we do not know which observation is an outlier. Thus, we need to adjust for multiple comparisons. A common approach is to use the Bonferroni correction. The adjusted cutoff becomes:\n\\[|t_i| &gt; t_{1- \\alpha/(2n), n-\\tilde p-1},\\] which is greater than the previous cutoff."
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example",
+    "href": "lectures/16-lecture.html#example",
+    "title": "Lec 16: Outliers",
+    "section": "5.8 Example",
+    "text": "5.8 Example\n\nWe will look at residuals, standardized residuals, and studentized residuals for the model lm(Y ~ X1 + X2).\n\n\n\nCode\nmodel &lt;- lm(Y ~ X1 + X2, data=data)\n# Get residuals, standardized residuals, and studentized residuals\ndata$residuals &lt;- resid(model)\ndata$standardized_residuals &lt;- rstandard(model)\ndata$studentized_residuals &lt;- rstudent(model)"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-residuals",
+    "href": "lectures/16-lecture.html#example-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.9 Example: residuals",
+    "text": "5.9 Example: residuals"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-standardized-residuals",
+    "href": "lectures/16-lecture.html#example-standardized-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.10 Example: standardized residuals",
+    "text": "5.10 Example: standardized residuals"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#example-studentized-residuals",
+    "href": "lectures/16-lecture.html#example-studentized-residuals",
+    "title": "Lec 16: Outliers",
+    "section": "5.11 Example: studentized residuals",
+    "text": "5.11 Example: studentized residuals"
+  },
+  {
+    "objectID": "lectures/16-lecture.html#summary-1",
+    "href": "lectures/16-lecture.html#summary-1",
+    "title": "Lec 16: Outliers",
+    "section": "6.1 Summary",
+    "text": "6.1 Summary\n\nFor outlier in predictor: leverage\n\nLeverage measures how far an observation is from the center of the X-space.\nLeverage values are the diagonal elements of the hat matrix.\nAn observation is considered to have high leverage \\(h_{ii}&gt; 2\\frac{\\tilde p}{n}\\) or \\(3\\frac{\\tilde p}{n}\\), where \\(\\tilde p\\) is the number of regression coefficients.\n\nFor outlier in response: studentized residual\n\nStudentized residuals are based on deleted residuals.\nThey follow a t-distribution with \\(n-\\tilde p-1\\) degrees of freedom.\nAn observation is considered an outlier in Y \\[|t_i| &gt; t_{1- \\alpha/(2n), n-\\tilde p-1}.\\]"
   }
 ]

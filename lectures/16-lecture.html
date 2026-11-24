@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lec 16: – STAT210 — Statistical Methods I: Linear Models</title>
+<title>Lec 16: Outliers – STAT210 — Statistical Methods I: Linear Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -114,15 +177,74 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#review-lecture-01-06" id="toc-review-lecture-01-06" class="nav-link active" data-scroll-target="#review-lecture-01-06"><span class="header-section-number">0.1</span> Review: Lecture 01-06</a></li>
+  <li><a href="#review-outline" id="toc-review-outline" class="nav-link" data-scroll-target="#review-outline"><span class="header-section-number">1</span> Review &amp; Outline</a>
+  <ul class="collapse">
+  <li><a href="#outline" id="toc-outline" class="nav-link" data-scroll-target="#outline"><span class="header-section-number">1.1</span> Outline</a></li>
+  </ul></li>
+  <li><a href="#extreme-obs" id="toc-extreme-obs" class="nav-link" data-scroll-target="#extreme-obs"><span class="header-section-number">2</span> Extreme Obs</a>
+  <ul class="collapse">
+  <li><a href="#extreme-observations" id="toc-extreme-observations" class="nav-link" data-scroll-target="#extreme-observations"><span class="header-section-number">2.1</span> Extreme Observations</a></li>
+  <li><a href="#example-simulation" id="toc-example-simulation" class="nav-link" data-scroll-target="#example-simulation"><span class="header-section-number">2.2</span> Example: Simulation</a></li>
+  <li><a href="#example-of-extreme-observations" id="toc-example-of-extreme-observations" class="nav-link" data-scroll-target="#example-of-extreme-observations"><span class="header-section-number">2.3</span> Example of Extreme Observations</a></li>
+  <li><a href="#example-of-extreme-observations-1" id="toc-example-of-extreme-observations-1" class="nav-link" data-scroll-target="#example-of-extreme-observations-1"><span class="header-section-number">2.4</span> Example of Extreme Observations</a></li>
+  <li><a href="#example-of-extreme-observations-2" id="toc-example-of-extreme-observations-2" class="nav-link" data-scroll-target="#example-of-extreme-observations-2"><span class="header-section-number">2.5</span> Example of Extreme Observations</a></li>
+  <li><a href="#residuals-and-extreme-observations" id="toc-residuals-and-extreme-observations" class="nav-link" data-scroll-target="#residuals-and-extreme-observations"><span class="header-section-number">2.6</span> Residuals and Extreme Observations</a></li>
+  <li><a href="#residuals-and-extreme-observations-1" id="toc-residuals-and-extreme-observations-1" class="nav-link" data-scroll-target="#residuals-and-extreme-observations-1"><span class="header-section-number">2.7</span> Residuals and Extreme Observations</a></li>
+  <li><a href="#residuals-and-extreme-observations-2" id="toc-residuals-and-extreme-observations-2" class="nav-link" data-scroll-target="#residuals-and-extreme-observations-2"><span class="header-section-number">2.8</span> Residuals and Extreme Observations</a></li>
+  </ul></li>
+  <li><a href="#leverage" id="toc-leverage" class="nav-link" data-scroll-target="#leverage"><span class="header-section-number">3</span> Leverage</a>
+  <ul class="collapse">
+  <li><a href="#leverage-1" id="toc-leverage-1" class="nav-link" data-scroll-target="#leverage-1"><span class="header-section-number">3.1</span> Leverage</a></li>
+  <li><a href="#the-hat-matrix" id="toc-the-hat-matrix" class="nav-link" data-scroll-target="#the-hat-matrix"><span class="header-section-number">3.2</span> The Hat Matrix</a></li>
+  <li><a href="#the-hat-matrixand-leverage" id="toc-the-hat-matrixand-leverage" class="nav-link" data-scroll-target="#the-hat-matrixand-leverage"><span class="header-section-number">3.3</span> The Hat Matrixand Leverage</a></li>
+  <li><a href="#properties-of-leverage-values" id="toc-properties-of-leverage-values" class="nav-link" data-scroll-target="#properties-of-leverage-values"><span class="header-section-number">3.4</span> Properties of Leverage Values</a></li>
+  <li><a href="#the-hat-matrix-in-slr" id="toc-the-hat-matrix-in-slr" class="nav-link" data-scroll-target="#the-hat-matrix-in-slr"><span class="header-section-number">3.5</span> The Hat Matrix in SLR</a></li>
+  <li><a href="#the-hat-matrix-in-slr-1" id="toc-the-hat-matrix-in-slr-1" class="nav-link" data-scroll-target="#the-hat-matrix-in-slr-1"><span class="header-section-number">3.6</span> The Hat Matrix in SLR</a></li>
+  <li><a href="#leverage-in-slr" id="toc-leverage-in-slr" class="nav-link" data-scroll-target="#leverage-in-slr"><span class="header-section-number">3.7</span> Leverage in SLR</a></li>
+  <li><a href="#leverage-in-slr-1" id="toc-leverage-in-slr-1" class="nav-link" data-scroll-target="#leverage-in-slr-1"><span class="header-section-number">3.8</span> Leverage in SLR</a></li>
+  <li><a href="#leverage-in-slr-2" id="toc-leverage-in-slr-2" class="nav-link" data-scroll-target="#leverage-in-slr-2"><span class="header-section-number">3.9</span> Leverage in SLR</a></li>
+  <li><a href="#leverage-in-mlr" id="toc-leverage-in-mlr" class="nav-link" data-scroll-target="#leverage-in-mlr"><span class="header-section-number">3.10</span> Leverage in MLR</a></li>
+  <li><a href="#leverage-in-mlr-1" id="toc-leverage-in-mlr-1" class="nav-link" data-scroll-target="#leverage-in-mlr-1"><span class="header-section-number">3.11</span> Leverage in MLR</a></li>
+  </ul></li>
+  <li><a href="#detecting-leverage-points" id="toc-detecting-leverage-points" class="nav-link" data-scroll-target="#detecting-leverage-points"><span class="header-section-number">4</span> Detecting Leverage Points</a>
+  <ul class="collapse">
+  <li><a href="#detecting-outliers-in-predictors" id="toc-detecting-outliers-in-predictors" class="nav-link" data-scroll-target="#detecting-outliers-in-predictors"><span class="header-section-number">4.1</span> Detecting outliers in predictors</a></li>
+  <li><a href="#detecting-outliers-example" id="toc-detecting-outliers-example" class="nav-link" data-scroll-target="#detecting-outliers-example"><span class="header-section-number">4.2</span> Detecting outliers: Example</a></li>
+  <li><a href="#detecting-outliers-example-1" id="toc-detecting-outliers-example-1" class="nav-link" data-scroll-target="#detecting-outliers-example-1"><span class="header-section-number">4.3</span> Detecting outliers: Example</a></li>
+  </ul></li>
+  <li><a href="#outliers-in-y" id="toc-outliers-in-y" class="nav-link" data-scroll-target="#outliers-in-y"><span class="header-section-number">5</span> Outliers in <span class="math inline">\(Y\)</span></a>
+  <ul class="collapse">
+  <li><a href="#outliers-in-response-residuals" id="toc-outliers-in-response-residuals" class="nav-link" data-scroll-target="#outliers-in-response-residuals"><span class="header-section-number">5.1</span> Outliers in Response: Residuals</a></li>
+  <li><a href="#standardized-residuals" id="toc-standardized-residuals" class="nav-link" data-scroll-target="#standardized-residuals"><span class="header-section-number">5.2</span> Standardized Residuals</a></li>
+  <li><a href="#deleted-residuals" id="toc-deleted-residuals" class="nav-link" data-scroll-target="#deleted-residuals"><span class="header-section-number">5.3</span> Deleted Residuals</a></li>
+  <li><a href="#deleted-residuals-1" id="toc-deleted-residuals-1" class="nav-link" data-scroll-target="#deleted-residuals-1"><span class="header-section-number">5.4</span> Deleted Residuals</a></li>
+  <li><a href="#studentized-residuals" id="toc-studentized-residuals" class="nav-link" data-scroll-target="#studentized-residuals"><span class="header-section-number">5.5</span> Studentized Residuals</a></li>
+  <li><a href="#studentized-residuals-t-distribution" id="toc-studentized-residuals-t-distribution" class="nav-link" data-scroll-target="#studentized-residuals-t-distribution"><span class="header-section-number">5.6</span> Studentized Residuals: t-distribution</a></li>
+  <li><a href="#studentized-residuals-cutoff" id="toc-studentized-residuals-cutoff" class="nav-link" data-scroll-target="#studentized-residuals-cutoff"><span class="header-section-number">5.7</span> Studentized Residuals: Cutoff</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">5.8</span> Example</a></li>
+  <li><a href="#example-residuals" id="toc-example-residuals" class="nav-link" data-scroll-target="#example-residuals"><span class="header-section-number">5.9</span> Example: residuals</a></li>
+  <li><a href="#example-standardized-residuals" id="toc-example-standardized-residuals" class="nav-link" data-scroll-target="#example-standardized-residuals"><span class="header-section-number">5.10</span> Example: standardized residuals</a></li>
+  <li><a href="#example-studentized-residuals" id="toc-example-studentized-residuals" class="nav-link" data-scroll-target="#example-studentized-residuals"><span class="header-section-number">5.11</span> Example: studentized residuals</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6</span> Summary</a>
+  <ul class="collapse">
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">6.1</span> Summary</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lec 16:</h1>
+<h1 class="title">Lec 16: Outliers</h1>
 </div>
 
 
@@ -139,8 +261,539 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyr) <span class="co">#the pipe (%&gt;%) tool is extremely useful</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(patchwork) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="review-lecture-01-06" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="review-lecture-01-06"><span class="header-section-number">0.1</span> Review: Lecture 01-06</h2>
+<ul>
+<li>Lectures 01-06: SLR: least squares estimate, inference (CI, prediction, t-test, F-test), diagnostics, transformations, ANOVA, lack of fit test.</li>
+<li>Lectures 07-11: Multiple Linear Regression (MLR).</li>
+<li>Lecture 11: multicollinearity</li>
+<li>Lecture 12: categorical predictors</li>
+<li>Lecture 13: Interactions</li>
+<li>Lectures 14-15: Model Selection</li>
+<li>Lecture 16: Outliers</li>
+</ul>
+</section>
+<section id="review-outline" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Review &amp; Outline</h1>
+<ul>
+<li>Exhaustive search for best subset selection</li>
+<li>Automatic model selection: forward selection, backward elimination, stepwise selection</li>
+<li>Selection criteria:
+<ul>
+<li>adjusted R-squared,</li>
+<li>Mallows’ Cp,</li>
+<li>AIC</li>
+<li>BIC</li>
+<li>PRESS, a special case of cross-validation</li>
+</ul></li>
+</ul>
+<section id="outline" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="outline"><span class="header-section-number">1.1</span> Outline</h2>
+<ul>
+<li>Extreme observations</li>
+<li>Outliers in predictors
+<ul>
+<li>Leverage and the hat matrix <span class="math inline">\(H\)</span></li>
+<li>Detecting leverage points</li>
+</ul></li>
+<li>Outliers in response
+<ul>
+<li>residuals</li>
+<li>standardized residuals</li>
+<li>studentized residuals</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="extreme-obs" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Extreme Obs</h1>
+<section id="extreme-observations" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="extreme-observations"><span class="header-section-number">2.1</span> Extreme Observations</h2>
+<ul>
+<li><p>An observation with an extreme value for one or more variables is called an <strong>extreme observation</strong>.</p></li>
+<li><p>Extreme observations can be of two types:</p>
+<ul>
+<li>Outliers in the response variable <span class="math inline">\(Y\)</span></li>
+<li>Outliers in the predictor variables <span class="math inline">\(X\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-simulation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="example-simulation"><span class="header-section-number">2.2</span> Example: Simulation</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>n <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>p <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>X1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>X2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>Y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> X1 <span class="sc">-</span> <span class="dv">1</span> <span class="sc">*</span> X2 <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Y, X1, X2)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># Add an extreme observation in both predictors and Y</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data, <span class="fu">data.frame</span>(<span class="at">Y =</span> <span class="dv">20</span>, <span class="at">X1 =</span> <span class="dv">5</span>, <span class="at">X2 =</span> <span class="dv">5</span>))</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># Add an extreme observation in Y only</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data, <span class="fu">data.frame</span>(<span class="at">Y =</span> <span class="dv">25</span>, <span class="at">X1 =</span> <span class="dv">0</span>, <span class="at">X2 =</span> <span class="dv">0</span>))</span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># Add an extrem observation in X1 only</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data, <span class="fu">data.frame</span>(<span class="at">Y =</span> <span class="dv">3</span>, <span class="at">X1 =</span> <span class="dv">6</span>, <span class="at">X2 =</span> <span class="dv">0</span>))</span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#draw scatter plots such that the outliers are in red color</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="fu">plot</span>(data<span class="sc">$</span>X1, data<span class="sc">$</span>Y, <span class="at">main=</span><span class="st">"Y vs X1"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">xlab=</span><span class="st">"X1"</span>, <span class="at">ylab=</span><span class="st">"Y"</span>,  </span>
+<span id="cb2-16"><a href="#cb2-16"></a>     <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,n), <span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">3</span>)), <span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(data<span class="sc">$</span>Y)<span class="sc">-</span><span class="dv">5</span>, <span class="fu">max</span>(data<span class="sc">$</span>Y)<span class="sc">+</span><span class="dv">10</span>))</span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="fu">text</span>(data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n),]<span class="sc">$</span>X1, data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>n),]<span class="sc">$</span>Y, <span class="at">labels=</span>(n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span><span class="dv">10</span>, <span class="at">pos=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-of-extreme-observations" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="example-of-extreme-observations"><span class="header-section-number">2.3</span> Example of Extreme Observations</h2>
+<ul>
+<li>8: outliers in both <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span>.</li>
+<li>9: outlier in <span class="math inline">\(Y\)</span> but no <span class="math inline">\(X_1\)</span>.</li>
+<li>10: outlier in <span class="math inline">\(X_1\)</span> but not <span class="math inline">\(Y\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-of-extreme-observations-1" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="example-of-extreme-observations-1"><span class="header-section-number">2.4</span> Example of Extreme Observations</h2>
+<ul>
+<li>8: outlier in both <span class="math inline">\(X_2\)</span> and <span class="math inline">\(Y\)</span>.</li>
+<li>9: outlier in <span class="math inline">\(Y\)</span> but no <span class="math inline">\(X_2\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-of-extreme-observations-2" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="example-of-extreme-observations-2"><span class="header-section-number">2.5</span> Example of Extreme Observations</h2>
+<ul>
+<li>8 and 10: outliers in the predictor space.</li>
+<li>9: not an outlier in the predictor space.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="residuals-and-extreme-observations" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="residuals-and-extreme-observations"><span class="header-section-number">2.6</span> Residuals and Extreme Observations</h2>
+<ul>
+<li><p>We have discussed how to use residuals to detect outliers in the response variable <span class="math inline">\(Y\)</span>. <span class="math display">\[e_i = y_i - \hat y_i\]</span></p></li>
+<li><p>However, extreme observations in the predictor variables <span class="math inline">\(X\)</span> may not have large residuals.</p></li>
+<li><p>Visualization might not be able to detect extreme observations when there are multiple predictors.</p></li>
+</ul>
+</section>
+<section id="residuals-and-extreme-observations-1" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="residuals-and-extreme-observations-1"><span class="header-section-number">2.7</span> Residuals and Extreme Observations</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="residuals-and-extreme-observations-2" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="residuals-and-extreme-observations-2"><span class="header-section-number">2.8</span> Residuals and Extreme Observations</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="leverage" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Leverage</h1>
+<section id="leverage-1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="leverage-1"><span class="header-section-number">3.1</span> Leverage</h2>
+<ul>
+<li>To detect extreme observations in the predictor variables <span class="math inline">\(X\)</span>, we can use the concept of <strong>leverage</strong>.</li>
+<li>The leverage of an observation measures how far away the values of the predictor variables are from their means.</li>
+<li>The leverage values are the diagonal elements of the hat matrix <span class="math inline">\(H\)</span>: <span class="math display">\[H = X(X^TX)^{-1}X^T\]</span></li>
+</ul>
+</section>
+<section id="the-hat-matrix" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-hat-matrix"><span class="header-section-number">3.2</span> The Hat Matrix</h2>
+<ul>
+<li>Recall that <span class="math inline">\(\hat y = Hy\)</span>, where <span class="math inline">\(H\)</span> is the hat matrix. So</li>
+</ul>
+<p><span class="math display">\[\hat y= Hy = \begin{pmatrix}
+h_{11} &amp; h_{12} &amp; \cdots &amp; h_{1n} \\
+h_{21} &amp; h_{22} &amp; \cdots &amp; h_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\color{red}{h_{i1}} &amp; \color{red}{h_{i2}} &amp; \color{red}{\cdots} &amp; \color{red}{h_{in}} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+h_{n1} &amp; h_{n2} &amp; \cdots &amp; h_{nn}
+\end{pmatrix}
+\begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}
+=
+\begin{pmatrix}
+h_{11}y_1 + h_{12}y_2 + \cdots + h_{1n}y_n \\
+h_{21}y_1 + h_{22}y_2 + \cdots + h_{2n}y_n \\
+\vdots \\[6pt]
+\color{red}{h_{i1}y_1 + h_{i2}y_2 + \cdots + h_{in}y_n} \\[6pt]
+\vdots \\
+h_{n1}y_1 + h_{n2}y_2 + \cdots + h_{nn}y_n
+\end{pmatrix}
+\]</span> </p>
+</section>
+<section id="the-hat-matrixand-leverage" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="the-hat-matrixand-leverage"><span class="header-section-number">3.3</span> The Hat Matrixand Leverage</h2>
+<ul>
+<li><p>so the <span class="math inline">\(i\)</span>th fitted value <span class="math inline">\(\hat y_i\)</span> can be expressed as: <span class="math display">\[\hat y_i
+=\sum_{j=1}^n h_{ij} y_j=h_{ii} y_i + \sum_{j \neq i} h_{ij} y_j\]</span></p></li>
+<li><p>Therefore, the <span class="math inline">\(i\)</span>th leverage value <span class="math inline">\(h_{ii}\)</span> measures the influence of the <span class="math inline">\(i\)</span>th observation on its own fitted value <span class="math inline">\(\hat y_i\)</span>.</p></li>
+<li><p>This shows that the fitted value <span class="math inline">\(\hat y_i\)</span> is a weighted average of all the observed values <span class="math inline">\(y_j\)</span>, with the weight for <span class="math inline">\(y_i\)</span> being <span class="math inline">\(h_{ii}\)</span> (<strong><em>leverage</em></strong>).</p></li>
+<li><p>A larger leverage value <span class="math inline">\(h_{ii}\)</span> means that the observation <span class="math inline">\(i\)</span> has more influence on its own fitted value <span class="math inline">\(\hat y_i\)</span>.</p></li>
+</ul>
+</section>
+<section id="properties-of-leverage-values" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="properties-of-leverage-values"><span class="header-section-number">3.4</span> Properties of Leverage Values</h2>
+<ul>
+<li>The leverage values <span class="math inline">\(h_{ii}\)</span> have the following properties:
+<ul>
+<li><span class="math inline">\(0 \leq h_{ii} \leq 1\)</span> for all <span class="math inline">\(i = 1, 2, \ldots, n\)</span>.</li>
+<li>The sum of the leverage values is equal to the number of regression coefficients in the model (including the intercept): <span class="math display">\[\sum_{i=1}^n h_{ii} = \tilde p\]</span> where <span class="math inline">\(\tilde p\)</span> is the number of regression coefficients.</li>
+<li>The average leverage value is <span class="math inline">\(\frac{\tilde p}{n}\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-hat-matrix-in-slr" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="the-hat-matrix-in-slr"><span class="header-section-number">3.5</span> The Hat Matrix in SLR</h2>
+<ul>
+<li>In simple linear regression (<span class="math inline">\(\tilde p=2\)</span>), leverage is about the distance of an observation from the center of <span class="math inline">\(X\)</span>.</li>
+<li>Consider the example with the predictor <span class="math inline">\(X_1\)</span>. The hat matrix is given by:</li>
+</ul>
+<p><span class="math display">\[ H = X(X^TX)^{-1}X^T
+= \frac{1}{n}\begin{bmatrix}
+1 &amp; x_{11} \\
+1 &amp; x_{21} \\
+\vdots &amp; \vdots \\
+1 &amp; x_{n1}
+\end{bmatrix}
+\begin{bmatrix}
+n &amp; \sum_{i=1}^n x_{i1} \\
+\sum_{i=1}^n x_{i1} &amp; \sum_{i=1}^n x_{i1}^2
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+1 &amp; 1 &amp; \cdots &amp; 1 \\
+x_{11} &amp; x_{21} &amp; \cdots &amp; x_{n1}
+\end{bmatrix}
+.\]</span> - After some math (matrix multiplication): <span class="math display">\[H = \frac{1}{\sum_{i=1}^n (x_{i1} - \bar{x}_1)^2}\,
+\begin{bmatrix}
+1 &amp; x_{11} - \bar{x}_1 \\
+1 &amp; x_{21} - \bar{x}_1 \\
+\vdots &amp; \vdots \\
+1 &amp; x_{n1} - \bar{x}_1
+\end{bmatrix}
+\begin{bmatrix}
+1 &amp; 1 &amp; \cdots &amp; 1 \\
+x_{11} - \bar{x}_1 &amp; x_{21} - \bar{x}_1 &amp; \cdots &amp; x_{n1} - \bar{x}_1
+\end{bmatrix}.\]</span> } </p>
+</section>
+<section id="the-hat-matrix-in-slr-1" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="the-hat-matrix-in-slr-1"><span class="header-section-number">3.6</span> The Hat Matrix in SLR</h2>
+<ul>
+<li>Reorganizing the hat matrix in SLR, we have: <span class="math display">\[H = \begin{bmatrix}
+\frac{1}{n} + \frac{(x_{11} - \bar{x}_1)^2}{\sum_{i=1}^n (x_{i1} - \bar{x}_1)^2}
+&amp; \cdots &amp;
+\frac{1}{n} + \frac{(x_{11} - \bar{x}_1)(x_{n1} - \bar{x}_1)}{\sum_{i=1}^n (x_{i1} - \bar{x}_1)^2}
+\\[10pt]
+\vdots &amp; \ddots &amp; \vdots
+\\[10pt]
+\frac{1}{n} + \frac{(x_{n1} - \bar{x}_1)(x_{11} - \bar{x}_1)}{\sum_{i=1}^n (x_{i1} - \bar{x}_1)^2}
+&amp; \cdots &amp;
+\frac{1}{n} + \frac{(x_{n1} - \bar{x}_1)^2}{\sum_{i=1}^n (x_{i1} - \bar{x}_1)^2}
+\end{bmatrix}.\]</span></li>
+</ul>
+</section>
+<section id="leverage-in-slr" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="leverage-in-slr"><span class="header-section-number">3.7</span> Leverage in SLR</h2>
+<ul>
+<li>The diagonal elements of the hat matrix <span class="math inline">\(H\)</span> are called the <strong>leverage values</strong>:</li>
+</ul>
+<p><span class="math display">\[h_{ii}
+= \frac{1}{n}
++ \frac{(x_{i1} - \bar{x}_1)^2}{\sum_{j=1}^n (x_{j1} - \bar{x}_1)^2}.\]</span></p>
+<ul>
+<li><span class="math inline">\(h_{ii}\)</span> measures the distance of the <span class="math inline">\(i\)</span>th observation from the center of <span class="math inline">\(X_1\)</span>.</li>
+</ul>
+</section>
+<section id="leverage-in-slr-1" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="leverage-in-slr-1"><span class="header-section-number">3.8</span> Leverage in SLR</h2>
+<ul>
+<li>leverage vs distance from the center of <span class="math inline">\(X_1\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Example data</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1, <span class="at">data=</span>data)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>leverage_values <span class="ot">&lt;-</span> <span class="fu">hatvalues</span>(model)</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Plot leverage values vs distance from center of X1</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>center_X1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>X1)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>scaled_distance_sq <span class="ot">&lt;-</span> (data<span class="sc">$</span>X1 <span class="sc">-</span> center_X1)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="fu">sum</span>((data<span class="sc">$</span>X1 <span class="sc">-</span> center_X1)<span class="sc">^</span><span class="dv">2</span>) </span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">plot</span>(scaled_distance_sq, leverage_values, <span class="at">main=</span><span class="st">"Leverage vs Distance from Center of X"</span>, </span>
+<span id="cb3-8"><a href="#cb3-8"></a>     <span class="at">xlab=</span><span class="st">"Scaled Dist^2 from Center of Xs"</span>, <span class="at">ylab=</span><span class="st">"Leverage"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,n), <span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">3</span>)))</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="at">b=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="leverage-in-slr-2" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="leverage-in-slr-2"><span class="header-section-number">3.9</span> Leverage in SLR</h2>
+<ul>
+<li>leverage vs (scaled and squared) distance from the center of <span class="math inline">\(X1\)</span></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="leverage-in-mlr" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="leverage-in-mlr"><span class="header-section-number">3.10</span> Leverage in MLR</h2>
+<ul>
+<li>Consider the model <code>lm(Y ~ X1 + X2)</code>.</li>
+<li>In multiple linear regression, leverage is about the statistical (Mahalonobis) distance of an observation from the center of the <span class="math inline">\(X\)</span>-space: <span class="math display">\[h_{ii}= \frac{1}{n} + \frac{(X_i - \bar{X})^T S_X^{-1} (X_i - \bar{X})}{n-1},\]</span> where <span class="math inline">\(\bar{X}\)</span> is the vector of mean predictor values, and <span class="math inline">\(S_X\)</span> is the sample covariance matrix of the predictors.</li>
+</ul>
+</section>
+<section id="leverage-in-mlr-1" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="leverage-in-mlr-1"><span class="header-section-number">3.11</span> Leverage in MLR</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="detecting-leverage-points" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Detecting Leverage Points</h1>
+<section id="detecting-outliers-in-predictors" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="detecting-outliers-in-predictors"><span class="header-section-number">4.1</span> Detecting outliers in predictors</h2>
+<ul>
+<li>How large is large? Let <span class="math inline">\(\tilde p\)</span> be the number of regression coefficients.</li>
+<li>Recall that <span class="math inline">\(\sum_{i=1}^n h_{ii} = \tilde p\)</span>, so the average leverage is <span class="math inline">\(\frac{\tilde p}{n}\)</span>.</li>
+<li>A common rule of thumb is that an observation is considered to have high leverage if its leverage value <span class="math inline">\(h_{ii}\)</span> is greater than <span class="math inline">\(2\frac{\tilde p}{n}\)</span> or <span class="math inline">\(3\frac{\tilde p}{n}\)</span>.</li>
+</ul>
+</section>
+<section id="detecting-outliers-example" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="detecting-outliers-example"><span class="header-section-number">4.2</span> Detecting outliers: Example</h2>
+<ul>
+<li>Consider <code>lm(Y~X1)</code>.</li>
+<li>In this example, the average leverage is <span class="math inline">\(\frac{2}{10} = 0.2\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="detecting-outliers-example-1" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="detecting-outliers-example-1"><span class="header-section-number">4.3</span> Detecting outliers: Example</h2>
+<ul>
+<li>Consider <code>lm(Y~X1 + X2)</code>.</li>
+<li>In this example, <span class="math inline">\(\tilde p=3\)</span> and the average leverage is <span class="math inline">\(\frac{3}{10} = 0.3\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="outliers-in-y" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Outliers in <span class="math inline">\(Y\)</span></h1>
+<section id="outliers-in-response-residuals" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="outliers-in-response-residuals"><span class="header-section-number">5.1</span> Outliers in Response: Residuals</h2>
+<ul>
+<li><p>Residuals are not very useful in detecting extreme observations in the predictor variables <span class="math inline">\(X\)</span>.</p></li>
+<li><p>They are valuable in detecting outliers in the response variable <span class="math inline">\(Y\)</span>.</p></li>
+<li><p>Recall that <span class="math inline">\(e=y - \hat y = (I-H)y\)</span>. Thus, the var-covariance matrix of the residuals is: <span class="math display">\[\text{Var}(e) = (I - H)\text{Var}(y)(I - H)^T
+=\sigma^2 (I - H).\]</span></p></li>
+<li><p>And the variance of the <span class="math inline">\(i\)</span>th residual is: <span class="math display">\[\text{Var}(e_i) = \sigma^2 (1 - h_{ii}).\]</span></p></li>
+<li><p>In practice, we replace <span class="math inline">\(\sigma^2\)</span> by <span class="math inline">\(MSE\)</span> to estimate the variance of the residuals.</p></li>
+</ul>
+</section>
+<section id="standardized-residuals" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="standardized-residuals"><span class="header-section-number">5.2</span> Standardized Residuals</h2>
+<ul>
+<li>The standardized residuals are defined as: <span class="math display">\[r_i = \frac{e_i}{\hat \sigma \sqrt{1 - h_{ii}}},\]</span> where <span class="math inline">\(\hat \sigma = \sqrt{MSE}\)</span> and <span class="math inline">\(h_{ii}\)</span> is the leverage of the <span class="math inline">\(i\)</span>th observation.</li>
+<li>The standardized residuals have constant variance.</li>
+<li>Thus, we can use the standardized residuals to detect outliers in the response variable <span class="math inline">\(Y\)</span> by choosing a threshold, e.g., 2 or 2.5 in absolute value.</li>
+</ul>
+</section>
+<section id="deleted-residuals" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="deleted-residuals"><span class="header-section-number">5.3</span> Deleted Residuals</h2>
+<ul>
+<li>One issue with standardized residuals is that the estimate of <span class="math inline">\(\sigma\)</span> includes the <span class="math inline">\(i\)</span>th observation itself.</li>
+<li>The deleted residuals (or externally studentized residuals) address this issue by deleting the <span class="math inline">\(i\)</span>th observation when estimating <span class="math inline">\(\sigma\)</span>.</li>
+<li>Let <span class="math inline">\(e_{(i)}\)</span> be the residual for the <span class="math inline">\(i\)</span>th observation obtained by fitting the model without the <span class="math inline">\(i\)</span>th observation. It is defined as <span class="math display">\[e_{(i)} = y_i - \hat y_{(i)},\]</span> where <span class="math inline">\(\hat y_{(i)}\)</span> is the fitted value when observation <span class="math inline">\(i\)</span> is deleted.</li>
+</ul>
+</section>
+<section id="deleted-residuals-1" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="deleted-residuals-1"><span class="header-section-number">5.4</span> Deleted Residuals</h2>
+<ul>
+<li><p>One does not need to refit models to obtain the deleted residuals. It can be shown that: <span class="math display">\[e_{(i)} = \frac{e_i}{1 - h_{ii}}.\]</span></p></li>
+<li><p>Recall that <span class="math inline">\(h_{ii}\)</span> is between 0 and 1.</p></li>
+<li><p>The larger the leverage <span class="math inline">\(h_{ii}\)</span> (close to 1), the larger the deleted residual <span class="math inline">\(e_{(i)}\)</span> compared to the ordinary residual <span class="math inline">\(e_i\)</span>.</p></li>
+<li><p>The standard error of the deleted residual is: <span class="math display">\[\text{SE}(e_{(i)}) = \hat \sigma_{(i)} \sqrt{1 - h_{ii}},\]</span> where <span class="math inline">\(\hat \sigma_{(i)}\)</span> is the estimate of <span class="math inline">\(\sigma\)</span> obtained by deleting the <span class="math inline">\(i\)</span>th observation.</p></li>
+</ul>
+</section>
+<section id="studentized-residuals" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="studentized-residuals"><span class="header-section-number">5.5</span> Studentized Residuals</h2>
+<ul>
+<li>We then define the studentized residuals based on the deleted residuals and its standard error:</li>
+</ul>
+<p><span class="math display">\[t_i = \frac{e_{(i)}}{\text{SE}(e_{(i)})} = \frac{e_i / (1 - h_{ii})}{\hat \sigma_{(i)} \sqrt{1 - h_{ii}}} = \frac{e_i}{\hat \sigma_{(i)} \sqrt{1 - h_{ii}}}.\]</span></p>
+<p>where <span class="math inline">\(\hat \sigma_{(i)}=\sqrt{MSE_{(i)}}\)</span> is the estimate of <span class="math inline">\(\sigma\)</span> obtained by deleting the <span class="math inline">\(i\)</span>th observation.</p>
+<ul>
+<li>It can be shown that <span class="math inline">\(t_i \sim t_{df?}\)</span>. What is <code>df</code> here when there are <span class="math inline">\(\tilde p\)</span> regression coefficients?</li>
+</ul>
+</section>
+<section id="studentized-residuals-t-distribution" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="studentized-residuals-t-distribution"><span class="header-section-number">5.6</span> Studentized Residuals: t-distribution</h2>
+<ul>
+<li>The <code>df</code> depends on the degrees of freedom used to estimate <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>When the <span class="math inline">\(i\)</span>th observation is deleted, the degrees of freedom becomes <span class="math inline">\((n-1)-\tilde p = n-\tilde p-1\)</span>.</li>
+<li>Thus, the studentized residuals follow a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-\tilde p-1\)</span> degrees of freedom: <span class="math display">\[t_i \sim t_{n-\tilde p-1}.\]</span></li>
+<li>Note , <span class="math inline">\(MSE_{(i)}\)</span> can also be computed from <span class="math inline">\(MSE\)</span> without refitting the model. It can be shown that: <span class="math display">\[MSE_{(i)} = \frac{(n-\tilde p)MSE - e_i^2/(1-h_{ii})}{n-\tilde p-1}.\]</span></li>
+</ul>
+</section>
+<section id="studentized-residuals-cutoff" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="studentized-residuals-cutoff"><span class="header-section-number">5.7</span> Studentized Residuals: Cutoff</h2>
+<ul>
+<li><p>If we want to test whether an observation is an outlier in <span class="math inline">\(Y\)</span> at significance level <span class="math inline">\(\alpha\)</span>, we can use the following cutoff:</p>
+<p><span class="math display">\[|t_i| &gt; t_{1- \alpha/2, n-\tilde p-1}.\]</span></p></li>
+<li><p>In practice, we do not know which observation is an outlier. Thus, we need to adjust for multiple comparisons. A common approach is to use the Bonferroni correction. The adjusted cutoff becomes:</p>
+<p><span class="math display">\[|t_i| &gt; t_{1- \alpha/(2n), n-\tilde p-1},\]</span> which is greater than the previous cutoff.</p></li>
+</ul>
+</section>
+<section id="example" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="example"><span class="header-section-number">5.8</span> Example</h2>
+<ul>
+<li>We will look at residuals, standardized residuals, and studentized residuals for the model <code>lm(Y ~ X1 + X2)</code>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">data=</span>data)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Get residuals, standardized residuals, and studentized residuals</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>data<span class="sc">$</span>residuals <span class="ot">&lt;-</span> <span class="fu">resid</span>(model)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>data<span class="sc">$</span>standardized_residuals <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(model)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>data<span class="sc">$</span>studentized_residuals <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="example-residuals" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="example-residuals"><span class="header-section-number">5.9</span> Example: residuals</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-standardized-residuals" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="example-standardized-residuals"><span class="header-section-number">5.10</span> Example: standardized residuals</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-studentized-residuals" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="example-studentized-residuals"><span class="header-section-number">5.11</span> Example: studentized residuals</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="16-lecture_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Summary</h1>
+<section id="summary-1" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">6.1</span> Summary</h2>
+<ul>
+<li>For outlier in predictor: leverage
+<ul>
+<li>Leverage measures how far an observation is from the center of the X-space.</li>
+<li>Leverage values are the diagonal elements of the hat matrix.</li>
+<li>An observation is considered to have high leverage <span class="math inline">\(h_{ii}&gt; 2\frac{\tilde p}{n}\)</span> or <span class="math inline">\(3\frac{\tilde p}{n}\)</span>, where <span class="math inline">\(\tilde p\)</span> is the number of regression coefficients.</li>
+</ul></li>
+<li>For outlier in response: studentized residual
+<ul>
+<li>Studentized residuals are based on deleted residuals.</li>
+<li>They follow a t-distribution with <span class="math inline">\(n-\tilde p-1\)</span> degrees of freedom.</li>
+<li>An observation is considered an outlier in Y <span class="math display">\[|t_i| &gt; t_{1- \alpha/(2n), n-\tilde p-1}.\]</span></li>
+</ul></li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
